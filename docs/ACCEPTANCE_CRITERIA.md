@@ -2,66 +2,47 @@
 
 ## M0
 
-- [x] The actual project location and pre-existing files are documented.
-- [x] Git is initialized and the worktree is inspected before checkpointing.
-- [x] The required ten workflow and project documents exist and do not contain material contradictions.
-- [x] Vite, strict TypeScript, HTML Canvas, and Vitest are configured without gameplay implementation.
-- [x] `npm install` exits successfully and creates a lockfile.
-- [x] `npm test` exits successfully with at least one executed test.
-- [x] `npm run build` exits successfully and creates ignored build output.
-- [x] Actual command evidence is present in `RUN_LOG.md`.
-- [x] `STATUS.md` and `HANDOFF.md` reflect the post-verification state.
-- [x] A Git checkpoint named `M0: bootstrap project workflow and toolchain` exists (`574d0ca`).
+- [x] Scaffold, workflow, install, test, build, checkpoint `574d0ca` (see history).
 
-## M1 (CP-M1-01)
+## M1 (CP-M1-01) — Green
 
-Observable and testable criteria. Check only with real evidence in `RUN_LOG.md`.
+- [x] Movement, input, bounds, delta, blur; independent audit PASS (`976dfc6`); user browser 11/11 PASS.
+
+## M2 (CP-M2-01)
 
 ### Automated / pure logic
 
-- [x] Key mapping: `W`/ArrowUp → up; `A`/ArrowLeft → left; `S`/ArrowDown → down; `D`/ArrowRight → right.
-- [x] WASD and arrow keys are equivalent for the same direction.
-- [x] Multiple directions combine; opposite directions cancel to zero on that axis.
-- [x] No input → zero direction; player does not move.
-- [x] Single-axis direction has length 1 (or correct unit axis vector).
-- [x] Diagonal direction is normalized (length 1; not ~√2 faster).
-- [x] Displacement scales with delta time at fixed speed and input.
-- [x] Two smaller steps match one larger step for equal total time (away from bounds).
-- [x] Player cannot cross left, right, top, or bottom bounds (radius/size considered).
-- [x] Key release removes only that key; other held keys remain.
-- [x] Clearing input stops further movement.
-- [x] If a max delta is used, its behavior is tested.
-- [x] Core tests run in Vitest without importing the browser entry (no `document is not defined`).
-- [x] `npm test` passes.
-- [x] `npx tsc --noEmit` passes.
-- [x] `npm run build` passes.
-- [x] `npm audit` recorded (prefer zero high/critical blockers for this stack).
+- [x] Spawn waits until interval; fires when interval crossed.
+- [x] Multi small dt vs one large dt spawn behavior tested (binary-friendly steps).
+- [x] Spawn positions on arena edge; not overlapping center player under test.
+- [x] Fixed RNG sequence yields repeatable spawn positions.
+- [x] Enemy cap prevents further spawns.
+- [x] Large dt does not create unbounded spawn burst beyond cap.
+- [x] Enemies chase player; diagonal chase normalized; displacement ∝ dt.
+- [x] Co-located enemy/player produces finite numbers.
+- [x] No enemies → no projectile; before cooldown → no attack; at cooldown → projectile.
+- [x] Nearest living enemy; equal distance broken by lower enemy id.
+- [x] Projectile moves with velocity × dt; expires; cleans outside margin.
+- [x] Hit deals once and removes projectile; no multi-enemy hit from one projectile.
+- [x] Circle collision; enemy dies at ≤0 hp; defeatedCount +1 once; no XP/upgrade fields.
+- [x] Contact damage on overlap; cooldown prevents per-frame drain; re-applies after cooldown.
+- [x] Player hp clamped at 0; no loss/restart state.
+- [x] M1 input/movement tests still pass.
+- [x] Pure tests do not import `main.ts`.
+- [x] Status copy reflects M2.
+- [x] Game-state loop test: attack→hit→kill→count.
+- [x] `npm test` / `npx tsc --noEmit` / `npm run build` / `npm audit` recorded.
 
 ### Browser / manual
 
-Evidence for all items below unless noted: **User-reported manual browser acceptance: PASS on all listed checks; browser/version not supplied.**
-
-- [x] Page opens; console has no unhandled errors.
-- [x] Canvas layout usable on desktop and narrow viewports.
-- [x] Arena and player placeholder clearly visible.
-- [x] WASD and arrows move the player; release stops that motion.
-- [x] Diagonal move works and is not obviously faster than axis move.
-- [x] Opposite keys do not produce wrong drift.
-- [x] Player stays inside visible Canvas bounds on all sides.
-- [x] Continuous hold does not accelerate per frame (frame-rate independence).
-- [x] Blur / switch-away while holding a key does not leave stuck movement after return.
-- [x] User-visible copy no longer claims gameplay only begins later / M0-only ready as the sole state.
+- [ ] All interactive combat checks — **UNVERIFIED** (implementer environment).
 
 ### Process
 
-- [x] M1 checkpoint commit exists with intended files only (`563f7ee`).
-- [x] Prior status record exists (`2684ac8`).
-- [x] Independent auditor reviewed scope, code, commits, and docs; no M2 scope creep; no blocking defects.
-- [x] Independent auditor re-ran critical automated commands (`npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit`) — all PASS.
-- [x] User completed real-browser acceptance (11 checks PASS; browser/version not supplied).
-- [x] `CP-M1-01` independent audit result: **PASS**.
-- [x] M1 may formally exit; M2 has **not** started.
+- [ ] M2 checkpoint commit with intended files only — set after commit.
+- [x] Independent M2 audit not claimed by implementer (pending).
+- [x] M3 remains Not started.
 
 ## Milestone Audit Rule
 
-The implementing agent may gather evidence but must not represent its own review as an independent milestone audit. Before entering the next milestone, a fresh agent or the user should compare this checklist with the repository and rerun critical commands. M1 independent audit is complete with result **PASS**.
+Implementer evidence ≠ independent milestone audit.

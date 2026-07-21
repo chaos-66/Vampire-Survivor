@@ -2,54 +2,41 @@
 
 ## Current Goal
 
-**M1 complete.** Stopped between M1 and M2. Next work is architect definition of M2 checkpoint, Must, Non-goals, and acceptance — not M2 implementation until a new development prompt.
+Complete **CP-M2-01**: deterministic enemy pressure and automatic combat loop. Implementation complete; independent audit and interactive browser acceptance still open.
 
 ## M0 Checkpoint (history)
 
+| ID | Status |
+|---|---|
+| CP-M0-01 | Green at `574d0ca` |
+
+## M1 Checkpoint (history)
+
+| ID | Status |
+|---|---|
+| CP-M1-01 | **Green** — `563f7ee`; audit close `976dfc6` |
+
+## M2 Checkpoint
+
 | ID | Deliverable | Verification | Pass condition | Status |
 |---|---|---|---|---|
-| CP-M0-01 | Workflow documents and runnable scaffold | `npm install`, `npm test`, `npm run build`, Git inspection | All commands succeed, docs agree, and checkpoint commit exists | Green at `574d0ca` |
+| CP-M2-01 | Deterministic enemy pressure and automatic combat | Vitest; tsc; build; audit; browser or UNVERIFIED | Spawn, chase, contact cooldown damage, auto projectiles, kills + count; M1 preserved | Implementation complete; automated green; browser UNVERIFIED; independent audit pending |
 
-The M0 rollback point is `574d0ca` (`M0: bootstrap project workflow and toolchain`). Status record: `ba842c4`.
+### Must delivered
 
-## M1 Checkpoint
+- Enemies with id/pos/radius/speed/hp; edge spawn; inject RNG; cap 20.
+- Normalized chase; contact damage + cooldown; HP HUD; no M4 loss at 0.
+- Auto nearest-target projectiles; defeat count; pure `updateGame`.
 
-| ID | Deliverable | Verification | Pass condition | Status |
-|---|---|---|---|---|
-| CP-M1-01 | Frame-independent player movement in a bounded arena | Vitest pure-logic tests; `npm test`; `npx tsc --noEmit`; `npm run build`; `npm audit`; manual browser checks | Player moves with WASD/arrows, diagonal normalized, bounds respect radius, blur clears input, loop uses delta time; evidence recorded | **Green** — implementation `563f7ee`; status record `2684ac8`; independent audit PASS; automated green; user manual browser acceptance PASS (11 checks; browser/version not supplied) |
+### Non-goals (not implemented)
 
-### CP-M1-01 scope (delivered)
-
-- Visible placeholder player on Canvas.
-- WASD and arrow keys; multi-key combine; opposite keys cancel.
-- Diagonal direction normalized (no √2 speed boost).
-- `requestAnimationFrame` loop; position updates from real delta time (seconds).
-- Player full extent stays inside logical Canvas bounds.
-- Key release stops that direction; `blur` and `visibilitychange` clear input.
-- Core move/normalize/clamp logic unit-tested without DOM.
-- Outdated M0-only user-visible copy updated.
-
-### Non-goals for this checkpoint
-
-No enemies, combat, XP, upgrades, weapons, audio, saves, ECS, engines, or M2–M4 scaffolding.
+No XP, levels, upgrades, multi-weapon, Boss, win/loss/restart, timer, audio, ECS, M3 scaffolding.
 
 ## Later Work
 
-| Milestone | Planned sequence | Status |
-|---|---|---|
-| M1 | Define movement acceptance; implement input, time-based movement, bounds, rendering, and tests | **Complete / Green** (`563f7ee`; independent audit PASS) |
-| M2 | Define combat acceptance; implement enemies, pressure, automatic attack, and tests | **Not started** |
-| M3 | Define progression acceptance; implement drops, leveling, upgrade choice, and tests | Not started |
-| M4 | Define final acceptance; implement run outcome/restart, tune, regress, and audit | Not started |
-
-Only one milestone checkpoint is active at a time. M2 is not active.
-
-## M1 Risks (historical mitigations applied)
-
-| Risk | Mitigation |
+| Milestone | Status |
 |---|---|
-| Movement appears frame-rate dependent | Use delta time in seconds; test proportional displacement |
-| Diagonal faster than axis move | Normalize non-zero direction vectors |
-| Bounds ignore player size | Clamp using radius / half-extent |
-| Stuck keys after tab-away | Clear input on window blur |
-| Browser checks inferred from build | Record browser evidence separately; user manual acceptance completed |
+| M1 | Complete / Green |
+| M2 | Implementation done; audit pending |
+| M3 | **Not started** |
+| M4 | Not started |

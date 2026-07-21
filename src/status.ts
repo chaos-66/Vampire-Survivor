@@ -1,2 +1,2 @@
 export const getStatusMessage = (): string =>
-  'M1: move with WASD or arrow keys'
+  'M2: move, dodge enemies, auto-attack'

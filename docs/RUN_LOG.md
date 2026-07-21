@@ -51,3 +51,13 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit code 0. |
 | 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 8 modules transformed; `dist/` generated. |
 | 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
+| 2026-07-21 | `git commit -m "M1: record independent audit pass"` | Passed | `976dfc6`. |
+| 2026-07-21 | M2 recovery: git status/log; HEAD `976dfc6` | Passed | Clean `main`; M1 green; M2 not started. |
+| 2026-07-21 | M2 first `npm test` (spawn multi-step assert) | Failed | 1 failed: multi small vs large spawn length (float steps); 62 passed. |
+| 2026-07-21 | M2 `npm test` after spawn step fix | Passed | 4 files, 63 tests passed. |
+| 2026-07-21 | M2 `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-21 | M2 `npm run build` | Passed | 10 modules transformed; `dist/` generated. |
+| 2026-07-21 | M2 `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-21 | M2 interactive browser combat checklist | UNVERIFIED | No interactive browser session in implementer environment. |
+| 2026-07-21 | M2 `npm run dev` HTTP GET localhost:5173 | Partial | HTTP 200; HTML has M2 status copy; no XP/upgrade/Boss copy. Interactive combat UNVERIFIED. |
+| 2026-07-21 | M2 `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |

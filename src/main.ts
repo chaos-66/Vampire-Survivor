@@ -8,13 +8,11 @@ import {
   releaseKey,
 } from './input'
 import {
-  clampDeltaSeconds,
-  createPlayer,
-  PLAYER_SPEED,
-  stepPlayer,
-  type Arena,
-  type Player,
-} from './movement'
+  createGameState,
+  updateGame,
+  type GameState,
+} from './game'
+import { clampDeltaSeconds } from './movement'
 import { getStatusMessage } from './status'
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game')
@@ -29,15 +27,16 @@ if (!context) {
   throw new Error('2D canvas is not supported')
 }
 
-const arena: Arena = {
+const arena = {
   width: canvas.width,
   height: canvas.height,
 }
 
 const input = createInputState()
-let player: Player = createPlayer(arena)
+let game: GameState = createGameState(arena)
 let lastTimestampMs: number | null = null
 let animationFrameId = 0
+let hitFlashRemaining = 0
 
 const statusEl = document.querySelector<HTMLElement>('#status')
 if (statusEl) {
@@ -84,9 +83,33 @@ const draw = (): void => {
   context.lineWidth = 2
   context.strokeRect(1, 1, arena.width - 2, arena.height - 2)
 
-  context.fillStyle = '#6ec6ff'
+  for (const enemy of game.enemies) {
+    context.fillStyle = '#e85d5d'
+    context.beginPath()
+    context.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2)
+    context.fill()
+    const ratio = enemy.health / enemy.maxHealth
+    context.fillStyle = '#2a2d38'
+    context.fillRect(enemy.x - enemy.radius, enemy.y - enemy.radius - 8, enemy.radius * 2, 4)
+    context.fillStyle = '#f0c14a'
+    context.fillRect(
+      enemy.x - enemy.radius,
+      enemy.y - enemy.radius - 8,
+      enemy.radius * 2 * ratio,
+      4,
+    )
+  }
+
+  for (const projectile of game.projectiles) {
+    context.fillStyle = '#f5f0a8'
+    context.beginPath()
+    context.arc(projectile.x, projectile.y, projectile.radius, 0, Math.PI * 2)
+    context.fill()
+  }
+
+  context.fillStyle = hitFlashRemaining > 0 ? '#ff9a6b' : '#6ec6ff'
   context.beginPath()
-  context.arc(player.x, player.y, player.radius, 0, Math.PI * 2)
+  context.arc(game.player.x, game.player.y, game.player.radius, 0, Math.PI * 2)
   context.fill()
 
   context.fillStyle = '#e8dfcf'
@@ -94,10 +117,12 @@ const draw = (): void => {
   context.textAlign = 'left'
   context.fillText(getStatusMessage(), 12, 24)
   context.fillText(
-    `pos ${player.x.toFixed(0)}, ${player.y.toFixed(0)}`,
+    `HP ${game.player.health} / ${game.player.maxHealth}`,
     12,
     44,
   )
+  context.fillText(`Defeated ${game.defeatedCount}`, 12, 64)
+  context.fillText(`Enemies ${game.enemies.length}`, 12, 84)
 }
 
 const frame = (timestampMs: number): void => {
@@ -108,10 +133,17 @@ const frame = (timestampMs: number): void => {
   const dtSeconds = clampDeltaSeconds((timestampMs - lastTimestampMs) / 1000)
   lastTimestampMs = timestampMs
 
+  const hpBefore = game.player.health
   const direction = getMoveDirection(input)
-  player = stepPlayer(player, direction, PLAYER_SPEED, dtSeconds, arena)
-  draw()
+  game = updateGame(game, direction, dtSeconds)
+  if (game.player.health < hpBefore) {
+    hitFlashRemaining = 0.12
+  }
+  if (hitFlashRemaining > 0) {
+    hitFlashRemaining = Math.max(0, hitFlashRemaining - dtSeconds)
+  }
 
+  draw()
   animationFrameId = window.requestAnimationFrame(frame)
 }
 

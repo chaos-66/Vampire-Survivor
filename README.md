@@ -2,7 +2,7 @@
 
 A small Survivors-style browser game built with Vite, TypeScript, and HTML Canvas.
 
-M1 provides a bounded arena and frame-independent player movement (WASD / arrow keys).
+**M2:** bounded arena, WASD/arrow movement, edge-spawning enemies that chase the player, contact damage with cooldown, automatic nearest-target projectiles, and a defeat counter.
 
 ## Commands
 

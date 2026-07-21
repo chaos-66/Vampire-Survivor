@@ -2,42 +2,38 @@
 
 ## Snapshot
 
-- Current stage: M1 complete and independently audited; stopped before M2
-- Current checkpoint: `CP-M1-01` green
+- Current stage: M2 implementation checkpoint complete; independent audit pending
+- Current checkpoint: `CP-M2-01` (implementation done; not independently audited)
 - Last updated: 2026-07-21
-- Latest milestone checkpoint: `563f7ee` (`M1: implement frame-independent player movement`)
-- Latest prior status record: `2684ac8` (`M1: record checkpoint status`)
-- Independent audit: **PASS**
-- Browser acceptance: user reported all 11 interactive checks **PASS**; browser name and version not supplied
-- M2 status: **Not started**
-- M1 blockers: none
+- Latest milestone checkpoint: pending create — `M2: implement enemy pressure and automatic combat`
+- M1 remains **Green** (`563f7ee`; audit `976dfc6`)
+- M3 status: **Not started**
 
 ## Recently Completed
 
-- Refined `CP-M1-01` in `PLAN.md` and M1 acceptance criteria.
-- Implemented pure input (`src/input.ts`), movement/bounds (`src/movement.ts`), vec helpers, and RAF game loop in `src/main.ts`.
-- Placeholder player (circle) on bounded 960×540 logical arena; WASD + arrows; diagonal normalize; delta time in seconds; max delta 0.05s; blur + visibilitychange clear input.
-- Added focused Vitest suites (`input.test.ts`, `movement.test.ts`); 26 tests green.
-- Updated user-visible copy away from M0-only messaging.
-- Created M1 checkpoint `563f7ee` and status record `2684ac8`.
-- Independent auditor re-ran `npm test` (3 files / 26 tests), `npx tsc --noEmit` (exit 0), `npm run build` (8 modules), `npm audit` (0 vulnerabilities); code/scope review found no M2 creep and no blocking defects.
-- User completed full manual browser acceptance: all 11 listed checks PASS (browser/version not supplied).
+- Defined CP-M2-01 Must/Non-goals and acceptance checklist.
+- Implemented pure combat in `src/game.ts` + `src/collision.ts`.
+- Enemies spawn from edges (injected RNG), chase, cap 20, interval 1s.
+- Contact damage with 0.5s cooldown; player HP 0..100; no loss screen at 0.
+- Auto-attack nearest enemy; projectiles; defeat count HUD.
+- Vitest: 4 files, 63 tests (M1 regression retained).
+- Automated: `npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit` passed.
 
-## Verified
+## Verified (implementer)
 
-- Pure movement, direction normalize, bounds-with-radius, key combine/cancel/release/clear, delta proportionality, max-delta behavior.
-- Typecheck, production build, audit zero vulnerabilities (implementer and independent auditor).
-- Independent M1 code/scope audit: PASS.
-- User-reported manual browser acceptance: PASS on all listed checks.
+- Pure spawn/chase/attack/projectile/contact/kill loop tests.
+- Typecheck, build, audit 0 vulnerabilities.
 
 ## Unverified
 
-- None for M1 exit. Browser name/version were not supplied and remain unrecorded.
+- Interactive browser combat acceptance — **UNVERIFIED** (no interactive browser session in this environment).
+- Independent M2 milestone audit — **pending**.
 
 ## Risks
 
-- None blocking M1. M2 must not start until architect defines checkpoint/acceptance and a new development prompt is issued.
+- Browser feel of spawn pressure, projectile aim, and contact cadence not human-verified here.
+- Implementer self-check ≠ independent audit.
 
 ## Next Step
 
-Architect defines M2 checkpoint, Must, Non-goals, and acceptance criteria. Do not implement M2 without a new task prompt.
+M2 independent audit + remaining browser acceptance. Do not start M3.
