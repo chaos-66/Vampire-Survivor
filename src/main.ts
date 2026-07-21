@@ -117,12 +117,12 @@ const draw = (): void => {
   context.textAlign = 'left'
   context.fillText(getStatusMessage(), 12, 24)
   context.fillText(
-    `HP ${game.player.health} / ${game.player.maxHealth}`,
+    `生命 ${game.player.health} / ${game.player.maxHealth}`,
     12,
     44,
   )
-  context.fillText(`Defeated ${game.defeatedCount}`, 12, 64)
-  context.fillText(`Enemies ${game.enemies.length}`, 12, 84)
+  context.fillText(`击败 ${game.defeatedCount}`, 12, 64)
+  context.fillText(`敌人 ${game.enemies.length}`, 12, 84)
 }
 
 const frame = (timestampMs: number): void => {

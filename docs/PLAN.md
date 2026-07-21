@@ -2,41 +2,34 @@
 
 ## Current Goal
 
-Complete **CP-M2-01**: deterministic enemy pressure and automatic combat loop. Implementation complete; independent audit and interactive browser acceptance still open.
+Close **CP-M2-01** after Chinese UI localization and user quick visual confirm. Gameplay already user-accepted (18/18). **M3 not started.**
 
-## M0 Checkpoint (history)
+## M0 / M1 (history)
 
 | ID | Status |
 |---|---|
 | CP-M0-01 | Green at `574d0ca` |
-
-## M1 Checkpoint (history)
-
-| ID | Status |
-|---|---|
 | CP-M1-01 | **Green** — `563f7ee`; audit close `976dfc6` |
 
 ## M2 Checkpoint
 
-| ID | Deliverable | Verification | Pass condition | Status |
-|---|---|---|---|---|
-| CP-M2-01 | Deterministic enemy pressure and automatic combat | Vitest; tsc; build; audit; browser or UNVERIFIED | Spawn, chase, contact cooldown damage, auto projectiles, kills + count; M1 preserved | Checkpoint `6c5afab`; automated green; browser UNVERIFIED; independent audit pending |
+| ID | Deliverable | Status |
+|---|---|---|
+| CP-M2-01 | Enemy pressure + automatic combat | Implementation `6c5afab`; status `6a6f981`; independent auto audit PASS; user functional browser 18/18 PASS; Chinese UI localization applied; Chinese visual confirm pending; formal closeout pending |
 
 ### Must delivered
 
-- Enemies with id/pos/radius/speed/hp; edge spawn; inject RNG; cap 20.
-- Normalized chase; contact damage + cooldown; HP HUD; no M4 loss at 0.
-- Auto nearest-target projectiles; defeat count; pure `updateGame`.
+- Edge spawn, chase, contact cooldown damage, auto projectiles, defeat count; M1 movement preserved.
+- User-visible runtime UI in Chinese.
 
-### Non-goals (not implemented)
+### Non-goals
 
-No XP, levels, upgrades, multi-weapon, Boss, win/loss/restart, timer, audio, ECS, M3 scaffolding.
+No XP/upgrades/Boss/win-loss/restart; no i18n framework.
 
 ## Later Work
 
 | Milestone | Status |
 |---|---|
-| M1 | Complete / Green |
-| M2 | Implementation done; audit pending |
+| M2 | Functional PASS; Chinese localization; final closeout pending user visual confirm |
 | M3 | **Not started** |
 | M4 | Not started |

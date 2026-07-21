@@ -12,37 +12,37 @@
 
 ### Automated / pure logic
 
-- [x] Spawn waits until interval; fires when interval crossed.
-- [x] Multi small dt vs one large dt spawn behavior tested (binary-friendly steps).
-- [x] Spawn positions on arena edge; not overlapping center player under test.
-- [x] Fixed RNG sequence yields repeatable spawn positions.
-- [x] Enemy cap prevents further spawns.
-- [x] Large dt does not create unbounded spawn burst beyond cap.
-- [x] Enemies chase player; diagonal chase normalized; displacement ∝ dt.
-- [x] Co-located enemy/player produces finite numbers.
-- [x] No enemies → no projectile; before cooldown → no attack; at cooldown → projectile.
-- [x] Nearest living enemy; equal distance broken by lower enemy id.
-- [x] Projectile moves with velocity × dt; expires; cleans outside margin.
-- [x] Hit deals once and removes projectile; no multi-enemy hit from one projectile.
-- [x] Circle collision; enemy dies at ≤0 hp; defeatedCount +1 once; no XP/upgrade fields.
-- [x] Contact damage on overlap; cooldown prevents per-frame drain; re-applies after cooldown.
-- [x] Player hp clamped at 0; no loss/restart state.
-- [x] M1 input/movement tests still pass.
-- [x] Pure tests do not import `main.ts`.
-- [x] Status copy reflects M2.
-- [x] Game-state loop test: attack→hit→kill→count.
-- [x] `npm test` / `npx tsc --noEmit` / `npm run build` / `npm audit` recorded.
+- [x] All CP-M2-01 automated items (spawn, chase, attack, projectiles, contact, kills, M1 regression) — evidence in `RUN_LOG.md`.
 
-### Browser / manual
+### Browser / manual (functional)
 
-- [ ] All interactive combat checks — **UNVERIFIED** (implementer environment).
+Evidence: **User-reported M2 browser acceptance: PASS on all 18 listed checks; browser/version not supplied.** Acceptance performed before Chinese localization; gameplay behavior unchanged by localization.
+
+- [x] Page/Canvas/console normal.
+- [x] M1 movement regression.
+- [x] Player bounds.
+- [x] Enemy spawn / chase.
+- [x] Auto-attack / nearest target visual.
+- [x] Projectile hit, enemy HP, death, defeat count.
+- [x] Contact damage + cooldown; HP floor.
+- [x] Enemy cap; 60s sustained run.
+- [x] Narrow layout; blur recovery.
+- [x] M2 copy present; no M3/M4 features.
+- [x] HP=0 continues without loss screen/buttons (user confirmed; M2 design).
+
+### Chinese UI
+
+- [x] Static source/HTML: `lang=zh-CN`, Chinese title/h1/aria/status, HUD labels `生命`/`击败`/`敌人` (implementer static check).
+- [ ] Real-browser Chinese visual display — **pending user quick confirm**.
 
 ### Process
 
-- [x] M2 checkpoint commit with intended files only (`6c5afab`).
-- [x] Independent M2 audit not claimed by implementer (pending).
+- [x] M2 checkpoint `6c5afab`.
+- [x] Independent code/auto re-verify PASS (auditor; not implementer self-claim as full exit until final closeout).
+- [x] User functional browser PASS recorded.
+- [ ] Formal M2 final audit closeout after Chinese visual confirm.
 - [x] M3 remains Not started.
 
 ## Milestone Audit Rule
 
-Implementer evidence ≠ independent milestone audit.
+Implementer evidence ≠ independent milestone audit. Functional audit evidence is recorded; final closeout follows Chinese UI user confirm.

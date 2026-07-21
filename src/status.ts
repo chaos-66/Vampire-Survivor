@@ -1,2 +1,2 @@
 export const getStatusMessage = (): string =>
-  'M2: move, dodge enemies, auto-attack'
+  'M2：移动、躲避敌人并自动攻击'

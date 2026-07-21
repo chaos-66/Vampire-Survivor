@@ -65,3 +65,18 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | Post-checkpoint `npm test` | Passed | 4 files, 63 tests passed. |
 | 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-21 | Post-checkpoint `npm run build` | Passed | 10 modules; `dist/` generated. |
+| 2026-07-21 | `git commit -m "M2: record checkpoint status"` | Passed | `6a6f981`. |
+| 2026-07-21 | Independent M2 code/scope audit (auditor) | PASS | Reviewed `6c5afab`/`6a6f981`; no M3/M4 creep; no blocking defects. |
+| 2026-07-21 | Independent auditor `npm test` | PASS | 4 files / 63 tests. |
+| 2026-07-21 | Independent auditor `npx tsc --noEmit` | PASS | Exit 0. |
+| 2026-07-21 | Independent auditor `npm run build` | PASS | 10 modules transformed. |
+| 2026-07-21 | Independent auditor `npm audit` | PASS | 0 vulnerabilities. |
+| 2026-07-21 | Independent auditor Git whitespace/status | PASS | Clean `main`. |
+| 2026-07-21 | User M2 browser acceptance (18 checks) | PASS | User-reported all PASS; browser/version not supplied. Includes HP=0 continues without loss UI/buttons (M2 design). Performed **before** Chinese localization; functional behavior accepted; Chinese display needs post-localization confirm. |
+| 2026-07-21 | Chinese UI code change | Applied | `index.html` zh-CN + 吸血鬼幸存者; status `M2：移动、躲避敌人并自动攻击`; HUD 生命/击败/敌人. |
+| 2026-07-21 | Localization `npm test` | Passed | 4 files / 63 tests. |
+| 2026-07-21 | Localization `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-21 | Localization `npm run build` | Passed | 10 modules. |
+| 2026-07-21 | Localization `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-21 | Chinese static source/HTML check | Passed | lang=zh-CN; title/aria/status Chinese; HUD labels present; English HUD labels removed. |
+| 2026-07-21 | Chinese real-browser visual confirm | Pending | User quick confirm required after localization. |
