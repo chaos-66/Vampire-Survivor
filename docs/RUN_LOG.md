@@ -33,11 +33,21 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | M1 `npm run build` | Passed | `tsc && vite build`; 8 modules transformed; `dist/` generated. |
 | 2026-07-21 | M1 `npm audit` | Passed | `found 0 vulnerabilities`. |
 | 2026-07-21 | M1 `git diff --check` | Passed | No whitespace errors (CRLF normalization warnings only). |
-| 2026-07-21 | M1 `npm run dev` + HTTP GET `http://localhost:5173/` | Partial | Vite ready on 5173; HTTP 200; HTML includes `M1: move with WASD or arrow keys` and no old “Gameplay begins in M1” paragraph. **Interactive keyboard/layout/blur play checks UNVERIFIED** (no interactive browser session in this environment). |
-| 2026-07-21 | M0 Canvas browser smoke (pre-M1 interactive) | UNVERIFIED | Superseded by M1 page smoke above for static load; full interactive still UNVERIFIED. |
+| 2026-07-21 | M1 `npm run dev` + HTTP GET `http://localhost:5173/` | Partial | Vite ready on 5173; HTTP 200; HTML includes `M1: move with WASD or arrow keys` and no old “Gameplay begins in M1” paragraph. **Interactive keyboard/layout/blur play checks UNVERIFIED at that time** (no interactive browser session in implementer environment). Later superseded by user manual acceptance PASS. |
+| 2026-07-21 | M0 Canvas browser smoke (pre-M1 interactive) | UNVERIFIED | Historical; later superseded by user M1 manual acceptance. |
 | 2026-07-21 | `git commit -m "M1: implement frame-independent player movement"` | Passed | Checkpoint `563f7ee` (16 files). |
 | 2026-07-21 | Post-checkpoint `npm test` | Passed | 3 files, 26 tests passed. |
 | 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit code 0. |
 | 2026-07-21 | Post-checkpoint `npm run build` | Passed | 8 modules; `dist/` generated. |
-
-Manual interactive browser acceptance for M1 movement is **not** claimed as passed.
+| 2026-07-21 | Independent M1 code/scope audit (auditor, not implementer) | PASS | Reviewed `563f7ee` and `2684ac8`; confirmed no M2 scope expansion; input, movement, delta time, bounds, blur clear, module split OK; no blocking defects. |
+| 2026-07-21 | Independent auditor re-ran `npm test` | PASS | 3 test files passed; 26 tests passed. |
+| 2026-07-21 | Independent auditor re-ran `npx tsc --noEmit` | PASS | Exit code 0. |
+| 2026-07-21 | Independent auditor re-ran `npm run build` | PASS | Success; Vite transformed 8 modules. |
+| 2026-07-21 | Independent auditor re-ran `npm audit` | PASS | found 0 vulnerabilities. |
+| 2026-07-21 | Independent auditor Git whitespace/status | PASS | No whitespace errors; `main` worktree clean. |
+| 2026-07-21 | User manual browser acceptance (11 checks) | PASS | User-reported: page/Canvas; WASD; arrows; key release stop; diagonal no speed boost; opposite cancel no drift; four-edge bounds; no per-frame accel on hold; blur/Alt+Tab no stuck move; narrow layout OK; console no unhandled errors. Browser name and version not supplied. |
+| 2026-07-21 | M1 independent audit final conclusion | PASS | `CP-M1-01` Green; M1 may exit. |
+| 2026-07-21 | Doc closeout (implementer): `npm test` | Passed | 3 files, 26 tests passed (docs-only change verification). |
+| 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 8 modules transformed; `dist/` generated. |
+| 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |

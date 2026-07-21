@@ -2,12 +2,15 @@
 
 ## Snapshot
 
-- Current stage: M1 implementation checkpoint complete; independent audit pending
-- Current checkpoint: `CP-M1-01` (implementation done; not independently audited)
+- Current stage: M1 complete and independently audited; stopped before M2
+- Current checkpoint: `CP-M1-01` green
 - Last updated: 2026-07-21
 - Latest milestone checkpoint: `563f7ee` (`M1: implement frame-independent player movement`)
-- Latest Git commit: status-record commit may follow `563f7ee`; verify with `git log -1`
+- Latest prior status record: `2684ac8` (`M1: record checkpoint status`)
+- Independent audit: **PASS**
+- Browser acceptance: user reported all 11 interactive checks **PASS**; browser name and version not supplied
 - M2 status: **Not started**
+- M1 blockers: none
 
 ## Recently Completed
 
@@ -16,25 +19,25 @@
 - Placeholder player (circle) on bounded 960×540 logical arena; WASD + arrows; diagonal normalize; delta time in seconds; max delta 0.05s; blur + visibilitychange clear input.
 - Added focused Vitest suites (`input.test.ts`, `movement.test.ts`); 26 tests green.
 - Updated user-visible copy away from M0-only messaging.
-- Automated: `npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit` all passed (see `RUN_LOG.md`).
-- Created M1 checkpoint `563f7ee`; post-checkpoint re-ran test, tsc, and build (all green).
+- Created M1 checkpoint `563f7ee` and status record `2684ac8`.
+- Independent auditor re-ran `npm test` (3 files / 26 tests), `npx tsc --noEmit` (exit 0), `npm run build` (8 modules), `npm audit` (0 vulnerabilities); code/scope review found no M2 creep and no blocking defects.
+- User completed full manual browser acceptance: all 11 listed checks PASS (browser/version not supplied).
 
-## Verified (this implementation pass)
+## Verified
 
 - Pure movement, direction normalize, bounds-with-radius, key combine/cancel/release/clear, delta proportionality, max-delta behavior.
-- Typecheck, production build, audit zero vulnerabilities.
-- Dev server HTTP 200 serves page with M1 status copy (no “Gameplay begins in M1” shell text).
+- Typecheck, production build, audit zero vulnerabilities (implementer and independent auditor).
+- Independent M1 code/scope audit: PASS.
+- User-reported manual browser acceptance: PASS on all listed checks.
 
 ## Unverified
 
-- Full interactive browser acceptance (WASD/arrows feel, diagonal speed, bounds visuals, blur stuck-key, responsive layout, console errors during play) — **UNVERIFIED** in this agent environment (no real interactive browser session).
-- Independent M1 milestone audit — **pending**.
+- None for M1 exit. Browser name/version were not supplied and remain unrecorded.
 
 ## Risks
 
-- Interactive play and blur behavior not proven by a human/browser session.
-- Implementer self-check is not a substitute for independent audit per `WORKFLOW.md`.
+- None blocking M1. M2 must not start until architect defines checkpoint/acceptance and a new development prompt is issued.
 
 ## Next Step
 
-Independent M1 audit (fresh agent/user): rerun tests/build, perform full browser acceptance checklist in `ACCEPTANCE_CRITERIA.md`, then mark milestone exit green only if PASS. Do not start M2 until that audit passes.
+Architect defines M2 checkpoint, Must, Non-goals, and acceptance criteria. Do not implement M2 without a new task prompt.

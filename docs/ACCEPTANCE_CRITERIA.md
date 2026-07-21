@@ -37,24 +37,31 @@ Observable and testable criteria. Check only with real evidence in `RUN_LOG.md`.
 - [x] `npm run build` passes.
 - [x] `npm audit` recorded (prefer zero high/critical blockers for this stack).
 
-### Browser / manual (or UNVERIFIED)
+### Browser / manual
 
-- [ ] Page opens; console has no unhandled errors. — static HTTP 200 only; **console UNVERIFIED**
-- [ ] Canvas layout usable on desktop and narrow viewports. — **UNVERIFIED**
-- [ ] Arena and player placeholder clearly visible. — **UNVERIFIED** (drawn in code; not visually confirmed)
-- [ ] WASD and arrows move the player; release stops that motion. — **UNVERIFIED**
-- [ ] Diagonal move works and is not obviously faster than axis move. — unit-tested; visual **UNVERIFIED**
-- [ ] Opposite keys do not produce wrong drift. — unit-tested; visual **UNVERIFIED**
-- [ ] Player stays inside visible Canvas bounds on all sides. — unit-tested; visual **UNVERIFIED**
-- [ ] Continuous hold does not accelerate per frame (frame-rate independence). — unit-tested; visual **UNVERIFIED**
-- [ ] Blur / switch-away while holding a key does not leave stuck movement after return. — **UNVERIFIED**
-- [x] User-visible copy no longer claims gameplay only begins later / M0-only ready as the sole state. (HTTP HTML check)
+Evidence for all items below unless noted: **User-reported manual browser acceptance: PASS on all listed checks; browser/version not supplied.**
+
+- [x] Page opens; console has no unhandled errors.
+- [x] Canvas layout usable on desktop and narrow viewports.
+- [x] Arena and player placeholder clearly visible.
+- [x] WASD and arrows move the player; release stops that motion.
+- [x] Diagonal move works and is not obviously faster than axis move.
+- [x] Opposite keys do not produce wrong drift.
+- [x] Player stays inside visible Canvas bounds on all sides.
+- [x] Continuous hold does not accelerate per frame (frame-rate independence).
+- [x] Blur / switch-away while holding a key does not leave stuck movement after return.
+- [x] User-visible copy no longer claims gameplay only begins later / M0-only ready as the sole state.
 
 ### Process
 
 - [x] M1 checkpoint commit exists with intended files only (`563f7ee`).
-- [x] Independent M1 audit is not claimed by the implementer; status records audit pending unless a separate auditor passes.
+- [x] Prior status record exists (`2684ac8`).
+- [x] Independent auditor reviewed scope, code, commits, and docs; no M2 scope creep; no blocking defects.
+- [x] Independent auditor re-ran critical automated commands (`npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit`) — all PASS.
+- [x] User completed real-browser acceptance (11 checks PASS; browser/version not supplied).
+- [x] `CP-M1-01` independent audit result: **PASS**.
+- [x] M1 may formally exit; M2 has **not** started.
 
 ## Milestone Audit Rule
 
-The implementing agent may gather evidence but must not represent its own review as an independent milestone audit. Before entering the next milestone, a fresh agent or the user should compare this checklist with the repository and rerun critical commands. Until then, implementation can be checkpointed while independent audit status remains explicitly recorded.
+The implementing agent may gather evidence but must not represent its own review as an independent milestone audit. Before entering the next milestone, a fresh agent or the user should compare this checklist with the repository and rerun critical commands. M1 independent audit is complete with result **PASS**.

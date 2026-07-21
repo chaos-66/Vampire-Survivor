@@ -4,9 +4,14 @@
 
 - Actual project root: `D:\agent\workspace\vampire_survivors`.
 - M0 remains green at `574d0ca` / status record `ba842c4`.
-- M1 **CP-M1-01** implementation checkpoint: `563f7ee` (`M1: implement frame-independent player movement`); independent audit is **pending**.
-- M2 has **not** been started.
-- `AI-Workflow-Library/` remains read-only, ignored, unmodified.
+- M1 implemented at `563f7ee` (`M1: implement frame-independent player movement`).
+- Post-implementation status record: `2684ac8` (`M1: record checkpoint status`).
+- Independent automated audit: **PASS**.
+- User manual browser acceptance: all 11 checks **PASS** (browser/version not supplied).
+- `CP-M1-01` is **Green**; M1 is **complete**.
+- M2 is **Not started**.
+- No open M1 defects requiring Grok fixes.
+- `AI-Workflow-Library/` is an ignored local reference copy curated separately at the user's direction; it is outside project commits and must not be modified during milestone work.
 
 ## Implemented (M1)
 
@@ -20,34 +25,26 @@
 
 ## Verified
 
-- `npm test` — 3 files, 26 tests passed (pre- and post-checkpoint).
-- `npx tsc --noEmit` — exit 0 (pre- and post-checkpoint).
-- `npm run build` — success (pre- and post-checkpoint).
-- `npm audit` — 0 vulnerabilities.
-- Dev server `http://localhost:5173/` HTTP 200; HTML shows M1 status copy.
-- M1 checkpoint commit `563f7ee` contains only intended project files.
+- Implementer and independent auditor: `npm test` (3 files / 26 tests), `npx tsc --noEmit` (exit 0), `npm run build` (success), `npm audit` (0 vulnerabilities).
+- Independent code/scope audit: no M2 expansion; no blocking implementation defects.
+- User-reported manual browser acceptance: PASS on all listed checks; browser/version not supplied.
+- M1 checkpoint `563f7ee` contains only intended project files.
 
 ## Not Yet Verified
 
-- Interactive keyboard movement, diagonal feel, on-screen bounds, blur recovery, narrow viewport layout, console during play — **UNVERIFIED**.
-- Independent M1 audit — **pending**.
+- None for M1 exit. Browser name and version were not provided.
 
-## Recent Files
+## Recent Files (status docs for this closeout)
 
-- `src/input.ts`, `src/input.test.ts`
-- `src/movement.ts`, `src/movement.test.ts`
-- `src/vec.ts`, `src/main.ts`, `src/status.ts`, `src/main.test.ts`
-- `index.html`, `docs/PLAN.md`, `docs/ACCEPTANCE_CRITERIA.md`, `docs/ARCHITECTURE.md`
-- `docs/STATUS.md`, `docs/RUN_LOG.md`, `docs/HANDOFF.md`, `README.md`
+- `docs/PLAN.md`, `docs/STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, `docs/RUN_LOG.md`, `docs/HANDOFF.md`
 
 ## Risks
 
-- Browser interaction not executed; do not treat build success as play acceptance.
-- Next agent must not start M2 without independent M1 audit PASS.
+- None blocking M1. Grok must not start M2 without a new architect-defined scope and development prompt.
 
 ## Next Task
 
-Run independent M1 audit and complete browser acceptance checklist. One next task only: **M1 independent audit + remaining browser verification**. Do not implement M2.
+**One task only:** architect refines M2 checkpoint, Must, Non-goals, and acceptance criteria; then wait for a new Grok M2 development prompt. **Grok must not begin M2 on its own.**
 
 ## Read First
 
