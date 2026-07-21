@@ -35,5 +35,9 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | M1 `git diff --check` | Passed | No whitespace errors (CRLF normalization warnings only). |
 | 2026-07-21 | M1 `npm run dev` + HTTP GET `http://localhost:5173/` | Partial | Vite ready on 5173; HTTP 200; HTML includes `M1: move with WASD or arrow keys` and no old “Gameplay begins in M1” paragraph. **Interactive keyboard/layout/blur play checks UNVERIFIED** (no interactive browser session in this environment). |
 | 2026-07-21 | M0 Canvas browser smoke (pre-M1 interactive) | UNVERIFIED | Superseded by M1 page smoke above for static load; full interactive still UNVERIFIED. |
+| 2026-07-21 | `git commit -m "M1: implement frame-independent player movement"` | Passed | Checkpoint `563f7ee` (16 files). |
+| 2026-07-21 | Post-checkpoint `npm test` | Passed | 3 files, 26 tests passed. |
+| 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-21 | Post-checkpoint `npm run build` | Passed | 8 modules; `dist/` generated. |
 
 Manual interactive browser acceptance for M1 movement is **not** claimed as passed.

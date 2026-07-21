@@ -5,8 +5,8 @@
 - Current stage: M1 implementation checkpoint complete; independent audit pending
 - Current checkpoint: `CP-M1-01` (implementation done; not independently audited)
 - Last updated: 2026-07-21
-- Latest milestone checkpoint: pending create — `M1: implement frame-independent player movement`
-- Latest Git commit: verify with `git log -1` after checkpoint commits
+- Latest milestone checkpoint: `563f7ee` (`M1: implement frame-independent player movement`)
+- Latest Git commit: status-record commit may follow `563f7ee`; verify with `git log -1`
 - M2 status: **Not started**
 
 ## Recently Completed
@@ -17,6 +17,7 @@
 - Added focused Vitest suites (`input.test.ts`, `movement.test.ts`); 26 tests green.
 - Updated user-visible copy away from M0-only messaging.
 - Automated: `npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit` all passed (see `RUN_LOG.md`).
+- Created M1 checkpoint `563f7ee`; post-checkpoint re-ran test, tsc, and build (all green).
 
 ## Verified (this implementation pass)
 

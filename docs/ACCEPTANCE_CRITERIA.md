@@ -52,7 +52,7 @@ Observable and testable criteria. Check only with real evidence in `RUN_LOG.md`.
 
 ### Process
 
-- [ ] M1 checkpoint commit exists with intended files only. — set after commit
+- [x] M1 checkpoint commit exists with intended files only (`563f7ee`).
 - [x] Independent M1 audit is not claimed by the implementer; status records audit pending unless a separate auditor passes.
 
 ## Milestone Audit Rule

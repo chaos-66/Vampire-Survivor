@@ -16,7 +16,7 @@ The M0 rollback point is `574d0ca` (`M0: bootstrap project workflow and toolchai
 
 | ID | Deliverable | Verification | Pass condition | Status |
 |---|---|---|---|---|
-| CP-M1-01 | Frame-independent player movement in a bounded arena | Vitest pure-logic tests; `npm test`; `npx tsc --noEmit`; `npm run build`; `npm audit`; manual browser checks (or explicit UNVERIFIED) | Player moves with WASD/arrows, diagonal normalized, bounds respect radius, blur clears input, loop uses delta time; evidence recorded | Implementation complete; automated green; interactive browser UNVERIFIED; independent audit pending |
+| CP-M1-01 | Frame-independent player movement in a bounded arena | Vitest pure-logic tests; `npm test`; `npx tsc --noEmit`; `npm run build`; `npm audit`; manual browser checks (or explicit UNVERIFIED) | Player moves with WASD/arrows, diagonal normalized, bounds respect radius, blur clears input, loop uses delta time; evidence recorded | Checkpoint `563f7ee`; automated green; interactive browser UNVERIFIED; independent audit pending |
 
 ### CP-M1-01 scope
 

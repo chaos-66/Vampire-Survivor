@@ -4,7 +4,7 @@
 
 - Actual project root: `D:\agent\workspace\vampire_survivors`.
 - M0 remains green at `574d0ca` / status record `ba842c4`.
-- M1 **CP-M1-01** implementation is complete and checkpointed (or about to be); independent audit is **pending**.
+- M1 **CP-M1-01** implementation checkpoint: `563f7ee` (`M1: implement frame-independent player movement`); independent audit is **pending**.
 - M2 has **not** been started.
 - `AI-Workflow-Library/` remains read-only, ignored, unmodified.
 
@@ -20,11 +20,12 @@
 
 ## Verified
 
-- `npm test` — 3 files, 26 tests passed.
-- `npx tsc --noEmit` — exit 0.
-- `npm run build` — success.
+- `npm test` — 3 files, 26 tests passed (pre- and post-checkpoint).
+- `npx tsc --noEmit` — exit 0 (pre- and post-checkpoint).
+- `npm run build` — success (pre- and post-checkpoint).
 - `npm audit` — 0 vulnerabilities.
 - Dev server `http://localhost:5173/` HTTP 200; HTML shows M1 status copy.
+- M1 checkpoint commit `563f7ee` contains only intended project files.
 
 ## Not Yet Verified
 
