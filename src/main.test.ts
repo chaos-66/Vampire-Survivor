@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { getBootstrapMessage } from './status'
+import { getStatusMessage } from './status'
 
-describe('M0 bootstrap', () => {
-  it('exposes the scaffold status message', () => {
-    expect(getBootstrapMessage()).toBe('M0 toolchain ready')
+describe('status copy', () => {
+  it('exposes the M1 movement status message', () => {
+    expect(getStatusMessage()).toBe('M1: move with WASD or arrow keys')
   })
 })

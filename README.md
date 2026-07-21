@@ -2,7 +2,7 @@
 
 A small Survivors-style browser game built with Vite, TypeScript, and HTML Canvas.
 
-M0 contains only the project workflow and a verified toolchain scaffold. Gameplay work starts in M1.
+M1 provides a bounded arena and frame-independent player movement (WASD / arrow keys).
 
 ## Commands
 

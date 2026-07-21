@@ -3,42 +3,50 @@
 ## Current Truth
 
 - Actual project root: `D:\agent\workspace\vampire_survivors`.
-- M0 is complete at green checkpoint `CP-M0-01`; work stopped before M1.
-- M0 milestone checkpoint: `574d0ca` (`M0: bootstrap project workflow and toolchain`).
-- The Vite/TypeScript/Canvas scaffold and required documents have been created.
-- `AI-Workflow-Library/` is pre-existing, read-only, ignored, and unmodified.
-- No M1-M4 gameplay has been implemented.
+- M0 remains green at `574d0ca` / status record `ba842c4`.
+- M1 **CP-M1-01** implementation is complete and checkpointed (or about to be); independent audit is **pending**.
+- M2 has **not** been started.
+- `AI-Workflow-Library/` remains read-only, ignored, unmodified.
+
+## Implemented (M1)
+
+- Visible player circle on Canvas arena.
+- WASD + arrow keys; multi-key combine; opposite cancel; diagonal normalize.
+- `requestAnimationFrame` loop; position from delta time (seconds); `MAX_DELTA_SECONDS = 0.05`.
+- Bounds clamp using player radius so full body stays in arena.
+- Key release; `blur` and `visibilitychange` clear input.
+- Pure modules: `src/input.ts`, `src/movement.ts`, `src/vec.ts`; DOM/RAF in `src/main.ts`.
+- Vitest coverage for mapping, combine, cancel, normalize, dt movement, bounds, clear/release, delta cap.
 
 ## Verified
 
-- Node `v22.12.0`, npm `10.9.0`, and Git `2.54.0.windows.1` are available.
-- The actual workspace and reference path mismatch are documented.
-- Git initialization succeeded.
-- Dependency installation succeeded and produced `package-lock.json`.
-- Vitest 4.1.10 executed one test successfully.
-- The strict TypeScript and Vite production build succeeded.
-- `npm audit` reports zero vulnerabilities after the Vitest upgrade.
-- An independent read-only auditor returned `PASS` for pre-commit M0 and found no blocking issue.
-- The M0 checkpoint commit was created with only intended project files.
+- `npm test` — 3 files, 26 tests passed.
+- `npx tsc --noEmit` — exit 0.
+- `npm run build` — success.
+- `npm audit` — 0 vulnerabilities.
+- Dev server `http://localhost:5173/` HTTP 200; HTML shows M1 status copy.
 
 ## Not Yet Verified
 
-- Browser rendering and responsive behavior remain unverified.
+- Interactive keyboard movement, diagonal feel, on-screen bounds, blur recovery, narrow viewport layout, console during play — **UNVERIFIED**.
+- Independent M1 audit — **pending**.
 
-## Recent Changes
+## Recent Files
 
-- Added the project scaffold, one basic harness test, README, lockfile, Git ignore rules, and ten required workflow/project documents.
-- Separated the pure bootstrap message from the browser entry after the first test failed in the Node environment.
-- Upgraded Vitest to 4.1.10 after the initial dependency audit reported vulnerabilities.
+- `src/input.ts`, `src/input.test.ts`
+- `src/movement.ts`, `src/movement.test.ts`
+- `src/vec.ts`, `src/main.ts`, `src/status.ts`, `src/main.test.ts`
+- `index.html`, `docs/PLAN.md`, `docs/ACCEPTANCE_CRITERIA.md`, `docs/ARCHITECTURE.md`
+- `docs/STATUS.md`, `docs/RUN_LOG.md`, `docs/HANDOFF.md`, `README.md`
 
 ## Risks
 
-- Automated verification covers the toolchain rather than gameplay, which is intentionally absent in M0.
-- Build success will not prove visual correctness; browser verification remains a separate item.
+- Browser interaction not executed; do not treat build success as play acceptance.
+- Next agent must not start M2 without independent M1 audit PASS.
 
 ## Next Task
 
-When the user authorizes M1, perform recovery from project files, manually smoke-test the M0 Canvas page, and refine the M1 movement checkpoint before coding.
+Run independent M1 audit and complete browser acceptance checklist. One next task only: **M1 independent audit + remaining browser verification**. Do not implement M2.
 
 ## Read First
 

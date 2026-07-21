@@ -1,1 +1,2 @@
-export const getBootstrapMessage = (): string => 'M0 toolchain ready'
+export const getStatusMessage = (): string =>
+  'M1: move with WASD or arrow keys'

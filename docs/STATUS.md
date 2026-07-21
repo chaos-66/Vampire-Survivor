@@ -2,34 +2,38 @@
 
 ## Snapshot
 
-- Current stage: M0 complete; stopped before M1
-- Current checkpoint: `CP-M0-01` green
+- Current stage: M1 implementation checkpoint complete; independent audit pending
+- Current checkpoint: `CP-M1-01` (implementation done; not independently audited)
 - Last updated: 2026-07-21
-- Latest milestone checkpoint: `574d0ca` (`M0: bootstrap project workflow and toolchain`)
-- Latest Git commit: status-record commit containing this handoff may follow `574d0ca`; verify with `git log -1`
+- Latest milestone checkpoint: pending create — `M1: implement frame-independent player movement`
+- Latest Git commit: verify with `git log -1` after checkpoint commits
+- M2 status: **Not started**
 
 ## Recently Completed
 
-- Confirmed the actual workspace is `D:\agent\workspace\vampire_survivors`.
-- Confirmed the reference paths `D:\workplace\mini-survivors` and `D:\AI-Workflow-Library` do not exist in this environment.
-- Found the read-only Workflow Library at `AI-Workflow-Library/` inside the actual workspace.
-- Confirmed there were no user project files outside that library and initialized Git.
-- Selected a lightweight workflow and created the initial scaffold and documentation.
-- Installed dependencies and generated `package-lock.json`.
-- Corrected the failed first test by separating browser startup from testable pure logic.
-- Upgraded Vitest after audit findings; the final audit reports zero vulnerabilities.
-- Verified one Vitest test and the production build.
-- Received an independent read-only pre-commit M0 audit result of `PASS`.
-- Created the M0 checkpoint commit `574d0ca`.
+- Refined `CP-M1-01` in `PLAN.md` and M1 acceptance criteria.
+- Implemented pure input (`src/input.ts`), movement/bounds (`src/movement.ts`), vec helpers, and RAF game loop in `src/main.ts`.
+- Placeholder player (circle) on bounded 960×540 logical arena; WASD + arrows; diagonal normalize; delta time in seconds; max delta 0.05s; blur + visibilitychange clear input.
+- Added focused Vitest suites (`input.test.ts`, `movement.test.ts`); 26 tests green.
+- Updated user-visible copy away from M0-only messaging.
+- Automated: `npm test`, `npx tsc --noEmit`, `npm run build`, `npm audit` all passed (see `RUN_LOG.md`).
 
-## Current Work
+## Verified (this implementation pass)
 
-- None. M0 is complete and work is stopped before M1.
+- Pure movement, direction normalize, bounds-with-radius, key combine/cancel/release/clear, delta proportionality, max-delta behavior.
+- Typecheck, production build, audit zero vulnerabilities.
+- Dev server HTTP 200 serves page with M1 status copy (no “Gameplay begins in M1” shell text).
 
-## Unresolved Issues
+## Unverified
 
-- Browser rendering remains unverified; it was not an M0 automated acceptance requirement.
+- Full interactive browser acceptance (WASD/arrows feel, diagonal speed, bounds visuals, blur stuck-key, responsive layout, console errors during play) — **UNVERIFIED** in this agent environment (no real interactive browser session).
+- Independent M1 milestone audit — **pending**.
+
+## Risks
+
+- Interactive play and blur behavior not proven by a human/browser session.
+- Implementer self-check is not a substitute for independent audit per `WORKFLOW.md`.
 
 ## Next Step
 
-Before M1, perform the documented recovery read, define the M1 checkpoint in detail, and manually verify the Canvas bootstrap in a browser. Do not implement M1 without a new task.
+Independent M1 audit (fresh agent/user): rerun tests/build, perform full browser acceptance checklist in `ACCEPTANCE_CRITERIA.md`, then mark milestone exit green only if PASS. Do not start M2 until that audit passes.
