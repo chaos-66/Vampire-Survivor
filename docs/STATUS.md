@@ -2,41 +2,43 @@
 
 ## Snapshot
 
-- Current stage: M2 functional acceptance PASS; Chinese UI localization applied; final audit closeout pending user Chinese visual confirm
-- Current checkpoint: `CP-M2-01` implementation `6c5afab`; Chinese UI `0f1bb50`
+- Current stage: M2 complete and independently audited; stopped before M3
+- Current checkpoint: `CP-M2-01` green
 - Last updated: 2026-07-21
-- Latest milestone checkpoint: `6c5afab` (`M2: implement enemy pressure and automatic combat`)
-- Localization commit: `0f1bb50` (`M2: localize game UI in Chinese`)
-- Prior status record: `6a6f981`
-- Independent code/auto audit: **PASS** (auditor re-ran tests/build/audit; no M3 creep; no blocking defects)
-- User M2 browser functional acceptance: **PASS** (18/18; browser/version not supplied; pre-localization)
-- Chinese UI static checks: **PASS** (implementer source + HTTP HTML)
-- Chinese UI real browser display: **pending user quick confirm**
+- M2 implementation: `6c5afab` (`M2: implement enemy pressure and automatic combat`)
+- M2 prior status: `6a6f981` (`M2: record checkpoint status`)
+- Chinese localization: `0f1bb50` (`M2: localize game UI in Chinese`)
+- Localization status: `ee60495` (`M2: record localization status`)
+- Independent audit: **PASS**
+- User M2 functional browser acceptance: **18/18 PASS**
+- User Chinese visual acceptance: **5/5 PASS**
+- Browser/version: not supplied
+- M2 blockers: none
 - M1 remains **Green**
-- M3 status: **Not started**
+- M3: **Not started**
 
 ## Recently Completed
 
-- M2 combat implementation and checkpoint.
-- Independent auditor: automated re-verify PASS; no blocking issues.
-- User: 18 interactive browser checks PASS; HP=0 continues without loss UI (by design).
-- Localized user-visible UI to Chinese (`index.html`, `status.ts`, Canvas HUD labels).
+- M2 combat: spawn, chase, contact damage, auto-attack projectiles, defeat count.
+- Independent auditor re-verified tests/build/audit; no M3/M4 creep; no blocking defects.
+- User functional browser acceptance 18/18 PASS (HP=0 continues without loss UI — M2 design).
+- Chinese UI localization; user Chinese real-browser display 5/5 PASS.
+- M2 formally closed after final independent audit PASS.
 
 ## Verified
 
 - Automated tests/build/audit (implementer + independent auditor).
-- User functional browser acceptance 18/18.
-- Static Chinese: `lang=zh-CN`, title/h1/aria/status, HUD `生命`/`击败`/`敌人`.
+- User functional browser 18/18.
+- User Chinese display 5/5 (title/H1, status, HUD 生命/击败/敌人, no garbled/overlap, gameplay still OK).
 
 ## Unverified / open
 
-- Real-browser visual confirm of Chinese glyphs after localization (user quick check).
-- Formal M2 final audit close documentation commit after that confirm.
+- None for M2 exit. Browser name and version were not supplied.
 
 ## Risks
 
-- None blocking gameplay. Chinese font rendering depends on system fonts (`system-ui`).
+- None blocking M2. M3 must not start without architect-defined checkpoint and a new development prompt.
 
 ## Next Step
 
-User quick-confirm Chinese page + HUD display, then record M2 final audit closeout. **Do not start M3.**
+Architect defines M3 checkpoint, Must, Non-goals, and acceptance criteria. Do not implement M3 without a new development prompt.

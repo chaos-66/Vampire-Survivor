@@ -4,13 +4,17 @@
 
 - Project root: `D:\agent\workspace\vampire_survivors`.
 - M1 Green (`563f7ee` / audit `976dfc6`).
-- M2 implementation checkpoint: `6c5afab`; status record `6a6f981`.
-- Independent M2 code/auto audit: **PASS**.
-- User M2 browser functional acceptance: **PASS** (18/18; browser/version not supplied).
-- User confirmed HP=0 continues without loss screen/buttons (M2 design).
-- Chinese localization of user-visible game UI: `0f1bb50` (`M2: localize game UI in Chinese`).
-- Chinese real-browser visual confirm: **pending user**.
+- M2 implementation: `6c5afab` (`M2: implement enemy pressure and automatic combat`).
+- M2 prior status: `6a6f981` (`M2: record checkpoint status`).
+- Chinese localization: `0f1bb50` (`M2: localize game UI in Chinese`).
+- Localization status: `ee60495` (`M2: record localization status`).
+- Independent M2 audit: **PASS**.
+- User functional browser acceptance: **18/18 PASS**.
+- User Chinese display acceptance: **5/5 PASS**.
+- `CP-M2-01` **Green**; M2 **complete**.
 - M3 **Not started**.
+- No open M2 exit items; no M2 defects requiring Grok fixes.
+- Browser name and version not supplied.
 - `AI-Workflow-Library/` is an ignored local reference copy curated separately at the user's direction; outside project commits; do not modify during milestone work.
 
 ## User-visible Chinese (runtime)
@@ -22,18 +26,18 @@
 
 ## Verified
 
-- `npm test` 4 files / 63 tests (post-localization).
-- `npx tsc --noEmit` exit 0; `npm run build` success; `npm audit` 0 vulns.
-- Static source/HTML Chinese checks PASS.
-- Prior independent audit + user 18-item functional PASS (pre-localization).
+- Independent auditor: `npm test` 4/63, tsc exit 0, build 10 modules, audit 0 vulns; scope review PASS.
+- User functional browser 18/18 PASS (includes HP=0 continues without loss UI).
+- User Chinese real-browser 5/5 PASS.
 
 ## Not Yet Verified
 
-- Chinese UI visual rendering in a real interactive browser after localization.
+- None for M2 exit.
+- Browser name/version were not supplied.
 
 ## Next Task
 
-**One task:** user quick-confirm Chinese UI, then M2 final audit closeout record. **Grok must not start M3.**
+**One task only:** architect refines M3 checkpoint, Must, Non-goals, and acceptance criteria; then wait for a new Grok M3 development prompt. **Grok must not begin M3 on its own.**
 
 ## Read First
 

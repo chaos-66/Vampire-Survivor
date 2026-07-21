@@ -8,7 +8,7 @@
 
 - [x] Movement, input, bounds, delta, blur; independent audit PASS (`976dfc6`); user browser 11/11 PASS.
 
-## M2 (CP-M2-01)
+## M2 (CP-M2-01) — Green
 
 ### Automated / pure logic
 
@@ -16,7 +16,7 @@
 
 ### Browser / manual (functional)
 
-Evidence: **User-reported M2 browser acceptance: PASS on all 18 listed checks; browser/version not supplied.** Acceptance performed before Chinese localization; gameplay behavior unchanged by localization.
+Evidence: **User-reported M2 browser acceptance: PASS on all 18 listed checks; browser/version not supplied.**
 
 - [x] Page/Canvas/console normal.
 - [x] M1 movement regression.
@@ -32,17 +32,30 @@ Evidence: **User-reported M2 browser acceptance: PASS on all 18 listed checks; b
 
 ### Chinese UI
 
-- [x] Static source/HTML: `lang=zh-CN`, Chinese title/h1/aria/status, HUD labels `生命`/`击败`/`敌人` (implementer static check).
-- [ ] Real-browser Chinese visual display — **pending user quick confirm**.
+Evidence: **User-reported real-browser Chinese display acceptance: 5/5 PASS; browser/version not supplied.**
+
+- [x] `lang=zh-CN`
+- [x] Chinese title and H1 (`吸血鬼幸存者`)
+- [x] Chinese Canvas aria-label (`游戏画布`)
+- [x] Chinese status copy (`M2：移动、躲避敌人并自动攻击`)
+- [x] HUD shows `生命` / `击败` / `敌人`
+- [x] Real-browser Chinese display without garbled text
+- [x] No truncation or obvious overlap
+- [x] Gameplay still normal after localization
 
 ### Process
 
-- [x] M2 checkpoint `6c5afab`.
-- [x] Independent code/auto re-verify PASS (auditor; not implementer self-claim as full exit until final closeout).
-- [x] User functional browser PASS recorded.
-- [ ] Formal M2 final audit closeout after Chinese visual confirm.
-- [x] M3 remains Not started.
+- [x] M2 checkpoint `6c5afab`
+- [x] M2 status `6a6f981`
+- [x] localization `0f1bb50`
+- [x] localization status `ee60495`
+- [x] independent code/automated audit PASS
+- [x] user functional browser acceptance 18/18 PASS
+- [x] user Chinese display acceptance 5/5 PASS
+- [x] `CP-M2-01` final audit PASS
+- [x] M2 may formally exit
+- [x] M3 remains Not started
 
 ## Milestone Audit Rule
 
-Implementer evidence ≠ independent milestone audit. Functional audit evidence is recorded; final closeout follows Chinese UI user confirm.
+Implementer evidence ≠ independent milestone audit. M2 final independent audit is complete with result **PASS**.

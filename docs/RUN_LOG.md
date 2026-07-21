@@ -84,3 +84,10 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | Post-localization `npm test` | Passed | 4 files / 63 tests. |
 | 2026-07-21 | Post-localization `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-21 | Post-localization `npm run build` | Passed | 10 modules. |
+| 2026-07-21 | `git commit -m "M2: record localization status"` | Passed | `ee60495`. |
+| 2026-07-21 | User Chinese real-browser display acceptance (5 checks) | PASS | User-reported 5/5: title/H1 吸血鬼幸存者; status M2：移动、躲避敌人并自动攻击; HUD 生命/击败/敌人; no garbled text/truncation/overlap; gameplay still normal. Browser/version not supplied. Supersedes prior “Chinese real-browser visual confirm Pending”. |
+| 2026-07-21 | M2 final independent audit conclusion | PASS | `CP-M2-01` Green; M2 may exit. Combines independent code/auto audit, user functional 18/18, user Chinese 5/5. |
+| 2026-07-21 | Doc closeout (implementer): `npm test` | Passed | 4 files / 63 tests (docs-only M2 audit close). |
+| 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 10 modules transformed. |
+| 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
