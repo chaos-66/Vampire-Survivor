@@ -8,7 +8,7 @@
 - Independent M2 code/auto audit: **PASS**.
 - User M2 browser functional acceptance: **PASS** (18/18; browser/version not supplied).
 - User confirmed HP=0 continues without loss screen/buttons (M2 design).
-- Chinese localization of user-visible game UI applied (commit hash after localization commit).
+- Chinese localization of user-visible game UI: `0f1bb50` (`M2: localize game UI in Chinese`).
 - Chinese real-browser visual confirm: **pending user**.
 - M3 **Not started**.
 - `AI-Workflow-Library/` is an ignored local reference copy curated separately at the user's direction; outside project commits; do not modify during milestone work.

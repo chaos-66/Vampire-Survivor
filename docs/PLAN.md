@@ -15,7 +15,7 @@ Close **CP-M2-01** after Chinese UI localization and user quick visual confirm. 
 
 | ID | Deliverable | Status |
 |---|---|---|
-| CP-M2-01 | Enemy pressure + automatic combat | Implementation `6c5afab`; status `6a6f981`; independent auto audit PASS; user functional browser 18/18 PASS; Chinese UI localization applied; Chinese visual confirm pending; formal closeout pending |
+| CP-M2-01 | Enemy pressure + automatic combat | Implementation `6c5afab`; status `6a6f981`; Chinese UI `0f1bb50`; independent auto audit PASS; user functional browser 18/18 PASS; Chinese visual confirm pending; formal closeout pending |
 
 ### Must delivered
 

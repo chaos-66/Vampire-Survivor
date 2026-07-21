@@ -3,9 +3,10 @@
 ## Snapshot
 
 - Current stage: M2 functional acceptance PASS; Chinese UI localization applied; final audit closeout pending user Chinese visual confirm
-- Current checkpoint: `CP-M2-01` implementation `6c5afab`; localization commit pending create
+- Current checkpoint: `CP-M2-01` implementation `6c5afab`; Chinese UI `0f1bb50`
 - Last updated: 2026-07-21
 - Latest milestone checkpoint: `6c5afab` (`M2: implement enemy pressure and automatic combat`)
+- Localization commit: `0f1bb50` (`M2: localize game UI in Chinese`)
 - Prior status record: `6a6f981`
 - Independent code/auto audit: **PASS** (auditor re-ran tests/build/audit; no M3 creep; no blocking defects)
 - User M2 browser functional acceptance: **PASS** (18/18; browser/version not supplied; pre-localization)

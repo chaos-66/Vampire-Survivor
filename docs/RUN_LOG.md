@@ -80,3 +80,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | Localization `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-21 | Chinese static source/HTML check | Passed | lang=zh-CN; title/aria/status Chinese; HUD labels present; English HUD labels removed. |
 | 2026-07-21 | Chinese real-browser visual confirm | Pending | User quick confirm required after localization. |
+| 2026-07-21 | `git commit -m "M2: localize game UI in Chinese"` | Passed | `0f1bb50` (10 files). |
+| 2026-07-21 | Post-localization `npm test` | Passed | 4 files / 63 tests. |
+| 2026-07-21 | Post-localization `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-21 | Post-localization `npm run build` | Passed | 10 modules. |
