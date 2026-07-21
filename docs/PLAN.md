@@ -20,7 +20,7 @@ Complete **CP-M2-01**: deterministic enemy pressure and automatic combat loop. I
 
 | ID | Deliverable | Verification | Pass condition | Status |
 |---|---|---|---|---|
-| CP-M2-01 | Deterministic enemy pressure and automatic combat | Vitest; tsc; build; audit; browser or UNVERIFIED | Spawn, chase, contact cooldown damage, auto projectiles, kills + count; M1 preserved | Implementation complete; automated green; browser UNVERIFIED; independent audit pending |
+| CP-M2-01 | Deterministic enemy pressure and automatic combat | Vitest; tsc; build; audit; browser or UNVERIFIED | Spawn, chase, contact cooldown damage, auto projectiles, kills + count; M1 preserved | Checkpoint `6c5afab`; automated green; browser UNVERIFIED; independent audit pending |
 
 ### Must delivered
 

@@ -61,3 +61,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | M2 interactive browser combat checklist | UNVERIFIED | No interactive browser session in implementer environment. |
 | 2026-07-21 | M2 `npm run dev` HTTP GET localhost:5173 | Partial | HTTP 200; HTML has M2 status copy; no XP/upgrade/Boss copy. Interactive combat UNVERIFIED. |
 | 2026-07-21 | M2 `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
+| 2026-07-21 | `git commit -m "M2: implement enemy pressure and automatic combat"` | Passed | Checkpoint `6c5afab` (14 files). |
+| 2026-07-21 | Post-checkpoint `npm test` | Passed | 4 files, 63 tests passed. |
+| 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-21 | Post-checkpoint `npm run build` | Passed | 10 modules; `dist/` generated. |

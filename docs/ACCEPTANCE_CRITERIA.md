@@ -39,7 +39,7 @@
 
 ### Process
 
-- [ ] M2 checkpoint commit with intended files only — set after commit.
+- [x] M2 checkpoint commit with intended files only (`6c5afab`).
 - [x] Independent M2 audit not claimed by implementer (pending).
 - [x] M3 remains Not started.
 
