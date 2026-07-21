@@ -3,8 +3,8 @@
 ## Current Truth
 
 - Actual project root: `D:\agent\workspace\vampire_survivors`.
-- M0 automated verification and independent pre-commit audit are complete at `CP-M0-01`; the commit remains.
-- Git has been initialized; no checkpoint commit exists yet.
+- M0 is complete at green checkpoint `CP-M0-01`; work stopped before M1.
+- M0 milestone checkpoint: `574d0ca` (`M0: bootstrap project workflow and toolchain`).
 - The Vite/TypeScript/Canvas scaffold and required documents have been created.
 - `AI-Workflow-Library/` is pre-existing, read-only, ignored, and unmodified.
 - No M1-M4 gameplay has been implemented.
@@ -19,11 +19,11 @@
 - The strict TypeScript and Vite production build succeeded.
 - `npm audit` reports zero vulnerabilities after the Vitest upgrade.
 - An independent read-only auditor returned `PASS` for pre-commit M0 and found no blocking issue.
+- The M0 checkpoint commit was created with only intended project files.
 
 ## Not Yet Verified
 
-- Browser rendering and responsive behavior.
-- Final post-commit Git state.
+- Browser rendering and responsive behavior remain unverified.
 
 ## Recent Changes
 
@@ -38,7 +38,7 @@
 
 ## Next Task
 
-Stage only intended project files, inspect and validate the staged diff, and create the M0 checkpoint. Do not start M1.
+When the user authorizes M1, perform recovery from project files, manually smoke-test the M0 Canvas page, and refine the M1 movement checkpoint before coding.
 
 ## Read First
 

@@ -2,10 +2,11 @@
 
 ## Snapshot
 
-- Current stage: M0, pre-commit audit passed; checkpoint commit pending
-- Current checkpoint: `CP-M0-01`
+- Current stage: M0 complete; stopped before M1
+- Current checkpoint: `CP-M0-01` green
 - Last updated: 2026-07-21
-- Latest Git commit: none yet; repository initialized during M0
+- Latest milestone checkpoint: `574d0ca` (`M0: bootstrap project workflow and toolchain`)
+- Latest Git commit: status-record commit containing this handoff may follow `574d0ca`; verify with `git log -1`
 
 ## Recently Completed
 
@@ -19,16 +20,16 @@
 - Upgraded Vitest after audit findings; the final audit reports zero vulnerabilities.
 - Verified one Vitest test and the production build.
 - Received an independent read-only pre-commit M0 audit result of `PASS`.
+- Created the M0 checkpoint commit `574d0ca`.
 
 ## Current Work
 
-- Stage and inspect only intended project files, validate the staged diff, and create the M0 checkpoint.
+- None. M0 is complete and work is stopped before M1.
 
 ## Unresolved Issues
 
-- Browser rendering has not been manually verified.
-- The checkpoint commit does not yet exist.
+- Browser rendering remains unverified; it was not an M0 automated acceptance requirement.
 
 ## Next Step
 
-Stage only intended project files, run `git diff --cached --check`, inspect the staged diff, and create the checkpoint commit. Do not begin M1.
+Before M1, perform the documented recovery read, define the M1 checkpoint in detail, and manually verify the Canvas bootstrap in a browser. Do not implement M1 without a new task.

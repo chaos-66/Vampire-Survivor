@@ -8,7 +8,7 @@ Complete M0 only: create a reproducible Vite + TypeScript + Canvas scaffold, ins
 
 | ID | Deliverable | Verification | Pass condition | Status |
 |---|---|---|---|---|
-| CP-M0-01 | Workflow documents and runnable scaffold | `npm install`, `npm test`, `npm run build`, Git inspection | All commands succeed, docs agree, and checkpoint commit exists | Pre-commit audit PASS; commit pending |
+| CP-M0-01 | Workflow documents and runnable scaffold | `npm install`, `npm test`, `npm run build`, Git inspection | All commands succeed, docs agree, and checkpoint commit exists | Green at `574d0ca` |
 
 The M0 rollback point is the final `M0: bootstrap project workflow and toolchain` commit.
 

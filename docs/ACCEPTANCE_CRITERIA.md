@@ -11,7 +11,7 @@
 - [x] `npm run build` exits successfully and creates ignored build output.
 - [x] Actual command evidence is present in `RUN_LOG.md`.
 - [x] `STATUS.md` and `HANDOFF.md` reflect the post-verification state.
-- [ ] A Git checkpoint named `M0: bootstrap project workflow and toolchain` exists.
+- [x] A Git checkpoint named `M0: bootstrap project workflow and toolchain` exists (`574d0ca`).
 
 ## Milestone Audit Rule
 
