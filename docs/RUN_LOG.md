@@ -122,3 +122,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Repair `npm run build` | Passed | 35 modules. |
 | 2026-07-22 | Repair `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-22 | Browser regression after repair | UNVERIFIED | No interactive browser session. |
+| 2026-07-22 | `git commit -m "M4: fix modular architecture audit findings"` | Passed | `58c6620` (33 files). |
+| 2026-07-22 | Post-repair `npm test` | Passed | 5 files / 115 tests. |
+| 2026-07-22 | Post-repair `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Post-repair `npm run build` | Passed | 35 modules. |
