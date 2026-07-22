@@ -2,22 +2,30 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-ARCH-01 architecture audit FAIL repaired; independent re-audit pending
+- Current stage: CP-M4-ARCH-01 second-round architecture repair complete; independent re-audit pending
 - Architecture checkpoint: `ba8b276`
-- Prior status: `bb9ad82`
-- Repair commit: `58c6620` (`M4: fix modular architecture audit findings`)
+- Round-1 repair: `58c6620` / status `952f392`
+- Round-2 repair: pending create `M4: complete modular architecture repair`
 - Last updated: 2026-07-22
-- Independent architecture audit: **FAIL** then repair applied
-- Independent architecture re-audit: **pending**
+- Independent architecture re-audit after round-1: **FAIL**
+- Independent architecture re-audit after round-2: **pending**
 - Browser regression: **UNVERIFIED**
 - M4 gameplay: **Not started**
 - M5+ content: **Not started**
 
-## Verified (implementer repair)
+## Round-2 repairs
+
+- Registry duplicate IDs: same object idempotent; different object same ID throws (weapon/progression/character).
+- Categories remain value-equality for immutable data.
+- Real weapon growth path via `createWeaponProgressionDefinition` (acquire level=1, level-up, maxLevel eligibility).
+- Fixture proves path without adding user-visible weapon to M3 offers.
+- D-009 corrected: real weapon growth path established in this round.
+
+## Verified
 
 - npm test x2: 115 tests
-- post-repair test/tsc/build green
+- tsc / build / audit
 
 ## Next Step
 
-Independent architecture re-audit + user browser regression. Do not start M4 gameplay or M5+ content.
+Independent architecture re-audit + browser regression. No M4 gameplay / no M5+ content.

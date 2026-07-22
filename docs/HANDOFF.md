@@ -4,13 +4,19 @@
 
 - Root: `D:\agent\workspace\vampire_survivors`
 - CP-M4-ARCH-01: `ba8b276`
-- Status: `bb9ad82`
-- Repair: `58c6620` (`M4: fix modular architecture audit findings`)
-- Independent architecture audit: **FAIL** → repair applied
-- Independent architecture re-audit: **pending**
+- Round-1 repair: `58c6620` / `952f392`
+- Round-2 repair: hash after `M4: complete modular architecture repair`
+- Independent re-audit after round-1: **FAIL** (behavior-bearing duplicate IDs; weapon level/maxLevel no runtime path)
+- Independent re-audit after round-2: **pending**
 - Browser regression: **UNVERIFIED**
-- M4 gameplay **not started**; M5+ **not started**
+- M4 gameplay not started; M5+ not started
+
+## Key APIs
+
+- `createWeaponProgressionDefinition(weaponId, meta)` → weapon-category progression
+- Registry identity: same object OK; different object same id throws
+- Pending options still bind input
 
 ## Next Task
 
-Architecture re-audit + browser regression. **No M4 gameplay / no new content.**
+Architecture re-audit + browser regression. **No new content.**

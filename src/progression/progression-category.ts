@@ -1,7 +1,9 @@
 /**
  * 成长分类注册表：stat / weapon / item 等体系标签。
  * item 仅注册分类，不实现道具内容。
- * 核心生成器不写死分类 ID。
+ *
+ * 分类是不可变数据值：同 ID 且 name/order 相同则幂等；
+ * 同 ID 但字段不同则抛错（无行为函数，故可按值比较）。
  */
 
 export type ProgressionCategoryDefinition = {

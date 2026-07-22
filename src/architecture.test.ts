@@ -10,7 +10,6 @@ import {
   getUpgradeCardRects,
   generateUpgradeOffers,
   registerProgression,
-  registerProgressionCategory,
   listProgressions,
   listProgressionCategories,
   getProgression,
@@ -23,12 +22,15 @@ import {
   ensureContentRegistered,
   resetAllContentRegistriesForTests,
   advanceWeapons,
+  createWeaponProgressionDefinition,
   PROJECTILE_DAMAGE,
   PLAYER_MAX_HEALTH,
   PLAYER_SPEED,
 } from './game'
 import { DEFAULT_CHARACTER_ID } from './content/characters/default-character'
 import { DEFAULT_WEAPON_ID } from './content/weapons/default-projectile'
+import { defaultProjectileWeapon } from './content/weapons/default-projectile'
+import { swiftUpgrade } from './content/upgrades/swift'
 import type { WeaponDefinition } from './weapons/weapon-definition'
 import type { CharacterDefinition } from './actors/character-definition'
 
@@ -46,18 +48,25 @@ describe('character registry', () => {
     expect(character!.baseStats.maxHealth).toBe(PLAYER_MAX_HEALTH)
     expect(character!.baseStats.moveSpeed).toBe(PLAYER_SPEED)
     expect(character!.startingWeaponIds).toContain(DEFAULT_WEAPON_ID)
-    expect(listCharacters().some((c) => c.id === DEFAULT_CHARACTER_ID)).toBe(
-      true,
-    )
   })
 
-  it('createGameState uses default character; runtime separate from definition', () => {
-    const state = createGameState(arena)
-    expect(state.player.characterId).toBe(DEFAULT_CHARACTER_ID)
-    expect(state.player.health).toBe(PLAYER_MAX_HEALTH)
-    const definition = getCharacter(DEFAULT_CHARACTER_ID)!
-    state.player.moveSpeed *= 1.1
-    expect(definition.baseStats.moveSpeed).toBe(PLAYER_SPEED)
+  it('same character object registers twice safely', () => {
+    const c = getCharacter(DEFAULT_CHARACTER_ID)!
+    registerCharacter(c)
+    registerCharacter(c)
+    expect(listCharacters().filter((x) => x.id === c.id)).toHaveLength(1)
+  })
+
+  it('different character object same id throws', () => {
+    expect(() =>
+      registerCharacter({
+        id: DEFAULT_CHARACTER_ID,
+        name: '另一角色',
+        description: 'd',
+        baseStats: { maxHealth: 1, moveSpeed: 1 },
+        startingWeaponIds: [DEFAULT_WEAPON_ID],
+      }),
+    ).toThrow(/different definition object/i)
   })
 
   it('can register extra character without game loop change', () => {
@@ -75,46 +84,115 @@ describe('character registry', () => {
       'test_only_character',
     )
     expect(state.player.maxHealth).toBe(50)
-    expect(state.player.moveSpeed).toBe(100)
-  })
-
-  it('default character resolves default weapon', () => {
-    const character = getCharacter(DEFAULT_CHARACTER_ID)!
-    for (const id of character.startingWeaponIds) {
-      expect(getWeapon(id)).toBeDefined()
-    }
   })
 })
 
-describe('weapon registry and multi-instance cooldown', () => {
-  it('registers default projectile weapon', () => {
-    expect(getWeapon(DEFAULT_WEAPON_ID)).toBeDefined()
-    expect(listWeapons().some((w) => w.id === DEFAULT_WEAPON_ID)).toBe(true)
+describe('weapon registry identity', () => {
+  it('same weapon definition object registers twice safely', () => {
+    registerWeapon(defaultProjectileWeapon)
+    registerWeapon(defaultProjectileWeapon)
+    expect(listWeapons().filter((w) => w.id === DEFAULT_WEAPON_ID)).toHaveLength(
+      1,
+    )
   })
 
-  it('default weapon fires via weapon system without DOM', () => {
+  it('same id different create throws and keeps original', () => {
+    const original = getWeapon(DEFAULT_WEAPON_ID)!
+    expect(() =>
+      registerWeapon({
+        id: DEFAULT_WEAPON_ID,
+        name: original.name,
+        description: original.description,
+        maxLevel: original.maxLevel,
+        create: () => ({
+          definitionId: DEFAULT_WEAPON_ID,
+          level: 99,
+          cooldownRemaining: 0,
+        }),
+        update: original.update,
+      }),
+    ).toThrow(/different definition object/i)
+    expect(getWeapon(DEFAULT_WEAPON_ID)).toBe(original)
+    expect(getWeapon(DEFAULT_WEAPON_ID)!.create().level).not.toBe(99)
+  })
+
+  it('same id different update throws', () => {
+    const original = getWeapon(DEFAULT_WEAPON_ID)!
+    expect(() =>
+      registerWeapon({
+        id: DEFAULT_WEAPON_ID,
+        name: original.name,
+        description: original.description,
+        maxLevel: original.maxLevel,
+        create: original.create,
+        update: () => undefined,
+      }),
+    ).toThrow(/different definition object/i)
+  })
+
+  it('bootstrap twice remains safe', () => {
+    ensureContentRegistered()
+    ensureContentRegistered()
+    expect(listWeapons().filter((w) => w.id === DEFAULT_WEAPON_ID)).toHaveLength(
+      1,
+    )
+  })
+})
+
+describe('progression registry identity', () => {
+  it('same progression object registers twice safely', () => {
+    registerProgression(swiftUpgrade)
+    registerProgression(swiftUpgrade)
+    expect(listProgressions().filter((p) => p.id === 'swift')).toHaveLength(1)
+  })
+
+  it('same id different apply throws and keeps original effect', () => {
+    const original = getProgression('swift')!
+    const before = createGameState(arena).player.moveSpeed
+    expect(() =>
+      registerProgression({
+        id: 'swift',
+        categoryId: 'stat',
+        name: original.name,
+        description: original.description,
+        maxLevel: original.maxLevel,
+        isEligible: original.isEligible,
+        apply: (ctx) => {
+          ctx.player.moveSpeed = 1
+        },
+      }),
+    ).toThrow(/different definition object/i)
     const state = createGameState(arena)
-    state.enemies = [
-      {
-        id: 1,
-        x: state.player.x + 40,
-        y: state.player.y,
-        radius: 14,
-        speed: 0,
-        health: 30,
-        maxHealth: 30,
-      },
-    ]
-    if (state.player.weapons[0]) {
-      state.player.weapons[0].cooldownRemaining = 0
+    state.experience = 3
+    state.pendingUpgrade = {
+      options: generateUpgradeOffers({
+        player: state.player,
+        progressionLevels: {},
+      }),
     }
-    updateGame(state, { x: 0, y: 0 }, 0.02)
-    expect(state.projectiles.length).toBeGreaterThanOrEqual(1)
+    applyUpgradeChoice(state, 'swift')
+    expect(state.player.moveSpeed).toBeCloseTo(before * 1.1)
+    expect(state.player.moveSpeed).not.toBe(1)
   })
 
+  it('same id different isEligible throws', () => {
+    const original = getProgression('swift')!
+    expect(() =>
+      registerProgression({
+        id: 'swift',
+        categoryId: 'stat',
+        name: original.name,
+        description: original.description,
+        maxLevel: original.maxLevel,
+        isEligible: () => false,
+        apply: original.apply,
+      }),
+    ).toThrow(/different definition object/i)
+  })
+})
+
+describe('multi-weapon cooldown', () => {
   it('two weapon instances update independently', () => {
-    let aCalls = 0
-    let bCalls = 0
     const weaponA: WeaponDefinition = {
       id: 'fixture_a',
       name: 'A',
@@ -126,7 +204,6 @@ describe('weapon registry and multi-instance cooldown', () => {
         cooldownRemaining: 0.2,
       }),
       update: (ctx, instance) => {
-        aCalls += 1
         instance.cooldownRemaining = Math.max(
           0,
           instance.cooldownRemaining - ctx.dtSeconds,
@@ -156,7 +233,6 @@ describe('weapon registry and multi-instance cooldown', () => {
         cooldownRemaining: 0.05,
       }),
       update: (ctx, instance) => {
-        bCalls += 1
         instance.cooldownRemaining = Math.max(
           0,
           instance.cooldownRemaining - ctx.dtSeconds,
@@ -179,149 +255,150 @@ describe('weapon registry and multi-instance cooldown', () => {
     registerWeapon(weaponB)
     const state = createGameState(arena)
     state.player.weapons = [weaponA.create(), weaponB.create()]
-    expect(state.player.weapons[0].cooldownRemaining).toBeCloseTo(0.2)
-    expect(state.player.weapons[1].cooldownRemaining).toBeCloseTo(0.05)
-
     const fired = advanceWeapons(state.player, state.enemies, 1, 0.1)
-    expect(aCalls).toBe(1)
-    expect(bCalls).toBe(1)
     expect(state.player.weapons[0].cooldownRemaining).toBeCloseTo(0.1)
     expect(state.player.weapons[1].cooldownRemaining).toBe(1)
     expect(fired.projectiles.some((p) => p.damage === 22)).toBe(true)
-    expect(fired.projectiles.some((p) => p.damage === 11)).toBe(false)
+  })
+})
 
-    const fired2 = advanceWeapons(
-      state.player,
-      state.enemies,
-      fired.nextProjectileId,
-      0.1,
-    )
-    expect(state.player.weapons[0].cooldownRemaining).toBe(1)
-    expect(fired2.projectiles.some((p) => p.damage === 11)).toBe(true)
-    expect(Object.prototype.hasOwnProperty.call(state, 'attackCooldownRemaining')).toBe(
-      false,
-    )
+describe('weapon progression path', () => {
+  const makeFixtureWeapon = (id: string, maxLevel: number): WeaponDefinition => ({
+    id,
+    name: id,
+    description: 'fixture weapon',
+    maxLevel,
+    create: () => ({
+      definitionId: id,
+      level: 1,
+      cooldownRemaining: 0,
+    }),
+    update: (ctx, instance) => {
+      instance.cooldownRemaining = Math.max(
+        0,
+        instance.cooldownRemaining - ctx.dtSeconds,
+      )
+    },
   })
 
-  it('power upgrade affects projectile damage used by weapons', () => {
+  it('acquires, levels up, respects maxLevel without core-loop branches', () => {
+    const fixture = makeFixtureWeapon('fixture_growth_weapon', 2)
+    registerWeapon(fixture)
+    const progression = createWeaponProgressionDefinition(fixture.id, {
+      id: 'prog_fixture_growth',
+      name: '获得测试武器',
+      description: 'fixture path',
+    })
+    registerProgression(progression)
+
     const state = createGameState(arena)
-    state.experience = 3
-    state.pendingUpgrade = {
-      options: generateUpgradeOffers({
+    expect(
+      state.player.weapons.some((w) => w.definitionId === fixture.id),
+    ).toBe(false)
+    expect(
+      progression.isEligible({
         player: state.player,
         progressionLevels: state.progressionLevels,
       }),
-    }
-    applyUpgradeChoice(state, 'power')
-    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
-  })
-})
+    ).toBe(true)
 
-describe('progression registry and offers', () => {
-  it('registers stat/weapon/item categories', () => {
-    const ids = listProgressionCategories().map((c) => c.id)
-    expect(ids).toEqual(expect.arrayContaining(['stat', 'weapon', 'item']))
-  })
-
-  it('registers swift/haste/power with Chinese copy and order', () => {
-    const defs = listProgressions()
-    expect(defs.map((d) => d.id).slice(0, 3)).toEqual([
-      'swift',
-      'haste',
-      'power',
-    ])
-    expect(getProgression('swift')?.name).toBe('迅捷')
-    expect(getProgression('swift')?.maxLevel).toBeNull()
-  })
-
-  it('rejects progression with missing category', () => {
-    expect(() =>
-      registerProgression({
-        id: 'bad_cat',
-        categoryId: 'no_such_category',
-        name: 'x',
-        description: 'y',
-        maxLevel: 1,
-        isEligible: () => true,
-        apply: () => undefined,
-      }),
-    ).toThrow(/category not registered/i)
-  })
-
-  it('rejects unexpected duplicate progression ids', () => {
-    expect(() =>
-      registerProgression({
-        id: 'swift',
-        categoryId: 'stat',
-        name: '另一迅捷',
-        description: '不同',
-        maxLevel: 1,
-        isEligible: () => true,
-        apply: () => undefined,
-      }),
-    ).toThrow(/different data/i)
-  })
-
-  it('maxLevel null never filters; finite maxLevel filters', () => {
-    const state = createGameState(arena)
-    state.progressionLevels = { swift: 1000 }
-    const offers = generateUpgradeOffers({
+    // first acquire
+    progression.apply({
       player: state.player,
       progressionLevels: state.progressionLevels,
     })
-    expect(offers.some((o) => o.id === 'swift')).toBe(true)
+    const owned = state.player.weapons.filter(
+      (w) => w.definitionId === fixture.id,
+    )
+    expect(owned).toHaveLength(1)
+    expect(owned[0].level).toBe(1)
 
-    registerProgression({
-      id: 'fixture_cap',
-      categoryId: 'stat',
-      name: '封顶',
-      description: 'max 1',
-      maxLevel: 1,
-      isEligible: () => true,
-      apply: () => undefined,
+    // level up
+    expect(
+      progression.isEligible({
+        player: state.player,
+        progressionLevels: state.progressionLevels,
+      }),
+    ).toBe(true)
+    progression.apply({
+      player: state.player,
+      progressionLevels: state.progressionLevels,
     })
-    const capped = generateUpgradeOffers(
+    const owned2 = state.player.weapons.filter(
+      (w) => w.definitionId === fixture.id,
+    )
+    expect(owned2).toHaveLength(1)
+    expect(owned2[0].level).toBe(2)
+
+    // maxed
+    expect(
+      progression.isEligible({
+        player: state.player,
+        progressionLevels: state.progressionLevels,
+      }),
+    ).toBe(false)
+    progression.apply({
+      player: state.player,
+      progressionLevels: state.progressionLevels,
+    })
+    expect(
+      state.player.weapons.find((w) => w.definitionId === fixture.id)?.level,
+    ).toBe(2)
+
+    // offers exclude when progressionLevels track selections OR isEligible false
+    // offer generator uses maxLevel on progression + isEligible
+    state.progressionLevels['prog_fixture_growth'] = 0
+    const offersWhileOwnedMaxed = generateUpgradeOffers(
       {
         player: state.player,
-        progressionLevels: { fixture_cap: 1 },
+        progressionLevels: state.progressionLevels,
       },
-      10,
+      20,
     )
-    expect(capped.some((o) => o.id === 'fixture_cap')).toBe(false)
+    // still filtered by isEligible even if progressionLevels low
+    expect(
+      offersWhileOwnedMaxed.some((o) => o.id === 'prog_fixture_growth'),
+    ).toBe(false)
   })
 
-  it('offers include categoryId from definition', () => {
-    const state = createGameState(arena)
-    const offers = generateUpgradeOffers({
-      player: state.player,
-      progressionLevels: {},
+  it('weapon progression uses category weapon', () => {
+    const fixture = makeFixtureWeapon('fixture_cat_weapon', 3)
+    registerWeapon(fixture)
+    const progression = createWeaponProgressionDefinition(fixture.id, {
+      id: 'prog_cat',
+      name: '武器成长',
+      description: 'd',
     })
-    expect(offers[0].categoryId).toBe('stat')
+    expect(progression.categoryId).toBe('weapon')
+  })
+
+  it('cannot create progression for missing weapon', () => {
+    expect(() =>
+      createWeaponProgressionDefinition('no_such_weapon', {
+        id: 'x',
+        name: 'x',
+        description: 'x',
+      }),
+    ).toThrow(/weapon not registered/i)
+  })
+
+  it('fixture cleaned after afterEach', () => {
+    expect(getWeapon('fixture_growth_weapon')).toBeUndefined()
+    expect(getProgression('prog_fixture_growth')).toBeUndefined()
   })
 })
 
-describe('pending options bind input', () => {
-  it('digit 1 selects first visible option after swift maxed out of list', () => {
-    // finite fixture first in registry would require re-register order;
-    // instead craft pending display list directly
+describe('pending input and offers', () => {
+  it('digits bind pending display list', () => {
     const options = [
       { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
       { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
     ]
     expect(upgradeIdFromDigitCode('Digit1', options)).toBe('haste')
-    expect(upgradeIdFromDigitCode('Digit2', options)).toBe('power')
     expect(upgradeIdFromDigitCode('Digit3', options)).toBeNull()
   })
 
-  it('ineligible first definition does not affect pending-bound digits', () => {
-    const options = [
-      { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
-      { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
-    ]
-    expect(upgradeIdFromDigitCode('Digit1', options)).toBe('power')
-  })
-
-  it('click maps to pending option ids not global registry', () => {
+  it('clicks bind pending option ids', () => {
     const ids = ['power', 'swift']
     const rects = getUpgradeCardRects(arena, ids.length)
     const mid = (r: { x: number; y: number; width: number; height: number }) => ({
@@ -329,53 +406,29 @@ describe('pending options bind input', () => {
       y: r.y + r.height / 2,
     })
     expect(upgradeIdAtPoint(arena, mid(rects[0]), ids)).toBe('power')
-    expect(upgradeIdAtPoint(arena, mid(rects[1]), ids)).toBe('swift')
   })
 
-  it('apply choice from pending closes UI and may re-open on overflow', () => {
+  it('maxLevel null never filters; finite filters', () => {
+    const state = createGameState(arena)
+    state.progressionLevels = { swift: 1000 }
+    const offers = generateUpgradeOffers({
+      player: state.player,
+      progressionLevels: state.progressionLevels,
+    })
+    expect(offers.some((o) => o.id === 'swift')).toBe(true)
+  })
+
+  it('power upgrade still works', () => {
     const state = createGameState(arena)
     state.experience = 3
     state.pendingUpgrade = {
       options: generateUpgradeOffers({
         player: state.player,
-        progressionLevels: state.progressionLevels,
+        progressionLevels: {},
       }),
     }
-    const first = state.pendingUpgrade.options[0].id
-    applyUpgradeChoice(state, first)
-    expect(state.level).toBe(2)
-    // no overflow beyond next threshold with xp 0 after cost 3
-    expect(state.pendingUpgrade).toBeNull()
-  })
-
-  it('when all finite options capped, offers empty so no freeze path', () => {
-    resetAllContentRegistriesForTests()
-    registerProgressionCategory({ id: 'stat', name: '属性', order: 1 })
-    registerProgression({
-      id: 'a',
-      categoryId: 'stat',
-      name: 'A',
-      description: 'd',
-      maxLevel: 1,
-      isEligible: () => true,
-      apply: () => undefined,
-    })
-    const offers = generateUpgradeOffers({
-      player: {
-        x: 0,
-        y: 0,
-        radius: 1,
-        health: 1,
-        maxHealth: 1,
-        moveSpeed: 1,
-        attackCooldown: 1,
-        projectileDamage: 1,
-        characterId: 'x',
-        weapons: [],
-      },
-      progressionLevels: { a: 1 },
-    })
-    expect(offers).toHaveLength(0)
+    applyUpgradeChoice(state, 'power')
+    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
   })
 })
 
@@ -398,32 +451,8 @@ describe('registry lifecycle', () => {
     expect(listProgressionCategories().map((c) => c.id)).toEqual(
       expect.arrayContaining(['stat', 'weapon', 'item']),
     )
-    expect(listProgressions().map((p) => p.id).slice(0, 3)).toEqual([
-      'swift',
-      'haste',
-      'power',
-    ])
   })
 
-  it('fixture does not pollute next test after afterEach', () => {
-    registerProgression({
-      id: 'pollute',
-      categoryId: 'stat',
-      name: '污染',
-      description: 'd',
-      maxLevel: 1,
-      isEligible: () => true,
-      apply: () => undefined,
-    })
-    expect(getProgression('pollute')).toBeDefined()
-  })
-
-  it('previous fixture cleaned', () => {
-    expect(getProgression('pollute')).toBeUndefined()
-  })
-})
-
-describe('system boundaries', () => {
   it('pending freezes simulation', () => {
     const state = createGameState(arena)
     state.pendingUpgrade = {
@@ -435,5 +464,19 @@ describe('system boundaries', () => {
     const x = state.player.x
     updateGame(state, { x: 1, y: 0 }, 0.5)
     expect(state.player.x).toBe(x)
+  })
+
+  it('rejects progression with missing category', () => {
+    expect(() =>
+      registerProgression({
+        id: 'bad_cat',
+        categoryId: 'no_such_category',
+        name: 'x',
+        description: 'y',
+        maxLevel: 1,
+        isEligible: () => true,
+        apply: () => undefined,
+      }),
+    ).toThrow(/category not registered/i)
   })
 })

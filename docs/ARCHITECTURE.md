@@ -1,26 +1,27 @@
 # Architecture
 
-## CP-M4-ARCH-01 (post-repair)
+## CP-M4-ARCH-01 (post round-2 repair)
 
-```text
-main.ts -> ui/* + core/game-loop + progression input helpers
-game.ts -> thin re-exports only
-core/   -> game-state, game-loop, constants
-actors/ -> character registry + player system
-weapons/-> definition, registry, system (instance cooldown sole source)
-combat/ -> enemy, projectile, contact
-progression/ -> offers from registry; pending.options is UI+input source
-content/ -> default character/weapon/upgrades; bootstrap/reset
-```
+### Registries
 
-### Key rules
+- Character / Weapon / Progression: **object-identity** duplicate policy
+  - same definition object -> idempotent
+  - same id, different object -> throw
+- ProgressionCategory: **value equality** (immutable data fields)
 
-- `pendingUpgrade.options` is the only source for on-screen choices and input mapping.
-- Each `WeaponInstance.cooldownRemaining` is independent; no global attack cooldown field.
-- `maxLevel: number | null` — `null` means unlimited stacking.
-- Progression register requires existing `categoryId`.
-- `registerDefaultContent` is idempotent; tests use `resetAllContentRegistriesForTests`.
+### Weapon growth
 
-### Constraints
+`createWeaponProgressionDefinition(weaponDefinitionId, meta)` builds a `categoryId: 'weapon'` progression:
 
-No ECS/event bus/UI framework. No dual upgrade/attack paths. No empty trait system.
+1. Not owned -> `create()` instance, force `level=1`, push to `player.weapons`
+2. Owned and `level < maxLevel` -> `level += 1`
+3. Owned and `level >= maxLevel` -> not eligible
+
+Default M3 offers remain swift/haste/power only (no default weapon progression in offer list).
+
+### Other rules
+
+- `pendingUpgrade.options` sole input source
+- Per-instance weapon cooldown
+- `maxLevel: number | null` on progression
+- Thin `game.ts` re-exports; test helpers in `game-facade-helpers.ts` only

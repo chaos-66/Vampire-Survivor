@@ -1,7 +1,9 @@
 /**
  * 成长内容注册表。
- * 候选生成器只读本表；注册时校验 categoryId 已存在。
- * 重复 ID：相同定义幂等；不同定义抛错，避免静默覆盖。
+ * 注册时校验 categoryId 已存在。
+ * 重复 ID 策略（对象身份）：
+ * - 同一 definition 对象：幂等
+ * - 同 ID 不同对象：抛错（不比较 apply/isEligible 源码）
  */
 
 import type { ProgressionDefinition } from './progression-definition'
@@ -9,16 +11,6 @@ import { getProgressionCategory } from './progression-category'
 
 const byId = new Map<string, ProgressionDefinition>()
 const order: string[] = []
-
-const sameDefinition = (
-  a: ProgressionDefinition,
-  b: ProgressionDefinition,
-): boolean =>
-  a.id === b.id &&
-  a.categoryId === b.categoryId &&
-  a.name === b.name &&
-  a.description === b.description &&
-  a.maxLevel === b.maxLevel
 
 export const registerProgression = (
   definition: ProgressionDefinition,
@@ -30,11 +22,11 @@ export const registerProgression = (
   }
   const existing = byId.get(definition.id)
   if (existing) {
-    if (sameDefinition(existing, definition)) {
+    if (existing === definition) {
       return
     }
     throw new Error(
-      `Progression already registered with different data: ${definition.id}`,
+      `Progression already registered with a different definition object: ${definition.id}`,
     )
   }
   byId.set(definition.id, definition)

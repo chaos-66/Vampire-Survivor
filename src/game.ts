@@ -100,6 +100,8 @@ export {
   clearWeaponRegistry,
 } from './weapons/weapon-registry'
 export { advanceWeapons } from './weapons/weapon-system'
+export { createWeaponProgressionDefinition } from './weapons/weapon-progression'
+export type { WeaponDefinition, WeaponInstance } from './weapons/weapon-definition'
 
 // 状态封装：名称与旧测试一致
 export {

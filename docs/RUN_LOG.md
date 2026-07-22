@@ -126,3 +126,12 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Post-repair `npm test` | Passed | 5 files / 115 tests. |
 | 2026-07-22 | Post-repair `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Post-repair `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Independent architecture re-audit after `58c6620` | FAIL | Duplicate ID metadata equality hid behavior diffs; weapon level/maxLevel no runtime growth path. Auto 115/tsc/build/audit green. |
+| 2026-07-22 | Round-2 repair: object-identity registries + weapon progression helper | Applied | `createWeaponProgressionDefinition`; identity register policy. |
+| 2026-07-22 | Round-2 `npm test` first | Passed | 5 files / 115 tests. |
+| 2026-07-22 | Round-2 `npm test` second | Passed | 5 files / 115 tests. |
+| 2026-07-22 | Round-2 `npx tsc --noEmit` first | Failed | unused import in architecture.test. |
+| 2026-07-22 | Round-2 `npx tsc --noEmit` after fix | Passed | Exit 0. |
+| 2026-07-22 | Round-2 `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Round-2 `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-22 | Browser regression | UNVERIFIED | No interactive browser session. |
