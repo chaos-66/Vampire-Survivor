@@ -5,7 +5,7 @@
 - Current stage: CP-M4-ARCH-01 second-round architecture repair complete; independent re-audit pending
 - Architecture checkpoint: `ba8b276`
 - Round-1 repair: `58c6620` / status `952f392`
-- Round-2 repair: pending create `M4: complete modular architecture repair`
+- Round-2 repair: `a2b3eb7` (`M4: complete modular architecture repair`)
 - Last updated: 2026-07-22
 - Independent architecture re-audit after round-1: **FAIL**
 - Independent architecture re-audit after round-2: **pending**
@@ -19,12 +19,12 @@
 - Categories remain value-equality for immutable data.
 - Real weapon growth path via `createWeaponProgressionDefinition` (acquire level=1, level-up, maxLevel eligibility).
 - Fixture proves path without adding user-visible weapon to M3 offers.
-- D-009 corrected: real weapon growth path established in this round.
+- D-009/D-011/D-012 documented honestly.
 
 ## Verified
 
-- npm test x2: 115 tests
-- tsc / build / audit
+- npm test x2 before commit + post-commit: 115 tests
+- tsc / build / audit green post-commit
 
 ## Next Step
 
