@@ -98,3 +98,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | M3 `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-22 | M3 interactive browser progression checklist | UNVERIFIED | No interactive browser session in implementer environment. |
 | 2026-07-22 | M3 `npm run dev` HTTP GET | Partial | HTTP 200; M3 Chinese status copy present. Interactive UNVERIFIED. |
+| 2026-07-22 | `git commit -m "M3: implement experience and upgrade progression"` | Passed | Checkpoint `3542f9b` (13 files). |
+| 2026-07-22 | Post-checkpoint `npm test` | Passed | 4 files, 91 tests passed. |
+| 2026-07-22 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Post-checkpoint `npm run build` | Passed | 10 modules. |

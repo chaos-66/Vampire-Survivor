@@ -5,7 +5,8 @@
 - Current stage: M3 implementation checkpoint complete; independent audit pending
 - Current checkpoint: `CP-M3-01` (implementation done; not independently audited)
 - Last updated: 2026-07-22
-- Latest milestone checkpoint: pending create — `M3: implement experience and upgrade progression`
+- Latest milestone checkpoint: `3542f9b` (`M3: implement experience and upgrade progression`)
+- Latest Git commit: status-record may follow `3542f9b`; verify with `git log -1`
 - M2 remains **Green** (`6c5afab`; audit `5ce3915`)
 - M4 status: **Not started**
 
@@ -16,8 +17,7 @@
 - Level/XP/threshold `3+(level-1)*2`; pending upgrade freezes sim.
 - Fixed upgrades 迅捷/急速/强击; keyboard 1–3 + click; overflow chain.
 - Chinese HUD 等级/经验; status `M3：收集经验并选择强化`.
-- Vitest: 4 files, 91 tests (M1/M2 regression retained).
-- Automated: test, tsc, build, audit green.
+- Checkpoint `3542f9b`; post-checkpoint test/tsc/build green (91 tests).
 
 ## Verified (implementer)
 

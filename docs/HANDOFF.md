@@ -4,7 +4,8 @@
 
 - Project root: `D:\agent\workspace\vampire_survivors`.
 - M2 Green (`6c5afab`; audit close `5ce3915`).
-- M3 **CP-M3-01** implementation complete (checkpoint hash after commit); independent audit **pending**.
+- M3 checkpoint: `3542f9b` (`M3: implement experience and upgrade progression`).
+- Independent M3 audit **pending**.
 - M4 **Not started**.
 - `AI-Workflow-Library/` is an ignored local reference copy; do not modify during milestone work.
 
@@ -18,10 +19,11 @@
 
 ## Verified
 
-- `npm test` — 4 files / 91 tests.
+- `npm test` — 4 files / 91 tests (pre- and post-checkpoint).
 - `npx tsc --noEmit` — exit 0.
 - `npm run build` — success.
 - `npm audit` — 0 vulnerabilities.
+- HTTP 200 M3 page copy.
 
 ## Not Yet Verified
 

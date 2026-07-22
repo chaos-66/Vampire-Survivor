@@ -1,4 +1,4 @@
-# Plan
+﻿# Plan
 
 ## Current Goal
 
@@ -16,7 +16,7 @@ Complete **CP-M3-01**: experience collection, leveling, and minimal upgrade choi
 
 | ID | Deliverable | Verification | Pass condition | Status |
 |---|---|---|---|---|
-| CP-M3-01 | Experience, leveling, minimal upgrade choice | Vitest; tsc; build; audit; browser or UNVERIFIED | Gems, pickup, freeze upgrade UI, three fixed upgrades, overflow chain; M1/M2 preserved | Implementation complete; automated green; browser UNVERIFIED; independent audit pending |
+| CP-M3-01 | Experience, leveling, minimal upgrade choice | Vitest; tsc; build; audit; browser or UNVERIFIED | Gems, pickup, freeze upgrade UI, three fixed upgrades, overflow chain; M1/M2 preserved | Checkpoint `3542f9b`; automated green; browser UNVERIFIED; independent audit pending |
 
 ### Must delivered
 

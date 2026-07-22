@@ -1,4 +1,4 @@
-# Acceptance Criteria
+﻿# Acceptance Criteria
 
 ## M0 / M1 / M2 — Green (history)
 
@@ -28,7 +28,7 @@ See `RUN_LOG.md`. M2 final audit PASS at `5ce3915`.
 
 ### Process
 
-- [ ] M3 checkpoint commit — set after commit.
+- [x] M3 checkpoint commit with intended files only (`3542f9b`).
 - [x] Independent M3 audit not claimed by implementer (pending).
 - [x] M4 remains Not started.
 
