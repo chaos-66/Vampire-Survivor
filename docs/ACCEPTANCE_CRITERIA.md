@@ -1,37 +1,37 @@
-﻿# Acceptance Criteria
+# Acceptance Criteria
 
-## M0 / M1 / M2 — Green (history)
+## M0–M3 history
 
-See `RUN_LOG.md`. M2 final audit PASS at `5ce3915`.
+See `RUN_LOG.md`. M3 implementation `3542f9b`.
 
-## M3 (CP-M3-01)
+## CP-M4-ARCH-01 Modularization
 
-### Automated / pure logic
+### Structure
 
-- [x] Non-lethal hit does not drop gem; kill drops one gem at death position.
-- [x] One gem per enemy; no double drop same step; stable gem ids; fixed XP value.
-- [x] Gem cap does not unbounded grow.
-- [x] Pickup on overlap only; remove gem; XP once; multi-pickup same step.
-- [x] Initial level 1, XP 0, threshold 3; thresholds 5 then 7.
-- [x] Below threshold no pending; at/over threshold pending with overflow retained until choice.
-- [x] Pending freezes move/spawn/chase/contact/attack/projectiles/pickup.
-- [x] 迅捷 ×1.1 speed; 急速 ×0.9 cooldown with floor; 强击 +5 damage; stacks; invalid/non-pending no-op.
-- [x] Apply: level+1, subtract threshold, keep overflow, update next threshold, clear pending; chain if still enough XP.
-- [x] Closed loop: kill→gem→pickup→pending→choose→buff→resume.
-- [x] Digit map + click hit-test helpers; CSS→logical coords.
-- [x] M1/M2 regression; M3 status copy; no M4 outcome/restart.
-- [x] `npm test` / tsc / build / audit recorded.
+- [x] Core game state / loop separated from content definitions.
+- [x] Character definition + registry; default character matches M3 baseline.
+- [x] Weapon definition + instance + registry; default projectile preserves auto-attack.
+- [x] Progression categories stat/weapon/item registered; item category only.
+- [x] 迅捷/急速/强击 registered; offer generator not hard-coded by name.
+- [x] maxLevel filtering works (fixture).
+- [x] Combat systems split; update order preserved.
+- [x] UI extracted; UI does not mutate sim state.
+- [x] No dual paths; no empty future modules; no ECS/event bus.
+- [x] Chinese comments on core modules.
 
-### Browser / manual
+### Regression
 
-- [ ] All interactive progression checks — **UNVERIFIED** (implementer environment).
+- [x] Prior M1/M2/M3 automated tests pass (104 total with architecture tests).
+- [x] Pending upgrade freezes sim.
+- [x] Architecture boundary tests pass.
+- [x] npm test / tsc / build / audit recorded.
+
+### Browser
+
+- [ ] Interactive regression — **UNVERIFIED**
 
 ### Process
 
-- [x] M3 checkpoint commit with intended files only (`3542f9b`).
-- [x] Independent M3 audit not claimed by implementer (pending).
-- [x] M4 remains Not started.
-
-## Milestone Audit Rule
-
-Implementer evidence ≠ independent milestone audit.
+- [ ] Architecture checkpoint commit — after commit
+- [x] Independent architecture audit pending
+- [x] M4 gameplay / M5+ not started

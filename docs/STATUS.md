@@ -2,39 +2,25 @@
 
 ## Snapshot
 
-- Current stage: M3 implementation checkpoint complete; independent audit pending
-- Current checkpoint: `CP-M3-01` (implementation done; not independently audited)
+- Current stage: CP-M4-ARCH-01 modularization checkpoint complete; independent architecture audit pending
+- Checkpoint: pending create `M4: modularize current gameplay architecture`
 - Last updated: 2026-07-22
-- Latest milestone checkpoint: `3542f9b` (`M3: implement experience and upgrade progression`)
-- Latest Git commit: status-record may follow `3542f9b`; verify with `git log -1`
-- M2 remains **Green** (`6c5afab`; audit `5ce3915`)
-- M4 status: **Not started**
+- M1–M3 behavior preserved; M4 gameplay **not started**; M5+ **not started**
+- Prior M3: `3542f9b` / `1fbbaa6`
 
 ## Recently Completed
 
-- Defined CP-M3-01 Must/Non-goals and acceptance.
-- Experience gems on kill (value 1, cap 100); circle pickup.
-- Level/XP/threshold `3+(level-1)*2`; pending upgrade freezes sim.
-- Fixed upgrades 迅捷/急速/强击; keyboard 1–3 + click; overflow chain.
-- Chinese HUD 等级/经验; status `M3：收集经验并选择强化`.
-- Checkpoint `3542f9b`; post-checkpoint test/tsc/build green (91 tests).
-
-## Verified (implementer)
-
-- Pure gem/pickup/level/freeze/upgrade/closed-loop tests.
-- Typecheck, build, audit 0 vulnerabilities.
-- Dev HTTP 200 with M3 status copy (static).
+- Split core/combat/progression/weapons/actors/ui/content modules.
+- Default character + default projectile weapon registries.
+- Progression categories + registered 迅捷/急速/强击; offer generator; maxLevel filter.
+- UI extracted; `game.ts` facade only.
+- Tests: 5 files / 104 passed; tsc/build/audit green.
 
 ## Unverified
 
-- Interactive browser progression checklist — **UNVERIFIED**.
-- Independent M3 milestone audit — **pending**.
-
-## Risks
-
-- Upgrade UI feel and click scaling not human-verified here.
-- Implementer self-check ≠ independent audit.
+- Interactive browser regression after modularization — UNVERIFIED.
+- Independent architecture audit — pending.
 
 ## Next Step
 
-M3 independent audit + remaining browser acceptance. Do not start M4.
+Independent architecture audit + browser regression. Do not start M4 gameplay or M5+ content.

@@ -102,3 +102,9 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Post-checkpoint `npm test` | Passed | 4 files, 91 tests passed. |
 | 2026-07-22 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Post-checkpoint `npm run build` | Passed | 10 modules. |
+| 2026-07-22 | CP-M4-ARCH-01 modularization start | Started | HEAD `1fbbaa6`; clean main. |
+| 2026-07-22 | Modular `npm test` | Passed | 5 files / 104 tests. |
+| 2026-07-22 | Modular `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Modular `npm run build` | Passed | 35 modules transformed. |
+| 2026-07-22 | Modular `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-22 | Modular browser interactive regression | UNVERIFIED | No interactive browser session. |

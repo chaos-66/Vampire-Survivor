@@ -2,43 +2,34 @@
 
 ## Current Truth
 
-- Project root: `D:\agent\workspace\vampire_survivors`.
-- M2 Green (`6c5afab`; audit close `5ce3915`).
-- M3 checkpoint: `3542f9b` (`M3: implement experience and upgrade progression`).
-- Independent M3 audit **pending**.
-- M4 **Not started**.
-- `AI-Workflow-Library/` is an ignored local reference copy; do not modify during milestone work.
+- Root: `D:\agent\workspace\vampire_survivors`
+- CP-M4-ARCH-01 modularization implemented (hash after commit)
+- M1–M3 gameplay behavior unchanged by design
+- M4 gameplay **not started**; M5+ **not started**
+- Independent architecture audit **pending**
+- `AI-Workflow-Library/` ignored; do not modify during milestone work
 
-## Implemented (M3)
+## Modules
 
-- Gems on enemy death; pickup; level/XP/threshold.
-- Pending upgrade freezes full combat sim.
-- 迅捷 / 急速 / 强击; Digit1–3 + mouse; CSS→logical clicks.
-- HUD 等级/经验; Chinese M3 status copy.
-- Pure logic in `src/game.ts`; main wires input/draw.
+- `core/` game-state + game-loop
+- `actors/` character registry + player system
+- `weapons/` registry + system + default projectile content
+- `combat/` enemies, projectiles, contact
+- `progression/` XP, offers, upgrade apply, categories
+- `ui/` hud, overlay, world draw, CSS→logical
+- `content/` default character/weapon/upgrades
+- `game.ts` facade re-exports for tests/main
 
 ## Verified
 
-- `npm test` — 4 files / 91 tests (pre- and post-checkpoint).
-- `npx tsc --noEmit` — exit 0.
-- `npm run build` — success.
-- `npm audit` — 0 vulnerabilities.
-- HTTP 200 M3 page copy.
+- `npm test` 104 tests
+- tsc / build / audit
 
 ## Not Yet Verified
 
-- Full interactive browser progression checklist — **UNVERIFIED**.
-- Independent M3 audit — **pending**.
+- Interactive browser regression
+- Independent architecture audit
 
 ## Next Task
 
-**One task:** M3 independent audit + browser acceptance. **Do not implement M4.**
-
-## Read First
-
-1. `AGENTS.md`
-2. `docs/STATUS.md`
-3. `docs/PLAN.md`
-4. `docs/ACCEPTANCE_CRITERIA.md`
-5. `docs/RUN_LOG.md`
-6. `docs/ARCHITECTURE.md`
+Architecture independent audit + browser regression. **No M4 gameplay / no new content.**

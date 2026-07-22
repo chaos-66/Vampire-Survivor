@@ -1,50 +1,36 @@
 # Architecture
 
-## M3 Shape
+## CP-M4-ARCH-01 Shape (current)
 
 ```text
 index.html
-  -> src/main.ts
-       -> DOM, keyboard, mouse click (CSS→logical), blur/visibility, RAF
-       -> updateGame / applyUpgradeChoice
-       -> draw world + upgrade overlay
-  -> src/game.ts      (pure: combat + gems + level + pending upgrade + apply)
-  -> src/collision.ts
-  -> src/input.ts
-  -> src/movement.ts
-  -> src/vec.ts
-  -> src/status.ts
-  -> src/style.css
+  -> src/main.ts          DOM / RAF / events only
+  -> src/ui/              hud, upgrade-overlay, draw-world, canvas-coordinates
+  -> src/game.ts          兼容门面（re-export）
+  -> src/core/            game-state, game-loop, constants
+  -> src/actors/          character definition/registry, player types/system
+  -> src/weapons/         weapon definition/registry/system
+  -> src/combat/          enemy, projectile, contact damage
+  -> src/progression/     experience, categories, registry, offers, upgrade apply
+  -> src/content/         default character/weapon + 迅捷/急速/强击
+  -> src/input.ts, movement.ts, vec.ts, collision.ts, status.ts
 ```
 
-Logical arena: 960×540. Simulation uses seconds.
+逻辑世界 960×540；CSS 仅缩放。
 
 ### Update order (`updateGame`)
 
-When `pendingUpgrade` is set: **no simulation advance**.
+`pendingUpgrade` 时：不推进模拟。
 
-Otherwise:
+否则：move → spawn → chase → contact → weapons → projectiles(gems) → pickup。
 
-1. Move player (buffed `moveSpeed`)
-2. Spawn enemies
-3. Chase
-4. Contact damage
-5. Auto-attack (buffed cooldown/damage)
-6. Projectiles (kills drop gems)
-7. Pickup gems → maybe enter `pendingUpgrade`
+### Registries
 
-### Progression
+- CharacterRegistry + default_survivor
+- WeaponRegistry + default_projectile
+- ProgressionCategory: stat / weapon / item（item 仅分类）
+- ProgressionRegistry: swift / haste / power（maxLevel 高上限，过滤真实生效）
 
-- Gems: fixed value 1, cap 100, drop on kill at death position.
-- Threshold: `3 + (level - 1) * 2`; XP is within-level.
-- Upgrades: fixed 迅捷 / 急速 / 强击; apply then level+1; overflow may re-pending.
+### Constraints
 
-## M2 History
-
-Combat loop without XP/upgrades.
-
-## Constraints
-
-- No engine/ECS/physics/UI framework.
-- No M4 win/loss/restart.
-- Placeholder geometry; Chinese user-visible copy.
+无 ECS、事件总线、UI 框架、双轨旧系统。
