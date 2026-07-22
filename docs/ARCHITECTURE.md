@@ -1,44 +1,50 @@
 # Architecture
 
-## M2 Shape
+## M3 Shape
 
 ```text
 index.html
   -> src/main.ts
-       -> DOM, keyboard, blur/visibility, requestAnimationFrame
-       -> updateGame(state, direction, dt)
-       -> draw player / enemies / projectiles / HP / defeated
-  -> src/game.ts      (pure: state, spawn, chase, contact, attack, projectiles)
-  -> src/collision.ts (pure: circle overlap, distanceSq)
-  -> src/input.ts     (pure: keys → direction)
-  -> src/movement.ts  (pure: player step, bounds, delta clamp)
+       -> DOM, keyboard, mouse click (CSS→logical), blur/visibility, RAF
+       -> updateGame / applyUpgradeChoice
+       -> draw world + upgrade overlay
+  -> src/game.ts      (pure: combat + gems + level + pending upgrade + apply)
+  -> src/collision.ts
+  -> src/input.ts
+  -> src/movement.ts
   -> src/vec.ts
   -> src/status.ts
   -> src/style.css
 ```
 
-Logical arena: 960×540. CSS scales display only. Simulation uses seconds.
+Logical arena: 960×540. Simulation uses seconds.
 
 ### Update order (`updateGame`)
 
-1. Move player (M1 rules)
-2. Spawn enemies (interval accumulator, cap, injected RNG)
-3. Chase player (normalized direction × speed × dt)
-4. Contact damage (time cooldown)
-5. Auto-attack (time cooldown, nearest enemy, at most one shot per step)
-6. Projectiles (move, first-hit damage, expire/bounds, remove dead enemies)
+When `pendingUpgrade` is set: **no simulation advance**.
 
-## M1 History
+Otherwise:
 
-Input + movement + RAF player-only loop.
+1. Move player (buffed `moveSpeed`)
+2. Spawn enemies
+3. Chase
+4. Contact damage
+5. Auto-attack (buffed cooldown/damage)
+6. Projectiles (kills drop gems)
+7. Pickup gems → maybe enter `pendingUpgrade`
 
-## M0 History
+### Progression
 
-Bootstrap screen only.
+- Gems: fixed value 1, cap 100, drop on kill at death position.
+- Threshold: `3 + (level - 1) * 2`; XP is within-level.
+- Upgrades: fixed 迅捷 / 急速 / 强击; apply then level+1; overflow may re-pending.
+
+## M2 History
+
+Combat loop without XP/upgrades.
 
 ## Constraints
 
-- Canvas 2D; no engine/ECS/physics/state library.
-- Frame-rate independent combat and movement.
-- Placeholder geometry.
-- No M3 XP/upgrade or M4 win/loss systems in this layer.
+- No engine/ECS/physics/UI framework.
+- No M4 win/loss/restart.
+- Placeholder geometry; Chinese user-visible copy.

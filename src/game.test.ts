@@ -7,25 +7,38 @@ import {
   advanceProjectiles,
   advanceSpawns,
   applyContactDamage,
+  applyUpgradeChoice,
   ATTACK_COOLDOWN,
   CONTACT_COOLDOWN,
   CONTACT_DAMAGE,
   createGameState,
   createSequenceRng,
+  cssPointToLogical,
   ENEMY_CAP,
   ENEMY_MAX_HEALTH,
   ENEMY_RADIUS,
   ENEMY_SPAWN_INTERVAL,
   ENEMY_SPEED,
   edgeSpawnPosition,
+  experienceThresholdForLevel,
   fireAtEnemy,
+  GEM_CAP,
+  GEM_VALUE,
+  getUpgradeCardRects,
+  MIN_ATTACK_COOLDOWN,
   PLAYER_MAX_HEALTH,
+  PLAYER_SPEED,
   PROJECTILE_DAMAGE,
   PROJECTILE_LIFETIME,
   PROJECTILE_SPEED,
+  pickupGems,
   selectNearestEnemy,
   spawnEnemyOnEdge,
+  spawnGemAt,
+  tryEnterPendingUpgrade,
   updateGame,
+  upgradeIdAtPoint,
+  upgradeIdFromDigitCode,
   type Enemy,
   type GameState,
 } from './game'
@@ -35,6 +48,20 @@ const arena: Arena = { width: 960, height: 540 }
 
 const stateWith = (rngValues: number[] = [0, 0.5]): GameState =>
   createGameState(arena, createSequenceRng(rngValues))
+
+const weakEnemy = (
+  state: GameState,
+  overrides: Partial<Enemy> = {},
+): Enemy => ({
+  id: 1,
+  x: state.player.x + ENEMY_RADIUS + 8,
+  y: state.player.y,
+  radius: ENEMY_RADIUS,
+  speed: 0,
+  health: PROJECTILE_DAMAGE,
+  maxHealth: PROJECTILE_DAMAGE,
+  ...overrides,
+})
 
 describe('enemy spawn', () => {
   it('does not spawn before interval', () => {
@@ -53,7 +80,6 @@ describe('enemy spawn', () => {
     const values = Array.from({ length: 40 }, (_, i) => (i % 4) * 0.1 + 0.05)
     const a = createGameState(arena, createSequenceRng([...values]))
     const b = createGameState(arena, createSequenceRng([...values]))
-    // Use binary-friendly steps so accumulator hits exact interval boundaries.
     const step = 0.25
     const steps = 12
     const total = step * steps
@@ -65,14 +91,15 @@ describe('enemy spawn', () => {
     expect(a.enemies).toHaveLength(3)
   })
 
-  it('spawns on an arena edge (outside or on boundary with radius offset)', () => {
+  it('spawns on an arena edge', () => {
     const state = stateWith([0, 0.5])
     const enemy = spawnEnemyOnEdge(state)
-    const onTop = enemy.y <= 0
-    const onBottom = enemy.y >= arena.height
-    const onLeft = enemy.x <= 0
-    const onRight = enemy.x >= arena.width
-    expect(onTop || onBottom || onLeft || onRight).toBe(true)
+    const onEdge =
+      enemy.y <= 0 ||
+      enemy.y >= arena.height ||
+      enemy.x <= 0 ||
+      enemy.x >= arena.width
+    expect(onEdge).toBe(true)
   })
 
   it('does not spawn overlapping a centered player for edge spawns', () => {
@@ -104,7 +131,7 @@ describe('enemy spawn', () => {
     expect(state.enemies).toHaveLength(ENEMY_CAP)
   })
 
-  it('large dt does not exceed cap (bounded burst)', () => {
+  it('large dt does not exceed cap', () => {
     const state = stateWith(Array.from({ length: 200 }, () => 0.2))
     advanceSpawns(state, ENEMY_SPAWN_INTERVAL * 100)
     expect(state.enemies.length).toBeLessThanOrEqual(ENEMY_CAP)
@@ -137,7 +164,7 @@ describe('enemy chase', () => {
     expect(state.enemies[0].x).toBeGreaterThan(before)
   })
 
-  it('normalizes diagonal chase so distance matches axis speed * dt', () => {
+  it('normalizes diagonal chase', () => {
     const state = stateWith()
     state.enemies = [
       {
@@ -230,17 +257,7 @@ describe('auto attack and targeting', () => {
 
   it('does not fire while cooldown remains', () => {
     const state = stateWith()
-    state.enemies = [
-      {
-        id: 1,
-        x: 100,
-        y: 100,
-        radius: ENEMY_RADIUS,
-        speed: ENEMY_SPEED,
-        health: ENEMY_MAX_HEALTH,
-        maxHealth: ENEMY_MAX_HEALTH,
-      },
-    ]
+    state.enemies = [weakEnemy(state, { health: ENEMY_MAX_HEALTH, maxHealth: ENEMY_MAX_HEALTH })]
     state.attackCooldownRemaining = ATTACK_COOLDOWN
     advanceAutoAttack(state, 0.01)
     expect(state.projectiles).toHaveLength(0)
@@ -248,99 +265,63 @@ describe('auto attack and targeting', () => {
 
   it('fires when cooldown elapsed', () => {
     const state = stateWith()
-    state.enemies = [
-      {
-        id: 1,
-        x: state.player.x + 50,
-        y: state.player.y,
-        radius: ENEMY_RADIUS,
-        speed: ENEMY_SPEED,
-        health: ENEMY_MAX_HEALTH,
-        maxHealth: ENEMY_MAX_HEALTH,
-      },
-    ]
+    state.enemies = [weakEnemy(state, { health: ENEMY_MAX_HEALTH, maxHealth: ENEMY_MAX_HEALTH })]
     state.attackCooldownRemaining = 0
     advanceAutoAttack(state, 0)
     expect(state.projectiles).toHaveLength(1)
-    expect(state.attackCooldownRemaining).toBe(ATTACK_COOLDOWN)
+    expect(state.attackCooldownRemaining).toBe(state.player.attackCooldown)
   })
 
   it('selects nearest living enemy', () => {
     const state = stateWith()
-    const near: Enemy = {
+    const near: Enemy = weakEnemy(state, {
       id: 2,
       x: state.player.x + 20,
-      y: state.player.y,
-      radius: ENEMY_RADIUS,
-      speed: ENEMY_SPEED,
       health: 10,
       maxHealth: 10,
-    }
-    const far: Enemy = {
+    })
+    const far: Enemy = weakEnemy(state, {
       id: 1,
       x: state.player.x + 200,
-      y: state.player.y,
-      radius: ENEMY_RADIUS,
-      speed: ENEMY_SPEED,
       health: 10,
       maxHealth: 10,
-    }
+    })
     expect(selectNearestEnemy(state.player, [far, near])?.id).toBe(2)
   })
 
   it('breaks equal distance ties by lower enemy id', () => {
     const state = stateWith()
-    const a: Enemy = {
+    const a: Enemy = weakEnemy(state, {
       id: 5,
       x: state.player.x + 30,
-      y: state.player.y,
-      radius: ENEMY_RADIUS,
-      speed: ENEMY_SPEED,
       health: 10,
       maxHealth: 10,
-    }
-    const b: Enemy = {
+    })
+    const b: Enemy = weakEnemy(state, {
       id: 2,
       x: state.player.x - 30,
-      y: state.player.y,
-      radius: ENEMY_RADIUS,
-      speed: ENEMY_SPEED,
       health: 10,
       maxHealth: 10,
-    }
+    })
     expect(selectNearestEnemy(state.player, [a, b])?.id).toBe(2)
   })
 
   it('projectile direction is unit-scaled by speed', () => {
     const state = stateWith()
-    const target: Enemy = {
-      id: 1,
+    const target = weakEnemy(state, {
       x: state.player.x + 100,
-      y: state.player.y,
-      radius: ENEMY_RADIUS,
-      speed: ENEMY_SPEED,
       health: 10,
       maxHealth: 10,
-    }
+    })
     fireAtEnemy(state, target)
     const p = state.projectiles[0]
     expect(p.vx).toBeCloseTo(PROJECTILE_SPEED)
     expect(p.vy).toBeCloseTo(0)
   })
 
-  it('large dt fires at most one projectile (no unbounded burst)', () => {
+  it('large dt fires at most one projectile', () => {
     const state = stateWith()
-    state.enemies = [
-      {
-        id: 1,
-        x: state.player.x + 40,
-        y: state.player.y,
-        radius: ENEMY_RADIUS,
-        speed: ENEMY_SPEED,
-        health: 10,
-        maxHealth: 10,
-      },
-    ]
+    state.enemies = [weakEnemy(state, { health: 10, maxHealth: 10 })]
     state.attackCooldownRemaining = 0
     advanceAutoAttack(state, 10)
     expect(state.projectiles).toHaveLength(1)
@@ -405,15 +386,11 @@ describe('projectiles', () => {
   it('hits once, damages enemy, removes projectile', () => {
     const state = stateWith()
     state.enemies = [
-      {
-        id: 1,
+      weakEnemy(state, {
         x: state.player.x + 10,
-        y: state.player.y,
-        radius: ENEMY_RADIUS,
-        speed: ENEMY_SPEED,
         health: ENEMY_MAX_HEALTH,
         maxHealth: ENEMY_MAX_HEALTH,
-      },
+      }),
     ]
     state.projectiles = [
       {
@@ -435,15 +412,12 @@ describe('projectiles', () => {
   it('does not damage when not overlapping', () => {
     const state = stateWith()
     state.enemies = [
-      {
-        id: 1,
+      weakEnemy(state, {
         x: 900,
         y: 500,
-        radius: ENEMY_RADIUS,
-        speed: ENEMY_SPEED,
         health: ENEMY_MAX_HEALTH,
         maxHealth: ENEMY_MAX_HEALTH,
-      },
+      }),
     ]
     state.projectiles = [
       {
@@ -503,26 +477,47 @@ describe('projectiles', () => {
   })
 })
 
-describe('collision death and count', () => {
+describe('collision death and gems', () => {
   it('circlesOverlap false when separate', () => {
     expect(
-      circlesOverlap(
-        { x: 0, y: 0, radius: 5 },
-        { x: 20, y: 0, radius: 5 },
-      ),
+      circlesOverlap({ x: 0, y: 0, radius: 5 }, { x: 20, y: 0, radius: 5 }),
     ).toBe(false)
   })
 
   it('circlesOverlap true when touching', () => {
     expect(
-      circlesOverlap(
-        { x: 0, y: 0, radius: 5 },
-        { x: 10, y: 0, radius: 5 },
-      ),
+      circlesOverlap({ x: 0, y: 0, radius: 5 }, { x: 10, y: 0, radius: 5 }),
     ).toBe(true)
   })
 
-  it('removes enemy at 0 hp and increments defeatedCount once', () => {
+  it('non-lethal hit does not drop a gem', () => {
+    const state = stateWith()
+    state.enemies = [
+      weakEnemy(state, {
+        x: 50,
+        y: 50,
+        health: 20,
+        maxHealth: 20,
+      }),
+    ]
+    state.projectiles = [
+      {
+        id: 1,
+        x: 50,
+        y: 50,
+        vx: 0,
+        vy: 0,
+        radius: 5,
+        damage: 5,
+        lifeRemaining: 1,
+      },
+    ]
+    advanceProjectiles(state, 0)
+    expect(state.enemies).toHaveLength(1)
+    expect(state.gems).toHaveLength(0)
+  })
+
+  it('removes enemy at 0 hp, increments defeatedCount once, drops one gem', () => {
     const state = stateWith()
     state.enemies = [
       {
@@ -550,9 +545,68 @@ describe('collision death and count', () => {
     advanceProjectiles(state, 0)
     expect(state.enemies).toHaveLength(0)
     expect(state.defeatedCount).toBe(1)
+    expect(state.gems).toHaveLength(1)
+    expect(state.gems[0].x).toBe(50)
+    expect(state.gems[0].y).toBe(50)
+    expect(state.gems[0].value).toBe(GEM_VALUE)
   })
 
-  it('kill does not create XP or upgrade fields on state', () => {
+  it('does not double-drop from one kill', () => {
+    const state = stateWith()
+    state.enemies = [
+      {
+        id: 1,
+        x: 0,
+        y: 0,
+        radius: 10,
+        speed: 1,
+        health: 1,
+        maxHealth: 1,
+      },
+    ]
+    state.projectiles = [
+      {
+        id: 1,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        radius: 5,
+        damage: 10,
+        lifeRemaining: 1,
+      },
+      {
+        id: 2,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        radius: 5,
+        damage: 10,
+        lifeRemaining: 1,
+      },
+    ]
+    advanceProjectiles(state, 0)
+    expect(state.defeatedCount).toBe(1)
+    expect(state.gems).toHaveLength(1)
+  })
+
+  it('gem ids increment stably', () => {
+    const state = stateWith()
+    spawnGemAt(state, 1, 1)
+    spawnGemAt(state, 2, 2)
+    expect(state.gems.map((g) => g.id)).toEqual([1, 2])
+  })
+
+  it('gem cap prevents unbounded growth', () => {
+    const state = stateWith()
+    for (let i = 0; i < GEM_CAP + 20; i += 1) {
+      spawnGemAt(state, i, 0)
+    }
+    expect(state.gems).toHaveLength(GEM_CAP)
+  })
+
+  it('kill does not create M4 outcome/restart fields', () => {
     const state = stateWith()
     state.enemies = [
       {
@@ -578,9 +632,9 @@ describe('collision death and count', () => {
       },
     ]
     advanceProjectiles(state, 0)
-    expect(state).not.toHaveProperty('experience')
-    expect(state).not.toHaveProperty('level')
-    expect(state).not.toHaveProperty('upgrades')
+    expect(state).not.toHaveProperty('outcome')
+    expect(state).not.toHaveProperty('lost')
+    expect(state).not.toHaveProperty('restart')
   })
 })
 
@@ -677,24 +731,358 @@ describe('player contact damage', () => {
   })
 })
 
-describe('game loop closed circuit', () => {
-  it('spawn chase attack hit kill increments defeatedCount', () => {
-    const state = createGameState(arena, createSequenceRng([0, 0.5]))
-    // Place enemy close and weak; force ready attack
+describe('experience pickup', () => {
+  it('does not pick up without contact', () => {
+    const state = stateWith()
+    state.gems = [
+      { id: 1, x: 0, y: 0, radius: 8, value: 1 },
+    ]
+    pickupGems(state)
+    expect(state.experience).toBe(0)
+    expect(state.gems).toHaveLength(1)
+  })
+
+  it('picks up on touch, removes gem, adds XP once', () => {
+    const state = stateWith()
+    state.gems = [
+      {
+        id: 1,
+        x: state.player.x,
+        y: state.player.y,
+        radius: 8,
+        value: 1,
+      },
+    ]
+    pickupGems(state)
+    expect(state.experience).toBe(1)
+    expect(state.gems).toHaveLength(0)
+  })
+
+  it('picks multiple overlapping gems in one step', () => {
+    const state = stateWith()
+    state.gems = [
+      {
+        id: 1,
+        x: state.player.x,
+        y: state.player.y,
+        radius: 8,
+        value: 1,
+      },
+      {
+        id: 2,
+        x: state.player.x + 2,
+        y: state.player.y,
+        radius: 8,
+        value: 1,
+      },
+    ]
+    pickupGems(state)
+    expect(state.experience).toBe(2)
+    expect(state.gems).toHaveLength(0)
+  })
+
+  it('keeps distant gems', () => {
+    const state = stateWith()
+    state.gems = [
+      {
+        id: 1,
+        x: state.player.x,
+        y: state.player.y,
+        radius: 8,
+        value: 1,
+      },
+      { id: 2, x: 10, y: 10, radius: 8, value: 1 },
+    ]
+    pickupGems(state)
+    expect(state.experience).toBe(1)
+    expect(state.gems).toHaveLength(1)
+    expect(state.gems[0].id).toBe(2)
+  })
+})
+
+describe('level thresholds', () => {
+  it('starts at level 1, XP 0, threshold 3', () => {
+    const state = stateWith()
+    expect(state.level).toBe(1)
+    expect(state.experience).toBe(0)
+    expect(state.experienceToNextLevel).toBe(3)
+  })
+
+  it('threshold formula for levels 1-3', () => {
+    expect(experienceThresholdForLevel(1)).toBe(3)
+    expect(experienceThresholdForLevel(2)).toBe(5)
+    expect(experienceThresholdForLevel(3)).toBe(7)
+  })
+})
+
+describe('pending upgrade freeze', () => {
+  it('does not pending below threshold', () => {
+    const state = stateWith()
+    state.experience = 2
+    tryEnterPendingUpgrade(state)
+    expect(state.pendingUpgrade).toBeNull()
+  })
+
+  it('enters pending at threshold', () => {
+    const state = stateWith()
+    state.experience = 3
+    tryEnterPendingUpgrade(state)
+    expect(state.pendingUpgrade).not.toBeNull()
+    expect(state.pendingUpgrade?.options).toHaveLength(3)
+  })
+
+  it('retains overflow XP until choice', () => {
+    const state = stateWith()
+    state.experience = 5
+    tryEnterPendingUpgrade(state)
+    expect(state.experience).toBe(5)
+    expect(state.level).toBe(1)
+  })
+
+  it('updateGame freezes combat while pending', () => {
+    const state = stateWith()
+    state.pendingUpgrade = { options: [...state.pendingUpgrade?.options ?? []] }
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: '移动速度 +10%' },
+        { id: 'haste', name: '急速', description: '攻击间隔 -10%' },
+        { id: 'power', name: '强击', description: '投射物伤害 +5' },
+      ],
+    }
     state.enemies = [
       {
         id: 1,
-        x: state.player.x + ENEMY_RADIUS + 8,
+        x: 0,
         y: state.player.y,
         radius: ENEMY_RADIUS,
-        speed: 0,
-        health: PROJECTILE_DAMAGE,
-        maxHealth: PROJECTILE_DAMAGE,
+        speed: ENEMY_SPEED,
+        health: 10,
+        maxHealth: 10,
       },
     ]
+    state.projectiles = [
+      {
+        id: 1,
+        x: 10,
+        y: 10,
+        vx: 100,
+        vy: 0,
+        radius: 5,
+        damage: 1,
+        lifeRemaining: 1,
+      },
+    ]
+    state.gems = [
+      {
+        id: 1,
+        x: state.player.x,
+        y: state.player.y,
+        radius: 8,
+        value: 1,
+      },
+    ]
+    const px = state.player.x
+    const enemyX = state.enemies[0].x
+    const projX = state.projectiles[0].x
+    const xp = state.experience
+    const hp = state.player.health
+    updateGame(state, { x: 1, y: 0 }, 0.5)
+    expect(state.player.x).toBe(px)
+    expect(state.enemies[0].x).toBe(enemyX)
+    expect(state.projectiles[0].x).toBe(projX)
+    expect(state.experience).toBe(xp)
+    expect(state.player.health).toBe(hp)
+    expect(state.enemies).toHaveLength(1)
+  })
+
+  it('zero delta remains safe', () => {
+    const state = stateWith()
+    updateGame(state, { x: 1, y: 0 }, 0)
+    expect(state.player.x).toBe(arena.width / 2)
+  })
+})
+
+describe('upgrade effects and apply', () => {
+  it('swift multiplies move speed by 1.1', () => {
+    const state = stateWith()
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: '移动速度 +10%' },
+        { id: 'haste', name: '急速', description: '攻击间隔 -10%' },
+        { id: 'power', name: '强击', description: '投射物伤害 +5' },
+      ],
+    }
+    const before = state.player.moveSpeed
+    applyUpgradeChoice(state, 'swift')
+    expect(state.player.moveSpeed).toBeCloseTo(before * 1.1)
+  })
+
+  it('haste multiplies attack cooldown by 0.9', () => {
+    const state = stateWith()
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    const before = state.player.attackCooldown
+    applyUpgradeChoice(state, 'haste')
+    expect(state.player.attackCooldown).toBeCloseTo(before * 0.9)
+  })
+
+  it('haste does not go below MIN_ATTACK_COOLDOWN', () => {
+    const state = stateWith()
+    state.player = { ...state.player, attackCooldown: 0.11 }
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    applyUpgradeChoice(state, 'haste')
+    expect(state.player.attackCooldown).toBe(MIN_ATTACK_COOLDOWN)
+  })
+
+  it('power adds 5 projectile damage and new shots use it', () => {
+    const state = stateWith()
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    applyUpgradeChoice(state, 'power')
+    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
+    state.enemies = [weakEnemy(state, { health: 100, maxHealth: 100 })]
+    state.attackCooldownRemaining = 0
+    advanceAutoAttack(state, 0)
+    expect(state.projectiles[0].damage).toBe(PROJECTILE_DAMAGE + 5)
+  })
+
+  it('stacks repeated same upgrade', () => {
+    const state = stateWith()
+    state.experience = 100
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    applyUpgradeChoice(state, 'power')
+    if (state.pendingUpgrade === null) {
+      state.pendingUpgrade = {
+        options: [
+          { id: 'swift', name: '迅捷', description: 'a' },
+          { id: 'haste', name: '急速', description: 'b' },
+          { id: 'power', name: '强击', description: 'c' },
+        ],
+      }
+    }
+    applyUpgradeChoice(state, 'power')
+    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 10)
+  })
+
+  it('invalid upgrade id does nothing', () => {
+    const state = stateWith()
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    const ok = applyUpgradeChoice(state, 'nope' as 'swift')
+    expect(ok).toBe(false)
+    expect(state.level).toBe(1)
+    expect(state.pendingUpgrade).not.toBeNull()
+  })
+
+  it('non-pending cannot apply upgrade', () => {
+    const state = stateWith()
+    expect(applyUpgradeChoice(state, 'swift')).toBe(false)
+    expect(state.player.moveSpeed).toBe(PLAYER_SPEED)
+  })
+
+  it('apply increases level, subtracts threshold, keeps overflow, updates next', () => {
+    const state = stateWith()
+    state.experience = 5
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    applyUpgradeChoice(state, 'swift')
+    expect(state.level).toBe(2)
+    expect(state.experience).toBe(2)
+    expect(state.experienceToNextLevel).toBe(5)
+  })
+
+  it('overflow into next threshold immediately re-pends without double apply', () => {
+    const state = stateWith()
+    state.experience = 8
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a' },
+        { id: 'haste', name: '急速', description: 'b' },
+        { id: 'power', name: '强击', description: 'c' },
+      ],
+    }
+    applyUpgradeChoice(state, 'power')
+    expect(state.level).toBe(2)
+    expect(state.experience).toBe(5)
+    expect(state.pendingUpgrade).not.toBeNull()
+    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
+    applyUpgradeChoice(state, 'power')
+    expect(state.level).toBe(3)
+    expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 10)
+  })
+})
+
+describe('input helpers', () => {
+  it('maps digits 1/2/3 to upgrade ids', () => {
+    expect(upgradeIdFromDigitCode('Digit1')).toBe('swift')
+    expect(upgradeIdFromDigitCode('Digit2')).toBe('haste')
+    expect(upgradeIdFromDigitCode('Digit3')).toBe('power')
+    expect(upgradeIdFromDigitCode('KeyW')).toBeNull()
+  })
+
+  it('converts CSS click to logical coords under scale', () => {
+    const p = cssPointToLogical(
+      100,
+      50,
+      { left: 0, top: 0, width: 480, height: 270 },
+      960,
+      540,
+    )
+    expect(p.x).toBeCloseTo(200)
+    expect(p.y).toBeCloseTo(100)
+  })
+
+  it('hit-tests upgrade cards', () => {
+    const rects = getUpgradeCardRects(arena)
+    const mid = (r: { x: number; y: number; width: number; height: number }) => ({
+      x: r.x + r.width / 2,
+      y: r.y + r.height / 2,
+    })
+    expect(upgradeIdAtPoint(arena, mid(rects[0]))).toBe('swift')
+    expect(upgradeIdAtPoint(arena, mid(rects[1]))).toBe('haste')
+    expect(upgradeIdAtPoint(arena, mid(rects[2]))).toBe('power')
+    expect(upgradeIdAtPoint(arena, { x: 0, y: 0 })).toBeNull()
+  })
+})
+
+describe('game loop closed circuits', () => {
+  it('M2 combat: attack hit kill increments defeatedCount and drops gem', () => {
+    const state = createGameState(arena, createSequenceRng([0, 0.5]))
+    state.enemies = [weakEnemy(state)]
     state.attackCooldownRemaining = 0
     updateGame(state, { x: 0, y: 0 }, 0.02)
-    // Projectile may need travel; step until hit or timeout
     for (let i = 0; i < 40; i += 1) {
       updateGame(state, { x: 0, y: 0 }, 0.02)
       if (state.defeatedCount >= 1) {
@@ -702,5 +1090,44 @@ describe('game loop closed circuit', () => {
       }
     }
     expect(state.defeatedCount).toBeGreaterThanOrEqual(1)
+    expect(state.gems.length + state.experience).toBeGreaterThanOrEqual(1)
+  })
+
+  it('M3 loop: kill→gem→pickup→pending→choose→buff→resume', () => {
+    const state = createGameState(arena, createSequenceRng([0, 0.5]))
+    state.enemies = [
+      weakEnemy(state, {
+        x: state.player.x,
+        y: state.player.y,
+        health: 1,
+        maxHealth: 1,
+      }),
+    ]
+    state.projectiles = [
+      {
+        id: 1,
+        x: state.player.x,
+        y: state.player.y,
+        vx: 0,
+        vy: 0,
+        radius: 5,
+        damage: 10,
+        lifeRemaining: 1,
+      },
+    ]
+    advanceProjectiles(state, 0)
+    expect(state.gems).toHaveLength(1)
+    state.experience = 2
+    pickupGems(state)
+    expect(state.pendingUpgrade).not.toBeNull()
+    expect(state.level).toBe(1)
+    const speedBefore = state.player.moveSpeed
+    applyUpgradeChoice(state, 'swift')
+    expect(state.level).toBe(2)
+    expect(state.player.moveSpeed).toBeCloseTo(speedBefore * 1.1)
+    expect(state.pendingUpgrade).toBeNull()
+    const xBefore = state.player.x
+    updateGame(state, { x: 1, y: 0 }, 0.1)
+    expect(state.player.x).toBeGreaterThan(xBefore)
   })
 })

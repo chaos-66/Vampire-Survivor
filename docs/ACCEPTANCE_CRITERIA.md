@@ -1,61 +1,37 @@
 # Acceptance Criteria
 
-## M0
+## M0 / M1 / M2 — Green (history)
 
-- [x] Scaffold, workflow, install, test, build, checkpoint `574d0ca` (see history).
+See `RUN_LOG.md`. M2 final audit PASS at `5ce3915`.
 
-## M1 (CP-M1-01) — Green
-
-- [x] Movement, input, bounds, delta, blur; independent audit PASS (`976dfc6`); user browser 11/11 PASS.
-
-## M2 (CP-M2-01) — Green
+## M3 (CP-M3-01)
 
 ### Automated / pure logic
 
-- [x] All CP-M2-01 automated items (spawn, chase, attack, projectiles, contact, kills, M1 regression) — evidence in `RUN_LOG.md`.
+- [x] Non-lethal hit does not drop gem; kill drops one gem at death position.
+- [x] One gem per enemy; no double drop same step; stable gem ids; fixed XP value.
+- [x] Gem cap does not unbounded grow.
+- [x] Pickup on overlap only; remove gem; XP once; multi-pickup same step.
+- [x] Initial level 1, XP 0, threshold 3; thresholds 5 then 7.
+- [x] Below threshold no pending; at/over threshold pending with overflow retained until choice.
+- [x] Pending freezes move/spawn/chase/contact/attack/projectiles/pickup.
+- [x] 迅捷 ×1.1 speed; 急速 ×0.9 cooldown with floor; 强击 +5 damage; stacks; invalid/non-pending no-op.
+- [x] Apply: level+1, subtract threshold, keep overflow, update next threshold, clear pending; chain if still enough XP.
+- [x] Closed loop: kill→gem→pickup→pending→choose→buff→resume.
+- [x] Digit map + click hit-test helpers; CSS→logical coords.
+- [x] M1/M2 regression; M3 status copy; no M4 outcome/restart.
+- [x] `npm test` / tsc / build / audit recorded.
 
-### Browser / manual (functional)
+### Browser / manual
 
-Evidence: **User-reported M2 browser acceptance: PASS on all 18 listed checks; browser/version not supplied.**
-
-- [x] Page/Canvas/console normal.
-- [x] M1 movement regression.
-- [x] Player bounds.
-- [x] Enemy spawn / chase.
-- [x] Auto-attack / nearest target visual.
-- [x] Projectile hit, enemy HP, death, defeat count.
-- [x] Contact damage + cooldown; HP floor.
-- [x] Enemy cap; 60s sustained run.
-- [x] Narrow layout; blur recovery.
-- [x] M2 copy present; no M3/M4 features.
-- [x] HP=0 continues without loss screen/buttons (user confirmed; M2 design).
-
-### Chinese UI
-
-Evidence: **User-reported real-browser Chinese display acceptance: 5/5 PASS; browser/version not supplied.**
-
-- [x] `lang=zh-CN`
-- [x] Chinese title and H1 (`吸血鬼幸存者`)
-- [x] Chinese Canvas aria-label (`游戏画布`)
-- [x] Chinese status copy (`M2：移动、躲避敌人并自动攻击`)
-- [x] HUD shows `生命` / `击败` / `敌人`
-- [x] Real-browser Chinese display without garbled text
-- [x] No truncation or obvious overlap
-- [x] Gameplay still normal after localization
+- [ ] All interactive progression checks — **UNVERIFIED** (implementer environment).
 
 ### Process
 
-- [x] M2 checkpoint `6c5afab`
-- [x] M2 status `6a6f981`
-- [x] localization `0f1bb50`
-- [x] localization status `ee60495`
-- [x] independent code/automated audit PASS
-- [x] user functional browser acceptance 18/18 PASS
-- [x] user Chinese display acceptance 5/5 PASS
-- [x] `CP-M2-01` final audit PASS
-- [x] M2 may formally exit
-- [x] M3 remains Not started
+- [ ] M3 checkpoint commit — set after commit.
+- [x] Independent M3 audit not claimed by implementer (pending).
+- [x] M4 remains Not started.
 
 ## Milestone Audit Rule
 
-Implementer evidence ≠ independent milestone audit. M2 final independent audit is complete with result **PASS**.
+Implementer evidence ≠ independent milestone audit.

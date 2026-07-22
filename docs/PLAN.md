@@ -2,37 +2,34 @@
 
 ## Current Goal
 
-**M2 complete.** Stopped between M2 and M3. Next work is architect definition of M3 checkpoint, Must, Non-goals, and acceptance — not M3 implementation until a new development prompt.
+Complete **CP-M3-01**: experience collection, leveling, and minimal upgrade choice. Implementation complete; independent audit and interactive browser acceptance still open.
 
-## M0 / M1 (history)
+## M0 / M1 / M2 (history)
 
 | ID | Status |
 |---|---|
 | CP-M0-01 | Green at `574d0ca` |
-| CP-M1-01 | **Green** — `563f7ee`; audit close `976dfc6` |
+| CP-M1-01 | **Green** — `563f7ee`; audit `976dfc6` |
+| CP-M2-01 | **Green** — `6c5afab`; Chinese `0f1bb50`; audit close `5ce3915` |
 
-## M2 Checkpoint
+## M3 Checkpoint
 
-| ID | Deliverable | Status |
-|---|---|---|
-| CP-M2-01 | Enemy pressure + automatic combat | **Green / Complete** — implementation `6c5afab`; status `6a6f981`; Chinese UI `0f1bb50`; localization status `ee60495`; independent code/auto audit PASS; user functional browser 18/18 PASS; user Chinese display 5/5 PASS |
+| ID | Deliverable | Verification | Pass condition | Status |
+|---|---|---|---|---|
+| CP-M3-01 | Experience, leveling, minimal upgrade choice | Vitest; tsc; build; audit; browser or UNVERIFIED | Gems, pickup, freeze upgrade UI, three fixed upgrades, overflow chain; M1/M2 preserved | Implementation complete; automated green; browser UNVERIFIED; independent audit pending |
 
 ### Must delivered
 
-- Edge spawn, chase, contact cooldown damage, auto projectiles, defeat count; M1 movement preserved.
-- User-visible runtime UI in Chinese.
+- Gems on kill; pickup; level/XP/threshold; pending freeze; 迅捷/急速/强击; keys+click; Chinese HUD.
 
-### Non-goals (not implemented)
+### Non-goals
 
-No XP/upgrades/Boss/win-loss/restart; no i18n framework.
+No M4 timer/win/loss/restart, Boss, random pool, i18n framework, ECS.
 
 ## Later Work
 
 | Milestone | Status |
 |---|---|
-| M1 | Complete / Green |
-| M2 | **Complete / Green** |
-| M3 | **Not started** |
-| M4 | Not started |
-
-Only one milestone checkpoint is active at a time. M3 is not active.
+| M2 | Complete / Green |
+| M3 | Implementation done; audit pending |
+| M4 | **Not started** |

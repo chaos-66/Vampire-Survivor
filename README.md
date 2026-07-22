@@ -2,7 +2,7 @@
 
 A small Survivors-style browser game built with Vite, TypeScript, and HTML Canvas.
 
-**M2:** bounded arena, WASD/arrow movement, edge-spawning enemies that chase the player, contact damage with cooldown, automatic nearest-target projectiles, and a defeat counter. In-game UI text is Chinese.
+**M3:** move and fight, collect experience gems from defeated enemies, level up, and choose one of three fixed Chinese upgrades (迅捷 / 急速 / 强击). UI text is Chinese.
 
 ## Commands
 

@@ -12,6 +12,9 @@ import { normalize, type Vec2, zeroVec, vecLength } from './vec'
 export type CombatPlayer = Player & {
   health: number
   maxHealth: number
+  moveSpeed: number
+  attackCooldown: number
+  projectileDamage: number
 }
 
 export type Enemy = {
@@ -35,6 +38,26 @@ export type Projectile = {
   lifeRemaining: number
 }
 
+export type ExperienceGem = {
+  id: number
+  x: number
+  y: number
+  radius: number
+  value: number
+}
+
+export type UpgradeId = 'swift' | 'haste' | 'power'
+
+export type UpgradeOption = {
+  id: UpgradeId
+  name: string
+  description: string
+}
+
+export type PendingUpgrade = {
+  options: UpgradeOption[]
+}
+
 /** Returns a number in [0, 1). Injected for deterministic tests. */
 export type Rng = () => number
 
@@ -43,12 +66,18 @@ export type GameState = {
   player: CombatPlayer
   enemies: Enemy[]
   projectiles: Projectile[]
+  gems: ExperienceGem[]
   defeatedCount: number
   spawnAccumulator: number
   attackCooldownRemaining: number
   contactCooldownRemaining: number
   nextEnemyId: number
   nextProjectileId: number
+  nextGemId: number
+  level: number
+  experience: number
+  experienceToNextLevel: number
+  pendingUpgrade: PendingUpgrade | null
   rng: Rng
 }
 
@@ -61,11 +90,26 @@ export const ENEMY_MAX_HEALTH = 30
 export const CONTACT_DAMAGE = 10
 export const CONTACT_COOLDOWN = 0.5
 export const ATTACK_COOLDOWN = 0.45
+export const MIN_ATTACK_COOLDOWN = 0.1
 export const PROJECTILE_SPEED = 420
 export const PROJECTILE_RADIUS = 5
 export const PROJECTILE_DAMAGE = 15
 export const PROJECTILE_LIFETIME = 2
 export const PROJECTILE_BOUNDS_MARGIN = 64
+export const GEM_RADIUS = 8
+export const GEM_VALUE = 1
+export const GEM_CAP = 100
+export const INITIAL_LEVEL = 1
+export const INITIAL_EXPERIENCE = 0
+
+export const UPGRADE_OPTIONS: UpgradeOption[] = [
+  { id: 'swift', name: '迅捷', description: '移动速度 +10%' },
+  { id: 'haste', name: '急速', description: '攻击间隔 -10%' },
+  { id: 'power', name: '强击', description: '投射物伤害 +5' },
+]
+
+export const experienceThresholdForLevel = (level: number): number =>
+  3 + (level - 1) * 2
 
 export const defaultRng = (): Rng => Math.random
 
@@ -80,15 +124,24 @@ export const createGameState = (
       ...base,
       health: PLAYER_MAX_HEALTH,
       maxHealth: PLAYER_MAX_HEALTH,
+      moveSpeed: PLAYER_SPEED,
+      attackCooldown: ATTACK_COOLDOWN,
+      projectileDamage: PROJECTILE_DAMAGE,
     },
     enemies: [],
     projectiles: [],
+    gems: [],
     defeatedCount: 0,
     spawnAccumulator: 0,
     attackCooldownRemaining: 0,
     contactCooldownRemaining: 0,
     nextEnemyId: 1,
     nextProjectileId: 1,
+    nextGemId: 1,
+    level: INITIAL_LEVEL,
+    experience: INITIAL_EXPERIENCE,
+    experienceToNextLevel: experienceThresholdForLevel(INITIAL_LEVEL),
+    pendingUpgrade: null,
     rng,
   }
 }
@@ -146,7 +199,11 @@ export const advanceSpawns = (state: GameState, dt: number): void => {
   }
 }
 
-export const chasePlayer = (enemy: Enemy, player: CombatPlayer, dt: number): Enemy => {
+export const chasePlayer = (
+  enemy: Enemy,
+  player: CombatPlayer,
+  dt: number,
+): Enemy => {
   const dx = player.x - enemy.x
   const dy = player.y - enemy.y
   const dir = normalize({ x: dx, y: dy })
@@ -223,7 +280,7 @@ export const fireAtEnemy = (state: GameState, target: Enemy): void => {
     vx: velocity.x,
     vy: velocity.y,
     radius: PROJECTILE_RADIUS,
-    damage: PROJECTILE_DAMAGE,
+    damage: state.player.projectileDamage,
     lifeRemaining: PROJECTILE_LIFETIME,
   })
   state.nextProjectileId += 1
@@ -243,7 +300,7 @@ export const advanceAutoAttack = (state: GameState, dt: number): void => {
     return
   }
   fireAtEnemy(state, target)
-  state.attackCooldownRemaining = ATTACK_COOLDOWN
+  state.attackCooldownRemaining = state.player.attackCooldown
 }
 
 export const projectileOutOfBounds = (
@@ -256,9 +313,27 @@ export const projectileOutOfBounds = (
   p.x > arena.width + margin ||
   p.y > arena.height + margin
 
+export const spawnGemAt = (
+  state: GameState,
+  x: number,
+  y: number,
+): void => {
+  if (state.gems.length >= GEM_CAP) {
+    return
+  }
+  state.gems.push({
+    id: state.nextGemId,
+    x,
+    y,
+    radius: GEM_RADIUS,
+    value: GEM_VALUE,
+  })
+  state.nextGemId += 1
+}
+
 /**
  * Move projectiles, resolve first-hit damage (one projectile → one enemy),
- * remove dead enemies and spent projectiles. Deterministic by projectile then enemy id order.
+ * drop gems on kill, remove dead enemies and spent projectiles.
  */
 export const advanceProjectiles = (state: GameState, dt: number): void => {
   const remainingProjectiles: Projectile[] = []
@@ -291,6 +366,7 @@ export const advanceProjectiles = (state: GameState, dt: number): void => {
         if (nextHp <= 0) {
           enemyById.delete(enemy.id)
           state.defeatedCount += 1
+          spawnGemAt(state, enemy.x, enemy.y)
         } else {
           enemyById.set(enemy.id, { ...enemy, health: nextHp })
         }
@@ -308,6 +384,31 @@ export const advanceProjectiles = (state: GameState, dt: number): void => {
   state.enemies = [...enemyById.values()].sort((a, b) => a.id - b.id)
 }
 
+export const tryEnterPendingUpgrade = (state: GameState): void => {
+  if (state.pendingUpgrade !== null) {
+    return
+  }
+  if (state.experience >= state.experienceToNextLevel) {
+    state.pendingUpgrade = { options: [...UPGRADE_OPTIONS] }
+  }
+}
+
+export const pickupGems = (state: GameState): void => {
+  if (state.pendingUpgrade !== null) {
+    return
+  }
+  const remaining: ExperienceGem[] = []
+  for (const gem of state.gems) {
+    if (circlesOverlap(state.player, gem)) {
+      state.experience += gem.value
+    } else {
+      remaining.push(gem)
+    }
+  }
+  state.gems = remaining
+  tryEnterPendingUpgrade(state)
+}
+
 export const movePlayer = (
   state: GameState,
   direction: Vec2,
@@ -316,7 +417,7 @@ export const movePlayer = (
   const stepped = stepPlayer(
     state.player,
     direction,
-    PLAYER_SPEED,
+    state.player.moveSpeed,
     dt,
     state.arena,
   )
@@ -329,14 +430,19 @@ export const movePlayer = (
 }
 
 /**
- * Fixed update order:
- * move player → spawn → chase → contact damage → auto-attack → projectiles.
+ * Fixed update order when not pending upgrade:
+ * move → spawn → chase → contact → auto-attack → projectiles (gems) → pickup.
+ * When pendingUpgrade is set, simulation does not advance.
  */
 export const updateGame = (
   state: GameState,
   direction: Vec2,
   dtSeconds: number,
 ): GameState => {
+  if (state.pendingUpgrade !== null) {
+    return state
+  }
+
   const dt = dtSeconds
   if (!(dt > 0)) {
     return state
@@ -348,6 +454,7 @@ export const updateGame = (
   applyContactDamage(state, dt)
   advanceAutoAttack(state, dt)
   advanceProjectiles(state, dt)
+  pickupGems(state)
 
   state.player = {
     ...state.player,
@@ -364,6 +471,129 @@ export const updateGame = (
   return state
 }
 
+export const applyUpgradeEffect = (
+  state: GameState,
+  upgradeId: UpgradeId,
+): void => {
+  if (upgradeId === 'swift') {
+    state.player = {
+      ...state.player,
+      moveSpeed: state.player.moveSpeed * 1.1,
+    }
+    return
+  }
+  if (upgradeId === 'haste') {
+    state.player = {
+      ...state.player,
+      attackCooldown: Math.max(
+        MIN_ATTACK_COOLDOWN,
+        state.player.attackCooldown * 0.9,
+      ),
+    }
+    return
+  }
+  if (upgradeId === 'power') {
+    state.player = {
+      ...state.player,
+      projectileDamage: state.player.projectileDamage + 5,
+    }
+  }
+}
+
+/** Apply one upgrade choice while pending; may immediately re-enter pending on overflow. */
+export const applyUpgradeChoice = (
+  state: GameState,
+  upgradeId: UpgradeId,
+): boolean => {
+  if (state.pendingUpgrade === null) {
+    return false
+  }
+  if (!UPGRADE_OPTIONS.some((option) => option.id === upgradeId)) {
+    return false
+  }
+
+  applyUpgradeEffect(state, upgradeId)
+
+  const cost = state.experienceToNextLevel
+  state.experience = Math.max(0, state.experience - cost)
+  state.level += 1
+  state.experienceToNextLevel = experienceThresholdForLevel(state.level)
+  state.pendingUpgrade = null
+
+  tryEnterPendingUpgrade(state)
+  return true
+}
+
+export const upgradeIdFromDigitCode = (code: string): UpgradeId | null => {
+  if (code === 'Digit1' || code === 'Numpad1') {
+    return 'swift'
+  }
+  if (code === 'Digit2' || code === 'Numpad2') {
+    return 'haste'
+  }
+  if (code === 'Digit3' || code === 'Numpad3') {
+    return 'power'
+  }
+  return null
+}
+
+export type Rect = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export const cssPointToLogical = (
+  clientX: number,
+  clientY: number,
+  canvasRect: { left: number; top: number; width: number; height: number },
+  logicalWidth: number,
+  logicalHeight: number,
+): Vec2 => {
+  const scaleX = logicalWidth / canvasRect.width
+  const scaleY = logicalHeight / canvasRect.height
+  return {
+    x: (clientX - canvasRect.left) * scaleX,
+    y: (clientY - canvasRect.top) * scaleY,
+  }
+}
+
+export const getUpgradeCardRects = (arena: Arena): Rect[] => {
+  const cardWidth = Math.min(220, arena.width * 0.28)
+  const cardHeight = 120
+  const gap = 16
+  const totalWidth = cardWidth * 3 + gap * 2
+  const startX = (arena.width - totalWidth) / 2
+  const y = arena.height / 2 - cardHeight / 2
+  return [0, 1, 2].map((i) => ({
+    x: startX + i * (cardWidth + gap),
+    y,
+    width: cardWidth,
+    height: cardHeight,
+  }))
+}
+
+export const upgradeIdAtPoint = (
+  arena: Arena,
+  point: Vec2,
+): UpgradeId | null => {
+  const rects = getUpgradeCardRects(arena)
+  const ids: UpgradeId[] = ['swift', 'haste', 'power']
+  for (let i = 0; i < rects.length; i += 1) {
+    const r = rects[i]
+    if (
+      point.x >= r.x &&
+      point.x <= r.x + r.width &&
+      point.y >= r.y &&
+      point.y <= r.y + r.height
+    ) {
+      return ids[i]
+    }
+  }
+  return null
+}
+
 export const createSequenceRng = (values: number[]): Rng => {
   let i = 0
   return () => {
@@ -376,4 +606,4 @@ export const createSequenceRng = (values: number[]): Rng => {
   }
 }
 
-export { zeroVec }
+export { zeroVec, PLAYER_SPEED }

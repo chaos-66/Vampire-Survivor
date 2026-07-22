@@ -91,3 +91,10 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 10 modules transformed. |
 | 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
+| 2026-07-22 | M3 recovery: git status/log; HEAD `5ce3915` | Passed | Clean `main`; M2 green; M3 not started. |
+| 2026-07-22 | M3 `npm test` after implementation | Passed | 4 files, 91 tests passed. |
+| 2026-07-22 | M3 `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | M3 `npm run build` | Passed | 10 modules; dist generated. |
+| 2026-07-22 | M3 `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-22 | M3 interactive browser progression checklist | UNVERIFIED | No interactive browser session in implementer environment. |
+| 2026-07-22 | M3 `npm run dev` HTTP GET | Partial | HTTP 200; M3 Chinese status copy present. Interactive UNVERIFIED. |
