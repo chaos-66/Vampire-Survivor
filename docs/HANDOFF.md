@@ -3,7 +3,7 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- CP-M4-ARCH-01 modularization implemented (hash after commit)
+- CP-M4-ARCH-01 checkpoint: `ba8b276` (`M4: modularize current gameplay architecture`)
 - M1–M3 gameplay behavior unchanged by design
 - M4 gameplay **not started**; M5+ **not started**
 - Independent architecture audit **pending**
@@ -22,7 +22,7 @@
 
 ## Verified
 
-- `npm test` 104 tests
+- `npm test` 104 tests (pre/post checkpoint)
 - tsc / build / audit
 
 ## Not Yet Verified

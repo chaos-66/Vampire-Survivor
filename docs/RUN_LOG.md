@@ -108,3 +108,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Modular `npm run build` | Passed | 35 modules transformed. |
 | 2026-07-22 | Modular `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-22 | Modular browser interactive regression | UNVERIFIED | No interactive browser session. |
+| 2026-07-22 | `git commit -m "M4: modularize current gameplay architecture"` | Passed | `ba8b276` (40 files). |
+| 2026-07-22 | Post-modular `npm test` | Passed | 5 files / 104 tests. |
+| 2026-07-22 | Post-modular `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Post-modular `npm run build` | Passed | 35 modules. |

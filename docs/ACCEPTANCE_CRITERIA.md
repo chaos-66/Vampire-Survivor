@@ -1,6 +1,6 @@
-# Acceptance Criteria
+﻿# Acceptance Criteria
 
-## M0–M3 history
+## M0鈥揗3 history
 
 See `RUN_LOG.md`. M3 implementation `3542f9b`.
 
@@ -12,7 +12,7 @@ See `RUN_LOG.md`. M3 implementation `3542f9b`.
 - [x] Character definition + registry; default character matches M3 baseline.
 - [x] Weapon definition + instance + registry; default projectile preserves auto-attack.
 - [x] Progression categories stat/weapon/item registered; item category only.
-- [x] 迅捷/急速/强击 registered; offer generator not hard-coded by name.
+- [x] 杩呮嵎/鎬ラ€?寮哄嚮 registered; offer generator not hard-coded by name.
 - [x] maxLevel filtering works (fixture).
 - [x] Combat systems split; update order preserved.
 - [x] UI extracted; UI does not mutate sim state.
@@ -28,10 +28,10 @@ See `RUN_LOG.md`. M3 implementation `3542f9b`.
 
 ### Browser
 
-- [ ] Interactive regression — **UNVERIFIED**
+- [ ] Interactive regression 鈥?**UNVERIFIED**
 
 ### Process
 
-- [ ] Architecture checkpoint commit — after commit
+- [ ] Architecture checkpoint commit 鈥?after commit
 - [x] Independent architecture audit pending
 - [x] M4 gameplay / M5+ not started

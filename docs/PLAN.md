@@ -2,7 +2,7 @@
 
 ## Current Goal
 
-**CP-M4-ARCH-01**: modularize M1–M3 architecture without changing gameplay. Independent audit pending.
+**CP-M4-ARCH-01** modularization at `ba8b276`. Independent architecture audit pending. M4 gameplay not started.
 
 ## History
 
@@ -17,7 +17,7 @@
 
 | ID | Status |
 |---|---|
-| CP-M4-ARCH-01 | Implementation complete; automated green; browser UNVERIFIED; independent audit pending |
+| CP-M4-ARCH-01 | Checkpoint `ba8b276`; automated green; browser UNVERIFIED; independent audit pending |
 
 ## Later
 
