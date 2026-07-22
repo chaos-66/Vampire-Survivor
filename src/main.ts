@@ -7,15 +7,13 @@ import {
   pressKey,
   releaseKey,
 } from './input'
+import { createGameState, type GameState } from './core/game-state'
+import { updateGame } from './core/game-loop'
+import { applyUpgradeChoice, upgradeIdFromDigitCode } from './progression/upgrade-system'
 import {
-  applyUpgradeChoice,
-  createGameState,
   cssPointToLogical,
-  updateGame,
   upgradeIdAtPoint,
-  upgradeIdFromDigitCode,
-  type GameState,
-} from './game'
+} from './ui/canvas-coordinates'
 import { clampDeltaSeconds } from './movement'
 import { getStatusMessage } from './status'
 import { drawHud } from './ui/hud'
@@ -53,6 +51,9 @@ if (statusEl) {
   statusEl.textContent = getStatusMessage()
 }
 
+/**
+ * 选择必须来自当前 pendingUpgrade.options（画面显示列表）。
+ */
 const tryChooseUpgrade = (id: string | null): void => {
   if (id === null || game.pendingUpgrade === null) {
     return
@@ -65,7 +66,11 @@ const onKeyDown = (event: KeyboardEvent): void => {
     if (event.repeat) {
       return
     }
-    const upgradeId = upgradeIdFromDigitCode(event.code)
+    // 绑定当前显示候选，不用全局注册表
+    const upgradeId = upgradeIdFromDigitCode(
+      event.code,
+      game.pendingUpgrade.options,
+    )
     if (upgradeId !== null) {
       event.preventDefault()
       tryChooseUpgrade(upgradeId)
@@ -121,7 +126,8 @@ const onCanvasClick = (event: MouseEvent): void => {
     arena.width,
     arena.height,
   )
-  tryChooseUpgrade(upgradeIdAtPoint(arena, point))
+  const optionIds = game.pendingUpgrade.options.map((o) => o.id)
+  tryChooseUpgrade(upgradeIdAtPoint(arena, point, optionIds))
 }
 
 window.addEventListener('keydown', onKeyDown)

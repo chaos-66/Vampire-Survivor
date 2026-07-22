@@ -20,5 +20,4 @@ export const defaultCharacter: CharacterDefinition = {
     moveSpeed: PLAYER_SPEED,
   },
   startingWeaponIds: [DEFAULT_WEAPON_ID],
-  traitIds: [],
 }

@@ -1,6 +1,6 @@
 /**
- * 武器系统：对玩家身上每个 WeaponInstance 调用其定义的 update。
- * 不判断具体 weaponId。
+ * 武器系统：遍历玩家全部 WeaponInstance，各自独立冷却与 update。
+ * 不判断具体 weaponId；冷却状态只在 instance.cooldownRemaining。
  */
 
 import { getWeapon } from './weapon-registry'

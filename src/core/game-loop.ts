@@ -6,7 +6,7 @@
  * 2 敌人生成
  * 3 敌人追踪
  * 4 接触伤害
- * 5 武器（自动攻击）
+ * 5 武器（各实例独立 cooldown）
  * 6 投射物（击杀掉落结晶）
  * 7 拾取经验 → 可能进入升级冻结
  *
@@ -54,11 +54,6 @@ export const updateGame = (
   state.player = contact.player
   state.contactCooldownRemaining = contact.contactCooldownRemaining
 
-  // 同步兼容字段：旧测试读写 attackCooldownRemaining 时镜像到首个武器
-  if (state.player.weapons[0]) {
-    state.player.weapons[0].cooldownRemaining = state.attackCooldownRemaining
-  }
-
   const fired = advanceWeapons(
     state.player,
     state.enemies,
@@ -68,9 +63,6 @@ export const updateGame = (
   state.nextProjectileId = fired.nextProjectileId
   if (fired.projectiles.length > 0) {
     state.projectiles.push(...fired.projectiles)
-  }
-  if (state.player.weapons[0]) {
-    state.attackCooldownRemaining = state.player.weapons[0].cooldownRemaining
   }
 
   const step = advanceProjectiles(

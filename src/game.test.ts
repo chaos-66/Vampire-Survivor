@@ -250,7 +250,7 @@ describe('enemy chase', () => {
 describe('auto attack and targeting', () => {
   it('does not fire without enemies', () => {
     const state = stateWith()
-    state.attackCooldownRemaining = 0
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = 0 }
     advanceAutoAttack(state, 1)
     expect(state.projectiles).toHaveLength(0)
   })
@@ -258,7 +258,7 @@ describe('auto attack and targeting', () => {
   it('does not fire while cooldown remains', () => {
     const state = stateWith()
     state.enemies = [weakEnemy(state, { health: ENEMY_MAX_HEALTH, maxHealth: ENEMY_MAX_HEALTH })]
-    state.attackCooldownRemaining = ATTACK_COOLDOWN
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = ATTACK_COOLDOWN }
     advanceAutoAttack(state, 0.01)
     expect(state.projectiles).toHaveLength(0)
   })
@@ -266,10 +266,10 @@ describe('auto attack and targeting', () => {
   it('fires when cooldown elapsed', () => {
     const state = stateWith()
     state.enemies = [weakEnemy(state, { health: ENEMY_MAX_HEALTH, maxHealth: ENEMY_MAX_HEALTH })]
-    state.attackCooldownRemaining = 0
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = 0 }
     advanceAutoAttack(state, 0)
     expect(state.projectiles).toHaveLength(1)
-    expect(state.attackCooldownRemaining).toBe(state.player.attackCooldown)
+    expect(state.player.weapons[0]?.cooldownRemaining).toBe(state.player.attackCooldown)
   })
 
   it('selects nearest living enemy', () => {
@@ -322,7 +322,7 @@ describe('auto attack and targeting', () => {
   it('large dt fires at most one projectile', () => {
     const state = stateWith()
     state.enemies = [weakEnemy(state, { health: 10, maxHealth: 10 })]
-    state.attackCooldownRemaining = 0
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = 0 }
     advanceAutoAttack(state, 10)
     expect(state.projectiles).toHaveLength(1)
   })
@@ -844,9 +844,9 @@ describe('pending upgrade freeze', () => {
     state.pendingUpgrade = { options: [...state.pendingUpgrade?.options ?? []] }
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: '移动速度 +10%' },
-        { id: 'haste', name: '急速', description: '攻击间隔 -10%' },
-        { id: 'power', name: '强击', description: '投射物伤害 +5' },
+        { id: 'swift', name: '迅捷', description: '移动速度 +10%', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: '攻击间隔 -10%', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: '投射物伤害 +5', categoryId: 'stat' },
       ],
     }
     state.enemies = [
@@ -907,9 +907,9 @@ describe('upgrade effects and apply', () => {
     const state = stateWith()
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: '移动速度 +10%' },
-        { id: 'haste', name: '急速', description: '攻击间隔 -10%' },
-        { id: 'power', name: '强击', description: '投射物伤害 +5' },
+        { id: 'swift', name: '迅捷', description: '移动速度 +10%', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: '攻击间隔 -10%', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: '投射物伤害 +5', categoryId: 'stat' },
       ],
     }
     const before = state.player.moveSpeed
@@ -921,9 +921,9 @@ describe('upgrade effects and apply', () => {
     const state = stateWith()
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     const before = state.player.attackCooldown
@@ -936,9 +936,9 @@ describe('upgrade effects and apply', () => {
     state.player = { ...state.player, attackCooldown: 0.11 }
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     applyUpgradeChoice(state, 'haste')
@@ -949,15 +949,15 @@ describe('upgrade effects and apply', () => {
     const state = stateWith()
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     applyUpgradeChoice(state, 'power')
     expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
     state.enemies = [weakEnemy(state, { health: 100, maxHealth: 100 })]
-    state.attackCooldownRemaining = 0
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = 0 }
     advanceAutoAttack(state, 0)
     expect(state.projectiles[0].damage).toBe(PROJECTILE_DAMAGE + 5)
   })
@@ -967,18 +967,18 @@ describe('upgrade effects and apply', () => {
     state.experience = 100
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     applyUpgradeChoice(state, 'power')
     if (state.pendingUpgrade === null) {
       state.pendingUpgrade = {
         options: [
-          { id: 'swift', name: '迅捷', description: 'a' },
-          { id: 'haste', name: '急速', description: 'b' },
-          { id: 'power', name: '强击', description: 'c' },
+          { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+          { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+          { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
         ],
       }
     }
@@ -990,9 +990,9 @@ describe('upgrade effects and apply', () => {
     const state = stateWith()
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     const ok = applyUpgradeChoice(state, 'nope' as 'swift')
@@ -1012,9 +1012,9 @@ describe('upgrade effects and apply', () => {
     state.experience = 5
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     applyUpgradeChoice(state, 'swift')
@@ -1028,9 +1028,9 @@ describe('upgrade effects and apply', () => {
     state.experience = 8
     state.pendingUpgrade = {
       options: [
-        { id: 'swift', name: '迅捷', description: 'a' },
-        { id: 'haste', name: '急速', description: 'b' },
-        { id: 'power', name: '强击', description: 'c' },
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
       ],
     }
     applyUpgradeChoice(state, 'power')
@@ -1045,11 +1045,16 @@ describe('upgrade effects and apply', () => {
 })
 
 describe('input helpers', () => {
-  it('maps digits 1/2/3 to upgrade ids', () => {
-    expect(upgradeIdFromDigitCode('Digit1')).toBe('swift')
-    expect(upgradeIdFromDigitCode('Digit2')).toBe('haste')
-    expect(upgradeIdFromDigitCode('Digit3')).toBe('power')
-    expect(upgradeIdFromDigitCode('KeyW')).toBeNull()
+  it('maps digits 1/2/3 to pending display options', () => {
+    const options = [
+      { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+      { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+      { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
+    ]
+    expect(upgradeIdFromDigitCode('Digit1', options)).toBe('swift')
+    expect(upgradeIdFromDigitCode('Digit2', options)).toBe('haste')
+    expect(upgradeIdFromDigitCode('Digit3', options)).toBe('power')
+    expect(upgradeIdFromDigitCode('KeyW', options)).toBeNull()
   })
 
   it('converts CSS click to logical coords under scale', () => {
@@ -1064,16 +1069,17 @@ describe('input helpers', () => {
     expect(p.y).toBeCloseTo(100)
   })
 
-  it('hit-tests upgrade cards', () => {
-    const rects = getUpgradeCardRects(arena)
+  it('hit-tests upgrade cards using pending option ids', () => {
+    const ids = ['swift', 'haste', 'power']
+    const rects = getUpgradeCardRects(arena, ids.length)
     const mid = (r: { x: number; y: number; width: number; height: number }) => ({
       x: r.x + r.width / 2,
       y: r.y + r.height / 2,
     })
-    expect(upgradeIdAtPoint(arena, mid(rects[0]))).toBe('swift')
-    expect(upgradeIdAtPoint(arena, mid(rects[1]))).toBe('haste')
-    expect(upgradeIdAtPoint(arena, mid(rects[2]))).toBe('power')
-    expect(upgradeIdAtPoint(arena, { x: 0, y: 0 })).toBeNull()
+    expect(upgradeIdAtPoint(arena, mid(rects[0]), ids)).toBe('swift')
+    expect(upgradeIdAtPoint(arena, mid(rects[1]), ids)).toBe('haste')
+    expect(upgradeIdAtPoint(arena, mid(rects[2]), ids)).toBe('power')
+    expect(upgradeIdAtPoint(arena, { x: 0, y: 0 }, ids)).toBeNull()
   })
 })
 
@@ -1081,7 +1087,7 @@ describe('game loop closed circuits', () => {
   it('M2 combat: attack hit kill increments defeatedCount and drops gem', () => {
     const state = createGameState(arena, createSequenceRng([0, 0.5]))
     state.enemies = [weakEnemy(state)]
-    state.attackCooldownRemaining = 0
+    if (state.player.weapons[0]) { state.player.weapons[0].cooldownRemaining = 0 }
     updateGame(state, { x: 0, y: 0 }, 0.02)
     for (let i = 0; i < 40; i += 1) {
       updateGame(state, { x: 0, y: 0 }, 0.02)

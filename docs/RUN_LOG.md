@@ -112,3 +112,13 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Post-modular `npm test` | Passed | 5 files / 104 tests. |
 | 2026-07-22 | Post-modular `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Post-modular `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Independent architecture audit of `ba8b276` | FAIL | Auto tests/tsc/build/audit green; extensibility defects: pending-input desync, dual cooldown, registry lifecycle, fake fields, facade duplication, maxLevel=999. |
+| 2026-07-22 | Architecture repair implementation | Applied | Fixes 1-7 per audit prompt. |
+| 2026-07-22 | Repair first `npm test` | Failed | architecture test weapon re-register during messy freeze fixture. |
+| 2026-07-22 | Repair `npm test` after fixture simplify | Passed | 5 files / 115 tests. |
+| 2026-07-22 | Repair `npm test` second independent run | Passed | 5 files / 115 tests. |
+| 2026-07-22 | Repair `npx tsc --noEmit` first | Failed | unused ProgressionDefinition import. |
+| 2026-07-22 | Repair `npx tsc --noEmit` after fix | Passed | Exit 0. |
+| 2026-07-22 | Repair `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Repair `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-22 | Browser regression after repair | UNVERIFIED | No interactive browser session. |

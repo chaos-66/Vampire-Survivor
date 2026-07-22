@@ -1,13 +1,17 @@
 /**
  * 升级候选生成：从注册表过滤可选项。
- * - 尊重 maxLevel（已达上限不再出现）
+ * - maxLevel: number 达上限则排除；null 永不排除
  * - 尊重 isEligible
- * - 当前 M3 行为：确定性注册顺序，不随机抽卡
+ * - 确定性注册顺序，不随机
+ * - 不写死分类或具体升级名称
+ *
+ * 返回的 options 即为 UI 显示与输入绑定的唯一来源。
  */
 
-import type {
-  ProgressionContext,
-  UpgradeOption,
+import {
+  isAtMaxLevel,
+  type ProgressionContext,
+  type UpgradeOption,
 } from './progression-definition'
 import { listProgressions } from './progression-registry'
 
@@ -18,7 +22,7 @@ export const generateUpgradeOffers = (
   const offers: UpgradeOption[] = []
   for (const definition of listProgressions()) {
     const current = context.progressionLevels[definition.id] ?? 0
-    if (current >= definition.maxLevel) {
+    if (isAtMaxLevel(current, definition.maxLevel)) {
       continue
     }
     if (!definition.isEligible(context)) {
@@ -28,6 +32,7 @@ export const generateUpgradeOffers = (
       id: definition.id,
       name: definition.name,
       description: definition.description,
+      categoryId: definition.categoryId,
     })
     if (offers.length >= limit) {
       break

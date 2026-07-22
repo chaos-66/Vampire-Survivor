@@ -1,5 +1,6 @@
 /**
  * 升级遮罩与卡片绘制：只读 pending 选项，不改 GameState。
+ * 卡片数量与 pending.options 一致；输入绑定同一列表。
  */
 
 import type { Arena } from '../movement'
@@ -23,8 +24,8 @@ export const drawUpgradeOverlay = (
   context.textAlign = 'center'
   context.fillText('选择强化', arena.width / 2, arena.height / 2 - 100)
 
-  const rects = getUpgradeCardRects(arena)
   const options = pending.options
+  const rects = getUpgradeCardRects(arena, options.length)
   for (let i = 0; i < options.length; i += 1) {
     const r = rects[i]
     if (!r) {

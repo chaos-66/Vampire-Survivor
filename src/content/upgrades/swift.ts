@@ -1,8 +1,8 @@
 /**
- * 迅捷：移动速度 ×1.1（可叠，受 maxLevel 限制）。
+ * 迅捷：移动速度 ×1.1。
+ * maxLevel: null 表示无上限，可重复选择（M3 已验收叠加行为）。
  */
 
-import { DEFAULT_UPGRADE_MAX_LEVEL } from '../../core/constants'
 import type { ProgressionDefinition } from '../../progression/progression-definition'
 
 export const swiftUpgrade: ProgressionDefinition = {
@@ -10,7 +10,7 @@ export const swiftUpgrade: ProgressionDefinition = {
   categoryId: 'stat',
   name: '迅捷',
   description: '移动速度 +10%',
-  maxLevel: DEFAULT_UPGRADE_MAX_LEVEL,
+  maxLevel: null,
   isEligible: () => true,
   apply: (context) => {
     context.player.moveSpeed *= 1.1

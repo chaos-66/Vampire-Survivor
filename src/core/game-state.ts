@@ -1,6 +1,6 @@
 /**
- * 局内 GameState（扁平运行时状态，便于测试与迁移）。
- * 静态内容在注册表；此处只存运行时字段。
+ * 局内 GameState（扁平运行时状态）。
+ * 静态内容在注册表；武器冷却仅在 player.weapons[i].cooldownRemaining。
  */
 
 import { createPlayer, type Arena } from '../movement'
@@ -8,8 +8,6 @@ import {
   ATTACK_COOLDOWN,
   INITIAL_EXPERIENCE,
   INITIAL_LEVEL,
-  PLAYER_MAX_HEALTH,
-  PLAYER_SPEED,
   PROJECTILE_DAMAGE,
 } from './constants'
 import { ensureContentRegistered } from '../content/bootstrap'
@@ -30,8 +28,6 @@ export type GameState = {
   gems: ExperienceGem[]
   defeatedCount: number
   spawnAccumulator: number
-  /** 兼容旧测试字段：默认武器实例的 cooldown 镜像 */
-  attackCooldownRemaining: number
   contactCooldownRemaining: number
   nextEnemyId: number
   nextProjectileId: number
@@ -100,7 +96,6 @@ export const createGameState = (
     gems: [],
     defeatedCount: 0,
     spawnAccumulator: 0,
-    attackCooldownRemaining: weapons[0]?.cooldownRemaining ?? 0,
     contactCooldownRemaining: 0,
     nextEnemyId: 1,
     nextProjectileId: 1,
@@ -114,10 +109,4 @@ export const createGameState = (
   }
 }
 
-// 再导出基线常量给兼容层
-export {
-  PLAYER_MAX_HEALTH,
-  PLAYER_SPEED,
-  ATTACK_COOLDOWN,
-  PROJECTILE_DAMAGE,
-}
+export { PLAYER_MAX_HEALTH, PLAYER_SPEED, ATTACK_COOLDOWN, PROJECTILE_DAMAGE } from './constants'

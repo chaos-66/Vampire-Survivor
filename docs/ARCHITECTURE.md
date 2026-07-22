@@ -1,36 +1,26 @@
 # Architecture
 
-## CP-M4-ARCH-01 Shape (current)
+## CP-M4-ARCH-01 (post-repair)
 
 ```text
-index.html
-  -> src/main.ts          DOM / RAF / events only
-  -> src/ui/              hud, upgrade-overlay, draw-world, canvas-coordinates
-  -> src/game.ts          兼容门面（re-export）
-  -> src/core/            game-state, game-loop, constants
-  -> src/actors/          character definition/registry, player types/system
-  -> src/weapons/         weapon definition/registry/system
-  -> src/combat/          enemy, projectile, contact damage
-  -> src/progression/     experience, categories, registry, offers, upgrade apply
-  -> src/content/         default character/weapon + 迅捷/急速/强击
-  -> src/input.ts, movement.ts, vec.ts, collision.ts, status.ts
+main.ts -> ui/* + core/game-loop + progression input helpers
+game.ts -> thin re-exports only
+core/   -> game-state, game-loop, constants
+actors/ -> character registry + player system
+weapons/-> definition, registry, system (instance cooldown sole source)
+combat/ -> enemy, projectile, contact
+progression/ -> offers from registry; pending.options is UI+input source
+content/ -> default character/weapon/upgrades; bootstrap/reset
 ```
 
-逻辑世界 960×540；CSS 仅缩放。
+### Key rules
 
-### Update order (`updateGame`)
-
-`pendingUpgrade` 时：不推进模拟。
-
-否则：move → spawn → chase → contact → weapons → projectiles(gems) → pickup。
-
-### Registries
-
-- CharacterRegistry + default_survivor
-- WeaponRegistry + default_projectile
-- ProgressionCategory: stat / weapon / item（item 仅分类）
-- ProgressionRegistry: swift / haste / power（maxLevel 高上限，过滤真实生效）
+- `pendingUpgrade.options` is the only source for on-screen choices and input mapping.
+- Each `WeaponInstance.cooldownRemaining` is independent; no global attack cooldown field.
+- `maxLevel: number | null` — `null` means unlimited stacking.
+- Progression register requires existing `categoryId`.
+- `registerDefaultContent` is idempotent; tests use `resetAllContentRegistriesForTests`.
 
 ### Constraints
 
-无 ECS、事件总线、UI 框架、双轨旧系统。
+No ECS/event bus/UI framework. No dual upgrade/attack paths. No empty trait system.

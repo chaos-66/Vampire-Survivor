@@ -1,11 +1,9 @@
 /**
  * 急速：攻击间隔 ×0.9，且不低于 MIN_ATTACK_COOLDOWN。
+ * maxLevel: null 表示无上限。
  */
 
-import {
-  DEFAULT_UPGRADE_MAX_LEVEL,
-  MIN_ATTACK_COOLDOWN,
-} from '../../core/constants'
+import { MIN_ATTACK_COOLDOWN } from '../../core/constants'
 import type { ProgressionDefinition } from '../../progression/progression-definition'
 
 export const hasteUpgrade: ProgressionDefinition = {
@@ -13,7 +11,7 @@ export const hasteUpgrade: ProgressionDefinition = {
   categoryId: 'stat',
   name: '急速',
   description: '攻击间隔 -10%',
-  maxLevel: DEFAULT_UPGRADE_MAX_LEVEL,
+  maxLevel: null,
   isEligible: () => true,
   apply: (context) => {
     context.player.attackCooldown = Math.max(

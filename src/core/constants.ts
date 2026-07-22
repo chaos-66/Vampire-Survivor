@@ -26,5 +26,3 @@ export const GEM_VALUE = 1
 export const GEM_CAP = 100
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0
-/** M3 允许重复叠加强化；用高上限表达“实际上无上限”，同时让 maxLevel 过滤真实生效。 */
-export const DEFAULT_UPGRADE_MAX_LEVEL = 999

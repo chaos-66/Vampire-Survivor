@@ -1,6 +1,6 @@
 /**
- * 武器注册表：保存武器定义。
- * 主循环 / 武器系统按 definitionId 查找并调用 update，不写 if (weaponId === ...)。
+ * 武器注册表。
+ * 重复 ID：相同定义幂等；不同定义抛错。
  */
 
 import type { WeaponDefinition } from './weapon-definition'
@@ -8,10 +8,21 @@ import type { WeaponDefinition } from './weapon-definition'
 const byId = new Map<string, WeaponDefinition>()
 const order: string[] = []
 
+const sameWeapon = (a: WeaponDefinition, b: WeaponDefinition): boolean =>
+  a.id === b.id &&
+  a.name === b.name &&
+  a.description === b.description &&
+  a.maxLevel === b.maxLevel
+
 export const registerWeapon = (definition: WeaponDefinition): void => {
-  if (byId.has(definition.id)) {
-    byId.set(definition.id, definition)
-    return
+  const existing = byId.get(definition.id)
+  if (existing) {
+    if (sameWeapon(existing, definition)) {
+      return
+    }
+    throw new Error(
+      `Weapon already registered with different data: ${definition.id}`,
+    )
   }
   byId.set(definition.id, definition)
   order.push(definition.id)

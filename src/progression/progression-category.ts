@@ -1,6 +1,7 @@
-﻿/**
+/**
  * 成长分类注册表：stat / weapon / item 等体系标签。
  * item 仅注册分类，不实现道具内容。
+ * 核心生成器不写死分类 ID。
  */
 
 export type ProgressionCategoryDefinition = {
@@ -15,13 +16,25 @@ const orderIds: string[] = []
 export const registerProgressionCategory = (
   definition: ProgressionCategoryDefinition,
 ): void => {
-  if (byId.has(definition.id)) {
-    byId.set(definition.id, definition)
-    return
+  const existing = byId.get(definition.id)
+  if (existing) {
+    if (
+      existing.name === definition.name &&
+      existing.order === definition.order
+    ) {
+      return
+    }
+    throw new Error(
+      `Progression category already registered with different data: ${definition.id}`,
+    )
   }
   byId.set(definition.id, definition)
   orderIds.push(definition.id)
 }
+
+export const getProgressionCategory = (
+  id: string,
+): ProgressionCategoryDefinition | undefined => byId.get(id)
 
 export const listProgressionCategories = (): ProgressionCategoryDefinition[] =>
   orderIds

@@ -1,26 +1,31 @@
 /**
- * 升级进入/应用：pending 冻结由 game-loop 检查；本模块只处理状态转换。
- * 不写 if id === swift/haste/power 长期分支，效果在各 definition.apply。
+ * 升级进入/应用。
+ * pendingUpgrade.options 是画面与输入的唯一选择来源。
+ * 效果在各 definition.apply，不写 if id === swift/haste/power。
  */
 
 import type { GameState } from '../core/game-state'
 import { experienceThresholdForLevel } from '../core/game-state'
 import { generateUpgradeOffers } from './offer-generator'
 import { getProgression } from './progression-registry'
+import { isAtMaxLevel } from './progression-definition'
 
 export const tryEnterPendingUpgrade = (state: GameState): void => {
   if (state.pendingUpgrade !== null) {
     return
   }
-  if (state.experience >= state.experienceToNextLevel) {
-    const options = generateUpgradeOffers({
-      player: state.player,
-      progressionLevels: state.progressionLevels,
-    })
-    if (options.length > 0) {
-      state.pendingUpgrade = { options }
-    }
+  if (state.experience < state.experienceToNextLevel) {
+    return
   }
+  const options = generateUpgradeOffers({
+    player: state.player,
+    progressionLevels: state.progressionLevels,
+  })
+  if (options.length === 0) {
+    // 无可用候选时不进入冻结，避免经验达标后永久卡住。
+    return
+  }
+  state.pendingUpgrade = { options }
 }
 
 export const applyUpgradeChoice = (
@@ -40,7 +45,7 @@ export const applyUpgradeChoice = (
   }
 
   const current = state.progressionLevels[upgradeId] ?? 0
-  if (current >= definition.maxLevel) {
+  if (isAtMaxLevel(current, definition.maxLevel)) {
     return false
   }
 
@@ -60,7 +65,10 @@ export const applyUpgradeChoice = (
   return true
 }
 
-/** 数字键 1/2/3 映射到当前 pending 选项下标，不硬编码升级 id。 */
+/**
+ * 数字键 1/2/3 映射到当前 pending 显示列表的下标。
+ * 必须传入画面上的 options，不得用全局注册表重建。
+ */
 export const upgradeIdFromDigitCode = (
   code: string,
   pendingOptions: ReadonlyArray<{ id: string }> | null | undefined,

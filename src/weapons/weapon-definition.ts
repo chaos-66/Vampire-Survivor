@@ -1,6 +1,8 @@
 /**
- * 武器定义与运行时实例（静态定义 vs 局内状态）。
- * 武器通过 WeaponUpdateContext 产生投射物，不直接碰 DOM/Canvas，也不应改写完整 GameState。
+ * 武器定义与运行时实例。
+ * - definition.maxLevel / instance.level 用于武器成长资格（测试 fixture 可证明）
+ * - cooldownRemaining 仅存在于 WeaponInstance，是该武器冷却的唯一状态源
+ * 武器通过 WeaponUpdateContext 产生投射物，不碰 DOM，不改写完整 GameState。
  */
 
 import type { Enemy } from '../combat/enemy-types'
@@ -18,7 +20,9 @@ export type ProjectileRequest = {
 
 export type WeaponInstance = {
   definitionId: string
+  /** 当前武器等级；与 definition.maxLevel 配合做成长过滤。 */
   level: number
+  /** 该武器冷却的唯一状态源。 */
   cooldownRemaining: number
 }
 
@@ -26,7 +30,6 @@ export type WeaponUpdateContext = {
   dtSeconds: number
   player: CombatPlayer
   enemies: readonly Enemy[]
-  /** 受控生成接口：武器只提交请求，不直接改数组。 */
   spawnProjectile: (request: ProjectileRequest) => void
 }
 
