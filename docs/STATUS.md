@@ -3,7 +3,7 @@
 ## Snapshot
 
 - Current stage: CP-M4-WORLD-01 implementation complete; independent audit pending
-- Checkpoint: pending create `M4: implement full-screen large world demo`
+- Checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Last updated: 2026-07-22
 - M3 Green; CP-M4-ARCH-01 Green
 - Dynamic difficulty: **Not started**
@@ -18,7 +18,7 @@
 - World entities via camera; HUD/upgrade screen-space
 - Visible-only world grid; off-view enemy spawn
 - Resize updates viewport only
-- Tests: 6 files / 136 passed
+- Checkpoint `ba20893`; post-check 136 tests / tsc / build green
 
 ## Unverified
 

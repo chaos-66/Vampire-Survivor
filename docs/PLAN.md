@@ -2,7 +2,7 @@
 
 ## Current Goal
 
-**CP-M4-WORLD-01** implementation complete; independent audit and browser acceptance open.
+**CP-M4-WORLD-01** at `ba20893`. Independent audit and browser acceptance open.
 
 ## History
 
@@ -13,7 +13,7 @@
 | CP-M2-01 | Green |
 | CP-M3-01 | Green `3542f9b` |
 | CP-M4-ARCH-01 | Green (closeout `00166ee`) |
-| CP-M4-WORLD-01 | Implementation done; audit pending |
+| CP-M4-WORLD-01 | Checkpoint `ba20893`; automated green; browser UNVERIFIED; independent audit pending |
 
 ## WORLD rules (delivered)
 

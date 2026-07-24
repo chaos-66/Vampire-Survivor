@@ -24,6 +24,6 @@ Closeout `00166ee`.
 
 ### Process
 
-- [ ] WORLD checkpoint commit — after commit
+- [x] WORLD checkpoint commit (`ba20893`)
 - [x] Independent WORLD audit pending
 - [x] Dynamic difficulty / win-loss / M5+ not started

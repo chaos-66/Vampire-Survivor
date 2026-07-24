@@ -166,3 +166,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | WORLD `npm run build` | Passed | dist generated. |
 | 2026-07-22 | WORLD `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-22 | WORLD interactive browser | UNVERIFIED | No interactive browser session in implementer environment. |
+| 2026-07-22 | `git commit -m "M4: implement full-screen large world demo"` | Passed | `ba20893` (25 files). |
+| 2026-07-22 | Post-WORLD `npm test` | Passed | 6 files / 136 tests. |
+| 2026-07-22 | Post-WORLD `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Post-WORLD `npm run build` | Passed | 40 modules. |

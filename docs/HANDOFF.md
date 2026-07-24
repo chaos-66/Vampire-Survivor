@@ -4,7 +4,7 @@
 
 - Root: `D:\agent\workspace\vampire_survivors`
 - M3 + ARCH Green (`00166ee`)
-- CP-M4-WORLD-01 implemented (hash after commit)
+- CP-M4-WORLD-01 checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Dynamic difficulty / win-loss / M5+ **not started**
 - Independent WORLD audit **pending**
 - Browser WORLD interactive **UNVERIFIED**
@@ -21,7 +21,7 @@
 
 ## Verified
 
-- npm test 136; tsc; build; audit 0
+- npm test 136 (pre/post checkpoint); tsc; build; audit 0
 
 ## Next Task
 
