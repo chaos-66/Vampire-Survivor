@@ -1,5 +1,5 @@
 /**
- * HUD 绘制：只读 GameState 快照，不修改模拟状态。
+ * HUD：屏幕空间固定左上角，不应用 camera offset。
  */
 
 import type { GameState } from '../core/game-state'
@@ -25,5 +25,15 @@ export const drawHud = (
     `经验 ${game.experience} / ${game.experienceToNextLevel}`,
     12,
     124,
+  )
+  context.fillText(
+    `位置 ${Math.round(game.player.x)}, ${Math.round(game.player.y)}`,
+    12,
+    144,
+  )
+  context.fillText(
+    `世界 ${Math.round(game.arena.width)} × ${Math.round(game.arena.height)}`,
+    12,
+    164,
   )
 }

@@ -1,15 +1,18 @@
 /**
- * 升级遮罩与卡片绘制：只读 pending 选项，不改 GameState。
- * 卡片数量与 pending.options 一致；输入绑定同一列表。
+ * 升级遮罩与卡片：屏幕空间，覆盖整个视口，不应用 camera。
  */
 
-import type { Arena } from '../movement'
 import type { PendingUpgrade } from '../progression/progression-definition'
 import { getUpgradeCardRects } from './canvas-coordinates'
 
+export type ViewportSize = {
+  width: number
+  height: number
+}
+
 export const drawUpgradeOverlay = (
   context: CanvasRenderingContext2D,
-  arena: Arena,
+  viewport: ViewportSize,
   pending: PendingUpgrade | null,
 ): void => {
   if (pending === null) {
@@ -17,15 +20,15 @@ export const drawUpgradeOverlay = (
   }
 
   context.fillStyle = 'rgba(0, 0, 0, 0.55)'
-  context.fillRect(0, 0, arena.width, arena.height)
+  context.fillRect(0, 0, viewport.width, viewport.height)
 
   context.fillStyle = '#e8dfcf'
   context.font = '700 28px system-ui, sans-serif'
   context.textAlign = 'center'
-  context.fillText('选择强化', arena.width / 2, arena.height / 2 - 100)
+  context.fillText('选择强化', viewport.width / 2, viewport.height / 2 - 100)
 
   const options = pending.options
-  const rects = getUpgradeCardRects(arena, options.length)
+  const rects = getUpgradeCardRects(viewport, options.length)
   for (let i = 0; i < options.length; i += 1) {
     const r = rects[i]
     if (!r) {

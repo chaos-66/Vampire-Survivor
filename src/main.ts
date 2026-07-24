@@ -9,7 +9,10 @@ import {
 } from './input'
 import { createGameState, type GameState } from './core/game-state'
 import { updateGame } from './core/game-loop'
-import { applyUpgradeChoice, upgradeIdFromDigitCode } from './progression/upgrade-system'
+import {
+  applyUpgradeChoice,
+  upgradeIdFromDigitCode,
+} from './progression/upgrade-system'
 import {
   cssPointToLogical,
   upgradeIdAtPoint,
@@ -20,6 +23,13 @@ import { drawHud } from './ui/hud'
 import { drawUpgradeOverlay } from './ui/upgrade-overlay'
 import { drawWorld } from './ui/draw-world'
 import { ensureContentRegistered } from './content/bootstrap'
+import { computeWorldBounds } from './world/world'
+import {
+  createViewport,
+  computeBackingStoreSize,
+  type Viewport,
+} from './world/viewport'
+import { computeCamera, type Camera } from './world/camera'
 
 ensureContentRegistered()
 
@@ -35,13 +45,35 @@ if (!context) {
   throw new Error('2D canvas is not supported')
 }
 
-const arena = {
-  width: canvas.width,
-  height: canvas.height,
+const readCssSize = (): { width: number; height: number } => ({
+  width: Math.max(1, window.innerWidth || 1),
+  height: Math.max(1, window.innerHeight || 1),
+})
+
+const initialCss = readCssSize()
+let viewport: Viewport = createViewport(
+  initialCss.width,
+  initialCss.height,
+  window.devicePixelRatio || 1,
+)
+
+// 世界在 run 创建时固定；resize 不改变世界
+const worldBounds = computeWorldBounds(viewport.width, viewport.height)
+let game: GameState = createGameState(worldBounds)
+
+const applyCanvasSize = (vp: Viewport): void => {
+  const backing = computeBackingStoreSize(vp)
+  canvas.width = backing.width
+  canvas.height = backing.height
+  canvas.style.width = `${vp.width}px`
+  canvas.style.height = `${vp.height}px`
+  // 后续绘制使用 CSS 像素逻辑单位
+  context.setTransform(vp.dpr, 0, 0, vp.dpr, 0, 0)
 }
 
+applyCanvasSize(viewport)
+
 const input = createInputState()
-let game: GameState = createGameState(arena)
 let lastTimestampMs: number | null = null
 let animationFrameId = 0
 let hitFlashRemaining = 0
@@ -51,9 +83,9 @@ if (statusEl) {
   statusEl.textContent = getStatusMessage()
 }
 
-/**
- * 选择必须来自当前 pendingUpgrade.options（画面显示列表）。
- */
+const currentCamera = (): Camera =>
+  computeCamera(game.player.x, game.player.y, game.arena, viewport)
+
 const tryChooseUpgrade = (id: string | null): void => {
   if (id === null || game.pendingUpgrade === null) {
     return
@@ -66,7 +98,6 @@ const onKeyDown = (event: KeyboardEvent): void => {
     if (event.repeat) {
       return
     }
-    // 绑定当前显示候选，不用全局注册表
     const upgradeId = upgradeIdFromDigitCode(
       event.code,
       game.pendingUpgrade.options,
@@ -123,11 +154,18 @@ const onCanvasClick = (event: MouseEvent): void => {
     event.clientX,
     event.clientY,
     rect,
-    arena.width,
-    arena.height,
+    viewport.width,
+    viewport.height,
   )
   const optionIds = game.pendingUpgrade.options.map((o) => o.id)
-  tryChooseUpgrade(upgradeIdAtPoint(arena, point, optionIds))
+  tryChooseUpgrade(upgradeIdAtPoint(viewport, point, optionIds))
+}
+
+const onResize = (): void => {
+  const css = readCssSize()
+  viewport = createViewport(css.width, css.height, window.devicePixelRatio || 1)
+  applyCanvasSize(viewport)
+  // 不重建 GameState，不改 world bounds
 }
 
 window.addEventListener('keydown', onKeyDown)
@@ -135,11 +173,13 @@ window.addEventListener('keyup', onKeyUp)
 window.addEventListener('blur', onBlur)
 document.addEventListener('visibilitychange', onVisibilityChange)
 canvas.addEventListener('click', onCanvasClick)
+window.addEventListener('resize', onResize)
 
 const draw = (): void => {
-  drawWorld(context, game, hitFlashRemaining)
+  const camera = currentCamera()
+  drawWorld(context, game, camera, viewport, hitFlashRemaining)
   drawHud(context, game)
-  drawUpgradeOverlay(context, arena, game.pendingUpgrade)
+  drawUpgradeOverlay(context, viewport, game.pendingUpgrade)
 }
 
 const frame = (timestampMs: number): void => {
@@ -150,10 +190,11 @@ const frame = (timestampMs: number): void => {
   const dtSeconds = clampDeltaSeconds((timestampMs - lastTimestampMs) / 1000)
   lastTimestampMs = timestampMs
 
+  const camera = currentCamera()
   const hpBefore = game.player.health
   const direction =
     game.pendingUpgrade !== null ? { x: 0, y: 0 } : getMoveDirection(input)
-  game = updateGame(game, direction, dtSeconds)
+  game = updateGame(game, direction, dtSeconds, { camera, viewport })
   if (game.player.health < hpBefore) {
     hitFlashRemaining = 0.12
   }
@@ -177,6 +218,7 @@ window.addEventListener(
     window.removeEventListener('blur', onBlur)
     document.removeEventListener('visibilitychange', onVisibilityChange)
     canvas.removeEventListener('click', onCanvasClick)
+    window.removeEventListener('resize', onResize)
   },
   { once: true },
 )

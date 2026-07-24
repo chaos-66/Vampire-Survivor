@@ -2,15 +2,15 @@
  * 游戏更新协调器（纯逻辑）。
  *
  * 固定顺序（pendingUpgrade 时整段跳过）：
- * 1 玩家移动
- * 2 敌人生成
+ * 1 玩家移动（世界坐标，受世界边界限制）
+ * 2 敌人生成（视口外围，需 FrameContext）
  * 3 敌人追踪
  * 4 接触伤害
- * 5 武器（各实例独立 cooldown）
- * 6 投射物（击杀掉落结晶）
- * 7 拾取经验 → 可能进入升级冻结
+ * 5 武器
+ * 6 投射物和击杀
+ * 7 经验拾取
  *
- * 升级选择期间只停止纯模拟；RAF 仍可绘制冻结画面。
+ * 不导入 window/document；相机只通过纯 FrameContext 影响刷怪可见矩形。
  */
 
 import type { Vec2 } from '../vec'
@@ -25,11 +25,14 @@ import { advanceProjectiles } from '../combat/projectile-system'
 import { advanceWeapons } from '../weapons/weapon-system'
 import { pickupGems, spawnGemAt } from '../progression/experience-system'
 import { tryEnterPendingUpgrade } from '../progression/upgrade-system'
+import type { FrameContext } from '../world/frame-context'
+import { viewRectFromCamera } from '../world/frame-context'
 
 export const updateGame = (
   state: GameState,
   direction: Vec2,
   dtSeconds: number,
+  frame?: FrameContext,
 ): GameState => {
   if (state.pendingUpgrade !== null) {
     return state
@@ -42,7 +45,8 @@ export const updateGame = (
 
   state.player = movePlayer(state.player, direction, dt, state.arena)
 
-  advanceSpawns(state, dt)
+  const view = frame ? viewRectFromCamera(frame.camera) : undefined
+  advanceSpawns(state, dt, view, state.player)
   state.enemies = advanceEnemyChases(state.enemies, state.player, dt)
 
   const contact = applyContactDamage(

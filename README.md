@@ -2,7 +2,7 @@
 
 A small Survivors-style browser game built with Vite, TypeScript, and HTML Canvas.
 
-**M3:** move and fight, collect experience gems from defeated enemies, level up, and choose one of three fixed Chinese upgrades (迅捷 / 急速 / 强击). UI text is Chinese.
+**M4 World Demo:** full-screen canvas, large world (10x viewport minimum), camera follow, off-view enemy spawn. M1–M3 combat and progression retained. UI in Chinese.
 
 ## Commands
 

@@ -2,23 +2,30 @@
 
 ## Current Goal
 
-**M3 complete. CP-M4-ARCH-01 complete.** Stopped after architecture checkpoint. Next work is architect/user definition of the next gameplay or content checkpoint — not M4 gameplay implementation until a new development prompt.
+**CP-M4-WORLD-01** implementation complete; independent audit and browser acceptance open.
 
 ## History
 
 | ID | Status |
 |---|---|
-| CP-M0-01 | Green `574d0ca` |
-| CP-M1-01 | Green `563f7ee` / audit `976dfc6` |
-| CP-M2-01 | Green `6c5afab` / audit `5ce3915` |
-| CP-M3-01 | **Green / Complete** — implementation `3542f9b`; status `1fbbaa6`; independent audit PASS; user browser acceptance PASS |
-| CP-M4-ARCH-01 | **Green / Complete** — modularize `ba8b276` / `bb9ad82`; r1 repair `58c6620` / `952f392`; r2 repair `a2b3eb7` / `e1b2ea2`; final independent architecture audit PASS; modularized M1–M3 browser regression 30/30 PASS |
+| CP-M0-01 | Green |
+| CP-M1-01 | Green |
+| CP-M2-01 | Green |
+| CP-M3-01 | Green `3542f9b` |
+| CP-M4-ARCH-01 | Green (closeout `00166ee`) |
+| CP-M4-WORLD-01 | Implementation done; audit pending |
+
+## WORLD rules (delivered)
+
+- Viewport = window CSS size; DPR capped at 2
+- World = max(12000, vw*10) x max(7000, vh*10); fixed per run
+- Camera follows player, clamped; screen helpers only for draw
+- Off-view spawn with margin; HUD/upgrade screen-space
 
 ## Later
 
 | Item | Status |
 |---|---|
-| M4 gameplay | **Not started** |
+| Dynamic difficulty | **Not started** |
+| Win/loss/restart | **Not started** |
 | M5+ content | **Not started** |
-
-Next: architect and user define the next gameplay/content checkpoint. Do not mark large map or other content as active without a new prompt.

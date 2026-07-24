@@ -1,2 +1,1 @@
-export const getStatusMessage = (): string =>
-  'M3：收集经验并选择强化'
+export const getStatusMessage = (): string => 'M4：探索大世界'

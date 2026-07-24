@@ -1,17 +1,18 @@
 /**
- * CSS 显示坐标 → Canvas 逻辑坐标。
- * 逻辑世界为 960×540；CSS 只做缩放，不改变模拟。
- *
- * 升级卡片命中必须使用当前 pending 显示的 option IDs，
- * 不得用全局注册表顺序替代画面顺序。
+ * CSS 显示坐标 -> 逻辑屏幕坐标；升级卡片布局（屏幕空间）。
+ * 升级 UI 使用视口逻辑尺寸，不使用世界尺寸，也不应用 camera offset。
  */
 
 import type { Vec2 } from '../vec'
-import type { Arena } from '../movement'
 
 export type Rect = {
   x: number
   y: number
+  width: number
+  height: number
+}
+
+export type Size2 = {
   width: number
   height: number
 }
@@ -31,20 +32,23 @@ export const cssPointToLogical = (
   }
 }
 
+/**
+ * 升级卡片矩形：基于视口（屏幕）尺寸居中。
+ */
 export const getUpgradeCardRects = (
-  arena: Arena,
+  viewport: Size2,
   optionCount = 3,
 ): Rect[] => {
   const count = Math.max(0, optionCount)
   if (count === 0) {
     return []
   }
-  const cardWidth = Math.min(220, arena.width * 0.28)
+  const cardWidth = Math.min(220, viewport.width * 0.28)
   const cardHeight = 120
   const gap = 16
   const totalWidth = cardWidth * count + gap * Math.max(0, count - 1)
-  const startX = (arena.width - totalWidth) / 2
-  const y = arena.height / 2 - cardHeight / 2
+  const startX = (viewport.width - totalWidth) / 2
+  const y = viewport.height / 2 - cardHeight / 2
   return Array.from({ length: count }, (_, i) => ({
     x: startX + i * (cardWidth + gap),
     y,
@@ -54,15 +58,14 @@ export const getUpgradeCardRects = (
 }
 
 /**
- * 按当前 pending 选项顺序命中卡片。
- * optionIds 必须来自 game.pendingUpgrade.options 的 id 列表。
+ * 命中测试：optionIds 必须来自 pendingUpgrade.options。
  */
 export const upgradeIdAtPoint = (
-  arena: Arena,
+  viewport: Size2,
   point: Vec2,
   optionIds: readonly string[],
 ): string | null => {
-  const rects = getUpgradeCardRects(arena, optionIds.length)
+  const rects = getUpgradeCardRects(viewport, optionIds.length)
   for (let i = 0; i < rects.length; i += 1) {
     const r = rects[i]
     if (

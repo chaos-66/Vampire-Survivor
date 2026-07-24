@@ -3,36 +3,26 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- M1 Green; M2 Green.
-- M3 **complete**: `3542f9b` / `1fbbaa6`; independent audit **PASS**; user browser acceptance **PASS**.
-- CP-M4-ARCH-01 **complete**:
-  - Modularize `ba8b276` / `bb9ad82`
-  - R1 repair `58c6620` / `952f392`
-  - R2 repair `a2b3eb7` / `e1b2ea2`
-  - Final independent architecture audit **PASS**
-  - User modularized M1–M3 browser regression **30/30 PASS**
-- M4 gameplay **Not started**
-- M5+ content **Not started**
-- No open M3 or architecture exit items; no defects requiring Grok fixes for these checkpoints.
-- Browser name and version not supplied.
-- `AI-Workflow-Library/` is an ignored local reference copy; outside project commits; do not modify during milestone work.
+- M3 + ARCH Green (`00166ee`)
+- CP-M4-WORLD-01 implemented (hash after commit)
+- Dynamic difficulty / win-loss / M5+ **not started**
+- Independent WORLD audit **pending**
+- Browser WORLD interactive **UNVERIFIED**
 
-## Architecture summary
+## Modules
 
-- Thin `game.ts` facade; systems under `core/`, `actors/`, `weapons/`, `combat/`, `progression/`, `content/`, `ui/`.
-- Pending options bind input; per-weapon instance cooldown; object-identity registries; `createWeaponProgressionDefinition` for real weapon growth fixtures.
+- `src/world/world.ts` bounds
+- `src/world/viewport.ts` CSS size + DPR
+- `src/world/camera.ts` follow/clamp
+- `src/world/coordinates.ts` world/screen
+- `src/world/frame-context.ts` pure frame data for sim
+- Enemy spawn outside view in `combat/enemy-system.ts`
+- `main.ts` full-screen + resize; draw via camera
 
 ## Verified
 
-- Independent M3 audit PASS + user M3 browser PASS.
-- Independent architecture audit PASS + user modularized regression 30/30 PASS.
-- Independent auto: test x2 (115), tsc 0, build 35 modules; audit 0 vulns after transient quick-audit 400.
-
-## Not Yet Verified
-
-- None for M3 or CP-M4-ARCH-01 exit.
-- Browser name/version were not supplied.
+- npm test 136; tsc; build; audit 0
 
 ## Next Task
 
-**One task only:** architect and user define the next gameplay/content checkpoint and issue a new development prompt. **Grok must not begin M4 gameplay or M5+ content on its own.**
+WORLD independent audit + user browser acceptance. **No difficulty / win-loss / new content.**

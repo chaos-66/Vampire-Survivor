@@ -160,3 +160,9 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Doc closeout (implementer): `npm run build` | Passed | 35 modules. |
 | 2026-07-22 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
+| 2026-07-22 | CP-M4-WORLD-01 start | Started | HEAD `00166ee`; clean main. |
+| 2026-07-22 | WORLD `npm test` | Passed | 6 files / 136 tests. |
+| 2026-07-22 | WORLD `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | WORLD `npm run build` | Passed | dist generated. |
+| 2026-07-22 | WORLD `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-22 | WORLD interactive browser | UNVERIFIED | No interactive browser session in implementer environment. |
