@@ -17,10 +17,11 @@ import { viewRectFromCamera } from './frame-context'
 import {
   spawnPositionOutsideView,
   SPAWN_VIEW_MARGIN,
+  SPAWN_VIEW_DEPTH,
   advanceSpawns,
 } from '../combat/enemy-system'
 import { getUpgradeCardRects, upgradeIdAtPoint } from '../ui/canvas-coordinates'
-import { PLAYER_SPEED } from '../core/constants'
+import { ENEMY_RADIUS, PLAYER_SPEED } from '../core/constants'
 import { clampPlayerToArena, stepPlayer } from '../movement'
 import {
   createGameState,
@@ -244,6 +245,117 @@ describe('off-view spawn', () => {
       rng: createSequenceRng(seq),
     })
     expect(a).toEqual(b)
+  })
+
+  it('keeps spawns in a bounded band around the selected view edge', () => {
+    const cases = [
+      { side: 0, point: 'top' },
+      { side: 1, point: 'right' },
+      { side: 2, point: 'bottom' },
+      { side: 3, point: 'left' },
+    ] as const
+
+    for (const testCase of cases) {
+      const p = spawnPositionOutsideView({
+        world,
+        view,
+        margin: SPAWN_VIEW_MARGIN,
+        player: {
+          x: 880,
+          y: 570,
+          radius: 16,
+          health: 1,
+          maxHealth: 1,
+          moveSpeed: 1,
+          attackCooldown: 1,
+          projectileDamage: 1,
+          characterId: 'x',
+          weapons: [],
+        },
+        rng: createSequenceRng([
+          (testCase.side + 0.01) / 4,
+          0.5,
+          0.5,
+        ]),
+      })
+
+      if (testCase.point === 'top') {
+        expect(p.y).toBeGreaterThanOrEqual(
+          view.top - SPAWN_VIEW_MARGIN - SPAWN_VIEW_DEPTH,
+        )
+        expect(p.y).toBeLessThan(view.top)
+        expect(p.x).toBeGreaterThanOrEqual(view.left - SPAWN_VIEW_MARGIN)
+        expect(p.x).toBeLessThanOrEqual(view.right + SPAWN_VIEW_MARGIN)
+      } else if (testCase.point === 'right') {
+        expect(p.x).toBeGreaterThanOrEqual(view.right)
+        expect(p.x).toBeLessThanOrEqual(
+          view.right + SPAWN_VIEW_MARGIN + SPAWN_VIEW_DEPTH,
+        )
+        expect(p.y).toBeGreaterThanOrEqual(view.top - SPAWN_VIEW_MARGIN)
+        expect(p.y).toBeLessThanOrEqual(view.bottom + SPAWN_VIEW_MARGIN)
+      } else if (testCase.point === 'bottom') {
+        expect(p.y).toBeGreaterThanOrEqual(view.bottom)
+        expect(p.y).toBeLessThanOrEqual(
+          view.bottom + SPAWN_VIEW_MARGIN + SPAWN_VIEW_DEPTH,
+        )
+        expect(p.x).toBeGreaterThanOrEqual(view.left - SPAWN_VIEW_MARGIN)
+        expect(p.x).toBeLessThanOrEqual(view.right + SPAWN_VIEW_MARGIN)
+      } else {
+        expect(p.x).toBeGreaterThanOrEqual(
+          view.left - SPAWN_VIEW_MARGIN - SPAWN_VIEW_DEPTH,
+        )
+        expect(p.x).toBeLessThan(view.left)
+        expect(p.y).toBeGreaterThanOrEqual(view.top - SPAWN_VIEW_MARGIN)
+        expect(p.y).toBeLessThanOrEqual(view.bottom + SPAWN_VIEW_MARGIN)
+      }
+    }
+  })
+
+  it('stays inside the world and outside views at world corners', () => {
+    const cornerViews = [
+      { left: 0, top: 0, right: 960, bottom: 540 },
+      { left: 1040, top: 0, right: 2000, bottom: 540 },
+      { left: 0, top: 960, right: 960, bottom: 1500 },
+      { left: 1040, top: 960, right: 2000, bottom: 1500 },
+    ]
+
+    for (const cornerView of cornerViews) {
+      for (let i = 0; i < 12; i += 1) {
+        const p = spawnPositionOutsideView({
+          world,
+          view: cornerView,
+          margin: SPAWN_VIEW_MARGIN,
+          player: {
+            x: (cornerView.left + cornerView.right) / 2,
+            y: (cornerView.top + cornerView.bottom) / 2,
+            radius: 16,
+            health: 1,
+            maxHealth: 1,
+            moveSpeed: 1,
+            attackCooldown: 1,
+            projectileDamage: 1,
+            characterId: 'x',
+            weapons: [],
+          },
+          rng: createSequenceRng([
+            (i % 4) / 4,
+            ((i * 3) % 10) / 10,
+            ((i * 7) % 10) / 10,
+          ]),
+        })
+
+        expect(p.x).toBeGreaterThanOrEqual(ENEMY_RADIUS)
+        expect(p.x).toBeLessThanOrEqual(world.width - ENEMY_RADIUS)
+        expect(p.y).toBeGreaterThanOrEqual(ENEMY_RADIUS)
+        expect(p.y).toBeLessThanOrEqual(world.height - ENEMY_RADIUS)
+        const insideView =
+          p.x >= cornerView.left &&
+          p.x <= cornerView.right &&
+          p.y >= cornerView.top &&
+          p.y <= cornerView.bottom
+        expect(insideView).toBe(false)
+      }
+    }
   })
 
   it('advanceSpawns with view uses off-view path', () => {

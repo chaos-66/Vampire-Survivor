@@ -170,3 +170,11 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Post-WORLD `npm test` | Passed | 6 files / 136 tests. |
 | 2026-07-22 | Post-WORLD `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Post-WORLD `npm run build` | Passed | 40 modules. |
+| 2026-07-24 | Independent audit of WORLD checkpoint `ba20893` | FAIL | Spawn candidates were outside the view but sampled across the entire world-side strip; enemies could spawn thousands of units away and consume the enemy cap before maintaining local pressure. |
+| 2026-07-24 | WORLD spawn repair | Applied | Limited candidates to bounded bands around the selected current-view edge; added four-side and world-corner coverage. |
+| 2026-07-24 | Repair `npm test` | Passed | 6 files / 138 tests. |
+| 2026-07-24 | Repair `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-24 | Repair `npm run build` | Passed | 40 modules transformed. |
+| 2026-07-24 | Repair `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-24 | Repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-24 | Fresh independent WORLD repair audit | PASS | Auditor reviewed world/viewport/camera/coordinates/rendering/UI/spawn scope and reran 138 tests, tsc, build, audit, and diff check. Browser interaction remains UNVERIFIED. |

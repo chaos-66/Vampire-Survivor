@@ -2,7 +2,8 @@
 
 ## Current Goal
 
-**CP-M4-WORLD-01** at `ba20893`. Independent audit and browser acceptance open.
+**CP-M4-WORLD-01** repair independently audited PASS. Repair checkpoint and
+browser acceptance remain open.
 
 ## History
 
@@ -13,14 +14,14 @@
 | CP-M2-01 | Green |
 | CP-M3-01 | Green `3542f9b` |
 | CP-M4-ARCH-01 | Green (closeout `00166ee`) |
-| CP-M4-WORLD-01 | Checkpoint `ba20893`; automated green; browser UNVERIFIED; independent audit pending |
+| CP-M4-WORLD-01 | `ba20893` audit found distant spawning; local repair independently re-audited PASS at 138 tests; repair checkpoint/browser pending |
 
 ## WORLD rules (delivered)
 
 - Viewport = window CSS size; DPR capped at 2
 - World = max(12000, vw*10) x max(7000, vh*10); fixed per run
 - Camera follows player, clamped; screen helpers only for draw
-- Off-view spawn with margin; HUD/upgrade screen-space
+- Off-view spawn in bounded bands around the current view; HUD/upgrade screen-space
 
 ## Later
 

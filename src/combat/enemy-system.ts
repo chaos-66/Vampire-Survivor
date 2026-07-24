@@ -21,6 +21,8 @@ import { circlesOverlap } from '../collision'
 
 /** 生成点距视口边缘的外边距（逻辑单位）。 */
 export const SPAWN_VIEW_MARGIN = 80
+/** 生成点沿视口外侧向世界延伸的最大深度（逻辑单位）。 */
+export const SPAWN_VIEW_DEPTH = 160
 
 export type SpawnState = {
   /** 世界边界（历史名 arena = 世界，不是屏幕） */
@@ -70,23 +72,25 @@ export const spawnPositionOutsideView = (
   ctx: VisibleSpawnContext,
 ): Vec2 => {
   const { world, view, margin, rng } = ctx
-  const m = Math.max(0, margin)
+  const m = Number.isFinite(margin) ? Math.max(0, margin) : 0
+  // margin 为 0 时仍需严格落在视口外，避免命中测试把边界算作可见。
+  const separation = Math.max(0.001, m)
   const sides: number[] = []
 
   // 上：view.top - m >= 0 且有条带
-  if (view.top - m >= 0) {
+  if (view.top - separation >= ENEMY_RADIUS) {
     sides.push(0)
   }
   // 右
-  if (view.right + m <= world.width) {
+  if (view.right + separation <= world.width - ENEMY_RADIUS) {
     sides.push(1)
   }
   // 下
-  if (view.bottom + m <= world.height) {
+  if (view.bottom + separation <= world.height - ENEMY_RADIUS) {
     sides.push(2)
   }
   // 左
-  if (view.left - m >= 0) {
+  if (view.left - separation >= ENEMY_RADIUS) {
     sides.push(3)
   }
 
@@ -109,39 +113,55 @@ export const spawnPositionOutsideView = (
   const clamp = (v: number, lo: number, hi: number): number =>
     Math.min(Math.max(v, lo), hi)
 
+  const randomUnit = (): number => {
+    const value = rng()
+    return Number.isFinite(value) ? clamp(value, 0, 1) : 0
+  }
+
+  const sampleRange = (
+    lo: number,
+    hi: number,
+    limit: number,
+    amount: number,
+  ): number => {
+    const max = Math.max(ENEMY_RADIUS, limit - ENEMY_RADIUS)
+    const start = clamp(lo, ENEMY_RADIUS, max)
+    const end = clamp(hi, ENEMY_RADIUS, max)
+    const rangeLo = Math.min(start, end)
+    const rangeHi = Math.max(start, end)
+    return rangeLo + amount * (rangeHi - rangeLo)
+  }
+
   const side = pickSide()
-  const t = rng()
+  const along = randomUnit()
+  const depth = randomUnit()
 
   let x = 0
   let y = 0
   switch (side) {
     case 0: {
-      // 上条带：y in [radius, view.top - m] or [radius, view.top)
-      const yHi = Math.max(ENEMY_RADIUS, view.top - m)
-      const yLo = ENEMY_RADIUS
-      y = yLo + t * Math.max(0, yHi - yLo)
-      x = ENEMY_RADIUS + rng() * Math.max(0, world.width - 2 * ENEMY_RADIUS)
+      // 上方窄带：横向贴近视口，纵向只向世界内部延伸有限深度。
+      const edge = view.top - separation
+      y = edge - depth * SPAWN_VIEW_DEPTH
+      x = sampleRange(view.left - m, view.right + m, world.width, along)
       break
     }
     case 1: {
-      const xLo = Math.min(world.width - ENEMY_RADIUS, view.right + m)
-      const xHi = world.width - ENEMY_RADIUS
-      x = xLo + t * Math.max(0, xHi - xLo)
-      y = ENEMY_RADIUS + rng() * Math.max(0, world.height - 2 * ENEMY_RADIUS)
+      const edge = view.right + separation
+      x = edge + depth * SPAWN_VIEW_DEPTH
+      y = sampleRange(view.top - m, view.bottom + m, world.height, along)
       break
     }
     case 2: {
-      const yLo = Math.min(world.height - ENEMY_RADIUS, view.bottom + m)
-      const yHi = world.height - ENEMY_RADIUS
-      y = yLo + t * Math.max(0, yHi - yLo)
-      x = ENEMY_RADIUS + rng() * Math.max(0, world.width - 2 * ENEMY_RADIUS)
+      const edge = view.bottom + separation
+      y = edge + depth * SPAWN_VIEW_DEPTH
+      x = sampleRange(view.left - m, view.right + m, world.width, along)
       break
     }
     default: {
-      const xHi = Math.max(ENEMY_RADIUS, view.left - m)
-      const xLo = ENEMY_RADIUS
-      x = xLo + t * Math.max(0, xHi - xLo)
-      y = ENEMY_RADIUS + rng() * Math.max(0, world.height - 2 * ENEMY_RADIUS)
+      const edge = view.left - separation
+      x = edge - depth * SPAWN_VIEW_DEPTH
+      y = sampleRange(view.top - m, view.bottom + m, world.height, along)
       break
     }
   }

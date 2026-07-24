@@ -6,7 +6,10 @@
 - M3 + ARCH Green (`00166ee`)
 - CP-M4-WORLD-01 checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Dynamic difficulty / win-loss / M5+ **not started**
-- Independent WORLD audit **pending**
+- Audit found distant side-band spawning; local repair constrains spawning to
+  bounded bands around the current view
+- Fresh independent repair audit: **PASS**
+- Repair checkpoint **pending**
 - Browser WORLD interactive **UNVERIFIED**
 
 ## Modules
@@ -16,13 +19,15 @@
 - `src/world/camera.ts` follow/clamp
 - `src/world/coordinates.ts` world/screen
 - `src/world/frame-context.ts` pure frame data for sim
-- Enemy spawn outside view in `combat/enemy-system.ts`
+- Enemy spawn outside view in bounded edge bands in `combat/enemy-system.ts`
 - `main.ts` full-screen + resize; draw via camera
 
 ## Verified
 
-- npm test 136 (pre/post checkpoint); tsc; build; audit 0
+- Original checkpoint: npm test 136; tsc; build; audit 0
+- Independent repair audit: npm test 138; tsc; build; audit 0; diff check passed
 
 ## Next Task
 
-WORLD independent audit + user browser acceptance. **No difficulty / win-loss / new content.**
+Create the WORLD spawn repair checkpoint, then obtain user browser acceptance.
+**No difficulty / win-loss / new content.**
