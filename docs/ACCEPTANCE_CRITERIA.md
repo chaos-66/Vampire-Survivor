@@ -20,11 +20,12 @@ Closeout `00166ee`.
 
 ### Browser
 
-- [ ] Interactive WORLD checklist — **UNVERIFIED**
+- [x] Interactive WORLD checklist — user-reported **PASS**; browser/version not supplied
 
 ### Process
 
 - [x] WORLD checkpoint commit (`ba20893`)
 - [x] WORLD spawn repair checkpoint (`008514e`)
 - [x] Independent repair audit PASS
+- [x] User browser acceptance PASS
 - [x] Dynamic difficulty / win-loss / M5+ not started

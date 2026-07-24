@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-WORLD-01 repair checkpoint complete; browser acceptance pending
+- Current stage: CP-M4-WORLD-01 Green; stopped before dynamic difficulty and win/loss
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
 - Last updated: 2026-07-24
@@ -25,11 +25,14 @@
 - Repair limits spawn depth and along-edge range near the current view
 - Independent repair audit PASS: 6 files / 138 tests; tsc / build / audit /
   diff check green
+- User-reported interactive WORLD browser acceptance: PASS
 
-## Unverified
+## Unverified / Not Started
 
-- Interactive browser WORLD checklist — UNVERIFIED
+- Browser name and version were not supplied
+- Dynamic difficulty, win/loss/restart, and M5+ content remain not started
 
 ## Next Step
 
-Complete browser acceptance. Do not start difficulty or win/loss.
+User and architect define the next checkpoint. Do not start difficulty,
+win/loss, or new content without an approved checkpoint.

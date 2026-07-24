@@ -179,3 +179,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-24 | Repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-24 | Fresh independent WORLD repair audit | PASS | Auditor reviewed world/viewport/camera/coordinates/rendering/UI/spawn scope and reran 138 tests, tsc, build, audit, and diff check. Browser interaction remains UNVERIFIED. |
 | 2026-07-24 | `git commit -m "M4: repair world-edge enemy spawning"` | Passed | Repair checkpoint `008514e` (7 intended files). |
+| 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
+| 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
+| 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |
+| 2026-07-24 | WORLD closeout `npm run build` | Passed | TypeScript and Vite completed; 40 modules transformed. |

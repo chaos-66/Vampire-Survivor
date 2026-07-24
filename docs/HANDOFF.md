@@ -10,7 +10,8 @@
   bounded bands around the current view
 - Fresh independent repair audit: **PASS**
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
-- Browser WORLD interactive **UNVERIFIED**
+- User-reported browser WORLD acceptance: **PASS**
+- CP-M4-WORLD-01: **Green**
 
 ## Modules
 
@@ -26,7 +27,9 @@
 
 - Original checkpoint: npm test 136; tsc; build; audit 0
 - Independent repair audit: npm test 138; tsc; build; audit 0; diff check passed
+- User-reported complete WORLD browser checklist: PASS; browser/version not supplied
 
 ## Next Task
 
-Obtain user browser acceptance. **No difficulty / win-loss / new content.**
+User and architect define the next checkpoint. **Do not begin difficulty,
+win-loss, or new content without an approved checkpoint.**
