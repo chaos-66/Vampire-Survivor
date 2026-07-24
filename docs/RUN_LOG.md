@@ -139,3 +139,24 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-22 | Post-round-2 `npm test` | Passed | 5 files / 115 tests. |
 | 2026-07-22 | Post-round-2 `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-22 | Post-round-2 `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Independent M3 code/scope audit (auditor) | PASS | Reviewed `3542f9b`/`1fbbaa6`; gems, level, freeze, upgrades, overflow; no M4 gameplay. |
+| 2026-07-22 | Independent auditor M3 `npm test` / tsc / build | PASS | Included in modular 115-test suite baseline; M3 logic covered. |
+| 2026-07-22 | User M3 browser acceptance | PASS | User-reported M3 interactive acceptance PASS; browser/version not supplied. |
+| 2026-07-22 | M3 independent audit final conclusion | PASS | `CP-M3-01` Green; M3 may exit. |
+| 2026-07-22 | Independent architecture final audit after `a2b3eb7` (auditor) | PASS | Modules/facade/pending-input/cooldowns/identity registries/weapon growth/category/maxLevel; no M4 gameplay; no M5+ content. |
+| 2026-07-22 | Independent auditor `npm test` first | PASS | 5 files / 115 tests. |
+| 2026-07-22 | Independent auditor `npm test` second | PASS | 5 files / 115 tests. |
+| 2026-07-22 | Independent auditor `npx tsc --noEmit` | PASS | Exit 0. |
+| 2026-07-22 | Independent auditor `npm run build` | PASS | 35 modules transformed. |
+| 2026-07-22 | Independent auditor `npm audit` first | Failed | npm registry quick-audit HTTP 400: Invalid package tree message; auditor did not reinstall or rewrite lockfile. |
+| 2026-07-22 | Independent auditor `npm ls --all` | Passed | Dependency tree resolvable; unmet items were platform/tool optional deps. |
+| 2026-07-22 | Independent auditor `npm audit` retry | PASS | found 0 vulnerabilities. |
+| 2026-07-22 | Independent auditor `npm audit --package-lock-only` | PASS | found 0 vulnerabilities. Transient quick-audit endpoint error, not lockfile block. |
+| 2026-07-22 | Independent auditor Git whitespace/status | PASS | Clean `main`. |
+| 2026-07-22 | User modularized M1-M3 browser regression (30 checks) | PASS | User-reported modularized M1-M3 browser regression: 30/30 PASS; browser/version not supplied. Includes movement, combat, XP, upgrade freeze/keys/click, three upgrades, Chinese UI, 60s run, no map/camera/win-loss/new content. |
+| 2026-07-22 | CP-M4-ARCH-01 independent audit final conclusion | PASS | Architecture checkpoint Green; may exit. |
+| 2026-07-22 | M3 + CP-M4-ARCH-01 formal closeout (docs-only) | In progress | Record PASS audits and user evidence; no src changes. |
+| 2026-07-22 | Doc closeout (implementer): `npm test` | Passed | 5 files / 115 tests (docs-only M3+ARCH close). |
+| 2026-07-22 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-22 | Doc closeout (implementer): `npm run build` | Passed | 35 modules. |
+| 2026-07-22 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
