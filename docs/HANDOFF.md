@@ -9,7 +9,7 @@
 - Audit found distant side-band spawning; local repair constrains spawning to
   bounded bands around the current view
 - Fresh independent repair audit: **PASS**
-- Repair checkpoint **pending**
+- Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
 - Browser WORLD interactive **UNVERIFIED**
 
 ## Modules
@@ -29,5 +29,4 @@
 
 ## Next Task
 
-Create the WORLD spawn repair checkpoint, then obtain user browser acceptance.
-**No difficulty / win-loss / new content.**
+Obtain user browser acceptance. **No difficulty / win-loss / new content.**

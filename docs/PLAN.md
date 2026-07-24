@@ -2,8 +2,8 @@
 
 ## Current Goal
 
-**CP-M4-WORLD-01** repair independently audited PASS. Repair checkpoint and
-browser acceptance remain open.
+**CP-M4-WORLD-01** repair checkpoint `008514e` independently audited PASS.
+Browser acceptance remains open.
 
 ## History
 
@@ -14,7 +14,7 @@ browser acceptance remain open.
 | CP-M2-01 | Green |
 | CP-M3-01 | Green `3542f9b` |
 | CP-M4-ARCH-01 | Green (closeout `00166ee`) |
-| CP-M4-WORLD-01 | `ba20893` audit found distant spawning; local repair independently re-audited PASS at 138 tests; repair checkpoint/browser pending |
+| CP-M4-WORLD-01 | `ba20893` audit found distant spawning; repair `008514e` independently audited PASS at 138 tests; browser UNVERIFIED |
 
 ## WORLD rules (delivered)
 

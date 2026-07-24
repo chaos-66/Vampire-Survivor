@@ -178,3 +178,4 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-24 | Repair `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-24 | Repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-24 | Fresh independent WORLD repair audit | PASS | Auditor reviewed world/viewport/camera/coordinates/rendering/UI/spawn scope and reran 138 tests, tsc, build, audit, and diff check. Browser interaction remains UNVERIFIED. |
+| 2026-07-24 | `git commit -m "M4: repair world-edge enemy spawning"` | Passed | Repair checkpoint `008514e` (7 intended files). |

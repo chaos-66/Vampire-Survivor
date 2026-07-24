@@ -2,8 +2,9 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-WORLD-01 audit repair independently verified; repair checkpoint pending
+- Current stage: CP-M4-WORLD-01 repair checkpoint complete; browser acceptance pending
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
+- Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
 - Last updated: 2026-07-24
 - M3 Green; CP-M4-ARCH-01 Green
 - Dynamic difficulty: **Not started**
@@ -28,9 +29,7 @@
 ## Unverified
 
 - Interactive browser WORLD checklist — UNVERIFIED
-- Repair checkpoint — pending
 
 ## Next Step
 
-Create the repair checkpoint, then complete browser acceptance. Do not start
-difficulty or win/loss.
+Complete browser acceptance. Do not start difficulty or win/loss.

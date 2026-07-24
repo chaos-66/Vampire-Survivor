@@ -25,5 +25,6 @@ Closeout `00166ee`.
 ### Process
 
 - [x] WORLD checkpoint commit (`ba20893`)
+- [x] WORLD spawn repair checkpoint (`008514e`)
 - [x] Independent repair audit PASS
 - [x] Dynamic difficulty / win-loss / M5+ not started
