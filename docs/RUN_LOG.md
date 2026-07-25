@@ -216,6 +216,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Input/gem repair `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-25 | Input/gem repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-25 | Independent input/gem repair audit | PASS | Auditor verified Canvas-only context-menu suppression, held-input clearing, complete GEM_CAP removal, one gem per kill, scope, and 170-test/toolchain evidence. Browser focused recheck remains pending. |
+| 2026-07-25 | `git commit -m "M4: fix stuck input and uncapped gem drops"` | Passed | Repair checkpoint `c2f6588` (13 intended files). |
 | 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |

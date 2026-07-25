@@ -65,4 +65,5 @@ Closeout `00166ee`.
 - [x] Implementation checkpoint (`60bd1dc`)
 - [x] Independent audit PASS after two repair rounds
 - [x] Input/gem repair independent audit PASS
+- [x] Input/gem repair checkpoint (`c2f6588`)
 - [ ] User browser acceptance PASS after focused regression recheck

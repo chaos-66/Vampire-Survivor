@@ -4,6 +4,7 @@
 
 - Root: `D:\agent\workspace\vampire_survivors`
 - Difficulty checkpoint: `60bd1dc` (`M4: implement dynamic spawn difficulty`)
+- Input/gem repair checkpoint: `c2f6588`
 - M3 + ARCH Green (`00166ee`)
 - CP-M4-WORLD-01 checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - CP-M4-DIFFICULTY-01 implemented; automated verification **PASS**
@@ -47,6 +48,5 @@
 
 ## Next Task
 
-Create the input/gem repair checkpoint and request focused browser recheck.
-**Do not implement win-loss, restart, enemy
+Request focused input/gem browser recheck. **Do not implement win-loss, restart, enemy
 stat scaling, or new content.**

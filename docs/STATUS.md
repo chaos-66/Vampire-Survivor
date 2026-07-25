@@ -2,10 +2,11 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-DIFFICULTY-01 input/gem repair independently audited PASS; repair checkpoint pending
+- Current stage: CP-M4-DIFFICULTY-01 input/gem repair checkpoint complete; focused browser recheck pending
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
 - Difficulty checkpoint: `60bd1dc` (`M4: implement dynamic spawn difficulty`)
+- Input/gem repair: `c2f6588` (`M4: fix stuck input and uncapped gem drops`)
 - Last updated: 2026-07-25
 - M3 Green; CP-M4-ARCH-01 Green
 - Dynamic difficulty: **Implemented; automated verification passed**
@@ -62,9 +63,9 @@
   parameters could still create an effectively unbounded spawn loop
 - Final independent difficulty audit: PASS; no blocking findings
 - Difficulty browser checklist: user-reported PASS
-- Input/gem repair checkpoint and focused browser recheck are pending
+- Focused input/gem browser recheck is pending
 - Win/loss/restart and M5+ content remain not started
 
 ## Next Step
 
-Create the input/gem repair checkpoint, then obtain focused browser recheck.
+Obtain focused input/gem browser recheck.

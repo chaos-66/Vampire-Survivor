@@ -2,9 +2,8 @@
 
 ## Current Goal
 
-**CP-M4-DIFFICULTY-01 checkpoint `60bd1dc` browser checklist passed, but user
-reported two blocking regressions.** Context-menu stuck input and capped gem
-drops are repaired locally; independent repair audit and browser recheck remain.
+**CP-M4-DIFFICULTY-01 input/gem repair `c2f6588` independently audited PASS.**
+Focused browser recheck remains before Green closeout.
 
 ## History
 
@@ -16,7 +15,7 @@ drops are repaired locally; independent repair audit and browser recheck remain.
 | CP-M3-01 | Green `3542f9b` |
 | CP-M4-ARCH-01 | Green (closeout `00166ee`) |
 | CP-M4-WORLD-01 | Green: implementation `ba20893`; spawn repair `008514e`; independent repair audit PASS; user browser acceptance PASS |
-| CP-M4-DIFFICULTY-01 | `60bd1dc`; difficulty browser checklist PASS; input/gem regression repair locally green at 170 tests; repair audit/recheck pending |
+| CP-M4-DIFFICULTY-01 | `60bd1dc`; difficulty checklist PASS; input/gem repair `c2f6588` audit PASS at 170 tests; focused recheck pending |
 
 ## WORLD rules (delivered)
 
