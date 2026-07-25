@@ -4,9 +4,10 @@ import {
   clearInput,
   createInputState,
   getMoveDirection,
+  isSecondaryPointerEvent,
   pressKey,
+  preventSecondaryDefault,
   releaseKey,
-  suppressContextMenu,
 } from './input'
 import { createGameState, type GameState } from './core/game-state'
 import { updateGame } from './core/game-loop'
@@ -78,6 +79,8 @@ const input = createInputState()
 let lastTimestampMs: number | null = null
 let animationFrameId = 0
 let hitFlashRemaining = 0
+/** 当前被 capture 的右键 pointerId；不涉及键盘 InputState。 */
+let secondaryPointerId: number | null = null
 
 const statusEl = document.querySelector<HTMLElement>('#status')
 if (statusEl) {
@@ -147,6 +150,10 @@ const onVisibilityChange = (): void => {
 }
 
 const onCanvasClick = (event: MouseEvent): void => {
+  // 右键不进入升级选择；仅左键路径
+  if (event.button === 2 || isSecondaryPointerEvent(event)) {
+    return
+  }
   if (game.pendingUpgrade === null) {
     return
   }
@@ -162,8 +169,83 @@ const onCanvasClick = (event: MouseEvent): void => {
   tryChooseUpgrade(upgradeIdAtPoint(viewport, point, optionIds))
 }
 
+/**
+ * Canvas 上右键/辅助按钮：只 preventDefault，绝不修改键盘 InputState。
+ */
 const onCanvasContextMenu = (event: MouseEvent): void => {
-  suppressContextMenu(input, event)
+  preventSecondaryDefault(event)
+}
+
+const releaseSecondaryCapture = (pointerId: number): void => {
+  if (secondaryPointerId !== pointerId) {
+    return
+  }
+  secondaryPointerId = null
+  try {
+    if (canvas.hasPointerCapture?.(pointerId)) {
+      canvas.releasePointerCapture(pointerId)
+    }
+  } catch {
+    // 忽略不支持或重复释放；不得抛到控制台中断游戏
+  }
+}
+
+const onCanvasPointerDown = (event: PointerEvent): void => {
+  if (!isSecondaryPointerEvent(event)) {
+    return
+  }
+  preventSecondaryDefault(event)
+  secondaryPointerId = event.pointerId
+  try {
+    canvas.setPointerCapture(event.pointerId)
+  } catch {
+    // 可选能力；失败时仍依赖 move/up 上的 preventDefault
+  }
+}
+
+const onCanvasPointerMove = (event: PointerEvent): void => {
+  if (!isSecondaryPointerEvent(event)) {
+    return
+  }
+  preventSecondaryDefault(event)
+}
+
+const onCanvasPointerUp = (event: PointerEvent): void => {
+  if (!isSecondaryPointerEvent(event) && secondaryPointerId !== event.pointerId) {
+    return
+  }
+  if (isSecondaryPointerEvent(event) || secondaryPointerId === event.pointerId) {
+    preventSecondaryDefault(event)
+  }
+  releaseSecondaryCapture(event.pointerId)
+}
+
+const onCanvasPointerCancel = (event: PointerEvent): void => {
+  if (isSecondaryPointerEvent(event) || secondaryPointerId === event.pointerId) {
+    preventSecondaryDefault(event)
+  }
+  releaseSecondaryCapture(event.pointerId)
+}
+
+const onCanvasAuxClick = (event: MouseEvent): void => {
+  if (!isSecondaryPointerEvent(event)) {
+    return
+  }
+  preventSecondaryDefault(event)
+}
+
+const onCanvasMouseDown = (event: MouseEvent): void => {
+  if (!isSecondaryPointerEvent(event)) {
+    return
+  }
+  preventSecondaryDefault(event)
+}
+
+const onCanvasMouseUp = (event: MouseEvent): void => {
+  if (!isSecondaryPointerEvent(event)) {
+    return
+  }
+  preventSecondaryDefault(event)
 }
 
 const onResize = (): void => {
@@ -179,6 +261,13 @@ window.addEventListener('blur', onBlur)
 document.addEventListener('visibilitychange', onVisibilityChange)
 canvas.addEventListener('click', onCanvasClick)
 canvas.addEventListener('contextmenu', onCanvasContextMenu)
+canvas.addEventListener('pointerdown', onCanvasPointerDown)
+canvas.addEventListener('pointermove', onCanvasPointerMove)
+canvas.addEventListener('pointerup', onCanvasPointerUp)
+canvas.addEventListener('pointercancel', onCanvasPointerCancel)
+canvas.addEventListener('auxclick', onCanvasAuxClick)
+canvas.addEventListener('mousedown', onCanvasMouseDown)
+canvas.addEventListener('mouseup', onCanvasMouseUp)
 window.addEventListener('resize', onResize)
 
 const draw = (): void => {
@@ -225,6 +314,13 @@ window.addEventListener(
     document.removeEventListener('visibilitychange', onVisibilityChange)
     canvas.removeEventListener('click', onCanvasClick)
     canvas.removeEventListener('contextmenu', onCanvasContextMenu)
+    canvas.removeEventListener('pointerdown', onCanvasPointerDown)
+    canvas.removeEventListener('pointermove', onCanvasPointerMove)
+    canvas.removeEventListener('pointerup', onCanvasPointerUp)
+    canvas.removeEventListener('pointercancel', onCanvasPointerCancel)
+    canvas.removeEventListener('auxclick', onCanvasAuxClick)
+    canvas.removeEventListener('mousedown', onCanvasMouseDown)
+    canvas.removeEventListener('mouseup', onCanvasMouseUp)
     window.removeEventListener('resize', onResize)
   },
   { once: true },

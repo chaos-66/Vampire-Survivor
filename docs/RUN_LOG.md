@@ -221,3 +221,9 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |
 | 2026-07-24 | WORLD closeout `npm run build` | Passed | TypeScript and Vite completed; 40 modules transformed. |
+| 2026-07-25 | Secondary-pointer input-neutral repair | Applied | Removed clearInput from contextmenu; Canvas-only secondary preventDefault + optional pointer capture. |
+| 2026-07-25 | Repair `npm test` | Passed | 7 files / 176 tests. |
+| 2026-07-25 | Repair `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-25 | Repair `npm run build` | Passed | Success. |
+| 2026-07-25 | Repair `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-25 | Secondary-pointer browser recheck | UNVERIFIED | Awaits user hold-key + right-click/drag validation. |

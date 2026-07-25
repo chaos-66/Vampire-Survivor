@@ -21,4 +21,6 @@
 | D-017 | 2026-07-25 | Implement dynamic difficulty before win/loss/restart. | User selected the minimum-risk sequence. | CP-M4-DIFFICULTY-01 is the only active checkpoint. |
 | D-018 | 2026-07-25 | Difficulty uses active-time spawn interval/cap tiers only. | Increase pressure without coupling outcome logic or changing enemy balance. | Tiers at 0/15/30/45s; upgrades freeze time; enemy stats remain baseline. |
 | D-019 | 2026-07-25 | Every defeated enemy must create an experience drop; gems have no count cap. | User explicitly rejected silent drop loss after the historical cap. | Remove `GEM_CAP`; long runs may retain all uncollected gem entities. |
-| D-020 | 2026-07-25 | Suppress the game Canvas context menu and clear held input on `contextmenu`. | Browser menus can swallow keyup and leave movement stuck. | Right-click has no browser menu on the game Canvas and cannot preserve stale movement state. |
+| D-020 | 2026-07-25 | (Superseded) Earlier attempt cleared held input on Canvas `contextmenu`. | Avoid stuck keys when browser swallows keyup. | Incorrect: stopped movement while keys still held. |
+| D-021 | 2026-07-25 | Canvas secondary pointer only `preventDefault`s; never mutates keyboard `InputState`. | D-020 stopped held WASD/arrows on right-click. | Right-click is browser-default suppression only on the game Canvas; blur/visibility still clear input. |
+

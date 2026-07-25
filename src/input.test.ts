@@ -4,9 +4,10 @@ import {
   clearInput,
   createInputState,
   getMoveDirection,
+  isSecondaryPointerEvent,
   pressKey,
+  preventSecondaryDefault,
   releaseKey,
-  suppressContextMenu,
 } from './input'
 import { vecLength } from './vec'
 
@@ -113,19 +114,75 @@ describe('input release and clear', () => {
     clearInput(state)
     expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
   })
+})
 
-  it('context menu is suppressed and clears held movement', () => {
-    const state = createInputState()
-    pressKey(state, 'KeyD')
+describe('secondary pointer is input-neutral', () => {
+  it('detects secondary button and buttons mask', () => {
+    expect(isSecondaryPointerEvent({ button: 2 })).toBe(true)
+    expect(isSecondaryPointerEvent({ buttons: 2 })).toBe(true)
+    expect(isSecondaryPointerEvent({ button: 0 })).toBe(false)
+    expect(isSecondaryPointerEvent({ buttons: 1 })).toBe(false)
+  })
+
+  it('preventSecondaryDefault calls preventDefault only', () => {
     let prevented = false
-
-    suppressContextMenu(state, {
+    preventSecondaryDefault({
       preventDefault: () => {
         prevented = true
       },
     })
-
     expect(prevented).toBe(true)
+  })
+
+  it('right-click protection does not change held KeyA direction', () => {
+    const state = createInputState()
+    pressKey(state, 'KeyA')
+    expect(getMoveDirection(state)).toEqual({ x: -1, y: 0 })
+
+    preventSecondaryDefault({
+      preventDefault: () => undefined,
+    })
+
+    expect(getMoveDirection(state)).toEqual({ x: -1, y: 0 })
+    expect(state.pressed.has('KeyA')).toBe(true)
+  })
+
+  it('right-click protection does not clear multi-key holds', () => {
+    const state = createInputState()
+    pressKey(state, 'KeyW')
+    pressKey(state, 'KeyD')
+    const before = getMoveDirection(state)
+
+    preventSecondaryDefault({
+      preventDefault: () => undefined,
+    })
+
+    expect(getMoveDirection(state)).toEqual(before)
+    expect(state.pressed.has('KeyW')).toBe(true)
+    expect(state.pressed.has('KeyD')).toBe(true)
+  })
+
+  it('left button is not treated as secondary', () => {
+    expect(isSecondaryPointerEvent({ button: 0, buttons: 1 })).toBe(false)
+  })
+
+  it('releaseKey still stops movement after secondary preventDefault', () => {
+    const state = createInputState()
+    pressKey(state, 'KeyA')
+    preventSecondaryDefault({
+      preventDefault: () => undefined,
+    })
+    releaseKey(state, 'KeyA')
+    expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
+  })
+
+  it('clearInput still works for blur semantics', () => {
+    const state = createInputState()
+    pressKey(state, 'KeyA')
+    preventSecondaryDefault({
+      preventDefault: () => undefined,
+    })
+    clearInput(state)
     expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
   })
 })

@@ -39,13 +39,40 @@ export const clearInput = (state: InputState): void => {
   state.pressed.clear()
 }
 
-/** 游戏画布不使用右键菜单；打开菜单前清空输入，避免 keyup 被浏览器吞掉。 */
-export const suppressContextMenu = (
-  state: InputState,
-  event: { preventDefault: () => void },
-): void => {
+/** MouseEvent.button / PointerEvent.button: secondary (right) button. */
+export const SECONDARY_BUTTON = 2
+
+/** MouseEvent.buttons bit mask for the secondary button. */
+export const SECONDARY_BUTTONS_MASK = 2
+
+/**
+ * 判断是否为辅助/右键相关指针事件。
+ * 不读取或修改任何键盘 InputState。
+ */
+export const isSecondaryPointerEvent = (event: {
+  button?: number
+  buttons?: number
+}): boolean => {
+  if (event.button === SECONDARY_BUTTON) {
+    return true
+  }
+  if (
+    typeof event.buttons === 'number' &&
+    (event.buttons & SECONDARY_BUTTONS_MASK) !== 0
+  ) {
+    return true
+  }
+  return false
+}
+
+/**
+ * 仅阻止浏览器默认行为（菜单、手势等）。
+ * 绝不修改 InputState；右键不是失焦，也不是按键释放。
+ */
+export const preventSecondaryDefault = (event: {
+  preventDefault: () => void
+}): void => {
   event.preventDefault()
-  clearInput(state)
 }
 
 /**

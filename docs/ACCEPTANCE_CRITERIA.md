@@ -54,10 +54,12 @@ Closeout `00166ee`.
 
 ### Browser Regression Repair
 
-- [x] Canvas `contextmenu` is suppressed and clears held movement in automated coverage
+- [x] Canvas secondary-button default is prevented without modifying keyboard InputState (automated)
+- [x] Held movement keys remain active across secondary preventDefault (automated)
 - [x] Experience gem creation has no count cap in automated coverage
-- [ ] Holding movement then right-clicking Canvas never opens a menu or sticks movement
+- [ ] Holding movement then right-clicking/dragging Canvas never opens a menu, never stops movement, and does not navigate the page
 - [ ] More than 100 uncollected kill drops continue to appear
+- [ ] Left-click upgrade selection still works; page outside Canvas is not globally right-click blocked
 
 ### Process
 
@@ -66,4 +68,5 @@ Closeout `00166ee`.
 - [x] Independent audit PASS after two repair rounds
 - [x] Input/gem repair independent audit PASS
 - [x] Input/gem repair checkpoint (`c2f6588`)
-- [ ] User browser acceptance PASS after focused regression recheck
+- [ ] Secondary-pointer input-neutral repair independent audit pending
+- [ ] User browser acceptance PASS after focused secondary-pointer recheck

@@ -47,4 +47,7 @@ canvas#game {
   background: #11131a;
   box-shadow: none;
   touch-action: none;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
