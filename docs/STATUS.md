@@ -2,8 +2,9 @@
 
 ## Snapshot
 
-- Current stage: secondary-pointer lifecycle repair independently audited PASS; checkpoint pending
+- Current stage: secondary-pointer lifecycle repair checkpoint complete; browser recheck pending
 - Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
+- Lifecycle repair: `a9f2d6d` (`M4: fix secondary pointer capture lifecycle`)
 - Prior input/gem repair: `c2f6588` (contextmenu cleared input — **wrong semantics**, superseded by `098841f`)
 - Difficulty checkpoint: `60bd1dc`
 - Last updated: 2026-07-25
@@ -45,5 +46,4 @@
 
 ## Next Step
 
-Create the lifecycle repair checkpoint, then run the focused secondary-pointer
-browser recheck. Do not start win/loss/restart.
+Run the focused secondary-pointer browser recheck. Do not start win/loss/restart.

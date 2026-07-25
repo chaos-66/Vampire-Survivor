@@ -70,4 +70,5 @@ Closeout `00166ee`.
 - [x] Input/gem repair checkpoint (`c2f6588`)
 - [x] First secondary-pointer repair audit FAIL; lifecycle findings repaired locally
 - [x] Fresh secondary-pointer lifecycle re-audit PASS
+- [x] Secondary-pointer lifecycle repair checkpoint (`a9f2d6d`)
 - [ ] User browser acceptance PASS after focused secondary-pointer recheck
