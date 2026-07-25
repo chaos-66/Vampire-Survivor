@@ -227,3 +227,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Repair `npm run build` | Passed | Success. |
 | 2026-07-25 | Repair `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-25 | Secondary-pointer browser recheck | UNVERIFIED | Awaits user hold-key + right-click/drag validation. |
+| 2026-07-25 | `git commit -m "M4: make secondary pointer input-neutral"` | Passed | `098841f` (9 files). |
+| 2026-07-25 | Post-commit `npm test` | Passed | 7 files / 176 tests. |
+| 2026-07-25 | Post-commit `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-25 | Post-commit `npm run build` | Passed | Success. |

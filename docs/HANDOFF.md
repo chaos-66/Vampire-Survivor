@@ -3,9 +3,9 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- HEAD before this repair: `05fdad8`
+- Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
 - Difficulty: `60bd1dc`; prior input/gem: `c2f6588` (cleared input on contextmenu — **superseded**)
-- This repair: secondary pointer is **input-neutral** (preventDefault only on Canvas)
+- Secondary pointer is **input-neutral** (preventDefault only on Canvas)
 - Win/loss/restart and M5+ **not started**
 
 ## What changed

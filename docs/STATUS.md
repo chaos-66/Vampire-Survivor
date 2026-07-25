@@ -3,10 +3,9 @@
 ## Snapshot
 
 - Current stage: secondary-pointer input-neutral repair complete; focused browser recheck pending
-- Audited checkpoint: `ba20893` (WORLD)
+- Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
+- Prior input/gem repair: `c2f6588` (contextmenu cleared input — **wrong semantics**, superseded by `098841f`)
 - Difficulty checkpoint: `60bd1dc`
-- Prior input/gem repair: `c2f6588` (contextmenu cleared input — **wrong semantics**, superseded)
-- Secondary-pointer repair: pending create `M4: make secondary pointer input-neutral`
 - Last updated: 2026-07-25
 - M3 Green; CP-M4-ARCH-01 Green; WORLD Green
 - Dynamic difficulty: **Implemented; automated verification passed**
@@ -29,7 +28,7 @@
 
 ## Verified
 
-- `npm test`: 7 files / **176** tests
+- `npm test`: 7 files / **176** tests (pre- and post-commit)
 - `npx tsc --noEmit`: exit 0
 - `npm run build`: success
 - `npm audit`: 0 vulnerabilities
