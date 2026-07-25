@@ -3,7 +3,7 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- Latest committed HEAD: `e10402e` (`M4: close world demo checkpoint`)
+- Difficulty checkpoint: `60bd1dc` (`M4: implement dynamic spawn difficulty`)
 - M3 + ARCH Green (`00166ee`)
 - CP-M4-WORLD-01 checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - CP-M4-DIFFICULTY-01 implemented; automated verification **PASS**
@@ -37,10 +37,9 @@
 - Second difficulty audit FAIL; latest local repair accepts only frozen registered
   profiles and falls back safely for custom or null values
 - Latest local verification: 7 files / 169 tests; tsc / build / audit / diff check PASS
-- Final independent difficulty audit: PASS; implementation checkpoint pending
+- Final independent difficulty audit: PASS; browser acceptance pending
 
 ## Next Task
 
-Create the CP-M4-DIFFICULTY-01 implementation checkpoint and request user
-browser acceptance. **Do not implement win-loss, restart, enemy stat scaling,
-or new content.**
+Request user browser acceptance for CP-M4-DIFFICULTY-01. **Do not implement
+win-loss, restart, enemy stat scaling, or new content.**

@@ -207,6 +207,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Second audit repair `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-25 | Second audit repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-25 | Final independent CP-M4-DIFFICULTY-01 re-audit | PASS | Auditor verified both repair rounds, scope, 169 tests, tsc, build, audit, diff check, status, and latest HEAD; browser acceptance remains pending. |
+| 2026-07-25 | `git commit -m "M4: implement dynamic spawn difficulty"` | Passed | Implementation checkpoint `60bd1dc` (17 intended files). |
 | 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |

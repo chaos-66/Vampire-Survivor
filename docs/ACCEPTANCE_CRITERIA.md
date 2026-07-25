@@ -55,6 +55,6 @@ Closeout `00166ee`.
 ### Process
 
 - [x] User approved minimum-risk order: difficulty before win/loss/restart
-- [ ] Implementation checkpoint
+- [x] Implementation checkpoint (`60bd1dc`)
 - [x] Independent audit PASS after two repair rounds
 - [ ] User browser acceptance PASS

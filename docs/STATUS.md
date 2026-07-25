@@ -2,9 +2,10 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-DIFFICULTY-01 independently audited PASS; checkpoint pending
+- Current stage: CP-M4-DIFFICULTY-01 checkpoint complete; browser acceptance pending
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
+- Difficulty checkpoint: `60bd1dc` (`M4: implement dynamic spawn difficulty`)
 - Last updated: 2026-07-25
 - M3 Green; CP-M4-ARCH-01 Green
 - Dynamic difficulty: **Implemented; automated verification passed**
@@ -53,10 +54,9 @@
 - Second independent difficulty audit: FAIL; finite hostile external profile
   parameters could still create an effectively unbounded spawn loop
 - Final independent difficulty audit: PASS; no blocking findings
-- Implementation checkpoint and browser acceptance are pending
+- Browser acceptance is pending
 - Win/loss/restart and M5+ content remain not started
 
 ## Next Step
 
-Create the CP-M4-DIFFICULTY-01 implementation checkpoint, then obtain user
-browser acceptance.
+Obtain user browser acceptance for CP-M4-DIFFICULTY-01.
