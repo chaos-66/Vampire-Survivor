@@ -6,6 +6,7 @@ import {
   getMoveDirection,
   pressKey,
   releaseKey,
+  suppressContextMenu,
 } from './input'
 import { createGameState, type GameState } from './core/game-state'
 import { updateGame } from './core/game-loop'
@@ -161,6 +162,10 @@ const onCanvasClick = (event: MouseEvent): void => {
   tryChooseUpgrade(upgradeIdAtPoint(viewport, point, optionIds))
 }
 
+const onCanvasContextMenu = (event: MouseEvent): void => {
+  suppressContextMenu(input, event)
+}
+
 const onResize = (): void => {
   const css = readCssSize()
   viewport = createViewport(css.width, css.height, window.devicePixelRatio || 1)
@@ -173,6 +178,7 @@ window.addEventListener('keyup', onKeyUp)
 window.addEventListener('blur', onBlur)
 document.addEventListener('visibilitychange', onVisibilityChange)
 canvas.addEventListener('click', onCanvasClick)
+canvas.addEventListener('contextmenu', onCanvasContextMenu)
 window.addEventListener('resize', onResize)
 
 const draw = (): void => {
@@ -218,6 +224,7 @@ window.addEventListener(
     window.removeEventListener('blur', onBlur)
     document.removeEventListener('visibilitychange', onVisibilityChange)
     canvas.removeEventListener('click', onCanvasClick)
+    canvas.removeEventListener('contextmenu', onCanvasContextMenu)
     window.removeEventListener('resize', onResize)
   },
   { once: true },

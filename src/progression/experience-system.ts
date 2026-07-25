@@ -3,7 +3,7 @@
  */
 
 import { circlesOverlap } from '../collision'
-import { GEM_CAP, GEM_RADIUS, GEM_VALUE } from '../core/constants'
+import { GEM_RADIUS, GEM_VALUE } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
 import type { ExperienceGem } from '../combat/enemy-types'
 
@@ -13,9 +13,6 @@ export const spawnGemAt = (
   x: number,
   y: number,
 ): { gems: ExperienceGem[]; nextGemId: number } => {
-  if (gems.length >= GEM_CAP) {
-    return { gems, nextGemId }
-  }
   return {
     gems: [
       ...gems,

@@ -39,6 +39,15 @@ export const clearInput = (state: InputState): void => {
   state.pressed.clear()
 }
 
+/** 游戏画布不使用右键菜单；打开菜单前清空输入，避免 keyup 被浏览器吞掉。 */
+export const suppressContextMenu = (
+  state: InputState,
+  event: { preventDefault: () => void },
+): void => {
+  event.preventDefault()
+  clearInput(state)
+}
+
 /**
  * Combines held move keys into a direction.
  * Opposite axes cancel; non-zero results are normalized so diagonals are not faster.

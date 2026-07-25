@@ -22,7 +22,5 @@ export const PROJECTILE_LIFETIME = 2
 export const PROJECTILE_BOUNDS_MARGIN = 64
 export const GEM_RADIUS = 8
 export const GEM_VALUE = 1
-/** 经验结晶实体上限，防止长期运行无界增长。 */
-export const GEM_CAP = 100
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0

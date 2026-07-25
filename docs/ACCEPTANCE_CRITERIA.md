@@ -46,15 +46,23 @@ Closeout `00166ee`.
 
 ### Browser
 
-- [ ] Chinese HUD shows elapsed active time and current difficulty tier
-- [ ] Pressure visibly increases across tiers without enemies appearing in view
-- [ ] Upgrade selection freezes elapsed time and pressure progression
-- [ ] Movement, combat, experience, upgrades, camera, resize, and DPR regressions pass
-- [ ] No win/loss/restart UI or behavior appears
+- [x] Chinese HUD shows elapsed active time and current difficulty tier
+- [x] Pressure visibly increases across tiers without enemies appearing in view
+- [x] Upgrade selection freezes elapsed time and pressure progression
+- [x] Movement, combat, experience, upgrades, camera, resize, and DPR checklist passed
+- [x] No win/loss/restart UI or behavior appears
+
+### Browser Regression Repair
+
+- [x] Canvas `contextmenu` is suppressed and clears held movement in automated coverage
+- [x] Experience gem creation has no count cap in automated coverage
+- [ ] Holding movement then right-clicking Canvas never opens a menu or sticks movement
+- [ ] More than 100 uncollected kill drops continue to appear
 
 ### Process
 
 - [x] User approved minimum-risk order: difficulty before win/loss/restart
 - [x] Implementation checkpoint (`60bd1dc`)
 - [x] Independent audit PASS after two repair rounds
-- [ ] User browser acceptance PASS
+- [x] Input/gem repair independent audit PASS
+- [ ] User browser acceptance PASS after focused regression recheck

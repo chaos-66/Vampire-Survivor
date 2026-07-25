@@ -6,6 +6,7 @@ import {
   getMoveDirection,
   pressKey,
   releaseKey,
+  suppressContextMenu,
 } from './input'
 import { vecLength } from './vec'
 
@@ -110,6 +111,21 @@ describe('input release and clear', () => {
     pressKey(state, 'KeyW')
     pressKey(state, 'KeyA')
     clearInput(state)
+    expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
+  })
+
+  it('context menu is suppressed and clears held movement', () => {
+    const state = createInputState()
+    pressKey(state, 'KeyD')
+    let prevented = false
+
+    suppressContextMenu(state, {
+      preventDefault: () => {
+        prevented = true
+      },
+    })
+
+    expect(prevented).toBe(true)
     expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
   })
 })

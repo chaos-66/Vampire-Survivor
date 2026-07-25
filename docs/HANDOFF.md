@@ -38,8 +38,15 @@
   profiles and falls back safely for custom or null values
 - Latest local verification: 7 files / 169 tests; tsc / build / audit / diff check PASS
 - Final independent difficulty audit: PASS; browser acceptance pending
+- User reported all difficulty browser checks PASS, then found Canvas right-click
+  stuck movement and the historical 100-gem drop cap
+- Local repair suppresses the Canvas context menu, clears held input, and removes
+  the gem count cap; 170 tests / tsc / build / audit / diff check PASS
+- Independent input/gem repair audit: PASS; long-run uncollected-gem performance
+  is a documented accepted risk of the no-cap decision
 
 ## Next Task
 
-Request user browser acceptance for CP-M4-DIFFICULTY-01. **Do not implement
-win-loss, restart, enemy stat scaling, or new content.**
+Create the input/gem repair checkpoint and request focused browser recheck.
+**Do not implement win-loss, restart, enemy
+stat scaling, or new content.**

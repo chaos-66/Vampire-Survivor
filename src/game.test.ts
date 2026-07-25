@@ -22,7 +22,6 @@ import {
   edgeSpawnPosition,
   experienceThresholdForLevel,
   fireAtEnemy,
-  GEM_CAP,
   GEM_VALUE,
   getUpgradeCardRects,
   MIN_ATTACK_COOLDOWN,
@@ -598,12 +597,14 @@ describe('collision death and gems', () => {
     expect(state.gems.map((g) => g.id)).toEqual([1, 2])
   })
 
-  it('gem cap prevents unbounded growth', () => {
+  it('creates a gem for every requested drop without a cap', () => {
     const state = stateWith()
-    for (let i = 0; i < GEM_CAP + 20; i += 1) {
+    const dropCount = 250
+    for (let i = 0; i < dropCount; i += 1) {
       spawnGemAt(state, i, 0)
     }
-    expect(state.gems).toHaveLength(GEM_CAP)
+    expect(state.gems).toHaveLength(dropCount)
+    expect(state.nextGemId).toBe(dropCount + 1)
   })
 
   it('kill does not create M4 outcome/restart fields', () => {

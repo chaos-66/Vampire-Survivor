@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-DIFFICULTY-01 checkpoint complete; browser acceptance pending
+- Current stage: CP-M4-DIFFICULTY-01 input/gem repair independently audited PASS; repair checkpoint pending
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
 - Difficulty checkpoint: `60bd1dc` (`M4: implement dynamic spawn difficulty`)
@@ -43,8 +43,15 @@
 - Active time freezes through the existing pending-upgrade early return
 - Dynamic interval/cap passed focused tier, boundary, cap, and baseline-stat tests
 - Chinese status/HUD exposes active time and current tier
-- Automated verification after latest repair: 7 files / 169 tests; tsc / build /
-  audit / diff check green
+- Automated difficulty verification: 7 files / 169 tests; tsc / build / audit /
+  diff check green
+- User reported the difficulty browser checklist passed, then identified two
+  blocking regressions: Canvas right-click could stick movement, and gem drops
+  stopped after the historical 100-entity cap
+- Local repair suppresses Canvas context menus while clearing input and removes
+  the gem count cap so every requested kill drop is created
+- Repair verification: 7 files / 170 tests; tsc / build / audit / diff check green
+- Independent input/gem repair audit: PASS; no blocking findings
 
 ## Unverified / Not Started
 
@@ -54,9 +61,10 @@
 - Second independent difficulty audit: FAIL; finite hostile external profile
   parameters could still create an effectively unbounded spawn loop
 - Final independent difficulty audit: PASS; no blocking findings
-- Browser acceptance is pending
+- Difficulty browser checklist: user-reported PASS
+- Input/gem repair checkpoint and focused browser recheck are pending
 - Win/loss/restart and M5+ content remain not started
 
 ## Next Step
 
-Obtain user browser acceptance for CP-M4-DIFFICULTY-01.
+Create the input/gem repair checkpoint, then obtain focused browser recheck.
