@@ -2,12 +2,17 @@ import { describe, expect, it } from 'vitest'
 
 import {
   clearInput,
+  createSecondaryPointerState,
   createInputState,
   getMoveDirection,
+  isPrimaryPointerEvent,
   isSecondaryPointerEvent,
+  isTrackedSecondaryPointer,
   pressKey,
   preventSecondaryDefault,
+  releaseSecondaryPointer,
   releaseKey,
+  trackSecondaryPointer,
 } from './input'
 import { vecLength } from './vec'
 
@@ -166,6 +171,12 @@ describe('secondary pointer is input-neutral', () => {
     expect(isSecondaryPointerEvent({ button: 0, buttons: 1 })).toBe(false)
   })
 
+  it('only primary button is accepted as a primary pointer event', () => {
+    expect(isPrimaryPointerEvent({ button: 0 })).toBe(true)
+    expect(isPrimaryPointerEvent({ button: 1 })).toBe(false)
+    expect(isPrimaryPointerEvent({ button: 2 })).toBe(false)
+  })
+
   it('releaseKey still stops movement after secondary preventDefault', () => {
     const state = createInputState()
     pressKey(state, 'KeyA')
@@ -184,5 +195,26 @@ describe('secondary pointer is input-neutral', () => {
     })
     clearInput(state)
     expect(getMoveDirection(state)).toEqual({ x: 0, y: 0 })
+  })
+
+  it('tracks and releases multiple secondary pointer ids independently', () => {
+    const pointers = createSecondaryPointerState()
+    trackSecondaryPointer(pointers, 3)
+    trackSecondaryPointer(pointers, 7)
+
+    expect(isTrackedSecondaryPointer(pointers, 3)).toBe(true)
+    expect(isTrackedSecondaryPointer(pointers, 7)).toBe(true)
+    expect(releaseSecondaryPointer(pointers, 3)).toBe(true)
+    expect(isTrackedSecondaryPointer(pointers, 3)).toBe(false)
+    expect(isTrackedSecondaryPointer(pointers, 7)).toBe(true)
+  })
+
+  it('lost capture cleanup makes a reused pointer id primary-neutral', () => {
+    const pointers = createSecondaryPointerState()
+    trackSecondaryPointer(pointers, 4)
+    expect(releaseSecondaryPointer(pointers, 4)).toBe(true)
+
+    expect(isTrackedSecondaryPointer(pointers, 4)).toBe(false)
+    expect(isPrimaryPointerEvent({ button: 0 })).toBe(true)
   })
 })

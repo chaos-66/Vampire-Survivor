@@ -44,6 +44,35 @@ export const SECONDARY_BUTTON = 2
 
 /** MouseEvent.buttons bit mask for the secondary button. */
 export const SECONDARY_BUTTONS_MASK = 2
+export const PRIMARY_BUTTON = 0
+
+export type SecondaryPointerState = {
+  activePointerIds: Set<number>
+}
+
+export const createSecondaryPointerState = (): SecondaryPointerState => ({
+  activePointerIds: new Set(),
+})
+
+export const trackSecondaryPointer = (
+  state: SecondaryPointerState,
+  pointerId: number,
+): void => {
+  state.activePointerIds.add(pointerId)
+}
+
+export const releaseSecondaryPointer = (
+  state: SecondaryPointerState,
+  pointerId: number,
+): boolean => state.activePointerIds.delete(pointerId)
+
+export const isTrackedSecondaryPointer = (
+  state: SecondaryPointerState,
+  pointerId: number,
+): boolean => state.activePointerIds.has(pointerId)
+
+export const isPrimaryPointerEvent = (event: { button: number }): boolean =>
+  event.button === PRIMARY_BUTTON
 
 /**
  * 判断是否为辅助/右键相关指针事件。

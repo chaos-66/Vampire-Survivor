@@ -68,5 +68,6 @@ Closeout `00166ee`.
 - [x] Independent audit PASS after two repair rounds
 - [x] Input/gem repair independent audit PASS
 - [x] Input/gem repair checkpoint (`c2f6588`)
-- [ ] Secondary-pointer input-neutral repair independent audit pending
+- [x] First secondary-pointer repair audit FAIL; lifecycle findings repaired locally
+- [x] Fresh secondary-pointer lifecycle re-audit PASS
 - [ ] User browser acceptance PASS after focused secondary-pointer recheck

@@ -23,4 +23,3 @@
 | D-019 | 2026-07-25 | Every defeated enemy must create an experience drop; gems have no count cap. | User explicitly rejected silent drop loss after the historical cap. | Remove `GEM_CAP`; long runs may retain all uncollected gem entities. |
 | D-020 | 2026-07-25 | (Superseded) Earlier attempt cleared held input on Canvas `contextmenu`. | Avoid stuck keys when browser swallows keyup. | Incorrect: stopped movement while keys still held. |
 | D-021 | 2026-07-25 | Canvas secondary pointer only `preventDefault`s; never mutates keyboard `InputState`. | D-020 stopped held WASD/arrows on right-click. | Right-click is browser-default suppression only on the game Canvas; blur/visibility still clear input. |
-

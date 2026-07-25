@@ -217,6 +217,14 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Input/gem repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-25 | Independent input/gem repair audit | PASS | Auditor verified Canvas-only context-menu suppression, held-input clearing, complete GEM_CAP removal, one gem per kill, scope, and 170-test/toolchain evidence. Browser focused recheck remains pending. |
 | 2026-07-25 | `git commit -m "M4: fix stuck input and uncapped gem drops"` | Passed | Repair checkpoint `c2f6588` (13 intended files). |
+| 2026-07-25 | Independent audit of secondary-pointer repair `098841f` | FAIL | Missing lostpointercapture cleanup could leave a stale pointerId; single-slot tracking was not multi-pointer safe; upgrade click did not positively require primary button; implementation range also had an EOF blank line. |
+| 2026-07-25 | Secondary-pointer lifecycle repair | Applied | Multiple captured IDs tracked independently; lost/up/cancel clear state; failed capture retains no ID; upgrade clicks require button 0; EOF whitespace fixed. |
+| 2026-07-25 | Lifecycle repair `npm test` | Passed | 7 files / 179 tests. |
+| 2026-07-25 | Lifecycle repair `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-25 | Lifecycle repair `npm run build` | Passed | 41 modules transformed. |
+| 2026-07-25 | Lifecycle repair `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-25 | Lifecycle repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-25 | Fresh independent secondary-pointer lifecycle re-audit | PASS | Auditor verified multi-pointer capture tracking, lost/up/cancel cleanup, primary-only upgrade clicks, input neutrality, scope, 179 tests, and toolchain evidence. Browser recheck remains pending. |
 | 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |

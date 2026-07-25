@@ -20,6 +20,17 @@
 
 - Edge/Chromium chrome-level mouse gestures or extensions may still navigate in some environments; page-level protection is implemented but not absolute.
 
+## Audit Repair
+
+- First independent audit of `098841f`: FAIL
+- Findings: no `lostpointercapture`, stale/single pointerId tracking, click filter
+  excluded right-click but did not positively require primary button
+- Local repair tracks multiple captured IDs, clears on lost/up/cancel, retains no
+  ID when capture fails, and requires `button === 0` for upgrade clicks
+- Local verification: 7 files / 179 tests; tsc / build / audit / diff check PASS
+- Fresh independent lifecycle re-audit: PASS; repair checkpoint pending
+
 ## Next Task
 
-Independent audit + user browser recheck of secondary-pointer + held-key movement. **No win/loss/restart.**
+Create the lifecycle repair checkpoint, then run user browser recheck of
+secondary pointer + held-key movement. **No win/loss/restart.**

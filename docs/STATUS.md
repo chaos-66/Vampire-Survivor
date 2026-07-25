@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Current stage: secondary-pointer input-neutral repair complete; focused browser recheck pending
+- Current stage: secondary-pointer lifecycle repair independently audited PASS; checkpoint pending
 - Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
 - Prior input/gem repair: `c2f6588` (contextmenu cleared input — **wrong semantics**, superseded by `098841f`)
 - Difficulty checkpoint: `60bd1dc`
@@ -32,13 +32,18 @@
 - `npx tsc --noEmit`: exit 0
 - `npm run build`: success
 - `npm audit`: 0 vulnerabilities
+- First independent audit of `098841f`: FAIL; missing `lostpointercapture`, stale
+  pointerId/multi-pointer lifecycle, and non-exclusive upgrade click filter
+- Local lifecycle repair: tracked pointer ID set, capture-loss cleanup, primary-only
+  upgrade clicks; 179 tests / tsc / build / audit / diff check PASS
 
 ## Unverified
 
 - Full secondary-pointer browser recheck (hold A + right-click/drag, no menu, no Edge back, left-click upgrades, gems >100)
 - Residual risk: browser chrome/extension-level gestures may not be fully blockable from page script
-- Independent audit of this repair: pending
+- Fresh independent audit of the lifecycle repair: PASS; no blocking findings
 
 ## Next Step
 
-Independent audit + user focused secondary-pointer browser recheck. Do not start win/loss/restart.
+Create the lifecycle repair checkpoint, then run the focused secondary-pointer
+browser recheck. Do not start win/loss/restart.
