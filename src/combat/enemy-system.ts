@@ -8,16 +8,19 @@ import type { Arena } from '../movement'
 import type { Vec2 } from '../vec'
 import { normalize } from '../vec'
 import {
-  ENEMY_CAP,
   ENEMY_MAX_HEALTH,
   ENEMY_RADIUS,
-  ENEMY_SPAWN_INTERVAL,
   ENEMY_SPEED,
 } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
 import type { Enemy } from './enemy-types'
 import type { ViewRect } from '../world/frame-context'
 import { circlesOverlap } from '../collision'
+import type { DifficultyProfile } from '../core/difficulty'
+import {
+  DIFFICULTY_PROFILES,
+  getDifficultyProfile,
+} from '../core/difficulty'
 
 /** 生成点距视口边缘的外边距（逻辑单位）。 */
 export const SPAWN_VIEW_MARGIN = 80
@@ -272,13 +275,21 @@ export const advanceSpawns = (
   dt: number,
   view?: ViewRect,
   player?: CombatPlayer,
+  difficulty: DifficultyProfile | null = getDifficultyProfile(0),
 ): void => {
+  const baseline = getDifficultyProfile(0)
+  const activeDifficulty =
+    difficulty !== null && DIFFICULTY_PROFILES.includes(difficulty)
+      ? difficulty
+      : baseline
+  const spawnInterval = activeDifficulty.spawnInterval
+  const enemyCap = activeDifficulty.enemyCap
   state.spawnAccumulator += dt
   while (
-    state.spawnAccumulator >= ENEMY_SPAWN_INTERVAL &&
-    state.enemies.length < ENEMY_CAP
+    state.spawnAccumulator >= spawnInterval &&
+    state.enemies.length < enemyCap
   ) {
-    state.spawnAccumulator -= ENEMY_SPAWN_INTERVAL
+    state.spawnAccumulator -= spawnInterval
     if (view) {
       const withPlayer = state as SpawnState & { player?: CombatPlayer }
       if (player) {
@@ -289,10 +300,10 @@ export const advanceSpawns = (
       state.enemies.push(spawnEnemyOnEdge(state))
     }
   }
-  if (state.enemies.length >= ENEMY_CAP) {
+  if (state.enemies.length >= enemyCap) {
     state.spawnAccumulator = Math.min(
       state.spawnAccumulator,
-      ENEMY_SPAWN_INTERVAL,
+      spawnInterval,
     )
   }
 }

@@ -1,1 +1,1 @@
-export const getStatusMessage = (): string => 'M4：探索大世界'
+export const getStatusMessage = (): string => 'M4：动态难度'

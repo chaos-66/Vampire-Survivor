@@ -27,6 +27,7 @@ import { pickupGems, spawnGemAt } from '../progression/experience-system'
 import { tryEnterPendingUpgrade } from '../progression/upgrade-system'
 import type { FrameContext } from '../world/frame-context'
 import { viewRectFromCamera } from '../world/frame-context'
+import { splitDifficultyTime } from './difficulty'
 
 export const updateGame = (
   state: GameState,
@@ -39,14 +40,19 @@ export const updateGame = (
   }
 
   const dt = dtSeconds
-  if (!(dt > 0)) {
+  if (!Number.isFinite(dt) || !(dt > 0)) {
     return state
   }
+
+  const difficultySlices = splitDifficultyTime(state.elapsedActiveSeconds, dt)
+  state.elapsedActiveSeconds += dt
 
   state.player = movePlayer(state.player, direction, dt, state.arena)
 
   const view = frame ? viewRectFromCamera(frame.camera) : undefined
-  advanceSpawns(state, dt, view, state.player)
+  for (const slice of difficultySlices) {
+    advanceSpawns(state, slice.duration, view, state.player, slice.profile)
+  }
   state.enemies = advanceEnemyChases(state.enemies, state.player, dt)
 
   const contact = applyContactDamage(

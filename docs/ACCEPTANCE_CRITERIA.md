@@ -29,3 +29,32 @@ Closeout `00166ee`.
 - [x] Independent repair audit PASS
 - [x] User browser acceptance PASS
 - [x] Dynamic difficulty / win-loss / M5+ not started
+
+## CP-M4-DIFFICULTY-01
+
+### Automated
+
+- [x] Active time starts at 0 and advances by simulation dt
+- [x] Pending upgrade freezes active time and all difficulty-driven spawning
+- [x] Pure tier boundaries are exact at 0s, 15s, 30s, and 45s
+- [x] Spawn intervals are 1.00s, 0.80s, 0.65s, and 0.50s by tier
+- [x] Enemy caps are 20, 24, 28, and 32 by tier
+- [x] Spawn accumulator remains bounded when the active tier cap is reached
+- [x] Enemy combat stats remain at baseline across tiers
+- [x] View-edge spawn guarantees and M1-M3/WORLD regressions pass
+- [x] `npm test`, `npx tsc --noEmit`, `npm run build`, and `npm audit` pass
+
+### Browser
+
+- [ ] Chinese HUD shows elapsed active time and current difficulty tier
+- [ ] Pressure visibly increases across tiers without enemies appearing in view
+- [ ] Upgrade selection freezes elapsed time and pressure progression
+- [ ] Movement, combat, experience, upgrades, camera, resize, and DPR regressions pass
+- [ ] No win/loss/restart UI or behavior appears
+
+### Process
+
+- [x] User approved minimum-risk order: difficulty before win/loss/restart
+- [ ] Implementation checkpoint
+- [x] Independent audit PASS after two repair rounds
+- [ ] User browser acceptance PASS

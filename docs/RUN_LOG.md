@@ -179,6 +179,34 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-24 | Repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-24 | Fresh independent WORLD repair audit | PASS | Auditor reviewed world/viewport/camera/coordinates/rendering/UI/spawn scope and reran 138 tests, tsc, build, audit, and diff check. Browser interaction remains UNVERIFIED. |
 | 2026-07-24 | `git commit -m "M4: repair world-edge enemy spawning"` | Passed | Repair checkpoint `008514e` (7 intended files). |
+| 2026-07-25 | User selected minimum-risk M4 sequence | Approved | Dynamic difficulty first; win/loss/restart second. |
+| 2026-07-25 | CP-M4-DIFFICULTY-01 planning | Defined | Active-time four-tier spawn interval/cap profile; no enemy stat scaling, outcome logic, restart, or new content. |
+| 2026-07-25 | Difficulty first `npm test` | Passed | 7 files / 151 tests. |
+| 2026-07-25 | Difficulty first `npx tsc --noEmit` | Failed | Two obsolete constant imports remained in `enemy-system.ts`; no behavior failure. |
+| 2026-07-25 | Difficulty focused test expansion | Applied | Added all-tier interval/cap, accumulator, baseline enemy stat, and Chinese HUD format coverage. |
+| 2026-07-25 | Difficulty final `npm test` | Passed | 7 files / 162 tests. |
+| 2026-07-25 | Difficulty final `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-25 | Difficulty final `npm run build` | Passed | 41 modules transformed. |
+| 2026-07-25 | Difficulty final `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-25 | Difficulty final `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-25 | First independent CP-M4-DIFFICULTY-01 audit | FAIL | Mutable exported profiles, whole-frame post-boundary tier application, and positive-infinite dt blocked checkpoint creation. |
+| 2026-07-25 | Difficulty audit repair | Applied | Frozen profiles; exact cross-tier time slices; non-finite dt rejection; unsafe external profile fallback; focused regression tests. |
+| 2026-07-25 | Audit repair first `npm test` | Failed | Difficulty worker exhausted heap because unsafe profile fallback had not landed in the actual spawn function; 6 files / 138 tests completed before worker failure. |
+| 2026-07-25 | Audit repair first `npx tsc --noEmit` / `npm run build` | Failed | Obsolete fallback constant imports were unused, confirming fallback code was missing from the function body. |
+| 2026-07-25 | Audit repair focused `npx vitest run src/core/difficulty.test.ts` | Passed | 1 file / 29 tests after correcting fallback placement. |
+| 2026-07-25 | Audit repair `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-25 | Audit repair final `npm test` | Passed | 7 files / 167 tests. |
+| 2026-07-25 | Audit repair final `npm run build` | Passed | 41 modules transformed. |
+| 2026-07-25 | Audit repair final `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-25 | Audit repair final `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-25 | Second independent CP-M4-DIFFICULTY-01 audit | FAIL | Extremely small positive interval plus extremely large finite cap could still make low-level spawning effectively unbounded; docs also had stale test totals/latest HEAD. |
+| 2026-07-25 | Second audit repair | Applied | `advanceSpawns` now accepts only frozen registered profiles; custom finite/invalid/null values use the baseline profile; docs synchronized. |
+| 2026-07-25 | Second audit repair `npm test` | Passed | 7 files / 169 tests. |
+| 2026-07-25 | Second audit repair `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-25 | Second audit repair `npm run build` | Passed | 41 modules transformed. |
+| 2026-07-25 | Second audit repair `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-25 | Second audit repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-25 | Final independent CP-M4-DIFFICULTY-01 re-audit | PASS | Auditor verified both repair rounds, scope, 169 tests, tsc, build, audit, diff check, status, and latest HEAD; browser acceptance remains pending. |
 | 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |

@@ -4,6 +4,20 @@
 
 import type { GameState } from '../core/game-state'
 import { getStatusMessage } from '../status'
+import { getDifficultyProfile } from '../core/difficulty'
+
+export const getDifficultyHudLines = (
+  elapsedActiveSeconds: number,
+): [string, string] => {
+  const elapsed = Number.isFinite(elapsedActiveSeconds)
+    ? Math.max(0, elapsedActiveSeconds)
+    : 0
+  const difficulty = getDifficultyProfile(elapsed)
+  return [
+    `时间 ${elapsed.toFixed(1)} 秒`,
+    `难度 第 ${difficulty.tier} 档`,
+  ]
+}
 
 export const drawHud = (
   context: CanvasRenderingContext2D,
@@ -36,4 +50,7 @@ export const drawHud = (
     12,
     164,
   )
+  const [timeLine, tierLine] = getDifficultyHudLines(game.elapsedActiveSeconds)
+  context.fillText(timeLine, 12, 184)
+  context.fillText(tierLine, 12, 204)
 }

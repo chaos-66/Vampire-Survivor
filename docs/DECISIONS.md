@@ -18,3 +18,5 @@
 | D-014 | 2026-07-22 | World size max(12000,vw*10) x max(7000,vh*10); fixed for run. | Large world without infinite map. | Resize does not resim world. |
 | D-015 | 2026-07-22 | Camera follows player; screen-only transform. | Separation of sim and view. | Camera not in collision. |
 | D-016 | 2026-07-22 | Enemies spawn outside current view, inside world. | Edge-of-world spawn too far on large maps. | Spawn needs view rect pure inputs. |
+| D-017 | 2026-07-25 | Implement dynamic difficulty before win/loss/restart. | User selected the minimum-risk sequence. | CP-M4-DIFFICULTY-01 is the only active checkpoint. |
+| D-018 | 2026-07-25 | Difficulty uses active-time spawn interval/cap tiers only. | Increase pressure without coupling outcome logic or changing enemy balance. | Tiers at 0/15/30/45s; upgrades freeze time; enemy stats remain baseline. |

@@ -27,6 +27,8 @@ export type GameState = {
   projectiles: Projectile[]
   gems: ExperienceGem[]
   defeatedCount: number
+  /** 升级选择期间冻结的局内有效战斗时间。 */
+  elapsedActiveSeconds: number
   spawnAccumulator: number
   contactCooldownRemaining: number
   nextEnemyId: number
@@ -95,6 +97,7 @@ export const createGameState = (
     projectiles: [],
     gems: [],
     defeatedCount: 0,
+    elapsedActiveSeconds: 0,
     spawnAccumulator: 0,
     contactCooldownRemaining: 0,
     nextEnemyId: 1,

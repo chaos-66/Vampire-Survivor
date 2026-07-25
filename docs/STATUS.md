@@ -2,12 +2,12 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-WORLD-01 Green; stopped before dynamic difficulty and win/loss
+- Current stage: CP-M4-DIFFICULTY-01 independently audited PASS; checkpoint pending
 - Audited checkpoint: `ba20893` (`M4: implement full-screen large world demo`)
 - Repair checkpoint: `008514e` (`M4: repair world-edge enemy spawning`)
-- Last updated: 2026-07-24
+- Last updated: 2026-07-25
 - M3 Green; CP-M4-ARCH-01 Green
-- Dynamic difficulty: **Not started**
+- Dynamic difficulty: **Implemented; automated verification passed**
 - Win/loss/restart: **Not started**
 - M5+ content: **Not started**
 
@@ -27,12 +27,36 @@
   diff check green
 - User-reported interactive WORLD browser acceptance: PASS
 
+## Approved Difficulty Scope
+
+- Active simulation time only; pending upgrade freezes the difficulty clock
+- Four pure tiers at 0s / 15s / 30s / 45s
+- Spawn interval 1.00s / 0.80s / 0.65s / 0.50s
+- Enemy cap 20 / 24 / 28 / 32
+- Chinese HUD shows elapsed time and tier
+- No enemy stat scaling and no win/loss/restart
+
+## Difficulty Evidence
+
+- Pure profile module: `src/core/difficulty.ts`
+- Active time freezes through the existing pending-upgrade early return
+- Dynamic interval/cap passed focused tier, boundary, cap, and baseline-stat tests
+- Chinese status/HUD exposes active time and current tier
+- Automated verification after latest repair: 7 files / 169 tests; tsc / build /
+  audit / diff check green
+
 ## Unverified / Not Started
 
 - Browser name and version were not supplied
-- Dynamic difficulty, win/loss/restart, and M5+ content remain not started
+- First independent difficulty audit: FAIL; mutable profiles, cross-tier frame
+  timing, and non-finite dt findings repaired locally
+- Second independent difficulty audit: FAIL; finite hostile external profile
+  parameters could still create an effectively unbounded spawn loop
+- Final independent difficulty audit: PASS; no blocking findings
+- Implementation checkpoint and browser acceptance are pending
+- Win/loss/restart and M5+ content remain not started
 
 ## Next Step
 
-User and architect define the next checkpoint. Do not start difficulty,
-win/loss, or new content without an approved checkpoint.
+Create the CP-M4-DIFFICULTY-01 implementation checkpoint, then obtain user
+browser acceptance.

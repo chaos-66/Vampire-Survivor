@@ -16,6 +16,16 @@ export {
 } from './core/game-state'
 export { updateGame } from './core/game-loop'
 export {
+  DIFFICULTY_PROFILES,
+  getDifficultyProfile,
+  splitDifficultyTime,
+} from './core/difficulty'
+export type {
+  DifficultyProfile,
+  DifficultyTier,
+  DifficultyTimeSlice,
+} from './core/difficulty'
+export {
   ATTACK_COOLDOWN,
   CONTACT_COOLDOWN,
   CONTACT_DAMAGE,
