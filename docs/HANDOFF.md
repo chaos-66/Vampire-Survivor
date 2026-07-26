@@ -3,7 +3,7 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- CP-M4-OUTCOME-01 implemented (hash after commit)
+- CP-M4-OUTCOME-01 checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
 - Rules: lost if HP<=0; won if elapsedActiveSeconds>=60; lost preferred; clamp dt to remaining run time
 - Restart: only terminal + KeyR / 重新开始 button; full new GameState
 - Independent audit **pending**; browser **UNVERIFIED**

@@ -3,8 +3,7 @@
 ## Snapshot
 
 - Current stage: CP-M4-OUTCOME-01 implementation complete; independent audit pending
-- Checkpoint: pending create `M4: implement timed run outcomes and restart`
-- HEAD at start: `84ab53b`
+- Checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
 - Last updated: 2026-07-25
 - DIFFICULTY Green; secondary pointer Green
 - Win/loss/restart: **Implemented (not Green until independent audit + browser)**
@@ -18,7 +17,7 @@
 - Restart via KeyR or Chinese button only when terminal; full `createGameState`
 - New run world from current viewport; clear keyboard; reset frame clock
 - Screen-space outcome overlay
-- Tests: 8 files / 198 passed
+- Checkpoint `dfbe925`; post-check 198 tests / tsc / build green
 
 ## Unverified
 

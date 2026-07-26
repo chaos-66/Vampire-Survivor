@@ -2,14 +2,14 @@
 
 ## Current Goal
 
-**CP-M4-OUTCOME-01** implementation complete; independent audit and browser acceptance open.
+**CP-M4-OUTCOME-01** at `dfbe925`. Independent audit and browser acceptance open. Not Green yet.
 
 ## History
 
 | ID | Status |
 |---|---|
-| CP-M0..DIFFICULTY | Green (see prior) |
-| CP-M4-OUTCOME-01 | Implementation done; audit pending |
+| Prior M0-DIFFICULTY | Green |
+| CP-M4-OUTCOME-01 | Checkpoint `dfbe925`; automated green; browser UNVERIFIED; independent audit pending |
 
 ## OUTCOME rules
 

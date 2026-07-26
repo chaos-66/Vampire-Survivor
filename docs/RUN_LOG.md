@@ -249,3 +249,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | OUTCOME `npm run build` | Passed | Success. |
 | 2026-07-25 | OUTCOME `npm audit` | Passed | 0 vulnerabilities. |
 | 2026-07-25 | OUTCOME browser interactive | UNVERIFIED | Awaits user. |
+| 2026-07-25 | `git commit -m "M4: implement timed run outcomes and restart"` | Passed | `dfbe925` (18 files). |
+| 2026-07-25 | Post-OUTCOME `npm test` | Passed | 8 files / 198 tests. |
+| 2026-07-25 | Post-OUTCOME `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-25 | Post-OUTCOME `npm run build` | Passed | Success. |

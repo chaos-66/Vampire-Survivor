@@ -25,6 +25,6 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 
 ### Process
 
-- [ ] OUTCOME checkpoint commit — after commit
+- [x] OUTCOME checkpoint commit (`dfbe925`)
 - [x] Independent audit pending
 - [x] M5+ not started
