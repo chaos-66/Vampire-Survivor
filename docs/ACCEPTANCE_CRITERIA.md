@@ -21,7 +21,7 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 
 ### Browser
 
-- [ ] Full OUTCOME interactive checklist — **UNVERIFIED**
+- [x] Full OUTCOME interactive checklist — user-reported **PASS**; browser/version not supplied
 
 ### Process
 
@@ -29,4 +29,5 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 - [x] First independent audit FAIL; findings repaired locally
 - [x] Fresh independent re-audit PASS
 - [x] OUTCOME repair checkpoint (`a596253`)
+- [x] User browser acceptance PASS
 - [x] M5+ not started

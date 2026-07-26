@@ -2,13 +2,13 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-OUTCOME-01 repair checkpoint complete; browser acceptance pending
+- Current stage: CP-M4-OUTCOME-01 Green; all MVP gameplay checkpoints implemented
 - Checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
-- Latest committed HEAD: `c136347` (`M4: record run outcome status`)
+- Latest committed HEAD: `0943397` (`M4: record run outcome repair status`)
 - OUTCOME repair: `a596253` (`M4: fix run outcome audit findings`)
-- Last updated: 2026-07-25
+- Last updated: 2026-07-26
 - DIFFICULTY Green; secondary pointer Green
-- Win/loss/restart: **Implemented (not Green until independent audit + browser)**
+- Win/loss/restart: **Green**
 - M5+ content: **Not started**
 
 ## Implemented
@@ -27,12 +27,13 @@
   clears terminal pending state, and repairs decision/HEAD records
 - Repair verification: 8 files / 203 tests; tsc / build / audit / diff check green
 - Fresh independent OUTCOME repair re-audit: PASS; no blocking findings
+- User-reported full OUTCOME browser acceptance: PASS
 
 ## Unverified
 
-- Interactive OUTCOME browser checklist — UNVERIFIED
-- Browser acceptance — UNVERIFIED
+- Browser name and version were not supplied
+- Final cross-checkpoint MVP audit/closeout has not started
 
 ## Next Step
 
-Obtain user browser acceptance. Do not start M5+.
+Define and run the final cross-checkpoint MVP audit/closeout. Do not start M5+.
