@@ -5,6 +5,7 @@
 - Current stage: M4 / MVP Green; final independent comprehensive audit PASS
 - Checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
 - Audited MVP baseline: `6236896` (`M4: close run outcome checkpoint`)
+- Final MVP docs-only closeout: `0d0289e` (`M4: close final MVP audit`)
 - OUTCOME repair: `a596253` (`M4: fix run outcome audit findings`)
 - Last updated: 2026-07-26
 - DIFFICULTY Green; secondary pointer Green
@@ -39,6 +40,7 @@
 - Git range `84ab53b..6236896`: intended OUTCOME and docs paths; whitespace PASS
 - M0, M1, M2, M3, ARCH, WORLD, DIFFICULTY, and OUTCOME reviewed Green
 - User browser evidence reviewed for all gameplay checkpoints
+- Final docs-only closeout `0d0289e`; source unchanged from audited baseline
 
 ## Accepted Residual Risks
 

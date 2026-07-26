@@ -277,3 +277,6 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-27 | Final MVP docs-only closeout `npm run build` | Passed | TypeScript and Vite completed; 43 modules transformed. |
 | 2026-07-27 | Final MVP docs-only closeout `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-27 | Final MVP docs-only closeout `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-27 | `git commit -m "M4: close final MVP audit"` | Passed | Final MVP docs-only closeout `0d0289e` (6 intended documentation files). |
+| 2026-07-27 | Post-closeout hash record `npm test` | Passed | 8 files / 203 tests. |
+| 2026-07-27 | Post-closeout hash record `npm run build` | Passed | 43 modules transformed. |

@@ -4,6 +4,7 @@
 
 - Root: `D:\agent\workspace\vampire_survivors`
 - Audited MVP baseline: `6236896` (`M4: close run outcome checkpoint`)
+- Final MVP docs-only closeout: `0d0289e` (`M4: close final MVP audit`)
 - FINAL-MVP-AUDIT-01: **PASS**
 - M4 / MVP: **Green**
 - CP-M4-OUTCOME-01 checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
@@ -21,6 +22,7 @@
 - Independent final audit: tests twice, 8 files / 203 tests each
 - tsc / build (43 modules) / npm audit 0 / Git checks PASS
 - All prior checkpoint code audits and user browser acceptance evidence reviewed
+- Final closeout changed documentation only; audited source baseline remains `6236896`
 
 ## Accepted Risks
 

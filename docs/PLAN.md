@@ -6,6 +6,8 @@
 All scope-lock capabilities, checkpoint audits, and user browser evidence pass.
 Stop before M5+; any expansion requires a newly approved checkpoint.
 
+Final docs-only closeout: `0d0289e` (`M4: close final MVP audit`).
+
 ## History
 
 | ID | Status |
@@ -27,5 +29,5 @@ Stop before M5+; any expansion requires a newly approved checkpoint.
 | Item | Status |
 |---|---|
 | Independent OUTCOME audit | **PASS after repair** |
-| Final MVP audit/closeout | **PASS / docs-only closeout in progress** |
+| Final MVP audit/closeout | **PASS / closeout `0d0289e`** |
 | M5+ content | **Not started** |
