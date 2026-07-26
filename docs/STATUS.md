@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Current stage: secondary-pointer lifecycle repair checkpoint complete; browser recheck pending
+- Current stage: CP-M4-DIFFICULTY-01 Green; stopped before win/loss/restart
 - Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
 - Lifecycle repair: `a9f2d6d` (`M4: fix secondary pointer capture lifecycle`)
 - Prior input/gem repair: `c2f6588` (contextmenu cleared input — **wrong semantics**, superseded by `098841f`)
@@ -40,10 +40,12 @@
 
 ## Unverified
 
-- Full secondary-pointer browser recheck (hold A + right-click/drag, no menu, no Edge back, left-click upgrades, gems >100)
-- Residual risk: browser chrome/extension-level gestures may not be fully blockable from page script
 - Fresh independent audit of the lifecycle repair: PASS; no blocking findings
+- User-reported focused browser recheck: PASS
+- Accepted residual risk: Edge browser chrome or extensions may still perform
+  configured right-drag navigation outside page-script control
 
 ## Next Step
 
-Run the focused secondary-pointer browser recheck. Do not start win/loss/restart.
+User and architect define the win/loss/restart checkpoint. Do not implement it
+until its scope and acceptance criteria are approved.

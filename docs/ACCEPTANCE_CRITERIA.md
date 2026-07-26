@@ -57,9 +57,10 @@ Closeout `00166ee`.
 - [x] Canvas secondary-button default is prevented without modifying keyboard InputState (automated)
 - [x] Held movement keys remain active across secondary preventDefault (automated)
 - [x] Experience gem creation has no count cap in automated coverage
-- [ ] Holding movement then right-clicking/dragging Canvas never opens a menu, never stops movement, and does not navigate the page
-- [ ] More than 100 uncollected kill drops continue to appear
-- [ ] Left-click upgrade selection still works; page outside Canvas is not globally right-click blocked
+- [x] Holding movement while right-clicking/dragging keeps game input neutral
+- [x] More than 100 uncollected kill drops continue to appear
+- [x] Left-click upgrade selection still works; page outside Canvas is not globally right-click blocked
+- [x] Edge chrome/extension gesture limitation accepted as a non-blocking browser-level risk
 
 ### Process
 
@@ -71,4 +72,4 @@ Closeout `00166ee`.
 - [x] First secondary-pointer repair audit FAIL; lifecycle findings repaired locally
 - [x] Fresh secondary-pointer lifecycle re-audit PASS
 - [x] Secondary-pointer lifecycle repair checkpoint (`a9f2d6d`)
-- [ ] User browser acceptance PASS after focused secondary-pointer recheck
+- [x] User browser acceptance PASS after focused secondary-pointer recheck

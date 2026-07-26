@@ -7,6 +7,7 @@
 - Lifecycle repair: `a9f2d6d` (`M4: fix secondary pointer capture lifecycle`)
 - Difficulty: `60bd1dc`; prior input/gem: `c2f6588` (cleared input on contextmenu — **superseded**)
 - Secondary pointer is **input-neutral** (preventDefault only on Canvas)
+- CP-M4-DIFFICULTY-01: **Green**
 - Win/loss/restart and M5+ **not started**
 
 ## What changed
@@ -20,6 +21,7 @@
 ## Residual risk
 
 - Edge/Chromium chrome-level mouse gestures or extensions may still navigate in some environments; page-level protection is implemented but not absolute.
+- User accepted this browser-level limitation as a non-blocking residual risk.
 
 ## Audit Repair
 
@@ -33,5 +35,5 @@
 
 ## Next Task
 
-Run user browser recheck of secondary pointer + held-key movement.
-**No win/loss/restart.**
+User and architect define the win/loss/restart checkpoint and acceptance criteria.
+**Do not implement it before approval.**

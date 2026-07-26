@@ -2,8 +2,8 @@
 
 ## Current Goal
 
-**CP-M4-DIFFICULTY-01 secondary-pointer lifecycle repair `a9f2d6d`
-independently audited PASS.** Focused browser recheck remains before Green.
+**CP-M4-DIFFICULTY-01 Green.** Implementation, repair audits, automated
+verification, and user browser acceptance all pass. Stop before win/loss/restart.
 
 ## History
 
@@ -15,7 +15,7 @@ independently audited PASS.** Focused browser recheck remains before Green.
 | CP-M3-01 | Green `3542f9b` |
 | CP-M4-ARCH-01 | Green (closeout `00166ee`) |
 | CP-M4-WORLD-01 | Green: implementation `ba20893`; spawn repair `008514e`; independent repair audit PASS; user browser acceptance PASS |
-| CP-M4-DIFFICULTY-01 | `60bd1dc`; difficulty checklist PASS; lifecycle repair `a9f2d6d` audit PASS at 179 tests; focused recheck pending |
+| CP-M4-DIFFICULTY-01 | Green: implementation `60bd1dc`; lifecycle repair `a9f2d6d`; final audit PASS; 179 tests; user browser acceptance PASS |
 
 ## WORLD rules (delivered)
 
@@ -41,6 +41,6 @@ independently audited PASS.** Focused browser recheck remains before Green.
 
 | Item | Status |
 |---|---|
-| Dynamic difficulty | **Implemented; audit/browser pending** |
-| Win/loss/restart | **Next after difficulty is Green** |
+| Dynamic difficulty | **Green** |
+| Win/loss/restart | **Not started; next checkpoint must be defined** |
 | M5+ content | **Not started** |

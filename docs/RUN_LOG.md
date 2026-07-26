@@ -226,6 +226,8 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Lifecycle repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-25 | Fresh independent secondary-pointer lifecycle re-audit | PASS | Auditor verified multi-pointer capture tracking, lost/up/cancel cleanup, primary-only upgrade clicks, input neutrality, scope, 179 tests, and toolchain evidence. Browser recheck remains pending. |
 | 2026-07-25 | `git commit -m "M4: fix secondary pointer capture lifecycle"` | Passed | Lifecycle repair checkpoint `a9f2d6d` (9 intended files). |
+| 2026-07-26 | User focused secondary-pointer browser recheck | PASS | User accepted the remaining Edge chrome/extension right-drag navigation limitation; all other focused checks passed, including input neutrality, left-click behavior, and uncapped gem drops. |
+| 2026-07-26 | CP-M4-DIFFICULTY-01 final conclusion | PASS | Automated verification, final independent audits, implementation/repair checkpoints, and user browser acceptance complete; checkpoint Green. |
 | 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
 | 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
 | 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |
