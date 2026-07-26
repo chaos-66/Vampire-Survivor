@@ -2,15 +2,15 @@
 
 ## Current Goal
 
-**CP-M4-OUTCOME-01** audit repair independently re-audited PASS. Repair
-checkpoint and browser acceptance remain open. Not Green yet.
+**CP-M4-OUTCOME-01** repair `a596253` independently re-audited PASS. Browser
+acceptance remains open. Not Green yet.
 
 ## History
 
 | ID | Status |
 |---|---|
 | Prior M0-DIFFICULTY | Green |
-| CP-M4-OUTCOME-01 | `dfbe925`; first audit FAIL; repair independently re-audited PASS at 203 tests; checkpoint/browser pending |
+| CP-M4-OUTCOME-01 | `dfbe925`; repair `a596253`; fresh audit PASS at 203 tests; browser UNVERIFIED |
 
 ## OUTCOME rules
 

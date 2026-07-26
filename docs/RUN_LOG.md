@@ -262,3 +262,4 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-26 | OUTCOME repair `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-26 | OUTCOME repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-26 | Fresh independent CP-M4-OUTCOME-01 repair re-audit | PASS | Auditor verified plain-R semantics, small-viewport layout, terminal invariants, exact boundary behavior, complete restart, scope, 203 tests, and toolchain evidence. Browser acceptance remains UNVERIFIED. |
+| 2026-07-26 | `git commit -m "M4: fix run outcome audit findings"` | Passed | OUTCOME repair checkpoint `a596253` (12 intended files). |

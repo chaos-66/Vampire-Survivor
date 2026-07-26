@@ -2,9 +2,10 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-OUTCOME-01 audit repair independently verified; repair checkpoint pending
+- Current stage: CP-M4-OUTCOME-01 repair checkpoint complete; browser acceptance pending
 - Checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
 - Latest committed HEAD: `c136347` (`M4: record run outcome status`)
+- OUTCOME repair: `a596253` (`M4: fix run outcome audit findings`)
 - Last updated: 2026-07-25
 - DIFFICULTY Green; secondary pointer Green
 - Win/loss/restart: **Implemented (not Green until independent audit + browser)**
@@ -30,9 +31,8 @@
 ## Unverified
 
 - Interactive OUTCOME browser checklist — UNVERIFIED
-- Repair checkpoint — pending
+- Browser acceptance — UNVERIFIED
 
 ## Next Step
 
-Create the OUTCOME repair checkpoint, then obtain user browser acceptance. Do
-not start M5+.
+Obtain user browser acceptance. Do not start M5+.
