@@ -24,3 +24,6 @@
 | D-020 | 2026-07-25 | (Superseded) Earlier attempt cleared held input on Canvas `contextmenu`. | Avoid stuck keys when browser swallows keyup. | Incorrect: stopped movement while keys still held. |
 | D-021 | 2026-07-25 | Canvas secondary pointer only `preventDefault`s; never mutates keyboard `InputState`. | D-020 stopped held WASD/arrows on right-click. | Right-click is browser-default suppression only on the game Canvas; blur/visibility still clear input. |
 | D-022 | 2026-07-26 | Accept Edge chrome/extension right-drag gestures as a non-blocking browser-level risk. | Page script cannot reliably cancel gestures intercepted by browser chrome or extensions. | Canvas input neutrality is required; users disable configured browser gestures when needed. |
+
+| D-022 | 2026-07-25 | Timed run: 60s win, HP0 loss, lost preferred, full restart. | User approved OUTCOME checkpoint. | CP-M4-OUTCOME-01; no endless mode. |
+| D-023 | 2026-07-25 | Clamp sim dt to remaining run time so elapsed hits 60 exactly. | Avoid overshoot past win boundary. | No extra spawn/damage past 60. |

@@ -607,7 +607,7 @@ describe('collision death and gems', () => {
     expect(state.nextGemId).toBe(dropCount + 1)
   })
 
-  it('kill does not create M4 outcome/restart fields', () => {
+  it('kill keeps outcome running until updateGame terminal resolve', () => {
     const state = stateWith()
     state.enemies = [
       {
@@ -633,8 +633,8 @@ describe('collision death and gems', () => {
       },
     ]
     advanceProjectiles(state, 0)
-    expect(state).not.toHaveProperty('outcome')
-    expect(state).not.toHaveProperty('lost')
+    expect(state.outcome).toBe('running')
+    // lost is set only by updateGame via resolveRunOutcome
     expect(state).not.toHaveProperty('restart')
   })
 })
@@ -710,7 +710,7 @@ describe('player contact damage', () => {
     expect(state.player.health).toBe(PLAYER_MAX_HEALTH - CONTACT_DAMAGE * 2)
   })
 
-  it('clamps health at 0 and does not add loss state', () => {
+  it('clamps health at 0 via contact helper without auto-setting lost', () => {
     const state = stateWith()
     state.player = { ...state.player, health: 5 }
     state.enemies = [
@@ -726,8 +726,8 @@ describe('player contact damage', () => {
     ]
     applyContactDamage(state, 0.01)
     expect(state.player.health).toBe(0)
-    expect(state).not.toHaveProperty('outcome')
-    expect(state).not.toHaveProperty('lost')
+    expect(state.outcome).toBe('running')
+    // lost is set only by updateGame via resolveRunOutcome
     expect(state).not.toHaveProperty('restart')
   })
 })

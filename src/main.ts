@@ -29,6 +29,10 @@ import { getStatusMessage } from './status'
 import { drawHud } from './ui/hud'
 import { drawUpgradeOverlay } from './ui/upgrade-overlay'
 import { drawWorld } from './ui/draw-world'
+import {
+  drawOutcomeOverlay,
+  restartButtonContainsPoint,
+} from './ui/outcome-overlay'
 import { ensureContentRegistered } from './content/bootstrap'
 import { computeWorldBounds } from './world/world'
 import {
@@ -37,6 +41,7 @@ import {
   type Viewport,
 } from './world/viewport'
 import { computeCamera, type Camera } from './world/camera'
+import { isRestartCode, isTerminalOutcome } from './core/run-outcome'
 
 ensureContentRegistered()
 
@@ -64,7 +69,6 @@ let viewport: Viewport = createViewport(
   window.devicePixelRatio || 1,
 )
 
-// 世界在 run 创建时固定；resize 不改变世界
 const worldBounds = computeWorldBounds(viewport.width, viewport.height)
 let game: GameState = createGameState(worldBounds)
 
@@ -74,7 +78,6 @@ const applyCanvasSize = (vp: Viewport): void => {
   canvas.height = backing.height
   canvas.style.width = `${vp.width}px`
   canvas.style.height = `${vp.height}px`
-  // 后续绘制使用 CSS 像素逻辑单位
   context.setTransform(vp.dpr, 0, 0, vp.dpr, 0, 0)
 }
 
@@ -84,7 +87,6 @@ const input = createInputState()
 let lastTimestampMs: number | null = null
 let animationFrameId = 0
 let hitFlashRemaining = 0
-/** 被 Canvas capture 的右键 pointerId 集合；不涉及键盘 InputState。 */
 const secondaryPointers = createSecondaryPointerState()
 
 const statusEl = document.querySelector<HTMLElement>('#status')
@@ -95,14 +97,50 @@ if (statusEl) {
 const currentCamera = (): Camera =>
   computeCamera(game.player.x, game.player.y, game.arena, viewport)
 
+/** 完整新 run：新世界、新状态、清键盘、重置帧时钟。 */
+const restartRun = (): void => {
+  const css = readCssSize()
+  viewport = createViewport(css.width, css.height, window.devicePixelRatio || 1)
+  applyCanvasSize(viewport)
+  const nextWorld = computeWorldBounds(viewport.width, viewport.height)
+  game = createGameState(nextWorld)
+  clearInput(input)
+  lastTimestampMs = null
+  hitFlashRemaining = 0
+}
+
 const tryChooseUpgrade = (id: string | null): void => {
   if (id === null || game.pendingUpgrade === null) {
+    return
+  }
+  if (isTerminalOutcome(game.outcome)) {
     return
   }
   applyUpgradeChoice(game, id)
 }
 
 const onKeyDown = (event: KeyboardEvent): void => {
+  if (isTerminalOutcome(game.outcome)) {
+    if (event.repeat) {
+      return
+    }
+    if (isRestartCode(event.code)) {
+      event.preventDefault()
+      restartRun()
+      return
+    }
+    if (
+      event.code === 'KeyW' ||
+      event.code === 'KeyA' ||
+      event.code === 'KeyS' ||
+      event.code === 'KeyD' ||
+      event.code.startsWith('Arrow')
+    ) {
+      event.preventDefault()
+    }
+    return
+  }
+
   if (game.pendingUpgrade !== null) {
     if (event.repeat) {
       return
@@ -158,9 +196,6 @@ const onCanvasClick = (event: MouseEvent): void => {
   if (!isPrimaryPointerEvent(event)) {
     return
   }
-  if (game.pendingUpgrade === null) {
-    return
-  }
   const rect = canvas.getBoundingClientRect()
   const point = cssPointToLogical(
     event.clientX,
@@ -169,13 +204,21 @@ const onCanvasClick = (event: MouseEvent): void => {
     viewport.width,
     viewport.height,
   )
+
+  if (isTerminalOutcome(game.outcome)) {
+    if (restartButtonContainsPoint(viewport, point)) {
+      restartRun()
+    }
+    return
+  }
+
+  if (game.pendingUpgrade === null) {
+    return
+  }
   const optionIds = game.pendingUpgrade.options.map((o) => o.id)
   tryChooseUpgrade(upgradeIdAtPoint(viewport, point, optionIds))
 }
 
-/**
- * Canvas 上右键/辅助按钮：只 preventDefault，绝不修改键盘 InputState。
- */
 const onCanvasContextMenu = (event: MouseEvent): void => {
   preventSecondaryDefault(event)
 }
@@ -189,7 +232,7 @@ const releaseSecondaryCapture = (pointerId: number): void => {
       canvas.releasePointerCapture(pointerId)
     }
   } catch {
-    // 忽略不支持或重复释放；不得抛到控制台中断游戏
+    // ignore
   }
 }
 
@@ -202,7 +245,7 @@ const onCanvasPointerDown = (event: PointerEvent): void => {
     canvas.setPointerCapture(event.pointerId)
     trackSecondaryPointer(secondaryPointers, event.pointerId)
   } catch {
-    // 未 capture 时不保留 pointerId，避免缺失 up/cancel 后污染后续主键。
+    // ignore
   }
 }
 
@@ -261,7 +304,6 @@ const onResize = (): void => {
   const css = readCssSize()
   viewport = createViewport(css.width, css.height, window.devicePixelRatio || 1)
   applyCanvasSize(viewport)
-  // 不重建 GameState，不改 world bounds
 }
 
 window.addEventListener('keydown', onKeyDown)
@@ -284,7 +326,10 @@ const draw = (): void => {
   const camera = currentCamera()
   drawWorld(context, game, camera, viewport, hitFlashRemaining)
   drawHud(context, game)
-  drawUpgradeOverlay(context, viewport, game.pendingUpgrade)
+  if (!isTerminalOutcome(game.outcome)) {
+    drawUpgradeOverlay(context, viewport, game.pendingUpgrade)
+  }
+  drawOutcomeOverlay(context, viewport, game.outcome)
 }
 
 const frame = (timestampMs: number): void => {
@@ -297,13 +342,20 @@ const frame = (timestampMs: number): void => {
 
   const camera = currentCamera()
   const hpBefore = game.player.health
+  const terminal = isTerminalOutcome(game.outcome)
   const direction =
-    game.pendingUpgrade !== null ? { x: 0, y: 0 } : getMoveDirection(input)
+    terminal || game.pendingUpgrade !== null
+      ? { x: 0, y: 0 }
+      : getMoveDirection(input)
   game = updateGame(game, direction, dtSeconds, { camera, viewport })
-  if (game.player.health < hpBefore) {
+  if (!terminal && game.player.health < hpBefore) {
     hitFlashRemaining = 0.12
   }
-  if (hitFlashRemaining > 0 && game.pendingUpgrade === null) {
+  if (
+    hitFlashRemaining > 0 &&
+    game.pendingUpgrade === null &&
+    !isTerminalOutcome(game.outcome)
+  ) {
     hitFlashRemaining = Math.max(0, hitFlashRemaining - dtSeconds)
   }
 

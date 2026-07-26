@@ -3,37 +3,19 @@
 ## Current Truth
 
 - Root: `D:\agent\workspace\vampire_survivors`
-- Secondary-pointer repair: `098841f` (`M4: make secondary pointer input-neutral`)
-- Lifecycle repair: `a9f2d6d` (`M4: fix secondary pointer capture lifecycle`)
-- Difficulty: `60bd1dc`; prior input/gem: `c2f6588` (cleared input on contextmenu — **superseded**)
-- Secondary pointer is **input-neutral** (preventDefault only on Canvas)
-- CP-M4-DIFFICULTY-01: **Green**
-- Win/loss/restart and M5+ **not started**
+- CP-M4-OUTCOME-01 implemented (hash after commit)
+- Rules: lost if HP<=0; won if elapsedActiveSeconds>=60; lost preferred; clamp dt to remaining run time
+- Restart: only terminal + KeyR / 重新开始 button; full new GameState
+- Independent audit **pending**; browser **UNVERIFIED**
+- M5+ **not started**
 
-## What changed
+## Modules
 
-- Removed `clearInput` from right-click handling
-- Canvas secondary events prevent default only; keyboard state untouched
-- Pointer capture for secondary drag where supported
-- Left-click upgrade path unchanged; no global document contextmenu ban
-- Gem uncapped drops remain
-
-## Residual risk
-
-- Edge/Chromium chrome-level mouse gestures or extensions may still navigate in some environments; page-level protection is implemented but not absolute.
-- User accepted this browser-level limitation as a non-blocking residual risk.
-
-## Audit Repair
-
-- First independent audit of `098841f`: FAIL
-- Findings: no `lostpointercapture`, stale/single pointerId tracking, click filter
-  excluded right-click but did not positively require primary button
-- Local repair tracks multiple captured IDs, clears on lost/up/cancel, retains no
-  ID when capture fails, and requires `button === 0` for upgrade clicks
-- Local verification: 7 files / 179 tests; tsc / build / audit / diff check PASS
-- Fresh independent lifecycle re-audit: PASS; repair checkpoint `a9f2d6d`
+- `src/core/run-outcome.ts` resolve + clampDt + isRestartCode
+- `src/ui/outcome-overlay.ts` Chinese overlay + button hit-test
+- `src/core/game-loop.ts` terminal freeze + time clamp
+- `src/main.ts` R/restart wiring
 
 ## Next Task
 
-User and architect define the win/loss/restart checkpoint and acceptance criteria.
-**Do not implement it before approval.**
+Independent audit + browser acceptance for OUTCOME. **No M5+.**

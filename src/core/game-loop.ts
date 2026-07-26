@@ -1,16 +1,11 @@
 /**
  * 游戏更新协调器（纯逻辑）。
  *
- * 固定顺序（pendingUpgrade 时整段跳过）：
- * 1 玩家移动（世界坐标，受世界边界限制）
- * 2 敌人生成（视口外围，需 FrameContext）
- * 3 敌人追踪
- * 4 接触伤害
- * 5 武器
- * 6 投射物和击杀
- * 7 经验拾取
+ * 终局（won/lost）时立即返回，不推进任何模拟。
+ * 运行中：先钳制本帧 dt 到 60 秒剩余，再模拟，再解析 outcome。
+ * 失败（生命<=0）优先于同帧胜利（时间>=60）。
  *
- * 不导入 window/document；相机只通过纯 FrameContext 影响刷怪可见矩形。
+ * 不导入 window/document。
  */
 
 import type { Vec2 } from '../vec'
@@ -28,6 +23,24 @@ import { tryEnterPendingUpgrade } from '../progression/upgrade-system'
 import type { FrameContext } from '../world/frame-context'
 import { viewRectFromCamera } from '../world/frame-context'
 import { splitDifficultyTime } from './difficulty'
+import {
+  clampDtToRunRemaining,
+  isTerminalOutcome,
+  resolveRunOutcome,
+} from './run-outcome'
+
+const applyTerminalIfNeeded = (state: GameState): boolean => {
+  const next = resolveRunOutcome(
+    state.player.health,
+    state.elapsedActiveSeconds,
+  )
+  if (!isTerminalOutcome(next)) {
+    return false
+  }
+  state.outcome = next
+  state.pendingUpgrade = null
+  return true
+}
 
 export const updateGame = (
   state: GameState,
@@ -35,12 +48,26 @@ export const updateGame = (
   dtSeconds: number,
   frame?: FrameContext,
 ): GameState => {
+  if (isTerminalOutcome(state.outcome)) {
+    return state
+  }
+
+  // 已有生命/时间满足终局时，不因 pending 而跳过失败/胜利
+  if (applyTerminalIfNeeded(state)) {
+    return state
+  }
+
   if (state.pendingUpgrade !== null) {
     return state
   }
 
-  const dt = dtSeconds
-  if (!Number.isFinite(dt) || !(dt > 0)) {
+  if (!Number.isFinite(dtSeconds) || !(dtSeconds > 0)) {
+    return state
+  }
+
+  const dt = clampDtToRunRemaining(state.elapsedActiveSeconds, dtSeconds)
+  if (!(dt > 0)) {
+    applyTerminalIfNeeded(state)
     return state
   }
 
@@ -96,5 +123,6 @@ export const updateGame = (
   tryEnterPendingUpgrade(state)
 
   state.player = clampPlayerHealthAndArena(state.player, state.arena)
+  applyTerminalIfNeeded(state)
   return state
 }

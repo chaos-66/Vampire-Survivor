@@ -1,75 +1,30 @@
 # Acceptance Criteria
 
-## M0-M3 / ARCH — Green
+## Prior checkpoints Green
 
-Closeout `00166ee`.
+DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 
-## CP-M4-WORLD-01
+## CP-M4-OUTCOME-01
 
 ### Automated
 
-- [x] World size floor and 10x viewport rules
-- [x] Player center spawn; world bounds; travel beyond one viewport
-- [x] Camera center/clamp/viewport-larger-than-world safe
-- [x] worldToScreen / screenToWorld
-- [x] Viewport/DPR clamp helpers
-- [x] Off-view enemy spawn inside world, not in view, and in a bounded view-edge band
-- [x] Upgrade layout uses viewport size
-- [x] M1-M3 + architecture regression retained (138 tests after repair)
+- [x] resolveRunOutcome: running / won / lost; lost beats won
+- [x] clampDtToRunRemaining: 59.98+0.05 -> 0.02; no overshoot past 60
+- [x] updateGame terminal freeze; sticky outcome
+- [x] pending freezes time (no mid-choice win)
+- [x] contact to 0 HP -> lost; pending+0 HP -> lost
+- [x] createGameState full reset fields
+- [x] restart button layout hit-test
+- [x] isRestartCode KeyR
+- [x] Regression 198 tests total
 - [x] npm test / tsc / build / audit recorded
 
 ### Browser
 
-- [x] Interactive WORLD checklist — user-reported **PASS**; browser/version not supplied
+- [ ] Full OUTCOME interactive checklist — **UNVERIFIED**
 
 ### Process
 
-- [x] WORLD checkpoint commit (`ba20893`)
-- [x] WORLD spawn repair checkpoint (`008514e`)
-- [x] Independent repair audit PASS
-- [x] User browser acceptance PASS
-- [x] Dynamic difficulty / win-loss / M5+ not started
-
-## CP-M4-DIFFICULTY-01
-
-### Automated
-
-- [x] Active time starts at 0 and advances by simulation dt
-- [x] Pending upgrade freezes active time and all difficulty-driven spawning
-- [x] Pure tier boundaries are exact at 0s, 15s, 30s, and 45s
-- [x] Spawn intervals are 1.00s, 0.80s, 0.65s, and 0.50s by tier
-- [x] Enemy caps are 20, 24, 28, and 32 by tier
-- [x] Spawn accumulator remains bounded when the active tier cap is reached
-- [x] Enemy combat stats remain at baseline across tiers
-- [x] View-edge spawn guarantees and M1-M3/WORLD regressions pass
-- [x] `npm test`, `npx tsc --noEmit`, `npm run build`, and `npm audit` pass
-
-### Browser
-
-- [x] Chinese HUD shows elapsed active time and current difficulty tier
-- [x] Pressure visibly increases across tiers without enemies appearing in view
-- [x] Upgrade selection freezes elapsed time and pressure progression
-- [x] Movement, combat, experience, upgrades, camera, resize, and DPR checklist passed
-- [x] No win/loss/restart UI or behavior appears
-
-### Browser Regression Repair
-
-- [x] Canvas secondary-button default is prevented without modifying keyboard InputState (automated)
-- [x] Held movement keys remain active across secondary preventDefault (automated)
-- [x] Experience gem creation has no count cap in automated coverage
-- [x] Holding movement while right-clicking/dragging keeps game input neutral
-- [x] More than 100 uncollected kill drops continue to appear
-- [x] Left-click upgrade selection still works; page outside Canvas is not globally right-click blocked
-- [x] Edge chrome/extension gesture limitation accepted as a non-blocking browser-level risk
-
-### Process
-
-- [x] User approved minimum-risk order: difficulty before win/loss/restart
-- [x] Implementation checkpoint (`60bd1dc`)
-- [x] Independent audit PASS after two repair rounds
-- [x] Input/gem repair independent audit PASS
-- [x] Input/gem repair checkpoint (`c2f6588`)
-- [x] First secondary-pointer repair audit FAIL; lifecycle findings repaired locally
-- [x] Fresh secondary-pointer lifecycle re-audit PASS
-- [x] Secondary-pointer lifecycle repair checkpoint (`a9f2d6d`)
-- [x] User browser acceptance PASS after focused secondary-pointer recheck
+- [ ] OUTCOME checkpoint commit — after commit
+- [x] Independent audit pending
+- [x] M5+ not started

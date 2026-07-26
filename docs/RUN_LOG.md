@@ -242,3 +242,10 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Post-commit `npm test` | Passed | 7 files / 176 tests. |
 | 2026-07-25 | Post-commit `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-25 | Post-commit `npm run build` | Passed | Success. |
+| 2026-07-25 | CP-M4-OUTCOME-01 start | Started | HEAD `84ab53b`. |
+| 2026-07-25 | OUTCOME first `npm test` | Failed | 2 game.test asserts no outcome property. |
+| 2026-07-25 | OUTCOME `npm test` after rewriting legacy asserts | Passed | 8 files / 198 tests. |
+| 2026-07-25 | OUTCOME `npx tsc --noEmit` | Passed | Exit 0. |
+| 2026-07-25 | OUTCOME `npm run build` | Passed | Success. |
+| 2026-07-25 | OUTCOME `npm audit` | Passed | 0 vulnerabilities. |
+| 2026-07-25 | OUTCOME browser interactive | UNVERIFIED | Awaits user. |

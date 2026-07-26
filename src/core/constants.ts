@@ -24,3 +24,5 @@ export const GEM_RADIUS = 8
 export const GEM_VALUE = 1
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0
+/** 有效战斗时间达到该秒数即胜利（精确边界）。 */
+export const RUN_DURATION_SECONDS = 60

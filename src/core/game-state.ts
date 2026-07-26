@@ -1,6 +1,7 @@
 /**
  * 局内 GameState（扁平运行时状态）。
  * 静态内容在注册表；武器冷却仅在 player.weapons[i].cooldownRemaining。
+ * outcome 为 running/won/lost；终局后由 game-loop 冻结模拟。
  */
 
 import { createPlayer, type Arena } from '../movement'
@@ -17,6 +18,7 @@ import { getWeapon } from '../weapons/weapon-registry'
 import type { CombatPlayer } from '../actors/player-types'
 import type { Enemy, ExperienceGem, Projectile } from '../combat/enemy-types'
 import type { PendingUpgrade } from '../progression/progression-definition'
+import type { RunOutcome } from './run-outcome'
 
 export type Rng = () => number
 
@@ -29,6 +31,8 @@ export type GameState = {
   defeatedCount: number
   /** 升级选择期间冻结的局内有效战斗时间。 */
   elapsedActiveSeconds: number
+  /** 局内结果：running / won / lost。 */
+  outcome: RunOutcome
   spawnAccumulator: number
   contactCooldownRemaining: number
   nextEnemyId: number
@@ -98,6 +102,7 @@ export const createGameState = (
     gems: [],
     defeatedCount: 0,
     elapsedActiveSeconds: 0,
+    outcome: 'running',
     spawnAccumulator: 0,
     contactCooldownRemaining: 0,
     nextEnemyId: 1,

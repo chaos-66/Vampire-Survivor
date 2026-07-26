@@ -1,1 +1,1 @@
-export const getStatusMessage = (): string => 'M4：动态难度'
+export const getStatusMessage = (): string => 'M4：坚持 60 秒'
