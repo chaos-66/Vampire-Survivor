@@ -27,3 +27,6 @@
 | D-023 | 2026-07-25 | Timed run: 60s win, HP0 loss, lost preferred, full restart. | User approved OUTCOME checkpoint. | CP-M4-OUTCOME-01; no endless mode. |
 | D-024 | 2026-07-25 | Clamp sim dt to remaining run time so elapsed hits 60 exactly. | Avoid overshoot past win boundary. | No extra spawn/damage past 60. |
 | D-025 | 2026-07-26 | Declare M4/MVP Green after FINAL-MVP-AUDIT-01 PASS at `6236896`. | All scope-lock capabilities have automated, independent, and user browser evidence. | Stop before M5+; expansion requires a new approved checkpoint. |
+| D-026 | 2026-07-27 | Make `docs/PIPELINE.md` mandatory for all future tasks. | User requested a documented, required delivery pipeline. | Every task follows scope, implementation, verification, audit, browser, closeout, and GitHub sync gates. |
+| D-027 | 2026-07-27 | Synchronize GitHub at deterministic checkpoint boundaries. | Replace ad hoc uploads with safe, auditable version publication. | Push verified commits after implementation, repair, Green closeout, handoff, or explicit request; never force-push. |
+| D-028 | 2026-07-27 | M5 foundations proceed RUNTIME -> ENEMY-ARCH -> DROP-ARCH -> WORLD-OBJECTS -> EFFECTS -> CONTENT -> NPC. | Performance and reusable definitions must precede content growth. | Reordering or combining checkpoints requires explicit user approval. |

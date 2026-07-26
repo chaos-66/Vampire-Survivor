@@ -12,6 +12,8 @@
 - Win/loss/restart: **Green**
 - FINAL-MVP-AUDIT-01: **PASS**
 - M5+ content: **Not started**
+- Delivery pipeline: **Defined; mandatory** (`docs/PIPELINE.md`)
+- GitHub remote: **Not configured; upload blocked pending repository URL/auth**
 
 ## Implemented
 
@@ -52,5 +54,6 @@
 
 ## Next Step
 
-Stop. User and architect must explicitly define and approve any M5+ checkpoint
-before implementation.
+Configure the user-confirmed GitHub remote and upload the current Green baseline,
+then define/approve `CP-M5-RUNTIME-01`. Do not begin its implementation before
+the checkpoint gate in `docs/PIPELINE.md` is complete.

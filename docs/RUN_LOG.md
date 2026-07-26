@@ -280,3 +280,11 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-27 | `git commit -m "M4: close final MVP audit"` | Passed | Final MVP docs-only closeout `0d0289e` (6 intended documentation files). |
 | 2026-07-27 | Post-closeout hash record `npm test` | Passed | 8 files / 203 tests. |
 | 2026-07-27 | Post-closeout hash record `npm run build` | Passed | 43 modules transformed. |
+| 2026-07-27 | CP-OPS-PIPELINE-01 start | Started | User requested a mandatory documented pipeline and periodic GitHub version uploads. |
+| 2026-07-27 | GitHub remote inspection | Blocked | `git remote -v` returned no remotes; current branch has no upstream tracking branch. |
+| 2026-07-27 | GitHub CLI authentication inspection | Blocked | `gh` is not installed in the environment; no credentials were exposed or modified. |
+| 2026-07-27 | Delivery pipeline definition | Applied | Added mandatory checkpoint stages, M5 foundation dependency order, Git commit gates, and deterministic GitHub sync policy. |
+| 2026-07-27 | Pipeline docs `npm test` | Passed | 8 files / 203 tests. |
+| 2026-07-27 | Pipeline docs `npm run build` | Passed | 43 modules transformed. |
+| 2026-07-27 | Pipeline docs `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-27 | Pipeline docs `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |

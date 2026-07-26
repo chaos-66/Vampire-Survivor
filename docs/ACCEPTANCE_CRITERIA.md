@@ -48,3 +48,16 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 - [x] M4 / MVP may be declared Green
 - [x] Final docs-only closeout (`0d0289e`)
 - [x] M5+ remains not started
+
+## CP-OPS-PIPELINE-01
+
+- [x] Mandatory pipeline documented in `docs/PIPELINE.md`
+- [x] Pipeline added to `AGENTS.md` required reading
+- [x] Pipeline added to `docs/WORKFLOW.md` start/recovery process
+- [x] M5 foundation checkpoints ordered with explicit dependencies
+- [x] Implementation, verification, independent audit, browser, and closeout gates defined
+- [x] Local Git checkpoint rules defined
+- [x] Deterministic GitHub synchronization points and no-force policy defined
+- [x] Upload evidence requirements defined
+- [ ] User-confirmed GitHub remote configured
+- [ ] Current Green baseline uploaded to GitHub

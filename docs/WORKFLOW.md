@@ -5,10 +5,11 @@ This is a lightweight adaptation of the local Workflow Library for a small TypeS
 ## Start A Task
 
 1. Confirm the repository root and inspect `git status` without discarding existing changes.
-2. Read `AGENTS.md`, `PROJECT_BRIEF.md`, `PLAN.md`, `STATUS.md`, and `HANDOFF.md` plus affected source and tests.
+2. Read `AGENTS.md`, `PROJECT_BRIEF.md`, `PIPELINE.md`, `PLAN.md`, `STATUS.md`, `HANDOFF.md`, `ACCEPTANCE_CRITERIA.md`, `ARCHITECTURE.md`, `DECISIONS.md`, recent `RUN_LOG.md`, and affected source/tests.
 3. Reconstruct truth from repository files, not prior chat. Resolve contradictions before coding.
 4. Select one current-milestone checkpoint and compare it with the scope lock and non-goals.
 5. Define observable acceptance and the commands that prove it before implementation.
+6. Follow the active stage and dependency order in `PIPELINE.md`; it is a required gate, not optional guidance.
 
 ## Code
 
@@ -38,7 +39,7 @@ At every milestone exit, a fresh agent or user acting only as auditor reads the 
 
 ## Interruption Recovery
 
-1. Read `PROJECT_BRIEF.md`, `STATUS.md`, `HANDOFF.md`, `PLAN.md`, `ARCHITECTURE.md`, and recent `RUN_LOG.md` entries.
+1. Read `PROJECT_BRIEF.md`, `PIPELINE.md`, `STATUS.md`, `HANDOFF.md`, `PLAN.md`, `ACCEPTANCE_CRITERIA.md`, `ARCHITECTURE.md`, `DECISIONS.md`, and recent `RUN_LOG.md` entries.
 2. Compare the documented latest commit with `git log -1` and inspect `git status`.
 3. Treat missing evidence as unverified and contradictions as blockers.
 4. Resume only the single next task named in `STATUS.md`; do not infer progress from chat history.
@@ -46,3 +47,10 @@ At every milestone exit, a fresh agent or user acting only as auditor reads the 
 ## Multi-Agent Handoff
 
 The outgoing agent updates `STATUS.md` and `HANDOFF.md` with exact verified/unverified state, recent files, risks, blockers, latest commit, and one next task. The incoming agent reads those files first, checks Git independently, and does not overwrite concurrent or unknown changes.
+
+## GitHub Sync
+
+Use the deterministic sync points and safety gates in `PIPELINE.md`. A push is
+allowed only with a confirmed remote, clean worktree, verified commit, and no
+unknown remote divergence. Never force-push. Record every success, failure, or
+blocked upload in `RUN_LOG.md` and update the last pushed commit in status/handoff.

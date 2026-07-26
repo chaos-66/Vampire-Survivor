@@ -16,6 +16,8 @@
 - User-reported full OUTCOME browser acceptance: **PASS**
 - CP-M4-OUTCOME-01: **Green**
 - M5+ **not started**
+- Mandatory delivery process: `docs/PIPELINE.md`
+- GitHub remote: not configured; no version has been uploaded from this workspace
 
 ## Final Evidence
 
@@ -39,4 +41,6 @@
 
 ## Next Task
 
-Stop. Define and approve a new checkpoint before any M5+ work.
+Obtain the user-confirmed GitHub repository URL/auth method, configure `origin`,
+and push the current Green baseline. Then define `CP-M5-RUNTIME-01` through the
+pipeline scope gate. Do not start M5+ implementation before approval.
