@@ -2,13 +2,14 @@
 
 ## Snapshot
 
-- Current stage: CP-M4-OUTCOME-01 Green; all MVP gameplay checkpoints implemented
+- Current stage: M4 / MVP Green; final independent comprehensive audit PASS
 - Checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
-- Latest committed HEAD: `0943397` (`M4: record run outcome repair status`)
+- Audited MVP baseline: `6236896` (`M4: close run outcome checkpoint`)
 - OUTCOME repair: `a596253` (`M4: fix run outcome audit findings`)
 - Last updated: 2026-07-26
 - DIFFICULTY Green; secondary pointer Green
 - Win/loss/restart: **Green**
+- FINAL-MVP-AUDIT-01: **PASS**
 - M5+ content: **Not started**
 
 ## Implemented
@@ -29,11 +30,25 @@
 - Fresh independent OUTCOME repair re-audit: PASS; no blocking findings
 - User-reported full OUTCOME browser acceptance: PASS
 
-## Unverified
+## Final Audit Evidence
+
+- `npm test` twice: 8 files / 203 tests PASS on both runs
+- `npx tsc --noEmit`: PASS
+- `npm run build`: PASS; 43 modules transformed
+- `npm audit`: 0 vulnerabilities
+- Git range `84ab53b..6236896`: intended OUTCOME and docs paths; whitespace PASS
+- M0, M1, M2, M3, ARCH, WORLD, DIFFICULTY, and OUTCOME reviewed Green
+- User browser evidence reviewed for all gameplay checkpoints
+
+## Accepted Residual Risks
 
 - Browser name and version were not supplied
-- Final cross-checkpoint MVP audit/closeout has not started
+- Uncollected experience gems are intentionally uncapped and can increase long-run
+  memory, scan, and draw costs
+- Edge browser chrome or extension right-drag gestures may bypass page script
+- Off-screen gems and the full-world border may add low, non-blocking draw cost
 
 ## Next Step
 
-Define and run the final cross-checkpoint MVP audit/closeout. Do not start M5+.
+Stop. User and architect must explicitly define and approve any M5+ checkpoint
+before implementation.

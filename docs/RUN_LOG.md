@@ -265,3 +265,15 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-26 | `git commit -m "M4: fix run outcome audit findings"` | Passed | OUTCOME repair checkpoint `a596253` (12 intended files). |
 | 2026-07-26 | User full CP-M4-OUTCOME-01 browser acceptance | PASS | User reported all 17 supplied checks PASS: timed victory, failure, terminal freeze, overlay priority, button/R restart, modified-R behavior, full reset, resize, upgrade, secondary pointer, uncapped gems, and console. Browser/version not supplied. |
 | 2026-07-26 | CP-M4-OUTCOME-01 final conclusion | PASS | Implementation and repair checkpoints, automated verification, fresh independent repair audit, and user browser acceptance complete; checkpoint Green. |
+| 2026-07-26 | FINAL-MVP-AUDIT-01 repository baseline | PASS | Clean `main`; HEAD `6236896`; all listed checkpoint commits resolved in history. |
+| 2026-07-26 | Final auditor `npm test` run 1 | PASS | 8 files / 203 tests. |
+| 2026-07-26 | Final auditor `npm test` run 2 | PASS | 8 files / 203 tests; no order or registry pollution. |
+| 2026-07-26 | Final auditor `npx tsc --noEmit` | PASS | Exit code 0. |
+| 2026-07-26 | Final auditor `npm run build` | PASS | 43 modules transformed. |
+| 2026-07-26 | Final auditor `npm audit` | PASS | found 0 vulnerabilities. |
+| 2026-07-26 | Final auditor Git worktree/range checks | PASS | Clean worktree; current and `84ab53b..6236896` whitespace checks passed; intended OUTCOME/docs range. |
+| 2026-07-26 | FINAL-MVP-AUDIT-01 conclusion | PASS | No blocking code defects; MVP scope lock satisfied; M4/MVP may be declared Green. Documentation noted stale HEAD and a table gap for docs-only closeout correction. |
+| 2026-07-27 | Final MVP docs-only closeout `npm test` | Passed | 8 files / 203 tests. |
+| 2026-07-27 | Final MVP docs-only closeout `npm run build` | Passed | TypeScript and Vite completed; 43 modules transformed. |
+| 2026-07-27 | Final MVP docs-only closeout `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-27 | Final MVP docs-only closeout `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |

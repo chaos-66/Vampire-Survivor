@@ -2,8 +2,9 @@
 
 ## Current Goal
 
-**CP-M4-OUTCOME-01 Green.** Automated verification, independent repair re-audit,
-and user browser acceptance all pass. Stop before final MVP audit or M5+.
+**M4 / MVP Green.** FINAL-MVP-AUDIT-01 independently passed against `6236896`.
+All scope-lock capabilities, checkpoint audits, and user browser evidence pass.
+Stop before M5+; any expansion requires a newly approved checkpoint.
 
 ## History
 
@@ -11,6 +12,7 @@ and user browser acceptance all pass. Stop before final MVP audit or M5+.
 |---|---|
 | Prior M0-DIFFICULTY | Green |
 | CP-M4-OUTCOME-01 | Green: implementation `dfbe925`; repair `a596253`; fresh audit PASS; 203 tests; user browser acceptance PASS |
+| FINAL-MVP-AUDIT-01 | PASS at audited baseline `6236896`; 203 tests twice; tsc/build/audit/Git green |
 
 ## OUTCOME rules
 
@@ -25,5 +27,5 @@ and user browser acceptance all pass. Stop before final MVP audit or M5+.
 | Item | Status |
 |---|---|
 | Independent OUTCOME audit | **PASS after repair** |
-| Final MVP audit/closeout | **Not started; next checkpoint must be defined** |
+| Final MVP audit/closeout | **PASS / docs-only closeout in progress** |
 | M5+ content | **Not started** |
