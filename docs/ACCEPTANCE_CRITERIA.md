@@ -16,7 +16,7 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 - [x] createGameState full reset fields
 - [x] restart button layout hit-test
 - [x] isRestartCode KeyR
-- [x] Regression 198 tests total
+- [x] Regression 203 tests total after audit repair
 - [x] npm test / tsc / build / audit recorded
 
 ### Browser
@@ -26,5 +26,6 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 ### Process
 
 - [x] OUTCOME checkpoint commit (`dfbe925`)
-- [x] Independent audit pending
+- [x] First independent audit FAIL; findings repaired locally
+- [x] Fresh independent re-audit PASS
 - [x] M5+ not started

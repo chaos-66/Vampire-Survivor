@@ -2,6 +2,7 @@
 
 import {
   clampDtToRunRemaining,
+  isPlainRestartEvent,
   isRestartCode,
   resolveRunOutcome,
 } from './run-outcome'
@@ -58,6 +59,22 @@ describe('isRestartCode', () => {
     expect(isRestartCode('KeyR')).toBe(true)
     expect(isRestartCode('KeyA')).toBe(false)
     expect(isRestartCode('Keyr')).toBe(false)
+  })
+
+  it('accepts only an unmodified physical R event', () => {
+    const plain = {
+      code: 'KeyR',
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false,
+      shiftKey: false,
+    }
+    expect(isPlainRestartEvent(plain)).toBe(true)
+    expect(isPlainRestartEvent({ ...plain, ctrlKey: true })).toBe(false)
+    expect(isPlainRestartEvent({ ...plain, metaKey: true })).toBe(false)
+    expect(isPlainRestartEvent({ ...plain, altKey: true })).toBe(false)
+    expect(isPlainRestartEvent({ ...plain, shiftKey: true })).toBe(false)
+    expect(isPlainRestartEvent({ ...plain, code: 'KeyA' })).toBe(false)
   })
 })
 
@@ -169,6 +186,17 @@ describe('updateGame outcome integration', () => {
     updateGame(state, { x: 0, y: 0 }, 1, frameFor(state))
     expect(state.outcome).toBe('won')
   })
+
+  it('terminal early return clears a stale pending upgrade', () => {
+    const state = createGameState(world)
+    state.outcome = 'lost'
+    state.pendingUpgrade = { options: [] }
+
+    updateGame(state, { x: 0, y: 0 }, 1, frameFor(state))
+
+    expect(state.outcome).toBe('lost')
+    expect(state.pendingUpgrade).toBeNull()
+  })
 })
 
 describe('restart creates full new run', () => {
@@ -211,5 +239,17 @@ describe('outcome overlay layout', () => {
       }),
     ).toBe(true)
     expect(restartButtonContainsPoint(vp, { x: 0, y: 0 })).toBe(false)
+  })
+
+  it.each([
+    { width: 120, height: 100 },
+    { width: 1, height: 1 },
+    { width: 320, height: 120 },
+  ])('keeps the restart button inside viewport $width x $height', (vp) => {
+    const r = getRestartButtonRect(vp)
+    expect(r.x).toBeGreaterThanOrEqual(0)
+    expect(r.y).toBeGreaterThanOrEqual(0)
+    expect(r.x + r.width).toBeLessThanOrEqual(vp.width)
+    expect(r.y + r.height).toBeLessThanOrEqual(vp.height)
   })
 })

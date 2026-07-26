@@ -44,3 +44,16 @@ export const isTerminalOutcome = (outcome: RunOutcome): boolean =>
 
 export const isRestartCode = (code: string): boolean =>
   code === 'KeyR'
+
+export const isPlainRestartEvent = (event: {
+  code: string
+  ctrlKey: boolean
+  metaKey: boolean
+  altKey: boolean
+  shiftKey: boolean
+}): boolean =>
+  isRestartCode(event.code) &&
+  !event.ctrlKey &&
+  !event.metaKey &&
+  !event.altKey &&
+  !event.shiftKey

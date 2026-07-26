@@ -41,7 +41,7 @@ import {
   type Viewport,
 } from './world/viewport'
 import { computeCamera, type Camera } from './world/camera'
-import { isRestartCode, isTerminalOutcome } from './core/run-outcome'
+import { isPlainRestartEvent, isTerminalOutcome } from './core/run-outcome'
 
 ensureContentRegistered()
 
@@ -124,7 +124,7 @@ const onKeyDown = (event: KeyboardEvent): void => {
     if (event.repeat) {
       return
     }
-    if (isRestartCode(event.code)) {
+    if (isPlainRestartEvent(event)) {
       event.preventDefault()
       restartRun()
       return

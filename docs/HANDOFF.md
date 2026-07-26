@@ -4,9 +4,11 @@
 
 - Root: `D:\agent\workspace\vampire_survivors`
 - CP-M4-OUTCOME-01 checkpoint: `dfbe925` (`M4: implement timed run outcomes and restart`)
+- Latest committed HEAD: `c136347` (`M4: record run outcome status`)
 - Rules: lost if HP<=0; won if elapsedActiveSeconds>=60; lost preferred; clamp dt to remaining run time
 - Restart: only terminal + KeyR / 重新开始 button; full new GameState
-- Independent audit **pending**; browser **UNVERIFIED**
+- First independent audit **FAIL**; local repair complete at 203 tests
+- Fresh independent re-audit **PASS**; repair checkpoint pending; browser **UNVERIFIED**
 - M5+ **not started**
 
 ## Modules
@@ -18,4 +20,4 @@
 
 ## Next Task
 
-Independent audit + browser acceptance for OUTCOME. **No M5+.**
+Create the OUTCOME repair checkpoint, then obtain browser acceptance. **No M5+.**

@@ -49,6 +49,7 @@ export const updateGame = (
   frame?: FrameContext,
 ): GameState => {
   if (isTerminalOutcome(state.outcome)) {
+    state.pendingUpgrade = null
     return state
   }
 

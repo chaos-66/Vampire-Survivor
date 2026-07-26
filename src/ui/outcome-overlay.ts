@@ -17,13 +17,22 @@ export type Rect = {
   height: number
 }
 
+const clamp = (value: number, min: number, max: number): number =>
+  Math.min(Math.max(value, min), max)
+
 /** 视口中心的「重新开始」按钮矩形（逻辑 CSS 像素）。 */
 export const getRestartButtonRect = (viewport: ViewportSize): Rect => {
-  const width = Math.min(220, Math.max(160, viewport.width * 0.28))
-  const height = 48
+  const viewportWidth = Number.isFinite(viewport.width)
+    ? Math.max(1, viewport.width)
+    : 1
+  const viewportHeight = Number.isFinite(viewport.height)
+    ? Math.max(1, viewport.height)
+    : 1
+  const width = Math.min(220, viewportWidth)
+  const height = Math.min(48, viewportHeight)
   return {
-    x: (viewport.width - width) / 2,
-    y: viewport.height / 2 + 48,
+    x: (viewportWidth - width) / 2,
+    y: clamp(viewportHeight / 2 + 48, 0, viewportHeight - height),
     width,
     height,
   }

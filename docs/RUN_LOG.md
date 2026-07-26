@@ -253,3 +253,12 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-25 | Post-OUTCOME `npm test` | Passed | 8 files / 198 tests. |
 | 2026-07-25 | Post-OUTCOME `npx tsc --noEmit` | Passed | Exit 0. |
 | 2026-07-25 | Post-OUTCOME `npm run build` | Passed | Success. |
+| 2026-07-26 | Independent CP-M4-OUTCOME-01 audit | FAIL | Modified R shortcuts restarted the game; restart button could leave small viewports; terminal early return could retain pending upgrade; duplicate decision ID and stale HEAD docs. |
+| 2026-07-26 | OUTCOME audit repair | Applied | Plain-R helper, viewport-contained restart button, terminal pending cleanup, unique decision IDs, and current HEAD documentation. |
+| 2026-07-26 | OUTCOME repair first `npm test` | Failed | 1x1 viewport button test exposed a 0.25px vertical overflow; 202 tests passed and 1 failed. |
+| 2026-07-26 | OUTCOME repair `npm test` after layout correction | Passed | 8 files / 203 tests. |
+| 2026-07-26 | OUTCOME repair `npx tsc --noEmit` | Passed | Exit code 0. |
+| 2026-07-26 | OUTCOME repair `npm run build` | Passed | 43 modules transformed. |
+| 2026-07-26 | OUTCOME repair `npm audit` | Passed | found 0 vulnerabilities. |
+| 2026-07-26 | OUTCOME repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-26 | Fresh independent CP-M4-OUTCOME-01 repair re-audit | PASS | Auditor verified plain-R semantics, small-viewport layout, terminal invariants, exact boundary behavior, complete restart, scope, 203 tests, and toolchain evidence. Browser acceptance remains UNVERIFIED. |

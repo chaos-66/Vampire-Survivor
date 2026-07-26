@@ -12,6 +12,7 @@
 ### Restart
 
 - Browser-only: KeyR or primary click on 重新开始
+- KeyR restart requires no Ctrl/Meta/Alt/Shift modifier
 - Always `createGameState(computeWorldBounds(currentViewport))` + clearInput + reset frame clock
 - World may change size only on new run
 
@@ -19,3 +20,4 @@
 
 - `drawOutcomeOverlay` screen-space above upgrade overlay
 - Button rect pure helpers for hit-test
+- Restart button rect is clamped fully inside the logical viewport
