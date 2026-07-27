@@ -8,6 +8,7 @@ Stop before M5+; any expansion requires a newly approved checkpoint.
 
 Final docs-only closeout: `0d0289e` (`M4: close final MVP audit`).
 Delivery pipeline: `docs/PIPELINE.md` is mandatory for all future work.
+Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`).
 
 ## History
 

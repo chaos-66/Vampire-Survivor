@@ -17,6 +17,7 @@
 - CP-M4-OUTCOME-01: **Green**
 - M5+ **not started**
 - Mandatory delivery process: `docs/PIPELINE.md`
+- Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`)
 - GitHub remote: not configured; no version has been uploaded from this workspace
 
 ## Final Evidence

@@ -281,7 +281,7 @@ git push origin main
 ## 6. 当前入口
 
 - M4 / MVP：Green
-- 当前本地最终状态记录：`957aea3`
+- Pipeline checkpoint：`74b6a3e` (`OPS: define mandatory delivery pipeline`)
 - M5+：未开始
 - 下一可批准 checkpoint：`CP-M5-RUNTIME-01`
 - GitHub remote：尚未配置；等待用户提供 repository URL 和认证确认

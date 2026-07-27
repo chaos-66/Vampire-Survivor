@@ -288,3 +288,5 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-27 | Pipeline docs `npm run build` | Passed | 43 modules transformed. |
 | 2026-07-27 | Pipeline docs `npm audit` | Passed | found 0 vulnerabilities. |
 | 2026-07-27 | Pipeline docs `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
+| 2026-07-27 | `git commit -m "OPS: define mandatory delivery pipeline"` | Passed | Pipeline checkpoint `74b6a3e` (9 intended files). |
+| 2026-07-27 | Pipeline hash record `npm test` / `npm run build` | Passed | 8 files / 203 tests; 43 modules transformed. |

@@ -13,6 +13,7 @@
 - FINAL-MVP-AUDIT-01: **PASS**
 - M5+ content: **Not started**
 - Delivery pipeline: **Defined; mandatory** (`docs/PIPELINE.md`)
+- Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`)
 - GitHub remote: **Not configured; upload blocked pending repository URL/auth**
 
 ## Implemented
