@@ -33,7 +33,7 @@ Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`).
 | Independent OUTCOME audit | **PASS after repair** |
 | Final MVP audit/closeout | **PASS / closeout `0d0289e`** |
 | Delivery pipeline | **Defined; mandatory** |
-| GitHub sync | **Blocked: no remote configured** |
+| GitHub sync | **Configured; initial Green baseline uploaded** |
 | M5+ content | **Not started** |
 
 ## M5 Foundation Queue

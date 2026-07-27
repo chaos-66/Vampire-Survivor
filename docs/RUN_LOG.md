@@ -290,3 +290,7 @@ Only commands actually executed are recorded here. Pending commands are not repr
 | 2026-07-27 | Pipeline docs `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
 | 2026-07-27 | `git commit -m "OPS: define mandatory delivery pipeline"` | Passed | Pipeline checkpoint `74b6a3e` (9 intended files). |
 | 2026-07-27 | Pipeline hash record `npm test` / `npm run build` | Passed | 8 files / 203 tests; 43 modules transformed. |
+| 2026-07-27 | `git remote add origin https://github.com/chaos-66/Vampire-Survivor.git` | Passed | User-confirmed HTTPS repository configured as `origin`; no credential material logged. |
+| 2026-07-27 | `git fetch origin` / remote inspection | Passed | Remote repository had no heads; no divergence or overwrite risk. |
+| 2026-07-27 | `git push -u origin main` | Passed | Created remote `main`, uploaded through `04143ba`, and established tracking of `origin/main`. |
+| 2026-07-27 | GitHub sync evidence docs `npm test` / `npm run build` | Passed | 8 files / 203 tests; 43 modules transformed. |

@@ -18,7 +18,8 @@
 - M5+ **not started**
 - Mandatory delivery process: `docs/PIPELINE.md`
 - Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`)
-- GitHub remote: not configured; no version has been uploaded from this workspace
+- GitHub remote: `origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
+- Initial upload succeeded through `04143ba`; local `main` tracks `origin/main`
 
 ## Final Evidence
 
@@ -42,6 +43,5 @@
 
 ## Next Task
 
-Obtain the user-confirmed GitHub repository URL/auth method, configure `origin`,
-and push the current Green baseline. Then define `CP-M5-RUNTIME-01` through the
-pipeline scope gate. Do not start M5+ implementation before approval.
+Define `CP-M5-RUNTIME-01` through the pipeline scope gate. Continue pushing all
+required implementation, repair, Green closeout, and handoff sync points.

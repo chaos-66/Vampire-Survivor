@@ -60,5 +60,5 @@ DIFFICULTY close `84ab53b`. Secondary pointer lifecycle Green.
 - [x] Deterministic GitHub synchronization points and no-force policy defined
 - [x] Upload evidence requirements defined
 - [x] Pipeline checkpoint (`74b6a3e`)
-- [ ] User-confirmed GitHub remote configured
-- [ ] Current Green baseline uploaded to GitHub
+- [x] User-confirmed GitHub remote configured
+- [x] Current Green baseline uploaded to GitHub through `04143ba`
