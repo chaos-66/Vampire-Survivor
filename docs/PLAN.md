@@ -38,8 +38,9 @@
 
 ## 当前活动检查点
 
-`CP-OPS-CHINESE-DOCS-01` 正在进行。完成文档审查、自动验证、提交和 GitHub
-同步后，才能恢复 `CP-M5-RUNTIME-01`。
+`CP-OPS-CHINESE-DOCS-01` 的实现提交 `67eb0dc` 已同步 GitHub。首次正式独立审计
+为 `FAIL`；当前正在修复文档状态一致性和 D-029 规则遗漏。修复、全新复审和 Green
+关闭完成后，才能恢复 `CP-M5-RUNTIME-01`。
 
 ## M5 基础建设队列
 

@@ -306,3 +306,9 @@
 | 2026-07-30 | 中文化文档 `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
 | 2026-07-30 | CP-OPS-CHINESE-DOCS-01 提交前独立只读审查 | PASS | 全新审计上下文核对范围、完整差异、提交原文、历史证据、流程一致性和 Markdown；仅有非阻塞的 LF/CRLF 规范化警告。 |
 | 2026-07-30 | 提交前审查独立复跑验证 | PASS | `npm test` 为 8 个文件 / 203 项测试；`npx tsc --noEmit`、`npm run build`（43 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-07-30 | `git commit -m "OPS: localize human-readable documentation"` | 通过 | 创建中文文档实现提交 `67eb0dc`，包含 12 个预期目标文档。 |
+| 2026-07-30 | `git fetch origin` / 分叉检查 | 通过 | 工作区干净；本地仅领先 `origin/main` 一个提交，远端无未知领先提交或分叉。 |
+| 2026-07-30 | `git push origin main` | 通过 | 已将中文文档实现提交 `67eb0dc` 推送至 `origin/main`。 |
+| 2026-07-30 | 对 `67eb0dc` 的首次正式独立审计 | FAIL | 自动验证和中文化范围均通过；阻塞项为提交后状态、交接、计划、验收和日志尚未写回真实提交/同步状态，以及 D-029 未完整列出 Git 提交原文和固定审计标记例外。 |
+| 2026-07-30 | 中文文档审计修复 | 已应用 | 更新提交与同步事实、活动任务和验收状态，并补全 D-029 例外列表；保留首次审计失败证据。 |
+| 2026-07-30 | 中文文档审计修复验证 | 通过 | `npm test` 为 8 个文件 / 203 项测试；`npx tsc --noEmit`、`npm run build`（43 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |

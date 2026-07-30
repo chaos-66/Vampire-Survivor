@@ -4,7 +4,8 @@
 
 - 当前阶段：M4 / MVP Green；最终独立综合审计 PASS
 - 当前活动检查点：`CP-OPS-CHINESE-DOCS-01`
-- 基线 HEAD：`2e371d7`；中文化改动尚未提交
+- 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
+- 首次正式独立审计：**FAIL**；当前正在修复文档状态一致性和 D-029 规则遗漏
 - 检查点：`dfbe925`（`M4: implement timed run outcomes and restart`）
 - 已审计的 MVP 基线：`6236896`（`M4: close run outcome checkpoint`）
 - 最终 MVP 纯文档收尾：`0d0289e`（`M4: close final MVP audit`）
@@ -17,7 +18,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**已成功推进至 `2e371d7`；当前未提交改动尚未同步**
+- GitHub 同步：**已成功推进至 `67eb0dc`；审计修复尚未提交或同步**
 
 ## 已实现
 
@@ -58,5 +59,6 @@
 
 ## 下一步
 
-完成 `CP-OPS-CHINESE-DOCS-01` 的审查、验证、提交和同步；完成后再通过
-`docs/PIPELINE.md` 的范围关卡定义并批准 `CP-M5-RUNTIME-01`。
+完成 `CP-OPS-CHINESE-DOCS-01` 审计修复的验证、提交、同步和全新独立复审；
+Green 关闭后再通过 `docs/PIPELINE.md` 的范围关卡定义并批准
+`CP-M5-RUNTIME-01`。

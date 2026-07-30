@@ -69,4 +69,8 @@ DIFFICULTY 关闭提交为 `84ab53b`。辅助指针生命周期为 Green。
 - [x] `AGENTS.md` 与全部 `docs/*.md` 面向人的自然语言使用简体中文
 - [x] 强制中文规则写入 `AGENTS.md` 和 `docs/PIPELINE.md`
 - [x] 命令、路径、代码标识符、Git 提交原文和专有技术名允许保留原文
-- [ ] 中文文档检查点已提交并同步 GitHub
+- [x] 中文文档实现提交 `67eb0dc` 已同步 GitHub
+- [x] 首次正式独立审计为 FAIL；发现的问题已进入审计修复
+- [ ] 审计修复已提交并同步 GitHub
+- [ ] 全新独立复审为 PASS
+- [ ] 中文文档检查点已完成 Green 关闭
