@@ -40,7 +40,7 @@
 
 `CP-OPS-CHINESE-DOCS-01`：实现提交 `67eb0dc`；首次正式独立审计 `FAIL`；
 审计修复提交 `15b474c`；全新独立复审 `PASS`。中文文档检查点已达到 Green
-关闭条件。
+关闭条件；Green 关闭提交为 `1279998`（`OPS: close Chinese documentation checkpoint`）。
 
 ## M5 基础建设队列
 

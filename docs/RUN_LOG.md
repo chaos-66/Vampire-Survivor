@@ -317,3 +317,5 @@
 | 2026-07-30 | 中文文档修复后全新独立复审 | PASS | 全新审计上下文确认 `2e371d7..15b474c` 范围、D-029 规则、流程一致性、远端同步和历史证据均正确；无阻塞发现。 |
 | 2026-07-30 | 全新复审独立验证 | PASS | `npm test` 为 8 个文件 / 203 项测试；`npx tsc --noEmit`、`npm run build`（43 个模块）、`npm audit`（0 个漏洞）和提交范围差异检查均通过。 |
 | 2026-07-30 | CP-OPS-CHINESE-DOCS-01 Green 关闭验证 | 通过 | `npm test` 为 8 个文件 / 203 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |
+| 2026-07-30 | `git commit -m "OPS: close Chinese documentation checkpoint"` | 通过 | 创建 Green 关闭提交 `1279998`，包含 6 个预期流程文档。 |
+| 2026-07-30 | Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `1279998` 推送至 `origin/main`。 |

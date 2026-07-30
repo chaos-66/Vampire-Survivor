@@ -7,6 +7,7 @@
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
 - 全新独立复审：**PASS**
+- Green 关闭提交：`1279998`（`OPS: close Chinese documentation checkpoint`）
 - 已审计的 MVP 基线：`6236896`（`M4: close run outcome checkpoint`）
 - 最终 MVP 纯文档收尾：`0d0289e`（`M4: close final MVP audit`）
 - FINAL-MVP-AUDIT-01: **PASS**
@@ -23,7 +24,7 @@
 - 强制交付流程：`docs/PIPELINE.md`
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 已成功同步至 `15b474c`；Green 关闭提交尚未同步
+- Green 关闭提交 `1279998` 已同步；本地 `main` 跟踪 `origin/main`
 
 ## 最终证据
 
