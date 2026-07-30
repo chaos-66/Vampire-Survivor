@@ -1,42 +1,47 @@
-# Plan
+# 计划
 
-## Current Goal
+## 当前目标
 
-**M4 / MVP Green.** FINAL-MVP-AUDIT-01 independently passed against `6236896`.
-All scope-lock capabilities, checkpoint audits, and user browser evidence pass.
-Stop before M5+; any expansion requires a newly approved checkpoint.
+**M4 / MVP Green。** FINAL-MVP-AUDIT-01 针对 `6236896` 的独立审计已通过。
+所有范围锁定能力、检查点审计和用户浏览器证据均已通过。
+在 M5+ 之前停止；任何扩展都需要新批准的检查点。
 
-Final docs-only closeout: `0d0289e` (`M4: close final MVP audit`).
-Delivery pipeline: `docs/PIPELINE.md` is mandatory for all future work.
-Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`).
+最终纯文档收尾：`0d0289e`（`M4: close final MVP audit`）。
+交付流程：所有未来工作都必须遵循 `docs/PIPELINE.md`。
+流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）。
 
-## History
+## 历史
 
-| ID | Status |
+| 标识 | 状态 |
 |---|---|
-| Prior M0-DIFFICULTY | Green |
-| CP-M4-OUTCOME-01 | Green: implementation `dfbe925`; repair `a596253`; fresh audit PASS; 203 tests; user browser acceptance PASS |
-| FINAL-MVP-AUDIT-01 | PASS at audited baseline `6236896`; 203 tests twice; tsc/build/audit/Git green |
+| 先前的 M0-DIFFICULTY | Green |
+| CP-M4-OUTCOME-01 | Green：实现 `dfbe925`；修复 `a596253`；全新审计 PASS；203 项测试；用户浏览器验收 PASS |
+| FINAL-MVP-AUDIT-01 | 在审计基线 `6236896` 上 PASS；两次运行 203 项测试；tsc/build/audit/Git 均为绿色状态 |
 
-## OUTCOME rules
+## OUTCOME 规则
 
-- lost: health <= 0 (beats win same frame)
-- won: elapsedActiveSeconds >= 60 with health > 0
-- dt clamped so elapsed never overshoots 60 during sim
-- terminal freezes all systems; clears pendingUpgrade
-- restart only when terminal: R or button; full new run + world from current viewport
+- lost：health <= 0（同一帧中优先于获胜）
+- won：elapsedActiveSeconds >= 60 且 health > 0
+- 对 dt 进行钳制，使模拟期间的已用时间永不超过 60
+- 终局状态冻结所有系统；清除 pendingUpgrade
+- 仅在终局状态下可通过 R 或按钮重新开始；从当前视口创建完整的新单局和世界
 
-## Later
+## 后续
 
-| Item | Status |
+| 项目 | 状态 |
 |---|---|
-| Independent OUTCOME audit | **PASS after repair** |
-| Final MVP audit/closeout | **PASS / closeout `0d0289e`** |
-| Delivery pipeline | **Defined; mandatory** |
-| GitHub sync | **Configured; initial Green baseline uploaded** |
-| M5+ content | **Not started** |
+| 独立 OUTCOME 审计 | **修复后 PASS** |
+| 最终 MVP 审计/收尾 | **PASS / 收尾 `0d0289e`** |
+| 交付流程 | **已定义；强制执行** |
+| GitHub 同步 | **已配置；初始 Green 基线已上传** |
+| M5+ 内容 | **未开始** |
 
-## M5 Foundation Queue
+## 当前活动检查点
+
+`CP-OPS-CHINESE-DOCS-01` 正在进行。完成文档审查、自动验证、提交和 GitHub
+同步后，才能恢复 `CP-M5-RUNTIME-01`。
+
+## M5 基础建设队列
 
 1. `CP-M5-RUNTIME-01`
 2. `CP-M5-ENEMY-ARCH-01`
@@ -46,5 +51,5 @@ Pipeline checkpoint: `74b6a3e` (`OPS: define mandatory delivery pipeline`).
 6. `CP-M5-CONTENT-01`
 7. `CP-M5-NPC-01`
 
-Exact gates, dependencies, Git commits, audits, browser acceptance, and GitHub
-sync points are defined in `docs/PIPELINE.md`.
+准确的关卡、依赖关系、Git 提交、审计、浏览器验收和 GitHub
+同步点均在 `docs/PIPELINE.md` 中定义。

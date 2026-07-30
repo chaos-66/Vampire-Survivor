@@ -1,56 +1,56 @@
-# Project Workflow
+# 项目工作流
 
-This is a lightweight adaptation of the local Workflow Library for a small TypeScript Canvas game.
+这是针对小型 TypeScript Canvas 游戏对本地工作流库进行的轻量化改编。
 
-## Start A Task
+## 开始任务
 
-1. Confirm the repository root and inspect `git status` without discarding existing changes.
-2. Read `AGENTS.md`, `PROJECT_BRIEF.md`, `PIPELINE.md`, `PLAN.md`, `STATUS.md`, `HANDOFF.md`, `ACCEPTANCE_CRITERIA.md`, `ARCHITECTURE.md`, `DECISIONS.md`, recent `RUN_LOG.md`, and affected source/tests.
-3. Reconstruct truth from repository files, not prior chat. Resolve contradictions before coding.
-4. Select one current-milestone checkpoint and compare it with the scope lock and non-goals.
-5. Define observable acceptance and the commands that prove it before implementation.
-6. Follow the active stage and dependency order in `PIPELINE.md`; it is a required gate, not optional guidance.
+1. 确认仓库根目录并检查 `git status`，不得丢弃已有变更。
+2. 阅读 `AGENTS.md`、`PROJECT_BRIEF.md`、`PIPELINE.md`、`PLAN.md`、`STATUS.md`、`HANDOFF.md`、`ACCEPTANCE_CRITERIA.md`、`ARCHITECTURE.md`、`DECISIONS.md`、`RUN_LOG.md` 的近期记录以及受影响的源码和测试。
+3. 根据仓库文件而非先前聊天还原事实。编码前解决矛盾。
+4. 选择一个当前里程碑的检查点，并将其与范围锁定和非目标进行比较。
+5. 实现前定义可观察的验收项以及用于证明它们的命令。
+6. 遵循 `PIPELINE.md` 中的当前阶段和依赖顺序；这是必需的关卡，而非可选指导。
 
-## Code
+## 编码
 
-1. Make the smallest change that satisfies the selected checkpoint.
-2. Keep simulation logic separable from Canvas rendering where practical so rules can be unit tested.
-3. Use placeholders and browser APIs before adding dependencies or abstractions.
-4. Do not mix unrelated cleanup or future milestone work into the change.
+1. 进行满足所选检查点的最小变更。
+2. 在可行的情况下，使模拟逻辑与 Canvas 渲染保持可分离，以便对规则进行单元测试。
+3. 添加依赖或抽象前，优先使用占位内容和浏览器 API。
+4. 不得在变更中混入无关清理或未来里程碑的工作。
 
-## Test
+## 测试
 
-1. Add or update focused Vitest tests for deterministic logic.
-2. Run `npm test` and `npm run build` after code changes.
-3. Manually run `npm run dev` when browser behavior or rendering changes, and record what was actually observed.
-4. Record command, result, and relevant warnings or failures in `RUN_LOG.md`. Failed evidence remains recorded until superseded by a successful rerun.
+1. 为确定性逻辑添加或更新针对性的 Vitest 测试。
+2. 修改代码后运行 `npm test` 和 `npm run build`。
+3. 浏览器行为或渲染发生变化时，手动运行 `npm run dev`，并记录实际观察结果。
+4. 在 `RUN_LOG.md` 中记录命令、结果以及相关警告或失败。失败证据须保留，直至成功重跑取代它。
 
-## Checkpoint
+## 检查点
 
-1. Confirm the checkpoint acceptance criteria and run its commands.
-2. Review `git status` and `git diff`; stage only intended files and never stage secrets or build output.
-3. Update `STATUS.md`, `RUN_LOG.md`, and `HANDOFF.md` before committing.
-4. Commit with a milestone-scoped message and then record the resulting commit hash without amending solely to place its own hash in that commit.
-5. A checkpoint is green only with real evidence and a Git commit that can serve as the rollback point.
+1. 确认检查点验收标准并运行相应命令。
+2. 审查 `git status` 和 `git diff`；只暂存预期文件，绝不暂存机密信息或构建输出。
+3. 提交前更新 `STATUS.md`、`RUN_LOG.md` 和 `HANDOFF.md`。
+4. 使用限定在里程碑范围内的消息提交，然后记录生成的提交哈希；不得仅为在该提交中写入其自身哈希而修订提交。
+5. 只有具备真实证据和可作为回滚点的 Git 提交，检查点才是 Green。
 
-## Audit
+## 审计
 
-At every milestone exit, a fresh agent or user acting only as auditor reads the scope, acceptance criteria, evidence, and diff, then reruns critical commands. The result is `PASS`, `FAIL`, or `INCONCLUSIVE`; the implementing agent's own claim is not an independent audit. A failure blocks the next milestone.
+每次退出里程碑时，由全新的智能体或仅担任审计员的用户阅读范围、验收标准、证据和差异，然后重新运行关键命令。结果为 `PASS`、`FAIL` 或 `INCONCLUSIVE`；实施智能体自己的声明不属于独立审计。失败会阻止进入下一里程碑。
 
-## Interruption Recovery
+## 中断恢复
 
-1. Read `PROJECT_BRIEF.md`, `PIPELINE.md`, `STATUS.md`, `HANDOFF.md`, `PLAN.md`, `ACCEPTANCE_CRITERIA.md`, `ARCHITECTURE.md`, `DECISIONS.md`, and recent `RUN_LOG.md` entries.
-2. Compare the documented latest commit with `git log -1` and inspect `git status`.
-3. Treat missing evidence as unverified and contradictions as blockers.
-4. Resume only the single next task named in `STATUS.md`; do not infer progress from chat history.
+1. 阅读 `PROJECT_BRIEF.md`、`PIPELINE.md`、`STATUS.md`、`HANDOFF.md`、`PLAN.md`、`ACCEPTANCE_CRITERIA.md`、`ARCHITECTURE.md`、`DECISIONS.md` 以及 `RUN_LOG.md` 的近期记录。
+2. 将文档所述的最新提交与 `git log -1` 进行比较，并检查 `git status`。
+3. 将缺失证据视为未验证，将矛盾视为阻塞项。
+4. 仅恢复 `STATUS.md` 中指定的唯一下一任务；不得根据聊天记录推断进度。
 
-## Multi-Agent Handoff
+## 多智能体交接
 
-The outgoing agent updates `STATUS.md` and `HANDOFF.md` with exact verified/unverified state, recent files, risks, blockers, latest commit, and one next task. The incoming agent reads those files first, checks Git independently, and does not overwrite concurrent or unknown changes.
+交出工作的智能体更新 `STATUS.md` 和 `HANDOFF.md`，准确写明已验证和未验证的状态、近期文件、风险、阻塞项、最新提交以及一个下一任务。接手工作的智能体首先阅读这些文件，独立检查 Git，并且不覆盖并发或未知变更。
 
-## GitHub Sync
+## GitHub 同步
 
-Use the deterministic sync points and safety gates in `PIPELINE.md`. A push is
-allowed only with a confirmed remote, clean worktree, verified commit, and no
-unknown remote divergence. Never force-push. Record every success, failure, or
-blocked upload in `RUN_LOG.md` and update the last pushed commit in status/handoff.
+使用 `PIPELINE.md` 中确定的同步点和安全关卡。只有在远程仓库已确认、工作区干净、
+提交已验证且远程仓库不存在未知分叉时，才允许推送。绝不强制推送。在
+`RUN_LOG.md` 中记录每次成功、失败或受阻的上传，并在状态和交接文档中更新最后
+推送的提交。

@@ -1,296 +1,308 @@
-# Run Log
+# 运行日志
 
-Only commands actually executed are recorded here. Pending commands are not represented as successful.
+此处仅记录实际执行过的命令。待执行命令不会被记为成功。
 
-| Time | Command or action | Result | Evidence |
+| 时间 | 命令或操作 | 结果 | 证据 |
 |---|---|---|---|
-| 2026-07-21 | Inspect actual and reference paths | Passed | Actual root exists; both reference paths were absent. |
-| 2026-07-21 | Inspect root contents | Passed | Only `AI-Workflow-Library/` existed before project initialization. |
-| 2026-07-21 | `git status --short --branch` before initialization | Expected failure | Git reported that the directory was not a repository. |
-| 2026-07-21 | Read selected Workflow Library planning, execution, checkpoint, recovery, audit, testing, frontend, game, agent, and minimalism files | Passed | Library remained unmodified. |
-| 2026-07-21 | `node --version` | Passed | `v22.12.0` |
-| 2026-07-21 | `npm --version` | Passed | `10.9.0` |
-| 2026-07-21 | `git --version` | Passed | `2.54.0.windows.1` |
-| 2026-07-21 | `git init` | Passed | Empty repository initialized at the actual project root. |
-| 2026-07-21 | `npm install` | Passed with security findings | Added 54 packages; npm reported 5 vulnerabilities: 3 moderate, 1 high, and 1 critical. |
-| 2026-07-21 | First `npm test` | Failed | Vitest collected no tests because importing `src/main.ts` raised `ReferenceError: document is not defined`. |
-| 2026-07-21 | First `npm run build` | Passed | TypeScript and Vite completed; 4 modules transformed and `dist/` generated. |
-| 2026-07-21 | `npm audit --json` | Failed security audit | Findings originated from the Vitest 2 dependency chain; npm identified Vitest 4.1.10 as the available major-version fix. |
-| 2026-07-21 | Second `npm install` after upgrading Vitest | Passed | Added 6, removed 17, and changed 13 packages; audited 44 packages with 0 vulnerabilities. |
-| 2026-07-21 | Final `npm test` | Passed | Vitest 4.1.10: 1 test file and 1 test passed. |
-| 2026-07-21 | Final `npm run build` | Passed | TypeScript and Vite completed; 5 modules transformed and ignored `dist/` output generated. |
-| 2026-07-21 | Final `npm audit` | Passed | `found 0 vulnerabilities` |
-| 2026-07-21 | `git status --short --branch` | Passed | Repository is on unborn `main`; only intended untracked project files are visible and the library is ignored. |
-| 2026-07-21 | `git diff --check` | Passed | No whitespace errors reported. |
-| 2026-07-21 | Independent read-only pre-commit M0 audit | Passed | Auditor reran test, build, and audit; confirmed scope and document consistency. One low finding: the earlier unstaged `git diff --check` was vacuous in an initial repository. |
-| 2026-07-21 | Stage intended project files and run `git diff --cached --check` | Passed | 20 intended files staged with no whitespace errors; `AI-Workflow-Library/` remained ignored. |
-| 2026-07-21 | `git commit -m "M0: bootstrap project workflow and toolchain"` | Passed | Created root checkpoint commit `574d0ca` with 20 intended project files. |
-| 2026-07-21 | M0 status-record commit | Passed | `ba842c4` (`M0: record checkpoint status`). |
-| 2026-07-21 | M1 recovery: `git status`, `git log -10`, HEAD | Passed | Branch `main`, clean worktree, HEAD `ba842c4`, M0 checkpoint `574d0ca`; library ignored. |
-| 2026-07-21 | M1 pre-impl: read project docs and M0 sources | Passed | M1 not started; Canvas still M0 bootstrap only. |
-| 2026-07-21 | M1 `npm test` after implementation | Passed | Vitest 4.1.10: 3 files, 26 tests passed (`main`, `input`, `movement`). |
-| 2026-07-21 | M1 `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-21 | M1 `npm run build` | Passed | `tsc && vite build`; 8 modules transformed; `dist/` generated. |
-| 2026-07-21 | M1 `npm audit` | Passed | `found 0 vulnerabilities`. |
-| 2026-07-21 | M1 `git diff --check` | Passed | No whitespace errors (CRLF normalization warnings only). |
-| 2026-07-21 | M1 `npm run dev` + HTTP GET `http://localhost:5173/` | Partial | Vite ready on 5173; HTTP 200; HTML includes `M1: move with WASD or arrow keys` and no old “Gameplay begins in M1” paragraph. **Interactive keyboard/layout/blur play checks UNVERIFIED at that time** (no interactive browser session in implementer environment). Later superseded by user manual acceptance PASS. |
-| 2026-07-21 | M0 Canvas browser smoke (pre-M1 interactive) | UNVERIFIED | Historical; later superseded by user M1 manual acceptance. |
-| 2026-07-21 | `git commit -m "M1: implement frame-independent player movement"` | Passed | Checkpoint `563f7ee` (16 files). |
-| 2026-07-21 | Post-checkpoint `npm test` | Passed | 3 files, 26 tests passed. |
-| 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-21 | Post-checkpoint `npm run build` | Passed | 8 modules; `dist/` generated. |
-| 2026-07-21 | Independent M1 code/scope audit (auditor, not implementer) | PASS | Reviewed `563f7ee` and `2684ac8`; confirmed no M2 scope expansion; input, movement, delta time, bounds, blur clear, module split OK; no blocking defects. |
-| 2026-07-21 | Independent auditor re-ran `npm test` | PASS | 3 test files passed; 26 tests passed. |
-| 2026-07-21 | Independent auditor re-ran `npx tsc --noEmit` | PASS | Exit code 0. |
-| 2026-07-21 | Independent auditor re-ran `npm run build` | PASS | Success; Vite transformed 8 modules. |
-| 2026-07-21 | Independent auditor re-ran `npm audit` | PASS | found 0 vulnerabilities. |
-| 2026-07-21 | Independent auditor Git whitespace/status | PASS | No whitespace errors; `main` worktree clean. |
-| 2026-07-21 | User manual browser acceptance (11 checks) | PASS | User-reported: page/Canvas; WASD; arrows; key release stop; diagonal no speed boost; opposite cancel no drift; four-edge bounds; no per-frame accel on hold; blur/Alt+Tab no stuck move; narrow layout OK; console no unhandled errors. Browser name and version not supplied. |
-| 2026-07-21 | M1 independent audit final conclusion | PASS | `CP-M1-01` Green; M1 may exit. |
-| 2026-07-21 | Doc closeout (implementer): `npm test` | Passed | 3 files, 26 tests passed (docs-only change verification). |
-| 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 8 modules transformed; `dist/` generated. |
-| 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
-| 2026-07-21 | `git commit -m "M1: record independent audit pass"` | Passed | `976dfc6`. |
-| 2026-07-21 | M2 recovery: git status/log; HEAD `976dfc6` | Passed | Clean `main`; M1 green; M2 not started. |
-| 2026-07-21 | M2 first `npm test` (spawn multi-step assert) | Failed | 1 failed: multi small vs large spawn length (float steps); 62 passed. |
-| 2026-07-21 | M2 `npm test` after spawn step fix | Passed | 4 files, 63 tests passed. |
-| 2026-07-21 | M2 `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-21 | M2 `npm run build` | Passed | 10 modules transformed; `dist/` generated. |
-| 2026-07-21 | M2 `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-21 | M2 interactive browser combat checklist | UNVERIFIED | No interactive browser session in implementer environment. |
-| 2026-07-21 | M2 `npm run dev` HTTP GET localhost:5173 | Partial | HTTP 200; HTML has M2 status copy; no XP/upgrade/Boss copy. Interactive combat UNVERIFIED. |
-| 2026-07-21 | M2 `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
-| 2026-07-21 | `git commit -m "M2: implement enemy pressure and automatic combat"` | Passed | Checkpoint `6c5afab` (14 files). |
-| 2026-07-21 | Post-checkpoint `npm test` | Passed | 4 files, 63 tests passed. |
-| 2026-07-21 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-21 | Post-checkpoint `npm run build` | Passed | 10 modules; `dist/` generated. |
-| 2026-07-21 | `git commit -m "M2: record checkpoint status"` | Passed | `6a6f981`. |
-| 2026-07-21 | Independent M2 code/scope audit (auditor) | PASS | Reviewed `6c5afab`/`6a6f981`; no M3/M4 creep; no blocking defects. |
-| 2026-07-21 | Independent auditor `npm test` | PASS | 4 files / 63 tests. |
-| 2026-07-21 | Independent auditor `npx tsc --noEmit` | PASS | Exit 0. |
-| 2026-07-21 | Independent auditor `npm run build` | PASS | 10 modules transformed. |
-| 2026-07-21 | Independent auditor `npm audit` | PASS | 0 vulnerabilities. |
-| 2026-07-21 | Independent auditor Git whitespace/status | PASS | Clean `main`. |
-| 2026-07-21 | User M2 browser acceptance (18 checks) | PASS | User-reported all PASS; browser/version not supplied. Includes HP=0 continues without loss UI/buttons (M2 design). Performed **before** Chinese localization; functional behavior accepted; Chinese display needs post-localization confirm. |
-| 2026-07-21 | Chinese UI code change | Applied | `index.html` zh-CN + 吸血鬼幸存者; status `M2：移动、躲避敌人并自动攻击`; HUD 生命/击败/敌人. |
-| 2026-07-21 | Localization `npm test` | Passed | 4 files / 63 tests. |
-| 2026-07-21 | Localization `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-21 | Localization `npm run build` | Passed | 10 modules. |
-| 2026-07-21 | Localization `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-21 | Chinese static source/HTML check | Passed | lang=zh-CN; title/aria/status Chinese; HUD labels present; English HUD labels removed. |
-| 2026-07-21 | Chinese real-browser visual confirm | Pending | User quick confirm required after localization. |
-| 2026-07-21 | `git commit -m "M2: localize game UI in Chinese"` | Passed | `0f1bb50` (10 files). |
-| 2026-07-21 | Post-localization `npm test` | Passed | 4 files / 63 tests. |
-| 2026-07-21 | Post-localization `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-21 | Post-localization `npm run build` | Passed | 10 modules. |
-| 2026-07-21 | `git commit -m "M2: record localization status"` | Passed | `ee60495`. |
-| 2026-07-21 | User Chinese real-browser display acceptance (5 checks) | PASS | User-reported 5/5: title/H1 吸血鬼幸存者; status M2：移动、躲避敌人并自动攻击; HUD 生命/击败/敌人; no garbled text/truncation/overlap; gameplay still normal. Browser/version not supplied. Supersedes prior “Chinese real-browser visual confirm Pending”. |
-| 2026-07-21 | M2 final independent audit conclusion | PASS | `CP-M2-01` Green; M2 may exit. Combines independent code/auto audit, user functional 18/18, user Chinese 5/5. |
-| 2026-07-21 | Doc closeout (implementer): `npm test` | Passed | 4 files / 63 tests (docs-only M2 audit close). |
-| 2026-07-21 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-21 | Doc closeout (implementer): `npm run build` | Passed | 10 modules transformed. |
-| 2026-07-21 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
-| 2026-07-22 | M3 recovery: git status/log; HEAD `5ce3915` | Passed | Clean `main`; M2 green; M3 not started. |
-| 2026-07-22 | M3 `npm test` after implementation | Passed | 4 files, 91 tests passed. |
-| 2026-07-22 | M3 `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | M3 `npm run build` | Passed | 10 modules; dist generated. |
-| 2026-07-22 | M3 `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-22 | M3 interactive browser progression checklist | UNVERIFIED | No interactive browser session in implementer environment. |
-| 2026-07-22 | M3 `npm run dev` HTTP GET | Partial | HTTP 200; M3 Chinese status copy present. Interactive UNVERIFIED. |
-| 2026-07-22 | `git commit -m "M3: implement experience and upgrade progression"` | Passed | Checkpoint `3542f9b` (13 files). |
-| 2026-07-22 | Post-checkpoint `npm test` | Passed | 4 files, 91 tests passed. |
-| 2026-07-22 | Post-checkpoint `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Post-checkpoint `npm run build` | Passed | 10 modules. |
-| 2026-07-22 | CP-M4-ARCH-01 modularization start | Started | HEAD `1fbbaa6`; clean main. |
-| 2026-07-22 | Modular `npm test` | Passed | 5 files / 104 tests. |
-| 2026-07-22 | Modular `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Modular `npm run build` | Passed | 35 modules transformed. |
-| 2026-07-22 | Modular `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-22 | Modular browser interactive regression | UNVERIFIED | No interactive browser session. |
-| 2026-07-22 | `git commit -m "M4: modularize current gameplay architecture"` | Passed | `ba8b276` (40 files). |
-| 2026-07-22 | Post-modular `npm test` | Passed | 5 files / 104 tests. |
-| 2026-07-22 | Post-modular `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Post-modular `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Independent architecture audit of `ba8b276` | FAIL | Auto tests/tsc/build/audit green; extensibility defects: pending-input desync, dual cooldown, registry lifecycle, fake fields, facade duplication, maxLevel=999. |
-| 2026-07-22 | Architecture repair implementation | Applied | Fixes 1-7 per audit prompt. |
-| 2026-07-22 | Repair first `npm test` | Failed | architecture test weapon re-register during messy freeze fixture. |
-| 2026-07-22 | Repair `npm test` after fixture simplify | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Repair `npm test` second independent run | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Repair `npx tsc --noEmit` first | Failed | unused ProgressionDefinition import. |
-| 2026-07-22 | Repair `npx tsc --noEmit` after fix | Passed | Exit 0. |
-| 2026-07-22 | Repair `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Repair `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-22 | Browser regression after repair | UNVERIFIED | No interactive browser session. |
-| 2026-07-22 | `git commit -m "M4: fix modular architecture audit findings"` | Passed | `58c6620` (33 files). |
-| 2026-07-22 | Post-repair `npm test` | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Post-repair `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Post-repair `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Independent architecture re-audit after `58c6620` | FAIL | Duplicate ID metadata equality hid behavior diffs; weapon level/maxLevel no runtime growth path. Auto 115/tsc/build/audit green. |
-| 2026-07-22 | Round-2 repair: object-identity registries + weapon progression helper | Applied | `createWeaponProgressionDefinition`; identity register policy. |
-| 2026-07-22 | Round-2 `npm test` first | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Round-2 `npm test` second | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Round-2 `npx tsc --noEmit` first | Failed | unused import in architecture.test. |
-| 2026-07-22 | Round-2 `npx tsc --noEmit` after fix | Passed | Exit 0. |
-| 2026-07-22 | Round-2 `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Round-2 `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-22 | Browser regression | UNVERIFIED | No interactive browser session. |
-| 2026-07-22 | `git commit -m "M4: complete modular architecture repair"` | Passed | `a2b3eb7` (14 files). |
-| 2026-07-22 | Post-round-2 `npm test` | Passed | 5 files / 115 tests. |
-| 2026-07-22 | Post-round-2 `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Post-round-2 `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Independent M3 code/scope audit (auditor) | PASS | Reviewed `3542f9b`/`1fbbaa6`; gems, level, freeze, upgrades, overflow; no M4 gameplay. |
-| 2026-07-22 | Independent auditor M3 `npm test` / tsc / build | PASS | Included in modular 115-test suite baseline; M3 logic covered. |
-| 2026-07-22 | User M3 browser acceptance | PASS | User-reported M3 interactive acceptance PASS; browser/version not supplied. |
-| 2026-07-22 | M3 independent audit final conclusion | PASS | `CP-M3-01` Green; M3 may exit. |
-| 2026-07-22 | Independent architecture final audit after `a2b3eb7` (auditor) | PASS | Modules/facade/pending-input/cooldowns/identity registries/weapon growth/category/maxLevel; no M4 gameplay; no M5+ content. |
-| 2026-07-22 | Independent auditor `npm test` first | PASS | 5 files / 115 tests. |
-| 2026-07-22 | Independent auditor `npm test` second | PASS | 5 files / 115 tests. |
-| 2026-07-22 | Independent auditor `npx tsc --noEmit` | PASS | Exit 0. |
-| 2026-07-22 | Independent auditor `npm run build` | PASS | 35 modules transformed. |
-| 2026-07-22 | Independent auditor `npm audit` first | Failed | npm registry quick-audit HTTP 400: Invalid package tree message; auditor did not reinstall or rewrite lockfile. |
-| 2026-07-22 | Independent auditor `npm ls --all` | Passed | Dependency tree resolvable; unmet items were platform/tool optional deps. |
-| 2026-07-22 | Independent auditor `npm audit` retry | PASS | found 0 vulnerabilities. |
-| 2026-07-22 | Independent auditor `npm audit --package-lock-only` | PASS | found 0 vulnerabilities. Transient quick-audit endpoint error, not lockfile block. |
-| 2026-07-22 | Independent auditor Git whitespace/status | PASS | Clean `main`. |
-| 2026-07-22 | User modularized M1-M3 browser regression (30 checks) | PASS | User-reported modularized M1-M3 browser regression: 30/30 PASS; browser/version not supplied. Includes movement, combat, XP, upgrade freeze/keys/click, three upgrades, Chinese UI, 60s run, no map/camera/win-loss/new content. |
-| 2026-07-22 | CP-M4-ARCH-01 independent audit final conclusion | PASS | Architecture checkpoint Green; may exit. |
-| 2026-07-22 | M3 + CP-M4-ARCH-01 formal closeout (docs-only) | In progress | Record PASS audits and user evidence; no src changes. |
-| 2026-07-22 | Doc closeout (implementer): `npm test` | Passed | 5 files / 115 tests (docs-only M3+ARCH close). |
-| 2026-07-22 | Doc closeout (implementer): `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Doc closeout (implementer): `npm run build` | Passed | 35 modules. |
-| 2026-07-22 | Doc closeout (implementer): `git diff --check` | Passed | No whitespace errors (CRLF warnings only). |
-| 2026-07-22 | CP-M4-WORLD-01 start | Started | HEAD `00166ee`; clean main. |
-| 2026-07-22 | WORLD `npm test` | Passed | 6 files / 136 tests. |
-| 2026-07-22 | WORLD `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | WORLD `npm run build` | Passed | dist generated. |
-| 2026-07-22 | WORLD `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-22 | WORLD interactive browser | UNVERIFIED | No interactive browser session in implementer environment. |
-| 2026-07-22 | `git commit -m "M4: implement full-screen large world demo"` | Passed | `ba20893` (25 files). |
-| 2026-07-22 | Post-WORLD `npm test` | Passed | 6 files / 136 tests. |
-| 2026-07-22 | Post-WORLD `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-22 | Post-WORLD `npm run build` | Passed | 40 modules. |
-| 2026-07-24 | Independent audit of WORLD checkpoint `ba20893` | FAIL | Spawn candidates were outside the view but sampled across the entire world-side strip; enemies could spawn thousands of units away and consume the enemy cap before maintaining local pressure. |
-| 2026-07-24 | WORLD spawn repair | Applied | Limited candidates to bounded bands around the selected current-view edge; added four-side and world-corner coverage. |
-| 2026-07-24 | Repair `npm test` | Passed | 6 files / 138 tests. |
-| 2026-07-24 | Repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-24 | Repair `npm run build` | Passed | 40 modules transformed. |
-| 2026-07-24 | Repair `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-24 | Repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-24 | Fresh independent WORLD repair audit | PASS | Auditor reviewed world/viewport/camera/coordinates/rendering/UI/spawn scope and reran 138 tests, tsc, build, audit, and diff check. Browser interaction remains UNVERIFIED. |
-| 2026-07-24 | `git commit -m "M4: repair world-edge enemy spawning"` | Passed | Repair checkpoint `008514e` (7 intended files). |
-| 2026-07-25 | User selected minimum-risk M4 sequence | Approved | Dynamic difficulty first; win/loss/restart second. |
-| 2026-07-25 | CP-M4-DIFFICULTY-01 planning | Defined | Active-time four-tier spawn interval/cap profile; no enemy stat scaling, outcome logic, restart, or new content. |
-| 2026-07-25 | Difficulty first `npm test` | Passed | 7 files / 151 tests. |
-| 2026-07-25 | Difficulty first `npx tsc --noEmit` | Failed | Two obsolete constant imports remained in `enemy-system.ts`; no behavior failure. |
-| 2026-07-25 | Difficulty focused test expansion | Applied | Added all-tier interval/cap, accumulator, baseline enemy stat, and Chinese HUD format coverage. |
-| 2026-07-25 | Difficulty final `npm test` | Passed | 7 files / 162 tests. |
-| 2026-07-25 | Difficulty final `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-25 | Difficulty final `npm run build` | Passed | 41 modules transformed. |
-| 2026-07-25 | Difficulty final `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-25 | Difficulty final `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-25 | First independent CP-M4-DIFFICULTY-01 audit | FAIL | Mutable exported profiles, whole-frame post-boundary tier application, and positive-infinite dt blocked checkpoint creation. |
-| 2026-07-25 | Difficulty audit repair | Applied | Frozen profiles; exact cross-tier time slices; non-finite dt rejection; unsafe external profile fallback; focused regression tests. |
-| 2026-07-25 | Audit repair first `npm test` | Failed | Difficulty worker exhausted heap because unsafe profile fallback had not landed in the actual spawn function; 6 files / 138 tests completed before worker failure. |
-| 2026-07-25 | Audit repair first `npx tsc --noEmit` / `npm run build` | Failed | Obsolete fallback constant imports were unused, confirming fallback code was missing from the function body. |
-| 2026-07-25 | Audit repair focused `npx vitest run src/core/difficulty.test.ts` | Passed | 1 file / 29 tests after correcting fallback placement. |
-| 2026-07-25 | Audit repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-25 | Audit repair final `npm test` | Passed | 7 files / 167 tests. |
-| 2026-07-25 | Audit repair final `npm run build` | Passed | 41 modules transformed. |
-| 2026-07-25 | Audit repair final `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-25 | Audit repair final `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-25 | Second independent CP-M4-DIFFICULTY-01 audit | FAIL | Extremely small positive interval plus extremely large finite cap could still make low-level spawning effectively unbounded; docs also had stale test totals/latest HEAD. |
-| 2026-07-25 | Second audit repair | Applied | `advanceSpawns` now accepts only frozen registered profiles; custom finite/invalid/null values use the baseline profile; docs synchronized. |
-| 2026-07-25 | Second audit repair `npm test` | Passed | 7 files / 169 tests. |
-| 2026-07-25 | Second audit repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-25 | Second audit repair `npm run build` | Passed | 41 modules transformed. |
-| 2026-07-25 | Second audit repair `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-25 | Second audit repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-25 | Final independent CP-M4-DIFFICULTY-01 re-audit | PASS | Auditor verified both repair rounds, scope, 169 tests, tsc, build, audit, diff check, status, and latest HEAD; browser acceptance remains pending. |
-| 2026-07-25 | `git commit -m "M4: implement dynamic spawn difficulty"` | Passed | Implementation checkpoint `60bd1dc` (17 intended files). |
-| 2026-07-25 | User CP-M4-DIFFICULTY-01 browser checklist | PASS with blocking regressions | User reported all requested difficulty checks PASS, then reported Canvas right-click could leave movement stuck and experience drops stopped at the historical gem cap. |
-| 2026-07-25 | Input/gem regression repair | Applied | Canvas `contextmenu` now prevents default and clears input; `GEM_CAP` and its silent drop suppression were removed. |
-| 2026-07-25 | Input/gem repair `npm test` | Passed | 7 files / 170 tests. |
-| 2026-07-25 | Input/gem repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-25 | Input/gem repair `npm run build` | Passed | 41 modules transformed. |
-| 2026-07-25 | Input/gem repair `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-25 | Input/gem repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-25 | Independent input/gem repair audit | PASS | Auditor verified Canvas-only context-menu suppression, held-input clearing, complete GEM_CAP removal, one gem per kill, scope, and 170-test/toolchain evidence. Browser focused recheck remains pending. |
-| 2026-07-25 | `git commit -m "M4: fix stuck input and uncapped gem drops"` | Passed | Repair checkpoint `c2f6588` (13 intended files). |
-| 2026-07-25 | Independent audit of secondary-pointer repair `098841f` | FAIL | Missing lostpointercapture cleanup could leave a stale pointerId; single-slot tracking was not multi-pointer safe; upgrade click did not positively require primary button; implementation range also had an EOF blank line. |
-| 2026-07-25 | Secondary-pointer lifecycle repair | Applied | Multiple captured IDs tracked independently; lost/up/cancel clear state; failed capture retains no ID; upgrade clicks require button 0; EOF whitespace fixed. |
-| 2026-07-25 | Lifecycle repair `npm test` | Passed | 7 files / 179 tests. |
-| 2026-07-25 | Lifecycle repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-25 | Lifecycle repair `npm run build` | Passed | 41 modules transformed. |
-| 2026-07-25 | Lifecycle repair `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-25 | Lifecycle repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-25 | Fresh independent secondary-pointer lifecycle re-audit | PASS | Auditor verified multi-pointer capture tracking, lost/up/cancel cleanup, primary-only upgrade clicks, input neutrality, scope, 179 tests, and toolchain evidence. Browser recheck remains pending. |
-| 2026-07-25 | `git commit -m "M4: fix secondary pointer capture lifecycle"` | Passed | Lifecycle repair checkpoint `a9f2d6d` (9 intended files). |
-| 2026-07-26 | User focused secondary-pointer browser recheck | PASS | User accepted the remaining Edge chrome/extension right-drag navigation limitation; all other focused checks passed, including input neutrality, left-click behavior, and uncapped gem drops. |
-| 2026-07-26 | CP-M4-DIFFICULTY-01 final conclusion | PASS | Automated verification, final independent audits, implementation/repair checkpoints, and user browser acceptance complete; checkpoint Green. |
-| 2026-07-24 | User interactive WORLD browser acceptance | PASS | User reported the complete supplied WORLD checklist passed. Browser name/version not supplied. |
-| 2026-07-24 | CP-M4-WORLD-01 final conclusion | PASS | Automated checks, fresh independent repair audit, and user browser acceptance pass; checkpoint Green. |
-| 2026-07-24 | WORLD closeout `npm test` | Passed | 6 files / 138 tests after docs-only acceptance update. |
-| 2026-07-24 | WORLD closeout `npm run build` | Passed | TypeScript and Vite completed; 40 modules transformed. |
-| 2026-07-25 | Secondary-pointer input-neutral repair | Applied | Removed clearInput from contextmenu; Canvas-only secondary preventDefault + optional pointer capture. |
-| 2026-07-25 | Repair `npm test` | Passed | 7 files / 176 tests. |
-| 2026-07-25 | Repair `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-25 | Repair `npm run build` | Passed | Success. |
-| 2026-07-25 | Repair `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-25 | Secondary-pointer browser recheck | UNVERIFIED | Awaits user hold-key + right-click/drag validation. |
-| 2026-07-25 | `git commit -m "M4: make secondary pointer input-neutral"` | Passed | `098841f` (9 files). |
-| 2026-07-25 | Post-commit `npm test` | Passed | 7 files / 176 tests. |
-| 2026-07-25 | Post-commit `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-25 | Post-commit `npm run build` | Passed | Success. |
-| 2026-07-25 | CP-M4-OUTCOME-01 start | Started | HEAD `84ab53b`. |
-| 2026-07-25 | OUTCOME first `npm test` | Failed | 2 game.test asserts no outcome property. |
-| 2026-07-25 | OUTCOME `npm test` after rewriting legacy asserts | Passed | 8 files / 198 tests. |
-| 2026-07-25 | OUTCOME `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-25 | OUTCOME `npm run build` | Passed | Success. |
-| 2026-07-25 | OUTCOME `npm audit` | Passed | 0 vulnerabilities. |
-| 2026-07-25 | OUTCOME browser interactive | UNVERIFIED | Awaits user. |
-| 2026-07-25 | `git commit -m "M4: implement timed run outcomes and restart"` | Passed | `dfbe925` (18 files). |
-| 2026-07-25 | Post-OUTCOME `npm test` | Passed | 8 files / 198 tests. |
-| 2026-07-25 | Post-OUTCOME `npx tsc --noEmit` | Passed | Exit 0. |
-| 2026-07-25 | Post-OUTCOME `npm run build` | Passed | Success. |
-| 2026-07-26 | Independent CP-M4-OUTCOME-01 audit | FAIL | Modified R shortcuts restarted the game; restart button could leave small viewports; terminal early return could retain pending upgrade; duplicate decision ID and stale HEAD docs. |
-| 2026-07-26 | OUTCOME audit repair | Applied | Plain-R helper, viewport-contained restart button, terminal pending cleanup, unique decision IDs, and current HEAD documentation. |
-| 2026-07-26 | OUTCOME repair first `npm test` | Failed | 1x1 viewport button test exposed a 0.25px vertical overflow; 202 tests passed and 1 failed. |
-| 2026-07-26 | OUTCOME repair `npm test` after layout correction | Passed | 8 files / 203 tests. |
-| 2026-07-26 | OUTCOME repair `npx tsc --noEmit` | Passed | Exit code 0. |
-| 2026-07-26 | OUTCOME repair `npm run build` | Passed | 43 modules transformed. |
-| 2026-07-26 | OUTCOME repair `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-26 | OUTCOME repair `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-26 | Fresh independent CP-M4-OUTCOME-01 repair re-audit | PASS | Auditor verified plain-R semantics, small-viewport layout, terminal invariants, exact boundary behavior, complete restart, scope, 203 tests, and toolchain evidence. Browser acceptance remains UNVERIFIED. |
-| 2026-07-26 | `git commit -m "M4: fix run outcome audit findings"` | Passed | OUTCOME repair checkpoint `a596253` (12 intended files). |
-| 2026-07-26 | User full CP-M4-OUTCOME-01 browser acceptance | PASS | User reported all 17 supplied checks PASS: timed victory, failure, terminal freeze, overlay priority, button/R restart, modified-R behavior, full reset, resize, upgrade, secondary pointer, uncapped gems, and console. Browser/version not supplied. |
-| 2026-07-26 | CP-M4-OUTCOME-01 final conclusion | PASS | Implementation and repair checkpoints, automated verification, fresh independent repair audit, and user browser acceptance complete; checkpoint Green. |
-| 2026-07-26 | FINAL-MVP-AUDIT-01 repository baseline | PASS | Clean `main`; HEAD `6236896`; all listed checkpoint commits resolved in history. |
-| 2026-07-26 | Final auditor `npm test` run 1 | PASS | 8 files / 203 tests. |
-| 2026-07-26 | Final auditor `npm test` run 2 | PASS | 8 files / 203 tests; no order or registry pollution. |
-| 2026-07-26 | Final auditor `npx tsc --noEmit` | PASS | Exit code 0. |
-| 2026-07-26 | Final auditor `npm run build` | PASS | 43 modules transformed. |
-| 2026-07-26 | Final auditor `npm audit` | PASS | found 0 vulnerabilities. |
-| 2026-07-26 | Final auditor Git worktree/range checks | PASS | Clean worktree; current and `84ab53b..6236896` whitespace checks passed; intended OUTCOME/docs range. |
-| 2026-07-26 | FINAL-MVP-AUDIT-01 conclusion | PASS | No blocking code defects; MVP scope lock satisfied; M4/MVP may be declared Green. Documentation noted stale HEAD and a table gap for docs-only closeout correction. |
-| 2026-07-27 | Final MVP docs-only closeout `npm test` | Passed | 8 files / 203 tests. |
-| 2026-07-27 | Final MVP docs-only closeout `npm run build` | Passed | TypeScript and Vite completed; 43 modules transformed. |
-| 2026-07-27 | Final MVP docs-only closeout `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-27 | Final MVP docs-only closeout `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-27 | `git commit -m "M4: close final MVP audit"` | Passed | Final MVP docs-only closeout `0d0289e` (6 intended documentation files). |
-| 2026-07-27 | Post-closeout hash record `npm test` | Passed | 8 files / 203 tests. |
-| 2026-07-27 | Post-closeout hash record `npm run build` | Passed | 43 modules transformed. |
-| 2026-07-27 | CP-OPS-PIPELINE-01 start | Started | User requested a mandatory documented pipeline and periodic GitHub version uploads. |
-| 2026-07-27 | GitHub remote inspection | Blocked | `git remote -v` returned no remotes; current branch has no upstream tracking branch. |
-| 2026-07-27 | GitHub CLI authentication inspection | Blocked | `gh` is not installed in the environment; no credentials were exposed or modified. |
-| 2026-07-27 | Delivery pipeline definition | Applied | Added mandatory checkpoint stages, M5 foundation dependency order, Git commit gates, and deterministic GitHub sync policy. |
-| 2026-07-27 | Pipeline docs `npm test` | Passed | 8 files / 203 tests. |
-| 2026-07-27 | Pipeline docs `npm run build` | Passed | 43 modules transformed. |
-| 2026-07-27 | Pipeline docs `npm audit` | Passed | found 0 vulnerabilities. |
-| 2026-07-27 | Pipeline docs `git diff --check` | Passed | No whitespace errors; line-ending warnings only. |
-| 2026-07-27 | `git commit -m "OPS: define mandatory delivery pipeline"` | Passed | Pipeline checkpoint `74b6a3e` (9 intended files). |
-| 2026-07-27 | Pipeline hash record `npm test` / `npm run build` | Passed | 8 files / 203 tests; 43 modules transformed. |
-| 2026-07-27 | `git remote add origin https://github.com/chaos-66/Vampire-Survivor.git` | Passed | User-confirmed HTTPS repository configured as `origin`; no credential material logged. |
-| 2026-07-27 | `git fetch origin` / remote inspection | Passed | Remote repository had no heads; no divergence or overwrite risk. |
-| 2026-07-27 | `git push -u origin main` | Passed | Created remote `main`, uploaded through `04143ba`, and established tracking of `origin/main`. |
-| 2026-07-27 | GitHub sync evidence docs `npm test` / `npm run build` | Passed | 8 files / 203 tests; 43 modules transformed. |
+| 2026-07-21 | 检查实际路径和参考路径 | 通过 | 实际根目录存在；两个参考路径均不存在。 |
+| 2026-07-21 | 检查根目录内容 | 通过 | 项目初始化前仅存在 `AI-Workflow-Library/`。 |
+| 2026-07-21 | 初始化前执行 `git status --short --branch` | 预期失败 | Git 报告该目录不是仓库。 |
+| 2026-07-21 | 阅读所选 Workflow Library 中关于规划、执行、检查点、恢复、审计、测试、前端、游戏、智能体和最小化的文件 | 通过 | 参考库保持未修改。 |
+| 2026-07-21 | `node --version` | 通过 | `v22.12.0` |
+| 2026-07-21 | `npm --version` | 通过 | `10.9.0` |
+| 2026-07-21 | `git --version` | 通过 | `2.54.0.windows.1` |
+| 2026-07-21 | `git init` | 通过 | 已在实际项目根目录初始化空仓库。 |
+| 2026-07-21 | `npm install` | 通过，但发现安全问题 | 添加 54 个包；npm 报告 5 个漏洞：3 个中危、1 个高危、1 个严重漏洞。 |
+| 2026-07-21 | 首次执行 `npm test` | 失败 | Vitest 未收集到测试，因为导入 `src/main.ts` 时引发 `ReferenceError: document is not defined`。 |
+| 2026-07-21 | 首次执行 `npm run build` | 通过 | TypeScript 和 Vite 执行完成；转换了 4 个模块并生成 `dist/`。 |
+| 2026-07-21 | `npm audit --json` | 安全审计失败 | 问题源于 Vitest 2 依赖链；npm 指出可用的主版本修复为 Vitest 4.1.10。 |
+| 2026-07-21 | 升级 Vitest 后第二次执行 `npm install` | 通过 | 添加 6 个、移除 17 个并变更 13 个包；审计 44 个包，发现 0 个漏洞。 |
+| 2026-07-21 | 最终执行 `npm test` | 通过 | Vitest 4.1.10：1 个测试文件、1 项测试通过。 |
+| 2026-07-21 | 最终执行 `npm run build` | 通过 | TypeScript 和 Vite 执行完成；转换了 5 个模块，并生成已忽略的 `dist/` 输出。 |
+| 2026-07-21 | 最终执行 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-21 | `git status --short --branch` | 通过 | 仓库位于尚无提交的 `main`；仅显示预期的未跟踪项目文件，参考库已忽略。 |
+| 2026-07-21 | `git diff --check` | 通过 | 未报告空白字符错误。 |
+| 2026-07-21 | 提交前进行独立只读 M0 审计 | 通过 | 审计员重新运行测试、构建和审计；确认范围与文档一致。一个低优先级发现：在初始仓库中，早先针对未暂存内容的 `git diff --check` 实际没有检查内容。 |
+| 2026-07-21 | 暂存预期项目文件并执行 `git diff --cached --check` | 通过 | 暂存了 20 个预期文件且无空白字符错误；`AI-Workflow-Library/` 仍被忽略。 |
+| 2026-07-21 | `git commit -m "M0: bootstrap project workflow and toolchain"` | 通过 | 创建根检查点提交 `574d0ca`，包含 20 个预期项目文件。 |
+| 2026-07-21 | M0 状态记录提交 | 通过 | `ba842c4`（`M0: record checkpoint status`）。 |
+| 2026-07-21 | M1 恢复：`git status`、`git log -10`、HEAD | 通过 | 分支为 `main`，工作区干净，HEAD 为 `ba842c4`，M0 检查点为 `574d0ca`；参考库已忽略。 |
+| 2026-07-21 | M1 实现前：阅读项目文档和 M0 源码 | 通过 | M1 尚未开始；Canvas 仍仅有 M0 脚手架。 |
+| 2026-07-21 | M1 实现后执行 `npm test` | 通过 | Vitest 4.1.10：3 个文件、26 项测试通过（`main`、`input`、`movement`）。 |
+| 2026-07-21 | M1 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | M1 `npm run build` | 通过 | `tsc && vite build`；转换了 8 个模块；生成 `dist/`。 |
+| 2026-07-21 | M1 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-21 | M1 `git diff --check` | 通过 | 无空白字符错误（仅有 CRLF 规范化警告）。 |
+| 2026-07-21 | M1 `npm run dev` + HTTP GET `http://localhost:5173/` | 部分通过 | Vite 已在 5173 端口就绪；HTTP 200；HTML 包含 `M1: move with WASD or arrow keys`，且不含旧的 `gameplay begins in M1` 段落。**当时交互式键盘/布局/失焦玩法检查为 UNVERIFIED**（实现者环境中无交互式浏览器会话）。后续已被用户手动验收 PASS 取代。 |
+| 2026-07-21 | M0 Canvas 浏览器冒烟检查（M1 交互前） | UNVERIFIED | 历史记录；后续已被用户 M1 手动验收取代。 |
+| 2026-07-21 | `git commit -m "M1: implement frame-independent player movement"` | 通过 | 检查点 `563f7ee`（16 个文件）。 |
+| 2026-07-21 | 检查点后执行 `npm test` | 通过 | 3 个文件、26 项测试通过。 |
+| 2026-07-21 | 检查点后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 检查点后执行 `npm run build` | 通过 | 8 个模块；生成 `dist/`。 |
+| 2026-07-21 | 独立 M1 代码/范围审计（审计员，非实现者） | PASS | 审查了 `563f7ee` 和 `2684ac8`；确认未扩展到 M2 范围；输入、移动、增量时间、边界、失焦清除、模块拆分均正常；无阻塞缺陷。 |
+| 2026-07-21 | 独立审计员重新运行 `npm test` | PASS | 3 个测试文件通过；26 项测试通过。 |
+| 2026-07-21 | 独立审计员重新运行 `npx tsc --noEmit` | PASS | 退出码为 0。 |
+| 2026-07-21 | 独立审计员重新运行 `npm run build` | PASS | 成功；Vite 转换了 8 个模块。 |
+| 2026-07-21 | 独立审计员重新运行 `npm audit` | PASS | 发现 0 个漏洞。 |
+| 2026-07-21 | 独立审计员检查 Git 空白字符/状态 | PASS | 无空白字符错误；`main` 工作区干净。 |
+| 2026-07-21 | 用户手动浏览器验收（11 项检查） | PASS | 用户报告：页面/Canvas；WASD；方向键；松键停止；斜向不提速；相反方向抵消且不漂移；四边边界；按住时不逐帧加速；失焦/Alt+Tab 后移动不卡住；窄布局正常；控制台无未处理错误。未提供浏览器名称和版本。 |
+| 2026-07-21 | M1 独立审计最终结论 | PASS | `CP-M1-01` 为 Green；M1 可以退出。 |
+| 2026-07-21 | 文档收尾（实现者）：`npm test` | 通过 | 3 个文件、26 项测试通过（纯文档变更验证）。 |
+| 2026-07-21 | 文档收尾（实现者）：`npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 文档收尾（实现者）：`npm run build` | 通过 | 转换了 8 个模块；生成 `dist/`。 |
+| 2026-07-21 | 文档收尾（实现者）：`git diff --check` | 通过 | 无空白字符错误（仅有 CRLF 警告）。 |
+| 2026-07-21 | `git commit -m "M1: record independent audit pass"` | 通过 | `976dfc6`。 |
+| 2026-07-21 | M2 恢复：Git 状态/日志；HEAD `976dfc6` | 通过 | `main` 干净；M1 为 Green；M2 尚未开始。 |
+| 2026-07-21 | M2 首次执行 `npm test`（生成多步断言） | 失败 | 1 项失败：多次小步与单次大步的生成数量不同（浮点步长）；62 项通过。 |
+| 2026-07-21 | 修复生成步长后执行 M2 `npm test` | 通过 | 4 个文件、63 项测试通过。 |
+| 2026-07-21 | M2 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | M2 `npm run build` | 通过 | 转换了 10 个模块；生成 `dist/`。 |
+| 2026-07-21 | M2 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-21 | M2 交互式浏览器战斗检查清单 | UNVERIFIED | 实现者环境中无交互式浏览器会话。 |
+| 2026-07-21 | M2 `npm run dev` HTTP GET localhost:5173 | 部分通过 | HTTP 200；HTML 包含 M2 状态文案；不包含 XP/升级/首领文案。交互式战斗为 UNVERIFIED。 |
+| 2026-07-21 | M2 `git diff --check` | 通过 | 无空白字符错误（仅有 CRLF 警告）。 |
+| 2026-07-21 | `git commit -m "M2: implement enemy pressure and automatic combat"` | 通过 | 检查点 `6c5afab`（14 个文件）。 |
+| 2026-07-21 | 检查点后执行 `npm test` | 通过 | 4 个文件、63 项测试通过。 |
+| 2026-07-21 | 检查点后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 检查点后执行 `npm run build` | 通过 | 10 个模块；生成 `dist/`。 |
+| 2026-07-21 | `git commit -m "M2: record checkpoint status"` | 通过 | `6a6f981`。 |
+| 2026-07-21 | 独立 M2 代码/范围审计（审计员） | PASS | 审查了 `6c5afab`/`6a6f981`；未蔓延至 M3/M4；无阻塞缺陷。 |
+| 2026-07-21 | 独立审计员执行 `npm test` | PASS | 4 个文件 / 63 项测试。 |
+| 2026-07-21 | 独立审计员执行 `npx tsc --noEmit` | PASS | 退出码为 0。 |
+| 2026-07-21 | 独立审计员执行 `npm run build` | PASS | 转换了 10 个模块。 |
+| 2026-07-21 | 独立审计员执行 `npm audit` | PASS | 0 个漏洞。 |
+| 2026-07-21 | 独立审计员检查 Git 空白字符/状态 | PASS | `main` 干净。 |
+| 2026-07-21 | 用户 M2 浏览器验收（18 项检查） | PASS | 用户报告全部 PASS；未提供浏览器/版本。包括 HP=0 后继续运行且无失败 UI/按钮（M2 设计）。验收在中文本地化**之前**进行；功能行为已接受；中文显示需要在本地化后确认。 |
+| 2026-07-21 | 中文 UI 代码变更 | 已应用 | `index.html` 使用 zh-CN + 吸血鬼幸存者；状态为 `M2：移动、躲避敌人并自动攻击`；HUD 为生命/击败/敌人。 |
+| 2026-07-21 | 本地化 `npm test` | 通过 | 4 个文件 / 63 项测试。 |
+| 2026-07-21 | 本地化 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 本地化 `npm run build` | 通过 | 10 个模块。 |
+| 2026-07-21 | 本地化 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-21 | 中文静态源码/HTML 检查 | 通过 | `lang=zh-CN`；标题/无障碍标签/状态为中文；HUD 标签存在；英文 HUD 标签已移除。 |
+| 2026-07-21 | 中文真实浏览器视觉确认 | 待处理 | 本地化后需要用户快速确认。 |
+| 2026-07-21 | `git commit -m "M2: localize game UI in Chinese"` | 通过 | `0f1bb50`（10 个文件）。 |
+| 2026-07-21 | 本地化后执行 `npm test` | 通过 | 4 个文件 / 63 项测试。 |
+| 2026-07-21 | 本地化后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 本地化后执行 `npm run build` | 通过 | 10 个模块。 |
+| 2026-07-21 | `git commit -m "M2: record localization status"` | 通过 | `ee60495`。 |
+| 2026-07-21 | 用户中文真实浏览器显示验收（5 项检查） | PASS | 用户报告 5/5：标题/H1 为吸血鬼幸存者；状态为 M2：移动、躲避敌人并自动攻击；HUD 为生命/击败/敌人；无乱码/截断/重叠；玩法仍正常。未提供浏览器/版本。取代先前的“中文真实浏览器视觉确认待处理”。 |
+| 2026-07-21 | M2 最终独立审计结论 | PASS | `CP-M2-01` 为 Green；M2 可以退出。结合独立代码/自动化审计、用户功能验收 18/18 和用户中文验收 5/5。 |
+| 2026-07-21 | 文档收尾（实现者）：`npm test` | 通过 | 4 个文件 / 63 项测试（纯文档 M2 审计收尾）。 |
+| 2026-07-21 | 文档收尾（实现者）：`npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-21 | 文档收尾（实现者）：`npm run build` | 通过 | 转换了 10 个模块。 |
+| 2026-07-21 | 文档收尾（实现者）：`git diff --check` | 通过 | 无空白字符错误（仅有 CRLF 警告）。 |
+| 2026-07-22 | M3 恢复：Git 状态/日志；HEAD `5ce3915` | 通过 | `main` 干净；M2 为 Green；M3 尚未开始。 |
+| 2026-07-22 | M3 实现后执行 `npm test` | 通过 | 4 个文件、91 项测试通过。 |
+| 2026-07-22 | M3 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | M3 `npm run build` | 通过 | 10 个模块；生成 `dist/`。 |
+| 2026-07-22 | M3 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-22 | M3 交互式浏览器成长检查清单 | UNVERIFIED | 实现者环境中无交互式浏览器会话。 |
+| 2026-07-22 | M3 `npm run dev` HTTP GET | 部分通过 | HTTP 200；存在 M3 中文状态文案。交互为 UNVERIFIED。 |
+| 2026-07-22 | `git commit -m "M3: implement experience and upgrade progression"` | 通过 | 检查点 `3542f9b`（13 个文件）。 |
+| 2026-07-22 | 检查点后执行 `npm test` | 通过 | 4 个文件、91 项测试通过。 |
+| 2026-07-22 | 检查点后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 检查点后执行 `npm run build` | 通过 | 10 个模块。 |
+| 2026-07-22 | CP-M4-ARCH-01 模块化开始 | 已开始 | HEAD `1fbbaa6`；`main` 干净。 |
+| 2026-07-22 | 模块化 `npm test` | 通过 | 5 个文件 / 104 项测试。 |
+| 2026-07-22 | 模块化 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 模块化 `npm run build` | 通过 | 转换了 35 个模块。 |
+| 2026-07-22 | 模块化 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-22 | 模块化浏览器交互回归 | UNVERIFIED | 无交互式浏览器会话。 |
+| 2026-07-22 | `git commit -m "M4: modularize current gameplay architecture"` | 通过 | `ba8b276`（40 个文件）。 |
+| 2026-07-22 | 模块化后执行 `npm test` | 通过 | 5 个文件 / 104 项测试。 |
+| 2026-07-22 | 模块化后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 模块化后执行 `npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | 对 `ba8b276` 的独立架构审计 | FAIL | 自动化测试/tsc/build/audit 均为 Green；可扩展性缺陷包括：`pending` 输入不同步、双重冷却、注册表生命周期、虚假字段、外观层重复、`maxLevel=999`。 |
+| 2026-07-22 | 实施架构修复 | 已应用 | 按审计要求修复第 1-7 项。 |
+| 2026-07-22 | 修复后首次执行 `npm test` | 失败 | 架构测试在复杂冻结测试夹具中重新注册武器。 |
+| 2026-07-22 | 简化测试夹具后执行修复版 `npm test` | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 修复版 `npm test` 第二次独立运行 | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 修复后首次执行 `npx tsc --noEmit` | 失败 | 存在未使用的 `ProgressionDefinition` 导入。 |
+| 2026-07-22 | 修正后执行修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 修复版 `npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | 修复版 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-22 | 修复后的浏览器回归 | UNVERIFIED | 无交互式浏览器会话。 |
+| 2026-07-22 | `git commit -m "M4: fix modular architecture audit findings"` | 通过 | `58c6620`（33 个文件）。 |
+| 2026-07-22 | 修复后执行 `npm test` | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 修复后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 修复后执行 `npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | `58c6620` 后的独立架构复审 | FAIL | 重复标识的元数据相等会掩盖行为差异；武器 `level`/`maxLevel` 没有运行时成长路径。自动化 115 项测试/tsc/build/audit 均为 Green。 |
+| 2026-07-22 | 第二轮修复：对象标识注册表 + 武器成长辅助函数 | 已应用 | `createWeaponProgressionDefinition`；对象标识注册策略。 |
+| 2026-07-22 | 第二轮首次执行 `npm test` | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 第二轮第二次执行 `npm test` | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 第二轮首次执行 `npx tsc --noEmit` | 失败 | `architecture.test` 中存在未使用的导入。 |
+| 2026-07-22 | 修正后执行第二轮 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 第二轮 `npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | 第二轮 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-22 | 浏览器回归 | UNVERIFIED | 无交互式浏览器会话。 |
+| 2026-07-22 | `git commit -m "M4: complete modular architecture repair"` | 通过 | `a2b3eb7`（14 个文件）。 |
+| 2026-07-22 | 第二轮后执行 `npm test` | 通过 | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 第二轮后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 第二轮后执行 `npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | 独立 M3 代码/范围审计（审计员） | PASS | 审查了 `3542f9b`/`1fbbaa6`；涵盖宝石、等级、冻结、升级、溢出；不含 M4 玩法。 |
+| 2026-07-22 | 独立审计员执行 M3 `npm test` / tsc / build | PASS | 包含在模块化 115 项测试套件基线中；已覆盖 M3 逻辑。 |
+| 2026-07-22 | 用户 M3 浏览器验收 | PASS | 用户报告 M3 交互验收为 PASS；未提供浏览器/版本。 |
+| 2026-07-22 | M3 独立审计最终结论 | PASS | `CP-M3-01` 为 Green；M3 可以退出。 |
+| 2026-07-22 | `a2b3eb7` 后的独立架构最终审计（审计员） | PASS | 审查模块/外观层/`pending` 输入/冷却/对象标识注册表/武器成长/类别/`maxLevel`；不含 M4 玩法；不含 M5+ 内容。 |
+| 2026-07-22 | 独立审计员首次执行 `npm test` | PASS | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 独立审计员第二次执行 `npm test` | PASS | 5 个文件 / 115 项测试。 |
+| 2026-07-22 | 独立审计员执行 `npx tsc --noEmit` | PASS | 退出码为 0。 |
+| 2026-07-22 | 独立审计员执行 `npm run build` | PASS | 转换了 35 个模块。 |
+| 2026-07-22 | 独立审计员首次执行 `npm audit` | 失败 | npm registry quick-audit 返回 HTTP 400：`Invalid package tree`；审计员未重新安装依赖或重写锁文件。 |
+| 2026-07-22 | 独立审计员执行 `npm ls --all` | 通过 | 依赖树可解析；未满足项均为平台/工具的可选依赖。 |
+| 2026-07-22 | 独立审计员重试 `npm audit` | PASS | 发现 0 个漏洞。 |
+| 2026-07-22 | 独立审计员执行 `npm audit --package-lock-only` | PASS | 发现 0 个漏洞。属于临时 quick-audit 端点错误，不是锁文件阻塞。 |
+| 2026-07-22 | 独立审计员检查 Git 空白字符/状态 | PASS | `main` 干净。 |
+| 2026-07-22 | 用户执行模块化后 M1-M3 浏览器回归（30 项检查） | PASS | 用户报告模块化后 M1-M3 浏览器回归为 30/30 PASS；未提供浏览器/版本。包括移动、战斗、XP、升级冻结/按键/点击、三项升级、中文 UI、60 秒运行，以及无地图/摄像机/胜负/新内容。 |
+| 2026-07-22 | CP-M4-ARCH-01 独立审计最终结论 | PASS | 架构检查点为 Green；可以退出。 |
+| 2026-07-22 | M3 + CP-M4-ARCH-01 正式收尾（纯文档） | 进行中 | 记录 PASS 审计和用户证据；无 `src/` 变更。 |
+| 2026-07-22 | 文档收尾（实现者）：`npm test` | 通过 | 5 个文件 / 115 项测试（纯文档 M3+ARCH 收尾）。 |
+| 2026-07-22 | 文档收尾（实现者）：`npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | 文档收尾（实现者）：`npm run build` | 通过 | 35 个模块。 |
+| 2026-07-22 | 文档收尾（实现者）：`git diff --check` | 通过 | 无空白字符错误（仅有 CRLF 警告）。 |
+| 2026-07-22 | CP-M4-WORLD-01 开始 | 已开始 | HEAD `00166ee`；`main` 干净。 |
+| 2026-07-22 | WORLD `npm test` | 通过 | 6 个文件 / 136 项测试。 |
+| 2026-07-22 | WORLD `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | WORLD `npm run build` | 通过 | 已生成 `dist/`。 |
+| 2026-07-22 | WORLD `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-22 | WORLD 交互式浏览器检查 | UNVERIFIED | 实现者环境中无交互式浏览器会话。 |
+| 2026-07-22 | `git commit -m "M4: implement full-screen large world demo"` | 通过 | `ba20893`（25 个文件）。 |
+| 2026-07-22 | WORLD 后执行 `npm test` | 通过 | 6 个文件 / 136 项测试。 |
+| 2026-07-22 | WORLD 后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-22 | WORLD 后执行 `npm run build` | 通过 | 40 个模块。 |
+| 2026-07-24 | 对 WORLD 检查点 `ba20893` 的独立审计 | FAIL | 生成候选点虽在视野外，却会从世界一侧的整条区域取样；敌人可能在数千单位外生成，并在维持局部压力前耗尽敌人上限。 |
+| 2026-07-24 | WORLD 生成修复 | 已应用 | 将候选点限制在所选当前视野边缘周围的有界带状区域；添加四边和世界角落覆盖。 |
+| 2026-07-24 | 修复版 `npm test` | 通过 | 6 个文件 / 138 项测试。 |
+| 2026-07-24 | 修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-24 | 修复版 `npm run build` | 通过 | 转换了 40 个模块。 |
+| 2026-07-24 | 修复版 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-24 | 修复版 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-24 | 全新独立 WORLD 修复审计 | PASS | 审计员审查了世界/视口/摄像机/坐标/渲染/UI/生成范围，并重新运行 138 项测试、tsc、build、audit 和差异检查。浏览器交互仍为 UNVERIFIED。 |
+| 2026-07-24 | `git commit -m "M4: repair world-edge enemy spawning"` | 通过 | 修复检查点 `008514e`（7 个预期文件）。 |
+| 2026-07-25 | 用户选择风险最低的 M4 顺序 | 已批准 | 先实现动态难度；再实现胜负/重新开始。 |
+| 2026-07-25 | CP-M4-DIFFICULTY-01 规划 | 已定义 | 基于活跃时间的四档生成间隔/数量上限配置；不调整敌人属性，不加入结果逻辑、重新开始或新内容。 |
+| 2026-07-25 | 难度功能首次执行 `npm test` | 通过 | 7 个文件 / 151 项测试。 |
+| 2026-07-25 | 难度功能首次执行 `npx tsc --noEmit` | 失败 | `enemy-system.ts` 中仍有两个过时常量导入；无行为失败。 |
+| 2026-07-25 | 扩展难度功能的针对性测试 | 已应用 | 添加所有档位的间隔/数量上限、累加器、敌人基线属性和中文 HUD 格式覆盖。 |
+| 2026-07-25 | 难度功能最终执行 `npm test` | 通过 | 7 个文件 / 162 项测试。 |
+| 2026-07-25 | 难度功能最终执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 难度功能最终执行 `npm run build` | 通过 | 转换了 41 个模块。 |
+| 2026-07-25 | 难度功能最终执行 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-25 | 难度功能最终执行 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-25 | 首次独立 CP-M4-DIFFICULTY-01 审计 | FAIL | 导出的配置可变、跨越边界后整帧应用新档位，以及正无穷 `dt`，导致无法创建检查点。 |
+| 2026-07-25 | 难度审计修复 | 已应用 | 冻结配置；精确划分跨档位时间片；拒绝非有限 `dt`；为不安全的外部配置提供回退；添加针对性回归测试。 |
+| 2026-07-25 | 审计修复后首次执行 `npm test` | 失败 | 难度工作线程耗尽堆内存，因为不安全配置回退尚未写入实际生成函数；工作线程失败前完成了 6 个文件 / 138 项测试。 |
+| 2026-07-25 | 审计修复后首次执行 `npx tsc --noEmit` / `npm run build` | 失败 | 过时的回退常量导入未使用，确认函数体缺少回退代码。 |
+| 2026-07-25 | 审计修复后针对性执行 `npx vitest run src/core/difficulty.test.ts` | 通过 | 修正回退位置后，1 个文件 / 29 项测试通过。 |
+| 2026-07-25 | 审计修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 审计修复最终执行 `npm test` | 通过 | 7 个文件 / 167 项测试。 |
+| 2026-07-25 | 审计修复最终执行 `npm run build` | 通过 | 转换了 41 个模块。 |
+| 2026-07-25 | 审计修复最终执行 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-25 | 审计修复最终执行 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-25 | 第二次独立 CP-M4-DIFFICULTY-01 审计 | FAIL | 极小正数间隔加上极大的有限数量上限，仍可能使底层生成实际上无界；文档中的测试总数/最新 HEAD 也已过时。 |
+| 2026-07-25 | 第二次审计修复 | 已应用 | `advanceSpawns` 现在只接受已冻结并注册的配置；自定义有限值/无效值/`null` 均使用基线配置；文档已同步。 |
+| 2026-07-25 | 第二次审计修复版 `npm test` | 通过 | 7 个文件 / 169 项测试。 |
+| 2026-07-25 | 第二次审计修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 第二次审计修复版 `npm run build` | 通过 | 转换了 41 个模块。 |
+| 2026-07-25 | 第二次审计修复版 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-25 | 第二次审计修复版 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-25 | 最终独立 CP-M4-DIFFICULTY-01 复审 | PASS | 审计员验证了两轮修复、范围、169 项测试、tsc、build、audit、差异检查、状态和最新 HEAD；浏览器验收仍待处理。 |
+| 2026-07-25 | `git commit -m "M4: implement dynamic spawn difficulty"` | 通过 | 实现检查点 `60bd1dc`（17 个预期文件）。 |
+| 2026-07-25 | 用户 CP-M4-DIFFICULTY-01 浏览器检查清单 | PASS，但存在阻塞性回归 | 用户报告所有要求的难度检查均为 PASS，随后报告 Canvas 右键可能使移动卡住，且经验掉落在达到历史宝石上限后停止。 |
+| 2026-07-25 | 输入/宝石回归修复 | 已应用 | Canvas `contextmenu` 现在阻止默认行为并清除输入；已移除 `GEM_CAP` 及其静默抑制掉落的逻辑。 |
+| 2026-07-25 | 输入/宝石修复版 `npm test` | 通过 | 7 个文件 / 170 项测试。 |
+| 2026-07-25 | 输入/宝石修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 输入/宝石修复版 `npm run build` | 通过 | 转换了 41 个模块。 |
+| 2026-07-25 | 输入/宝石修复版 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-25 | 输入/宝石修复版 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-25 | 独立输入/宝石修复审计 | PASS | 审计员验证了仅限 Canvas 的上下文菜单抑制、按住输入清除、完整移除 `GEM_CAP`、每次击杀掉落一个宝石、范围，以及 170 项测试/工具链证据。浏览器针对性复查仍待处理。 |
+| 2026-07-25 | `git commit -m "M4: fix stuck input and uncapped gem drops"` | 通过 | 修复检查点 `c2f6588`（13 个预期文件）。 |
+| 2026-07-25 | 对辅助指针修复 `098841f` 的独立审计 | FAIL | 缺少 `lostpointercapture` 清理可能留下过时的 `pointerId`；单槽跟踪无法安全处理多指针；升级点击未明确要求主按钮；实现范围中还存在文件末尾空行。 |
+| 2026-07-25 | 辅助指针生命周期修复 | 已应用 | 独立跟踪多个已捕获标识；`lost`/`up`/`cancel` 清除状态；捕获失败不保留标识；升级点击要求按钮 0；已修复文件末尾空白。 |
+| 2026-07-25 | 生命周期修复版 `npm test` | 通过 | 7 个文件 / 179 项测试。 |
+| 2026-07-25 | 生命周期修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 生命周期修复版 `npm run build` | 通过 | 转换了 41 个模块。 |
+| 2026-07-25 | 生命周期修复版 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-25 | 生命周期修复版 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-25 | 全新独立辅助指针生命周期复审 | PASS | 审计员验证了多指针捕获跟踪、`lost`/`up`/`cancel` 清理、仅主按钮触发升级点击、输入中立性、范围、179 项测试和工具链证据。浏览器复查仍待处理。 |
+| 2026-07-25 | `git commit -m "M4: fix secondary pointer capture lifecycle"` | 通过 | 生命周期修复检查点 `a9f2d6d`（9 个预期文件）。 |
+| 2026-07-26 | 用户针对性辅助指针浏览器复查 | PASS | 用户接受了剩余的 Edge 浏览器界面/扩展右键拖动导航限制；其他针对性检查均通过，包括输入中立性、左键行为和无上限宝石掉落。 |
+| 2026-07-26 | CP-M4-DIFFICULTY-01 最终结论 | PASS | 自动化验证、最终独立审计、实现/修复检查点和用户浏览器验收均已完成；检查点为 Green。 |
+| 2026-07-24 | 用户交互式 WORLD 浏览器验收 | PASS | 用户报告所提供的完整 WORLD 检查清单通过。未提供浏览器名称/版本。 |
+| 2026-07-24 | CP-M4-WORLD-01 最终结论 | PASS | 自动化检查、全新独立修复审计和用户浏览器验收均通过；检查点为 Green。 |
+| 2026-07-24 | WORLD 收尾 `npm test` | 通过 | 纯文档验收更新后，6 个文件 / 138 项测试通过。 |
+| 2026-07-24 | WORLD 收尾 `npm run build` | 通过 | TypeScript 和 Vite 执行完成；转换了 40 个模块。 |
+| 2026-07-25 | 辅助指针输入中立修复 | 已应用 | 从 `contextmenu` 移除 `clearInput`；仅在 Canvas 上对辅助指针调用 `preventDefault` + 可选指针捕获。 |
+| 2026-07-25 | 修复版 `npm test` | 通过 | 7 个文件 / 176 项测试。 |
+| 2026-07-25 | 修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 修复版 `npm run build` | 通过 | 成功。 |
+| 2026-07-25 | 修复版 `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-25 | 辅助指针浏览器复查 | UNVERIFIED | 等待用户验证按住按键 + 右键点击/拖动。 |
+| 2026-07-25 | `git commit -m "M4: make secondary pointer input-neutral"` | 通过 | `098841f`（9 个文件）。 |
+| 2026-07-25 | 提交后执行 `npm test` | 通过 | 7 个文件 / 176 项测试。 |
+| 2026-07-25 | 提交后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | 提交后执行 `npm run build` | 通过 | 成功。 |
+| 2026-07-25 | CP-M4-OUTCOME-01 开始 | 已开始 | HEAD `84ab53b`。 |
+| 2026-07-25 | OUTCOME 首次执行 `npm test` | 失败 | `game.test` 中 2 个断言认为不存在 `outcome` 属性。 |
+| 2026-07-25 | 重写旧断言后执行 OUTCOME `npm test` | 通过 | 8 个文件 / 198 项测试。 |
+| 2026-07-25 | OUTCOME `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | OUTCOME `npm run build` | 通过 | 成功。 |
+| 2026-07-25 | OUTCOME `npm audit` | 通过 | 0 个漏洞。 |
+| 2026-07-25 | OUTCOME 浏览器交互 | UNVERIFIED | 等待用户验收。 |
+| 2026-07-25 | `git commit -m "M4: implement timed run outcomes and restart"` | 通过 | `dfbe925`（18 个文件）。 |
+| 2026-07-25 | OUTCOME 后执行 `npm test` | 通过 | 8 个文件 / 198 项测试。 |
+| 2026-07-25 | OUTCOME 后执行 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-25 | OUTCOME 后执行 `npm run build` | 通过 | 成功。 |
+| 2026-07-26 | 独立 CP-M4-OUTCOME-01 审计 | FAIL | 带修饰键的 R 快捷键会重新开始游戏；重新开始按钮可能超出小视口；终局状态提前返回时可能保留待处理升级；存在重复的决策标识和记录了过时 HEAD 的文档。 |
+| 2026-07-26 | OUTCOME 审计修复 | 已应用 | 添加仅接受无修饰键 R 的辅助函数、保持在视口内的重新开始按钮、终局待处理项清理、唯一决策标识以及记录当前 HEAD 的文档。 |
+| 2026-07-26 | OUTCOME 修复后首次执行 `npm test` | 失败 | 1x1 视口按钮测试暴露出 0.25px 的垂直溢出；202 项测试通过，1 项失败。 |
+| 2026-07-26 | 修正布局后执行 OUTCOME 修复版 `npm test` | 通过 | 8 个文件 / 203 项测试。 |
+| 2026-07-26 | OUTCOME 修复版 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-26 | OUTCOME 修复版 `npm run build` | 通过 | 转换了 43 个模块。 |
+| 2026-07-26 | OUTCOME 修复版 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-26 | OUTCOME 修复版 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-26 | 全新独立 CP-M4-OUTCOME-01 修复复审 | PASS | 审计员验证了仅接受无修饰键 R 的语义、小视口布局、终局不变量、精确边界行为、完整重新开始、范围、203 项测试和工具链证据。浏览器验收仍为 UNVERIFIED。 |
+| 2026-07-26 | `git commit -m "M4: fix run outcome audit findings"` | 通过 | OUTCOME 修复检查点 `a596253`（12 个预期文件）。 |
+| 2026-07-26 | 用户完整 CP-M4-OUTCOME-01 浏览器验收 | PASS | 用户报告所提供的 17 项检查全部 PASS：限时获胜、失败、终局冻结、叠加层优先级、按钮/R 重新开始、带修饰键 R 的行为、完整重置、调整窗口大小、升级、辅助指针、无上限宝石以及控制台。未提供浏览器/版本。 |
+| 2026-07-26 | CP-M4-OUTCOME-01 最终结论 | PASS | 实现和修复检查点、自动化验证、全新独立修复审计以及用户浏览器验收均已完成；检查点为 Green。 |
+| 2026-07-26 | FINAL-MVP-AUDIT-01 仓库基线 | PASS | `main` 干净；HEAD 为 `6236896`；列出的所有检查点提交均可在历史记录中解析。 |
+| 2026-07-26 | 最终审计员第一次执行 `npm test` | PASS | 8 个文件 / 203 项测试。 |
+| 2026-07-26 | 最终审计员第二次执行 `npm test` | PASS | 8 个文件 / 203 项测试；不存在顺序或注册表污染。 |
+| 2026-07-26 | 最终审计员执行 `npx tsc --noEmit` | PASS | 退出码为 0。 |
+| 2026-07-26 | 最终审计员执行 `npm run build` | PASS | 转换了 43 个模块。 |
+| 2026-07-26 | 最终审计员执行 `npm audit` | PASS | 发现 0 个漏洞。 |
+| 2026-07-26 | 最终审计员执行 Git 工作区/范围检查 | PASS | 工作区干净；当前范围和 `84ab53b..6236896` 范围的空白字符检查均通过；OUTCOME/文档范围符合预期。 |
+| 2026-07-26 | FINAL-MVP-AUDIT-01 结论 | PASS | 没有阻塞性代码缺陷；MVP 范围锁定已满足；M4/MVP 可以宣布为 Green。文档中记录的 HEAD 已过时，且表格存在缺口，需要通过纯文档收尾修正。 |
+| 2026-07-27 | 最终 MVP 纯文档收尾 `npm test` | 通过 | 8 个文件 / 203 项测试。 |
+| 2026-07-27 | 最终 MVP 纯文档收尾 `npm run build` | 通过 | TypeScript 和 Vite 执行完成；转换了 43 个模块。 |
+| 2026-07-27 | 最终 MVP 纯文档收尾 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-27 | 最终 MVP 纯文档收尾 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-27 | `git commit -m "M4: close final MVP audit"` | 通过 | 最终 MVP 纯文档收尾 `0d0289e`（6 个预期文档文件）。 |
+| 2026-07-27 | 收尾后哈希记录 `npm test` | 通过 | 8 个文件 / 203 项测试。 |
+| 2026-07-27 | 收尾后哈希记录 `npm run build` | 通过 | 转换了 43 个模块。 |
+| 2026-07-27 | CP-OPS-PIPELINE-01 开始 | 已开始 | 用户要求建立强制性的文档化流程，并定期将版本上传至 GitHub。 |
+| 2026-07-27 | GitHub 远程仓库检查 | 受阻 | `git remote -v` 未返回任何远程仓库；当前分支没有上游跟踪分支。 |
+| 2026-07-27 | GitHub CLI 身份验证检查 | 受阻 | 环境中未安装 `gh`；未暴露或修改任何凭据。 |
+| 2026-07-27 | 交付流程定义 | 已应用 | 添加强制检查点阶段、M5 基础建设依赖顺序、Git 提交关卡和确定性的 GitHub 同步策略。 |
+| 2026-07-27 | 流程文档 `npm test` | 通过 | 8 个文件 / 203 项测试。 |
+| 2026-07-27 | 流程文档 `npm run build` | 通过 | 转换了 43 个模块。 |
+| 2026-07-27 | 流程文档 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-27 | 流程文档 `git diff --check` | 通过 | 无空白字符错误；仅有行尾警告。 |
+| 2026-07-27 | `git commit -m "OPS: define mandatory delivery pipeline"` | 通过 | 流程检查点 `74b6a3e`（9 个预期文件）。 |
+| 2026-07-27 | 流程哈希记录 `npm test` / `npm run build` | 通过 | 8 个文件 / 203 项测试；转换了 43 个模块。 |
+| 2026-07-27 | `git remote add origin https://github.com/chaos-66/Vampire-Survivor.git` | 通过 | 用户确认的 HTTPS 仓库已配置为 `origin`；未记录任何凭据材料。 |
+| 2026-07-27 | `git fetch origin` / 远程仓库检查 | 通过 | 远程仓库没有任何分支头；不存在分叉或覆盖风险。 |
+| 2026-07-27 | `git push -u origin main` | 通过 | 已创建远程 `main`，上传至 `04143ba`，并建立对 `origin/main` 的跟踪。 |
+| 2026-07-27 | GitHub 同步证据文档 `npm test` / `npm run build` | 通过 | 8 个文件 / 203 项测试；转换了 43 个模块。 |
+| 2026-07-27 | CP-OPS-CHINESE-DOCS-01 开始 | 已开始 | 用户要求 README 和所有面向人的项目内容统一使用简体中文。 |
+| 2026-07-27 | 人类可读文档中文化 | 已应用 | 翻译 `README.md`、`AGENTS.md` 和全部 `docs/*.md` 的自然语言；命令、路径、代码标识符、提交原文和专有技术名保持原样。 |
+| 2026-07-30 | 中文化工作区恢复检查 | 通过 | 本地 `main` 与 `origin/main` 同步于 `2e371d7`；发现 12 个未暂存目标文档改动，无暂存改动；未丢弃或覆盖现有改动。 |
+| 2026-07-30 | 中文化文档只读审查 | 发现问题 | 主体翻译已完成；发现提交原文被翻译、活动检查点文档不一致、少量普通英文漏译及历史字面证据失真。 |
+| 2026-07-30 | 中文化审查修复 | 已应用 | 恢复真实提交主题和历史字面证据，补齐活动检查点状态，修正漏译与翻译语义；未修改 `src/` 或 `AI-Workflow-Library/`。 |
+| 2026-07-30 | 中文化文档 `npm test` | 通过 | Vitest 4.1.10：8 个文件、203 项测试通过。 |
+| 2026-07-30 | 中文化文档 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-30 | 中文化文档 `npm run build` | 通过 | TypeScript 和 Vite 执行完成；转换了 43 个模块。 |
+| 2026-07-30 | 中文化文档 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-30 | 中文化文档 `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
+| 2026-07-30 | CP-OPS-CHINESE-DOCS-01 提交前独立只读审查 | PASS | 全新审计上下文核对范围、完整差异、提交原文、历史证据、流程一致性和 Markdown；仅有非阻塞的 LF/CRLF 规范化警告。 |
+| 2026-07-30 | 提交前审查独立复跑验证 | PASS | `npm test` 为 8 个文件 / 203 项测试；`npx tsc --noEmit`、`npm run build`（43 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |

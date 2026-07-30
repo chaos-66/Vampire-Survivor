@@ -1,32 +1,33 @@
-# Decisions
+# 决策记录
 
-| ID | Date | Decision | Reason | Consequence |
+| 标识 | 日期 | 决策 | 原因 | 影响 |
 |---|---|---|---|---|
-| D-001 | 2026-07-21 | Project root `D:\agent\workspace\vampire_survivors`. | Actual workspace. | Writes in root. |
-| D-002 | 2026-07-21 | `AI-Workflow-Library/` ignored. | Must not modify/commit. | Required docs only. |
-| D-003 | 2026-07-21 | Vite + strict TS + Canvas 2D + Vitest. | Smallest stack. | No engine. |
-| D-004 | 2026-07-21 | User M0-M4 names authoritative. | Scope lock. | Milestone meanings fixed. |
-| D-005 | 2026-07-21 | Evidence in required docs/. | Avoid duplicate bank. | Less sync risk. |
-| D-006 | 2026-07-22 | Modularize via registries without ECS. | game.ts bottleneck. | CP-M4-ARCH-01. |
-| D-007 | 2026-07-22 | maxLevel null for unlimited upgrades. | Avoid 999 magic. | Offer filter correct. |
-| D-008 | 2026-07-22 | Pending options bind all upgrade input. | Prevent UI desync. | Keyboard/mouse use pending. |
-| D-009 | 2026-07-22 | Delete traitIds; weapon level needs real path. | Avoid fake extensions. | Later weapon growth. |
-| D-010 | 2026-07-22 | Idempotent bootstrap + test reset API. | Flag/registry desync. | Stable multi-run tests. |
-| D-011 | 2026-07-22 | Registry duplicates by object identity. | Metadata equality hid behavior. | Same object OK; different object throws. |
-| D-012 | 2026-07-22 | `createWeaponProgressionDefinition` for weapon growth. | level/maxLevel unused. | Fixture path without second user weapon. |
-| D-013 | 2026-07-22 | Full-screen Canvas uses CSS viewport + DPR-capped backing store. | WORLD demo needs fill window clarity. | Logical draw in CSS pixels. |
-| D-014 | 2026-07-22 | World size max(12000,vw*10) x max(7000,vh*10); fixed for run. | Large world without infinite map. | Resize does not resim world. |
-| D-015 | 2026-07-22 | Camera follows player; screen-only transform. | Separation of sim and view. | Camera not in collision. |
-| D-016 | 2026-07-22 | Enemies spawn outside current view, inside world. | Edge-of-world spawn too far on large maps. | Spawn needs view rect pure inputs. |
-| D-017 | 2026-07-25 | Implement dynamic difficulty before win/loss/restart. | User selected the minimum-risk sequence. | CP-M4-DIFFICULTY-01 is the only active checkpoint. |
-| D-018 | 2026-07-25 | Difficulty uses active-time spawn interval/cap tiers only. | Increase pressure without coupling outcome logic or changing enemy balance. | Tiers at 0/15/30/45s; upgrades freeze time; enemy stats remain baseline. |
-| D-019 | 2026-07-25 | Every defeated enemy must create an experience drop; gems have no count cap. | User explicitly rejected silent drop loss after the historical cap. | Remove `GEM_CAP`; long runs may retain all uncollected gem entities. |
-| D-020 | 2026-07-25 | (Superseded) Earlier attempt cleared held input on Canvas `contextmenu`. | Avoid stuck keys when browser swallows keyup. | Incorrect: stopped movement while keys still held. |
-| D-021 | 2026-07-25 | Canvas secondary pointer only `preventDefault`s; never mutates keyboard `InputState`. | D-020 stopped held WASD/arrows on right-click. | Right-click is browser-default suppression only on the game Canvas; blur/visibility still clear input. |
-| D-022 | 2026-07-26 | Accept Edge chrome/extension right-drag gestures as a non-blocking browser-level risk. | Page script cannot reliably cancel gestures intercepted by browser chrome or extensions. | Canvas input neutrality is required; users disable configured browser gestures when needed. |
-| D-023 | 2026-07-25 | Timed run: 60s win, HP0 loss, lost preferred, full restart. | User approved OUTCOME checkpoint. | CP-M4-OUTCOME-01; no endless mode. |
-| D-024 | 2026-07-25 | Clamp sim dt to remaining run time so elapsed hits 60 exactly. | Avoid overshoot past win boundary. | No extra spawn/damage past 60. |
-| D-025 | 2026-07-26 | Declare M4/MVP Green after FINAL-MVP-AUDIT-01 PASS at `6236896`. | All scope-lock capabilities have automated, independent, and user browser evidence. | Stop before M5+; expansion requires a new approved checkpoint. |
-| D-026 | 2026-07-27 | Make `docs/PIPELINE.md` mandatory for all future tasks. | User requested a documented, required delivery pipeline. | Every task follows scope, implementation, verification, audit, browser, closeout, and GitHub sync gates. |
-| D-027 | 2026-07-27 | Synchronize GitHub at deterministic checkpoint boundaries. | Replace ad hoc uploads with safe, auditable version publication. | Push verified commits after implementation, repair, Green closeout, handoff, or explicit request; never force-push. |
-| D-028 | 2026-07-27 | M5 foundations proceed RUNTIME -> ENEMY-ARCH -> DROP-ARCH -> WORLD-OBJECTS -> EFFECTS -> CONTENT -> NPC. | Performance and reusable definitions must precede content growth. | Reordering or combining checkpoints requires explicit user approval. |
+| D-001 | 2026-07-21 | 项目根目录为 `D:\agent\workspace\vampire_survivors`。 | 这是实际工作区。 | 在根目录内写入。 |
+| D-002 | 2026-07-21 | 忽略 `AI-Workflow-Library/`。 | 不得修改或提交。 | 仅创建必需文档。 |
+| D-003 | 2026-07-21 | 使用 Vite + 严格模式 TS + Canvas 2D + Vitest。 | 最小技术栈。 | 不使用引擎。 |
+| D-004 | 2026-07-21 | 以用户定义的 M0-M4 名称为准。 | 锁定范围。 | 里程碑含义固定。 |
+| D-005 | 2026-07-21 | 证据记录在必需的 `docs/` 中。 | 避免重复的证据库。 | 降低同步风险。 |
+| D-006 | 2026-07-22 | 通过注册表实现模块化，不使用 ECS。 | `game.ts` 成为瓶颈。 | 对应 CP-M4-ARCH-01。 |
+| D-007 | 2026-07-22 | 无限升级使用 `maxLevel: null`。 | 避免魔法数字 999。 | 正确筛选可选升级。 |
+| D-008 | 2026-07-22 | `Pending` 选项绑定所有升级输入。 | 防止 UI 不同步。 | 键盘/鼠标均使用 `pending`。 |
+| D-009 | 2026-07-22 | 删除 `traitIds`；武器等级需要真实路径。 | 避免虚假扩展点。 | 后续支持武器成长。 |
+| D-010 | 2026-07-22 | 使用幂等初始化 + 测试重置 API。 | 标志与注册表不同步。 | 多次运行的测试保持稳定。 |
+| D-011 | 2026-07-22 | 注册表通过对象标识判断重复项。 | 元数据相等会掩盖行为差异。 | 同一对象允许重复注册；不同对象会抛出错误。 |
+| D-012 | 2026-07-22 | 使用 `createWeaponProgressionDefinition` 实现武器成长。 | `level`/`maxLevel` 未使用。 | 无需添加第二件用户武器即可提供测试夹具路径。 |
+| D-013 | 2026-07-22 | 全屏 Canvas 使用 CSS 视口 + DPR 限制的后备存储。 | WORLD 演示需要明确填满窗口。 | 使用 CSS 像素进行逻辑绘制。 |
+| D-014 | 2026-07-22 | 世界尺寸为 max(12000,vw*10) x max(7000,vh*10)，单局内固定。 | 无需无限地图即可提供大型世界。 | 调整窗口大小不会重新模拟世界。 |
+| D-015 | 2026-07-22 | 摄像机跟随玩家；仅进行屏幕变换。 | 分离模拟与视图。 | 摄像机不参与碰撞。 |
+| D-016 | 2026-07-22 | 敌人在当前视野外、世界内部生成。 | 大型地图中从世界边缘生成距离过远。 | 生成逻辑需要视野矩形的纯函数输入。 |
+| D-017 | 2026-07-25 | 先实现动态难度，再实现胜负/重新开始。 | 用户选择了风险最低的顺序。 | CP-M4-DIFFICULTY-01 是唯一活跃检查点。 |
+| D-018 | 2026-07-25 | 难度仅使用活跃时间对应的生成间隔/数量上限档位。 | 在不耦合结果逻辑或改变敌人平衡的情况下增加压力。 | 档位位于 0/15/30/45 秒；升级时冻结时间；敌人属性保持基线。 |
+| D-019 | 2026-07-25 | 每个被击败的敌人都必须产生经验掉落；宝石数量不设上限。 | 用户明确拒绝达到历史上限后静默丢失掉落。 | 删除 `GEM_CAP`；长时间单局可能保留所有未收集的宝石实体。 |
+| D-020 | 2026-07-25 | （已取代）早先的尝试会在 Canvas `contextmenu` 事件中清除按住的输入。 | 避免浏览器吞掉 `keyup` 时按键卡住。 | 不正确：按键仍被按住时移动却停止。 |
+| D-021 | 2026-07-25 | Canvas 辅助指针仅调用 `preventDefault`；绝不修改键盘 `InputState`。 | D-020 导致按住 WASD/方向键时右键会停止移动。 | 右键仅在游戏 Canvas 上抑制浏览器默认行为；`blur`/可见性变化仍会清除输入。 |
+| D-022 | 2026-07-26 | 接受 Edge 浏览器界面/扩展的右键拖动手势，将其视为非阻塞的浏览器层风险。 | 页面脚本无法可靠取消被浏览器界面或扩展拦截的手势。 | 必须保证 Canvas 输入中立；用户需要时应禁用已配置的浏览器手势。 |
+| D-023 | 2026-07-25 | 限时单局：60 秒获胜，HP0 失败，`lost` 优先，完整重新开始。 | 用户批准了 OUTCOME 检查点。 | 对应 CP-M4-OUTCOME-01；不提供无尽模式。 |
+| D-024 | 2026-07-25 | 将模拟 `dt` 限制为单局剩余时间，使已用时间精确到达 60。 | 避免超过获胜边界。 | 60 秒后不会额外生成敌人或造成伤害。 |
+| D-025 | 2026-07-26 | FINAL-MVP-AUDIT-01 在 `6236896` 上为 PASS 后，宣布 M4/MVP 为 Green。 | 所有范围锁定能力均有自动化、独立审计和用户浏览器证据。 | 在 M5+ 前停止；扩展需要新的已批准检查点。 |
+| D-026 | 2026-07-27 | 将 `docs/PIPELINE.md` 设为所有未来任务的强制流程。 | 用户要求记录并强制执行交付流程。 | 每项任务均遵循范围、实现、验证、审计、浏览器、收尾和 GitHub 同步关卡。 |
+| D-027 | 2026-07-27 | 在确定性的检查点边界同步 GitHub。 | 用安全、可审计的版本发布替代临时上传。 | 在实现、修复、Green 收尾、交接或明确要求后推送已验证提交；绝不强制推送。 |
+| D-028 | 2026-07-27 | M5 基础建设按 RUNTIME -> ENEMY-ARCH -> DROP-ARCH -> WORLD-OBJECTS -> EFFECTS -> CONTENT -> NPC 推进。 | 性能和可复用定义必须先于内容增长。 | 重新排序或合并检查点需要用户明确批准。 |
+| D-029 | 2026-07-27 | 所有面向人的自然语言统一使用简体中文。 | 用户要求 README、项目文档和其他人类可读内容全部中文化。 | 标题、表头、说明、状态、交接、验收、日志和 UI 使用中文；命令、路径、标识符和专有技术名可保留原文。 |

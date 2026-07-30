@@ -1,43 +1,43 @@
-# Project Brief
+# 项目简介
 
-## Goal
+## 目标
 
-Build a small, deterministic Survivors-style browser game whose core loop is movement, automatic attacks, enemy pressure, experience collection, upgrades, and a clear run outcome.
+构建一款小型、确定性的《吸血鬼幸存者》风格浏览器游戏，其核心循环包括移动、自动攻击、敌人压力、收集经验、升级以及明确的单局结果。
 
-## Stack
+## 技术栈
 
-- Vite for local development and production builds
-- TypeScript in strict mode
-- HTML Canvas 2D for rendering
-- Vitest for automated tests
-- Browser APIs and CSS without a UI framework
+- 使用 Vite 进行本地开发和生产构建
+- 使用严格模式的 TypeScript
+- 使用 HTML Canvas 2D 进行渲染
+- 使用 Vitest 进行自动化测试
+- 使用浏览器 API 和 CSS，不使用 UI 框架
 
-## Scope Lock
+## 范围锁定
 
-The MVP must provide no more than these five capabilities:
+MVP 最多提供以下五项能力：
 
-- A player moves inside a bounded arena.
-- Enemies spawn, pursue the player, and create collision pressure.
-- The player attacks automatically and can defeat enemies.
-- Defeated enemies yield experience that drives a small upgrade choice flow.
-- A timed run ends in a visible win or loss state and can restart.
+- 玩家可在有边界的竞技场内移动。
+- 敌人会生成、追逐玩家并产生碰撞压力。
+- 玩家会自动攻击并能击败敌人。
+- 被击败的敌人会提供经验，以推动小型升级选择流程。
+- 限时单局以可见的获胜或失败状态结束，并可重新开始。
 
-## Non-goals
+## 非目标
 
-- No multiplayer, backend, accounts, cloud saves, analytics, or online services.
-- No 3D engine, game framework, physics library, or heavy state-management library.
-- No production art pipeline, music, elaborate menus, settings, localization, or accessibility certification in the MVP.
-- No procedural map system, meta-progression, character roster, inventory, achievements, or leaderboard.
-- No M1-M4 gameplay implementation during M0.
+- 不包含多人游戏、后端、账户、云存档、分析或在线服务。
+- 不使用 3D 引擎、游戏框架、物理库或重量级状态管理库。
+- MVP 不包含生产级美术流程、音乐、复杂菜单、设置、本地化或无障碍认证。
+- 不包含程序化地图系统、局外成长、角色阵容、物品栏、成就或排行榜。
+- M0 期间不实现 M1-M4 的玩法。
 
-## Milestones
+## 里程碑
 
-| Milestone | Deliverable | Exit signal |
+| 里程碑 | 交付物 | 退出信号 |
 |---|---|---|
-| M0 | Project workflow, Vite/TypeScript/Canvas scaffold, test harness, and Git checkpoint | Install, test, and build pass; M0 checkpoint exists |
-| M1 | Playable movement loop in a bounded Canvas arena | Player movement and frame loop are testable and demonstrable |
-| M2 | Enemy spawning, pursuit, collision pressure, automatic attacks, and enemy defeat | Combat pressure loop is demonstrable |
-| M3 | Experience drops, leveling, and a minimal upgrade choice | Progression loop is demonstrable |
-| M4 | Timed win/loss, restart, tuning, regression checks, and final MVP audit | All scope-lock capabilities pass acceptance |
+| M0 | 项目工作流、Vite/TypeScript/Canvas 脚手架、测试工具及 Git 检查点 | 安装、测试和构建通过；M0 检查点已存在 |
+| M1 | 有边界 Canvas 竞技场中的可玩移动循环 | 玩家移动和帧循环可测试、可演示 |
+| M2 | 敌人生成、追逐、碰撞压力、自动攻击以及击败敌人 | 战斗压力循环可演示 |
+| M3 | 经验掉落、升级以及最小化的升级选择 | 成长循环可演示 |
+| M4 | 限时胜负、重新开始、调优、回归检查以及最终 MVP 审计 | 所有范围锁定能力均通过验收 |
 
-Scope changes require explicit user approval and an entry in `docs/DECISIONS.md`.
+范围变更需要用户明确批准，并在 `docs/DECISIONS.md` 中记录。
