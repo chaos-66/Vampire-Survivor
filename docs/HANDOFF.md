@@ -9,6 +9,7 @@
 - 首次正式独立审计：**FAIL**；发现视口角点圆形相交假阳性
 - 审计修复提交：`330fa59`（`M5: fix runtime visibility corner culling`）
 - 全新独立复审：**PASS**
+- 用户浏览器验收：**PASS**
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -59,5 +60,5 @@
 
 ## 下一任务
 
-完成 `CP-M5-RUNTIME-01` 的真实浏览器验收；通过后再创建 Green 关闭提交。
-不得同时开始 `CP-M5-ENEMY-ARCH-01`。
+创建并同步 `CP-M5-RUNTIME-01` 的纯文档 Green 关闭提交；关闭后下一可批准检查点为
+`CP-M5-ENEMY-ARCH-01`。

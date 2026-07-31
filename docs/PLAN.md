@@ -47,7 +47,8 @@
 
 实现提交 `07be558`（`M5: establish runtime entity performance baseline`）和修复提交
 `330fa59`（`M5: fix runtime visibility corner culling`）已同步 GitHub。正式独立审计
-首次为 `FAIL`，修复后全新复审为 `PASS`。当前待完成：用户浏览器验收。
+首次为 `FAIL`，修复后全新复审为 `PASS`。用户报告浏览器验收全部 `PASS`；
+检查点已达到 Green 关闭条件。
 
 首次正式独立审计为 `FAIL`：圆形可见性在视口角点使用外接矩形近似，可能绘制
 完全位于视口外的实体。当前正在实现精确圆形/矩形相交修复和角点回归测试。
