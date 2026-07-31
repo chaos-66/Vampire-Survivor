@@ -48,6 +48,9 @@
 实现提交 `07be558`（`M5: establish runtime entity performance baseline`）已同步
 GitHub。当前待完成：正式独立审计和用户浏览器验收。
 
+首次正式独立审计为 `FAIL`：圆形可见性在视口角点使用外接矩形近似，可能绘制
+完全位于视口外的实体。当前正在实现精确圆形/矩形相交修复和角点回归测试。
+
 ## 最近关闭的检查点
 
 `CP-OPS-CHINESE-DOCS-01`：实现提交 `67eb0dc`；首次正式独立审计 `FAIL`；

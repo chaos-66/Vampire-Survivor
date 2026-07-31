@@ -35,10 +35,9 @@ export const circleIntersectsView = (
     : 0
   const safeMargin = Number.isFinite(margin) ? Math.max(0, margin) : 0
   const reach = safeRadius + safeMargin
-  return (
-    circle.x + reach >= view.left &&
-    circle.x - reach <= view.right &&
-    circle.y + reach >= view.top &&
-    circle.y - reach <= view.bottom
-  )
+  const nearestX = Math.max(view.left, Math.min(circle.x, view.right))
+  const nearestY = Math.max(view.top, Math.min(circle.y, view.bottom))
+  const dx = circle.x - nearestX
+  const dy = circle.y - nearestY
+  return dx * dx + dy * dy <= reach * reach
 }

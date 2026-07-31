@@ -112,6 +112,11 @@ describe('可见绘制裁剪', () => {
     expect(circleIntersectsView({ x: 90, y: 100, radius: 5 }, view, 5)).toBe(true)
   })
 
+  it('精确排除视口角点外的圆并包含角点相切', () => {
+    expect(circleIntersectsView({ x: 96, y: 46, radius: 5 }, view)).toBe(false)
+    expect(circleIntersectsView({ x: 97, y: 46, radius: 5 }, view)).toBe(true)
+  })
+
   it('大量屏幕外实体不触发实体绘制且不会从状态中删除', () => {
     const game = createGameState({ width: 12000, height: 7000 })
     const camera = {

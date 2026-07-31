@@ -335,3 +335,8 @@
 | 2026-07-31 | CP-M5-RUNTIME-01 提交前独立只读审查 | PASS | 全新审计上下文核对范围、批量掉落、投射物确定性、绘制裁剪、测试和文档；未发现阻塞项。 |
 | 2026-07-31 | `git commit -m "M5: establish runtime entity performance baseline"` | 通过 | 创建 RUNTIME 实现提交 `07be558`，包含 14 个预期源码、测试和文档文件。 |
 | 2026-07-31 | RUNTIME 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `07be558` 推送至 `origin/main`。 |
+| 2026-07-31 | `git commit -m "M5: record runtime checkpoint status"` | 通过 | 创建实现状态提交 `abb125c`，包含 5 个预期流程文档。 |
+| 2026-07-31 | RUNTIME 状态分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `abb125c` 推送至 `origin/main`。 |
+| 2026-07-31 | 对 `07be558` / `abb125c` 的首次正式独立审计 | FAIL | 其余范围、行为和工具链均通过；`circleIntersectsView` 使用外接矩形近似，在视口角点会将完全不可见的圆误判为可见。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-07-31 | RUNTIME 可见性审计修复 | 已应用 | 改为视口最近点到圆心的精确距离判断，并添加角点假阳性和相切回归测试。 |
+| 2026-07-31 | RUNTIME 可见性修复验证 | 通过 | `npm test` 为 9 个文件 / 211 项测试；`npx tsc --noEmit`、`npm run build`（43 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |

@@ -6,6 +6,7 @@
 - 当前活动检查点：`CP-M5-RUNTIME-01`
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
+- 首次正式独立审计：**FAIL**；当前正在修复视口角点圆形相交假阳性
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -67,5 +68,5 @@
 
 ## 下一步
 
-完成 `CP-M5-RUNTIME-01` 的正式独立审计和浏览器验收；不得同时开始
-`CP-M5-ENEMY-ARCH-01`。
+完成 `CP-M5-RUNTIME-01` 审计修复的验证、提交、同步和全新独立复审；随后完成
+浏览器验收。不得同时开始 `CP-M5-ENEMY-ARCH-01`。
