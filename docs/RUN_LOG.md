@@ -351,3 +351,4 @@
 | 2026-07-31 | `git commit -m "M5: close runtime performance checkpoint"` | 通过 | 创建 RUNTIME Green 关闭提交 `f250741`，包含 5 个预期流程文档。 |
 | 2026-07-31 | RUNTIME Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `f250741` 推送至 `origin/main`。 |
 | 2026-07-31 | RUNTIME Green 哈希记录验证 | 通过 | `npm test` 为 9 个文件 / 211 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |
+| 2026-07-31 | RUNTIME 最终状态措辞修正 | 已应用 | 将当前状态和交接中的浏览器验收描述从旧的 `UNVERIFIED` 更新为用户验收 PASS；历史未验证记录保留不改。 |

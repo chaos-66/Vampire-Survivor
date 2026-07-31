@@ -31,7 +31,7 @@
 - M5+ RUNTIME Green；后续架构和内容未开始
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
-- 开发服务器：`http://localhost:5173/` 返回 HTTP 200；真实浏览器交互为 `UNVERIFIED`
+- 开发服务器：`http://localhost:5173/` 返回 HTTP 200；随后用户浏览器验收 PASS
 - 强制交付流程：`docs/PIPELINE.md`
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
