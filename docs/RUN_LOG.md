@@ -348,3 +348,6 @@
 | 2026-07-31 | RUNTIME 复审状态分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `40a6613` 推送至 `origin/main`。 |
 | 2026-07-31 | 用户 CP-M5-RUNTIME-01 浏览器验收 | PASS | 用户报告全部检查通过：页面和移动/战斗/掉落/拾取正常；实体穿过视口四边和四角无明显提前消失或闪烁；顶部敌人血条正常；完整单局、重新开始和控制台无回归。未提供浏览器名称和版本。 |
 | 2026-07-31 | CP-M5-RUNTIME-01 Green 关闭验证 | 通过 | `npm test` 为 9 个文件 / 211 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |
+| 2026-07-31 | `git commit -m "M5: close runtime performance checkpoint"` | 通过 | 创建 RUNTIME Green 关闭提交 `f250741`，包含 5 个预期流程文档。 |
+| 2026-07-31 | RUNTIME Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `f250741` 推送至 `origin/main`。 |
+| 2026-07-31 | RUNTIME Green 哈希记录验证 | 通过 | `npm test` 为 9 个文件 / 211 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |

@@ -2,14 +2,15 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设
-- 当前活动检查点：`CP-M5-RUNTIME-01`
+- 当前阶段：M5 基础建设；RUNTIME Green
+- 最近关闭的检查点：`CP-M5-RUNTIME-01`，**Green**
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
 - 首次正式独立审计：**FAIL**；发现视口角点圆形相交假阳性
 - 审计修复提交：`330fa59`（`M5: fix runtime visibility corner culling`）
 - 全新独立复审：**PASS**
 - 用户浏览器验收：**PASS**
+- Green 关闭提交：`f250741`（`M5: close runtime performance checkpoint`）
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -23,11 +24,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**仅 RUNTIME 检查点已开始；后续架构和内容未开始**
+- M5+ 内容：**RUNTIME Green；后续架构和内容未开始**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**RUNTIME 修复提交 `330fa59` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**RUNTIME Green 关闭提交 `f250741` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -71,5 +72,4 @@
 
 ## 下一步
 
-创建并同步 `CP-M5-RUNTIME-01` 的纯文档 Green 关闭提交；关闭后下一可批准检查点为
-`CP-M5-ENEMY-ARCH-01`。
+通过范围关卡定义并批准 `CP-M5-ENEMY-ARCH-01`。

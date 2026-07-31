@@ -2,7 +2,7 @@
 
 ## 当前目标
 
-**CP-M5-RUNTIME-01 正在进行。** 在不改变玩法结果和不限制实体数量的前提下，
+**CP-M5-RUNTIME-01 已 Green。** 在不改变玩法结果和不限制实体数量的前提下，
 建立大规模实体运行时基线，降低批量击杀掉落和投射物碰撞分配成本，并裁剪
 完全位于当前视口外的实体绘制。
 
@@ -39,7 +39,7 @@
 | GitHub 同步 | **已配置；初始 Green 基线已上传** |
 | M5+ 内容 | **未开始** |
 
-## 当前活动检查点
+## 最近关闭的检查点
 
 `CP-M5-RUNTIME-01`。基线 HEAD 为 `a68424a`；目标模块为
 `src/progression/experience-system.ts`、`src/combat/projectile-system.ts`、
@@ -48,7 +48,7 @@
 实现提交 `07be558`（`M5: establish runtime entity performance baseline`）和修复提交
 `330fa59`（`M5: fix runtime visibility corner culling`）已同步 GitHub。正式独立审计
 首次为 `FAIL`，修复后全新复审为 `PASS`。用户报告浏览器验收全部 `PASS`；
-检查点已达到 Green 关闭条件。
+Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）。
 
 首次正式独立审计为 `FAIL`：圆形可见性在视口角点使用外接矩形近似，可能绘制
 完全位于视口外的实体。当前正在实现精确圆形/矩形相交修复和角点回归测试。
