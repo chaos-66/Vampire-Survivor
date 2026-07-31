@@ -24,3 +24,21 @@ export const viewRectFromCamera = (camera: Camera): ViewRect => ({
   right: camera.x + camera.width,
   bottom: camera.y + camera.height,
 })
+
+export const circleIntersectsView = (
+  circle: { x: number; y: number; radius: number },
+  view: ViewRect,
+  margin = 0,
+): boolean => {
+  const safeRadius = Number.isFinite(circle.radius)
+    ? Math.max(0, circle.radius)
+    : 0
+  const safeMargin = Number.isFinite(margin) ? Math.max(0, margin) : 0
+  const reach = safeRadius + safeMargin
+  return (
+    circle.x + reach >= view.left &&
+    circle.x - reach <= view.right &&
+    circle.y + reach >= view.top &&
+    circle.y - reach <= view.bottom
+  )
+}

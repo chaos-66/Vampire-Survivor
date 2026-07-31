@@ -3,6 +3,9 @@
 ## 当前事实
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
+- 当前活动检查点：`CP-M5-RUNTIME-01`
+- 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
+- 实现状态：已应用；实现检查点尚未提交
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -20,7 +23,10 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ **未开始**
+- M5+ 仅 RUNTIME 检查点已开始；后续架构和内容未开始
+- RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
+- 自动验证：9 个测试文件 / 210 项测试；tsc / build / audit / diff check 通过
+- 开发服务器：`http://localhost:5173/` 返回 HTTP 200；真实浏览器交互为 `UNVERIFIED`
 - 强制交付流程：`docs/PIPELINE.md`
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -48,4 +54,5 @@
 
 ## 下一任务
 
-通过流程范围关卡定义并批准 `CP-M5-RUNTIME-01`。
+提交并同步 `CP-M5-RUNTIME-01` 实现检查点；随后完成独立审计和浏览器验收。
+不得同时开始 `CP-M5-ENEMY-ARCH-01`。

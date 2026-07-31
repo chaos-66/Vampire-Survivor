@@ -319,3 +319,17 @@
 | 2026-07-30 | CP-OPS-CHINESE-DOCS-01 Green 关闭验证 | 通过 | `npm test` 为 8 个文件 / 203 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |
 | 2026-07-30 | `git commit -m "OPS: close Chinese documentation checkpoint"` | 通过 | 创建 Green 关闭提交 `1279998`，包含 6 个预期流程文档。 |
 | 2026-07-30 | Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `1279998` 推送至 `origin/main`。 |
+| 2026-07-31 | CP-M5-RUNTIME-01 基线检查 | 通过 | `main` 工作区干净，HEAD `a68424a` 与 `origin/main` 同步；M5 后续架构和内容均未开始。 |
+| 2026-07-31 | CP-M5-RUNTIME-01 源码成本审查 | 通过 | 确认逐击杀宝石数组复制、逐投射物重复敌人筛选/排序和屏幕外实体全量绘制为当前目标；范围不含后续 M5 架构。 |
+| 2026-07-31 | CP-M5-RUNTIME-01 范围关卡 | 已批准 | 用户要求继续流水线；记录 D-030，并统一 PLAN、STATUS、HANDOFF 和验收标准。 |
+| 2026-07-31 | CP-M5-RUNTIME-01 测试基线 `npm test` | 通过 | 实现前共有 8 个文件 / 203 项测试通过。 |
+| 2026-07-31 | RUNTIME 首次完整 `npm test` | 通过 | 9 个文件 / 210 项测试通过。 |
+| 2026-07-31 | RUNTIME 首次 `npx tsc --noEmit` / `npm run build` | 失败 | `projectile-system.ts` 的 `as const` 使敌人副本被推断为只读，生命值更新无法编译；无运行时测试失败。 |
+| 2026-07-31 | RUNTIME 类型修复 | 已应用 | 使用显式可变的 `[number, Enemy]` Map 元组类型，保留一次性敌人索引和有序列表。 |
+| 2026-07-31 | RUNTIME 修复后 `npm test` | 通过 | 9 个文件 / 210 项测试。 |
+| 2026-07-31 | RUNTIME 修复后 `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-07-31 | RUNTIME 修复后 `npm run build` | 通过 | 转换了 43 个模块。 |
+| 2026-07-31 | RUNTIME 修复后 `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-07-31 | RUNTIME 修复后 `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
+| 2026-07-31 | `npm run dev -- --host 127.0.0.1 --port 5173` + HTTP GET | 通过 | 开发服务器可达；`http://localhost:5173/` 返回 HTTP 200。真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-07-31 | CP-M5-RUNTIME-01 提交前独立只读审查 | PASS | 全新审计上下文核对范围、批量掉落、投射物确定性、绘制裁剪、测试和文档；未发现阻塞项。 |

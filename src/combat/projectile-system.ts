@@ -32,7 +32,11 @@ export const advanceProjectiles = (
   dt: number,
 ): ProjectileStepResult => {
   const remainingProjectiles: Projectile[] = []
-  const enemyById = new Map(enemies.map((e) => [e.id, { ...e }]))
+  const enemyById = new Map<number, Enemy>(
+    enemies.map((enemy): [number, Enemy] => [enemy.id, { ...enemy }]),
+  )
+  const orderedEnemies = [...enemyById.values()].sort((a, b) => a.id - b.id)
+  const killedEnemyIds = new Set<number>()
   let defeatedDelta = 0
   const kills: Array<{ x: number; y: number }> = []
 
@@ -53,19 +57,19 @@ export const advanceProjectiles = (
     }
 
     let hit = false
-    const living = [...enemyById.values()]
-      .filter((e) => e.health > 0)
-      .sort((a, b) => a.id - b.id)
-
-    for (const enemy of living) {
+    for (const enemy of orderedEnemies) {
+      if (enemy.health <= 0) {
+        continue
+      }
       if (circlesOverlap(moved, enemy)) {
         const nextHp = enemy.health - moved.damage
         if (nextHp <= 0) {
-          enemyById.delete(enemy.id)
+          enemy.health = 0
+          killedEnemyIds.add(enemy.id)
           defeatedDelta += 1
           kills.push({ x: enemy.x, y: enemy.y })
         } else {
-          enemyById.set(enemy.id, { ...enemy, health: nextHp })
+          enemy.health = nextHp
         }
         hit = true
         break
@@ -79,7 +83,7 @@ export const advanceProjectiles = (
 
   return {
     projectiles: remainingProjectiles,
-    enemies: [...enemyById.values()].sort((a, b) => a.id - b.id),
+    enemies: orderedEnemies.filter((enemy) => !killedEnemyIds.has(enemy.id)),
     defeatedDelta,
     kills,
   }

@@ -18,6 +18,7 @@ import { advanceWeapons } from './weapons/weapon-system'
 import {
   pickupGems as pickupGemsCore,
   spawnGemAt as spawnGemAtCore,
+  spawnGemsAt as spawnGemsAtCore,
 } from './progression/experience-system'
 import { tryEnterPendingUpgrade } from './progression/upgrade-system'
 import { movePlayer as movePlayerCore } from './actors/player-system'
@@ -77,9 +78,9 @@ export const advanceProjectilesOnState = (
   state.projectiles = step.projectiles
   state.enemies = step.enemies
   state.defeatedCount += step.defeatedDelta
-  for (const kill of step.kills) {
-    spawnGemAtOnState(state, kill.x, kill.y)
-  }
+  const spawned = spawnGemsAtCore(state.gems, state.nextGemId, step.kills)
+  state.gems = spawned.gems
+  state.nextGemId = spawned.nextGemId
 }
 
 export const pickupGemsOnState = (state: GameState): void => {

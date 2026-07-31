@@ -7,25 +7,37 @@ import { GEM_RADIUS, GEM_VALUE } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
 import type { ExperienceGem } from '../combat/enemy-types'
 
+export type GemSpawnPoint = { x: number; y: number }
+
+export const spawnGemsAt = (
+  gems: ExperienceGem[],
+  nextGemId: number,
+  points: readonly GemSpawnPoint[],
+): { gems: ExperienceGem[]; nextGemId: number } => {
+  if (points.length === 0) {
+    return { gems, nextGemId }
+  }
+
+  const spawned = points.map((point, index) => ({
+    id: nextGemId + index,
+    x: point.x,
+    y: point.y,
+    radius: GEM_RADIUS,
+    value: GEM_VALUE,
+  }))
+  return {
+    gems: [...gems, ...spawned],
+    nextGemId: nextGemId + spawned.length,
+  }
+}
+
 export const spawnGemAt = (
   gems: ExperienceGem[],
   nextGemId: number,
   x: number,
   y: number,
 ): { gems: ExperienceGem[]; nextGemId: number } => {
-  return {
-    gems: [
-      ...gems,
-      {
-        id: nextGemId,
-        x,
-        y,
-        radius: GEM_RADIUS,
-        value: GEM_VALUE,
-      },
-    ],
-    nextGemId: nextGemId + 1,
-  }
+  return spawnGemsAt(gems, nextGemId, [{ x, y }])
 }
 
 export const pickupGems = (

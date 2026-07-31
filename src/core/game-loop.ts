@@ -18,7 +18,7 @@ import {
 import { applyContactDamage } from '../combat/damage-system'
 import { advanceProjectiles } from '../combat/projectile-system'
 import { advanceWeapons } from '../weapons/weapon-system'
-import { pickupGems, spawnGemAt } from '../progression/experience-system'
+import { pickupGems, spawnGemsAt } from '../progression/experience-system'
 import { tryEnterPendingUpgrade } from '../progression/upgrade-system'
 import type { FrameContext } from '../world/frame-context'
 import { viewRectFromCamera } from '../world/frame-context'
@@ -112,11 +112,9 @@ export const updateGame = (
   state.projectiles = step.projectiles
   state.enemies = step.enemies
   state.defeatedCount += step.defeatedDelta
-  for (const kill of step.kills) {
-    const gem = spawnGemAt(state.gems, state.nextGemId, kill.x, kill.y)
-    state.gems = gem.gems
-    state.nextGemId = gem.nextGemId
-  }
+  const spawnedGems = spawnGemsAt(state.gems, state.nextGemId, step.kills)
+  state.gems = spawnedGems.gems
+  state.nextGemId = spawnedGems.nextGemId
 
   const picked = pickupGems(state.player, state.gems, state.experience)
   state.gems = picked.gems

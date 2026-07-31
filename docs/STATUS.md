@@ -2,7 +2,10 @@
 
 ## 快照
 
-- 当前阶段：M4 / MVP Green；最终独立综合审计 PASS
+- 当前阶段：M5 基础建设
+- 当前活动检查点：`CP-M5-RUNTIME-01`
+- 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
+- 实现状态：已应用；实现检查点尚未提交
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -16,7 +19,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**未开始**
+- M5+ 内容：**仅 RUNTIME 检查点已开始；后续架构和内容未开始**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -25,11 +28,14 @@
 ## 已实现
 
 - `outcome: running | won | lost`；同一帧中 lost > won
+- RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
 - 根据当前视口创建新单局世界；清除键盘输入；重置帧时钟
 - 屏幕空间中的结果叠加层
+- RUNTIME 自动验证：9 个测试文件 / 210 项测试；tsc / build / audit / diff check 通过
+- RUNTIME 开发服务器可达：`http://localhost:5173/` 返回 HTTP 200；浏览器交互仍为 `UNVERIFIED`
 - 检查点 `dfbe925`；检查后 198 项测试 / tsc / build 均为绿色状态
 - 首次独立 OUTCOME 审计：FAIL；带修饰键的 R 组合会重新开始
   游戏，小视口可能隐藏重新开始按钮，终局状态提前返回时可能
@@ -61,4 +67,5 @@
 
 ## 下一步
 
-通过 `docs/PIPELINE.md` 的范围关卡定义并批准 `CP-M5-RUNTIME-01`。
+提交并同步 `CP-M5-RUNTIME-01` 实现检查点；随后完成独立审计和浏览器验收。
+不得同时开始 `CP-M5-ENEMY-ARCH-01`。

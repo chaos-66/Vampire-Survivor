@@ -8,9 +8,14 @@ import type { GameState } from '../core/game-state'
 import type { Camera } from '../world/camera'
 import type { Viewport } from '../world/viewport'
 import { worldToScreen } from '../world/coordinates'
+import {
+  circleIntersectsView,
+  viewRectFromCamera,
+} from '../world/frame-context'
 
 /** 世界网格间距（逻辑单位）；仅绘制可见线。 */
 export const WORLD_GRID_SPACING = 256
+export const ENEMY_DRAW_MARGIN = 12
 
 export const drawWorld = (
   context: CanvasRenderingContext2D,
@@ -25,8 +30,12 @@ export const drawWorld = (
 
   drawVisibleGrid(context, camera, viewport, game.arena)
   drawWorldBorder(context, camera, game.arena)
+  const view = viewRectFromCamera(camera)
 
   for (const gem of game.gems) {
+    if (!circleIntersectsView(gem, view)) {
+      continue
+    }
     const s = worldToScreen(gem, camera)
     context.fillStyle = '#7dffb3'
     context.beginPath()
@@ -35,6 +44,9 @@ export const drawWorld = (
   }
 
   for (const enemy of game.enemies) {
+    if (!circleIntersectsView(enemy, view, ENEMY_DRAW_MARGIN)) {
+      continue
+    }
     const s = worldToScreen(enemy, camera)
     context.fillStyle = '#e85d5d'
     context.beginPath()
@@ -58,6 +70,9 @@ export const drawWorld = (
   }
 
   for (const projectile of game.projectiles) {
+    if (!circleIntersectsView(projectile, view)) {
+      continue
+    }
     const s = worldToScreen(projectile, camera)
     context.fillStyle = '#f5f0a8'
     context.beginPath()
