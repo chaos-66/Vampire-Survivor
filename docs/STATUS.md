@@ -6,7 +6,9 @@
 - 当前活动检查点：`CP-M5-RUNTIME-01`
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
-- 首次正式独立审计：**FAIL**；当前正在修复视口角点圆形相交假阳性
+- 首次正式独立审计：**FAIL**；发现视口角点圆形相交假阳性
+- 审计修复提交：`330fa59`（`M5: fix runtime visibility corner culling`）
+- 全新独立复审：**PASS**
 - 最近关闭的检查点：`CP-OPS-CHINESE-DOCS-01`，**Green**
 - 中文化实现提交：`67eb0dc`（`OPS: localize human-readable documentation`）
 - 首次正式独立审计：**FAIL**；审计修复提交：`15b474c`（`OPS: fix Chinese documentation audit findings`）
@@ -24,7 +26,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**RUNTIME 实现提交 `07be558` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**RUNTIME 修复提交 `330fa59` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -35,7 +37,7 @@
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
 - 根据当前视口创建新单局世界；清除键盘输入；重置帧时钟
 - 屏幕空间中的结果叠加层
-- RUNTIME 自动验证：9 个测试文件 / 210 项测试；tsc / build / audit / diff check 通过
+- RUNTIME 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
 - RUNTIME 开发服务器可达：`http://localhost:5173/` 返回 HTTP 200；浏览器交互仍为 `UNVERIFIED`
 - 检查点 `dfbe925`；检查后 198 项测试 / tsc / build 均为绿色状态
 - 首次独立 OUTCOME 审计：FAIL；带修饰键的 R 组合会重新开始
@@ -68,5 +70,5 @@
 
 ## 下一步
 
-完成 `CP-M5-RUNTIME-01` 审计修复的验证、提交、同步和全新独立复审；随后完成
-浏览器验收。不得同时开始 `CP-M5-ENEMY-ARCH-01`。
+完成 `CP-M5-RUNTIME-01` 的真实浏览器验收；通过后再创建 Green 关闭提交。
+不得同时开始 `CP-M5-ENEMY-ARCH-01`。
