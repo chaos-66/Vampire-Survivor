@@ -45,7 +45,8 @@
 `src/progression/experience-system.ts`、`src/combat/projectile-system.ts`、
 `src/world/frame-context.ts`、`src/ui/draw-world.ts` 及针对性测试。
 
-实现已应用，当前待完成：提交实现检查点、同步、独立审计和用户浏览器验收。
+实现提交 `07be558`（`M5: establish runtime entity performance baseline`）已同步
+GitHub。当前待完成：正式独立审计和用户浏览器验收。
 
 ## 最近关闭的检查点
 

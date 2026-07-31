@@ -333,3 +333,5 @@
 | 2026-07-31 | RUNTIME 修复后 `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
 | 2026-07-31 | `npm run dev -- --host 127.0.0.1 --port 5173` + HTTP GET | 通过 | 开发服务器可达；`http://localhost:5173/` 返回 HTTP 200。真实浏览器交互仍为 `UNVERIFIED`。 |
 | 2026-07-31 | CP-M5-RUNTIME-01 提交前独立只读审查 | PASS | 全新审计上下文核对范围、批量掉落、投射物确定性、绘制裁剪、测试和文档；未发现阻塞项。 |
+| 2026-07-31 | `git commit -m "M5: establish runtime entity performance baseline"` | 通过 | 创建 RUNTIME 实现提交 `07be558`，包含 14 个预期源码、测试和文档文件。 |
+| 2026-07-31 | RUNTIME 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `07be558` 推送至 `origin/main`。 |
