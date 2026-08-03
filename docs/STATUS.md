@@ -2,12 +2,13 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；ENEMY-ARCH 进行中
-- 当前活动检查点：`CP-M5-ENEMY-ARCH-01`
+- 当前阶段：M5 基础建设；ENEMY-ARCH Green
+- 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
 - ENEMY-ARCH 用户浏览器验收：**PASS**
+- ENEMY-ARCH Green 关闭提交：`ecf5ffb`（`M5: close enemy architecture checkpoint`）
 - 依赖检查点：`CP-M5-RUNTIME-01`，**Green**
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
@@ -29,11 +30,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME Green；ENEMY-ARCH 已开始；后续架构和内容未开始**
+- M5+ 内容：**RUNTIME 与 ENEMY-ARCH Green；后续架构和内容未开始**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**ENEMY-ARCH 实现提交 `fb956cb` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**ENEMY-ARCH Green 关闭提交 `ecf5ffb` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -80,5 +81,4 @@
 
 ## 下一步
 
-创建并同步 `CP-M5-ENEMY-ARCH-01` 的纯文档 Green 关闭提交；关闭后下一可批准
-检查点为 `CP-M5-DROP-ARCH-01`。
+通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。

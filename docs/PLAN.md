@@ -2,7 +2,7 @@
 
 ## 当前目标
 
-**CP-M5-ENEMY-ARCH-01 正在进行。** 建立 `EnemyDefinition`、敌人注册表、
+**CP-M5-ENEMY-ARCH-01 已 Green。** 建立 `EnemyDefinition`、敌人注册表、
 定义驱动工厂和运行时 `definitionId`，并将当前唯一基础敌人的两个真实生成入口
 迁移到工厂。
 
@@ -56,13 +56,14 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 审计修复提交 `15b474c`；全新独立复审 `PASS`。中文文档检查点已达到 Green
 关闭条件；Green 关闭提交为 `1279998`（`OPS: close Chinese documentation checkpoint`）。
 
-## 当前活动检查点
+## 最近关闭的检查点
 
 `CP-M5-ENEMY-ARCH-01`。基线 HEAD 为 `e6627de`；目标模块为敌人定义、注册表、
 工厂、默认敌人内容、内容 bootstrap、敌人生成路径及架构测试。
 
 实现提交 `fb956cb`（`M5: introduce enemy definition architecture`）已同步 GitHub。
-正式独立审计和用户浏览器验收均已 `PASS`；检查点已达到 Green 关闭条件。
+正式独立审计和用户浏览器验收均已 `PASS`；Green 关闭提交为 `ecf5ffb`
+（`M5: close enemy architecture checkpoint`）。
 
 ## M5 基础建设队列
 
