@@ -368,3 +368,8 @@
 | 2026-08-01 | `git commit -m "M5: introduce enemy definition architecture"` | 通过 | 创建 ENEMY-ARCH 实现提交 `fb956cb`，包含 20 个预期源码、测试和流程文档文件。 |
 | 2026-08-01 | ENEMY-ARCH 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `fb956cb` 推送至 `origin/main`。 |
 | 2026-08-01 | ENEMY-ARCH 实现状态记录验证 | 通过 | `npm test` 为 9 个文件 / 217 项测试；`npm run build` 转换 46 个模块；`git diff --check` 通过。 |
+| 2026-08-01 | `git commit -m "M5: record enemy architecture status"` | 通过 | 创建 ENEMY-ARCH 状态提交 `420cb67`，包含 5 个预期流程文档。 |
+| 2026-08-01 | ENEMY-ARCH 状态分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `420cb67` 推送至 `origin/main`。 |
+| 2026-08-01 | ENEMY-ARCH 正式独立审计 | PASS | 全新审计上下文确认定义/运行时分离、注册表身份规则、严格工厂、bootstrap/reset、两个生成入口、`definitionId` 传播、范围和工具链均通过；浏览器仍为 `UNVERIFIED`。 |
+| 2026-08-01 | 用户 CP-M5-ENEMY-ARCH-01 浏览器验收 | PASS | 用户报告全部检查通过：基础敌人生成、追逐、受击、死亡和经验掉落正常；经验拾取与升级正常；60 秒胜负、重新开始、窗口调整和控制台无回归。未提供浏览器名称和版本。 |
+| 2026-08-01 | CP-M5-ENEMY-ARCH-01 Green 关闭验证 | 通过 | `npm test` 为 9 个文件 / 217 项测试；`npm run build` 转换 46 个模块；`git diff --check` 通过。 |

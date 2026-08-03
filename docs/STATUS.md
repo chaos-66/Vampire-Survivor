@@ -6,6 +6,8 @@
 - 当前活动检查点：`CP-M5-ENEMY-ARCH-01`
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
+- ENEMY-ARCH 正式独立审计：**PASS**
+- ENEMY-ARCH 用户浏览器验收：**PASS**
 - 依赖检查点：`CP-M5-RUNTIME-01`，**Green**
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
@@ -78,5 +80,5 @@
 
 ## 下一步
 
-提交并同步 `CP-M5-ENEMY-ARCH-01` 实现检查点；随后完成正式独立审计和浏览器
-验收。不得同时开始 `CP-M5-DROP-ARCH-01`。
+创建并同步 `CP-M5-ENEMY-ARCH-01` 的纯文档 Green 关闭提交；关闭后下一可批准
+检查点为 `CP-M5-DROP-ARCH-01`。
