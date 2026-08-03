@@ -132,7 +132,7 @@ DIFFICULTY 关闭提交为 `84ab53b`。辅助指针生命周期为 Green。
 
 - [x] 范围仅限敌人定义、注册表、工厂和 `definitionId`
 - [x] 不新增第二种默认敌人，不实现通用掉落或后续 M5 内容
-- [ ] 实现检查点已提交并同步 GitHub
+- [x] 实现检查点 `fb956cb` 已提交并同步 GitHub
 - [ ] 独立审计为 PASS
 - [ ] 浏览器验收为 PASS
 - [ ] Green 关闭已提交并同步 GitHub

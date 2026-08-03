@@ -365,3 +365,6 @@
 | 2026-08-01 | ENEMY-ARCH `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
 | 2026-08-01 | ENEMY-ARCH 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
 | 2026-08-01 | CP-M5-ENEMY-ARCH-01 提交前独立只读审查 | PASS | 全新审计上下文核对定义、注册表、严格工厂、bootstrap/reset、两个生成入口、必填 `definitionId`、测试和范围；未发现阻塞项。 |
+| 2026-08-01 | `git commit -m "M5: introduce enemy definition architecture"` | 通过 | 创建 ENEMY-ARCH 实现提交 `fb956cb`，包含 20 个预期源码、测试和流程文档文件。 |
+| 2026-08-01 | ENEMY-ARCH 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `fb956cb` 推送至 `origin/main`。 |
+| 2026-08-01 | ENEMY-ARCH 实现状态记录验证 | 通过 | `npm test` 为 9 个文件 / 217 项测试；`npm run build` 转换 46 个模块；`git diff --check` 通过。 |

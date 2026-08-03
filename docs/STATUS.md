@@ -5,7 +5,7 @@
 - 当前阶段：M5 基础建设；ENEMY-ARCH 进行中
 - 当前活动检查点：`CP-M5-ENEMY-ARCH-01`
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
-- ENEMY-ARCH 实现状态：已应用；实现检查点尚未提交
+- ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - 依赖检查点：`CP-M5-RUNTIME-01`，**Green**
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
 - 实现提交：`07be558`（`M5: establish runtime entity performance baseline`）
@@ -31,7 +31,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**RUNTIME Green 关闭提交 `f250741` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**ENEMY-ARCH 实现提交 `fb956cb` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 

@@ -5,7 +5,7 @@
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 当前活动检查点：`CP-M5-ENEMY-ARCH-01`
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
-- ENEMY-ARCH 实现状态：已应用；实现检查点尚未提交
+- ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - 依赖检查点：`CP-M5-RUNTIME-01`，**Green**
 - 最近关闭的检查点：`CP-M5-RUNTIME-01`，**Green**
 - 基线 HEAD：`a68424a`；开始时工作区干净并与 `origin/main` 同步
@@ -46,6 +46,7 @@
 - RUNTIME 实现提交 `07be558` 已同步；本地 `main` 跟踪 `origin/main`
 - RUNTIME 修复提交 `330fa59` 已同步；本地 `main` 跟踪 `origin/main`
 - RUNTIME Green 关闭提交 `f250741` 已同步；本地 `main` 跟踪 `origin/main`
+- ENEMY-ARCH 实现提交 `fb956cb` 已同步；本地 `main` 跟踪 `origin/main`
 
 ## 最终证据
 

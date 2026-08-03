@@ -61,7 +61,8 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 `CP-M5-ENEMY-ARCH-01`。基线 HEAD 为 `e6627de`；目标模块为敌人定义、注册表、
 工厂、默认敌人内容、内容 bootstrap、敌人生成路径及架构测试。
 
-实现已应用且自动验证通过。当前待完成：实现提交、正式独立审计和用户浏览器验收。
+实现提交 `fb956cb`（`M5: introduce enemy definition architecture`）已同步 GitHub。
+当前待完成：正式独立审计和用户浏览器验收。
 
 ## M5 基础建设队列
 
