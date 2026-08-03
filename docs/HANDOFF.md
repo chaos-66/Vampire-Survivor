@@ -40,7 +40,7 @@
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
 - ENEMY-ARCH 自动验证：9 个测试文件 / 217 项测试；tsc / build / audit / diff check 通过
-- ENEMY-ARCH 开发服务器：`http://localhost:5173/` 返回 HTTP 200；浏览器交互仍为 `UNVERIFIED`
+- ENEMY-ARCH 开发服务器：`http://localhost:5173/` 返回 HTTP 200；随后用户浏览器验收 PASS
 - 开发服务器：`http://localhost:5173/` 返回 HTTP 200；随后用户浏览器验收 PASS
 - 强制交付流程：`docs/PIPELINE.md`
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）

@@ -48,7 +48,7 @@
 - 屏幕空间中的结果叠加层
 - RUNTIME 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
 - ENEMY-ARCH 自动验证：9 个测试文件 / 217 项测试；tsc / build / audit / diff check 通过
-- ENEMY-ARCH 开发服务器：`http://localhost:5173/` 返回 HTTP 200；浏览器交互仍为 `UNVERIFIED`
+- ENEMY-ARCH 开发服务器：`http://localhost:5173/` 返回 HTTP 200；随后用户浏览器验收 PASS
 - RUNTIME 开发服务器可达：`http://localhost:5173/` 返回 HTTP 200；随后用户浏览器验收 PASS
 - 检查点 `dfbe925`；检查后 198 项测试 / tsc / build 均为绿色状态
 - 首次独立 OUTCOME 审计：FAIL；带修饰键的 R 组合会重新开始
