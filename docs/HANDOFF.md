@@ -4,6 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
+- 交接状态：等待 `CP-M5-DROP-ARCH-01` 范围关卡；尚未开始实现
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -72,6 +73,24 @@
 - `src/core/game-loop.ts` 终局冻结 + 时间钳制
 - `src/main.ts` R/重新开始接线
 
+## DROP-ARCH 恢复要点
+
+- 唯一下一任务为 `CP-M5-DROP-ARCH-01` 的范围关卡；不得直接实现或开始
+  `CP-M5-WORLD-OBJECTS-01`、`CP-M5-EFFECTS-01`、`CP-M5-CONTENT-01` 或 NPC。
+- 当前击杀路径：`src/combat/projectile-system.ts` 的 `advanceProjectiles` 输出
+  `kills: Array<{ x, y }>`；`src/core/game-loop.ts` 调用 `spawnGemsAt`；
+  `src/progression/experience-system.ts` 的 `pickupGems` 直接累加经验。
+- 不变量：每次实际击杀必定产生一个经验掉落；掉落 ID 连续；未收集宝石不设数量上限；
+  升级选择、胜负和重新开始行为不变。
+- 建议模式：参照 `src/enemies/`、`src/weapons/` 和 `src/actors/` 的静态定义、对象身份
+  注册表、严格工厂、`registerDefaultContent` 和 `resetAllContentRegistriesForTests` 生命周期。
+- 本检查点仅建立通用掉落/拾取定义及当前经验适配路径；不加入食物、宝箱、稀有度、
+  掉落权重、库存、世界物体或其他真实内容。
+- 基线：`main` / `origin/main` 为 `0bd70d4`，工作区干净；217 项测试、tsc、46 模块
+  build 和 `npm audit` 0 均为最近验证结果。历史未收集宝石的长时内存/扫描成本仍是接受的风险。
+
 ## 下一任务
 
-通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。
+通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。开始前必须完整阅读规定文档、
+检查 Git，并在 `PLAN`、`STATUS`、`HANDOFF`、`ACCEPTANCE_CRITERIA` 和
+`DECISIONS` 中写明范围、非目标和验收项。

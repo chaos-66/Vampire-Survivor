@@ -2,12 +2,11 @@
 
 ## 当前目标
 
-**CP-M5-ENEMY-ARCH-01 已 Green。** 建立 `EnemyDefinition`、敌人注册表、
-定义驱动工厂和运行时 `definitionId`，并将当前唯一基础敌人的两个真实生成入口
-迁移到工厂。
+**等待定义 `CP-M5-DROP-ARCH-01` 范围关卡。** 目标是在不改变“每击杀必掉经验”
+和无上限宝石行为的前提下，建立通用掉落与拾取定义。
 
-非目标：不新增第二种默认敌人，不实现生成权重、通用掉落、世界物体、效果、
-内容批次或 NPC；不改变基础敌人数值、生成位置、难度、碰撞和单局结果规则。
+非目标：不加入食物、宝箱或其他真实掉落内容，不修改敌人定义/生成、世界物体、
+效果、NPC、难度或单局结果规则。
 
 最终纯文档收尾：`0d0289e`（`M4: close final MVP audit`）。
 交付流程：所有未来工作都必须遵循 `docs/PIPELINE.md`。
@@ -74,6 +73,16 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 5. `CP-M5-EFFECTS-01`
 6. `CP-M5-CONTENT-01`
 7. `CP-M5-NPC-01`
+
+## DROP-ARCH 交接要点
+
+- 当前击杀由 `advanceProjectiles` 返回 `kills: Array<{ x, y }>`；`updateGame` 直接调用
+  `spawnGemsAt`，随后 `pickupGems` 直接增加经验。
+- 迁移后仍必须保证每次实际击杀产生一个经验掉落，掉落 ID 连续、未收集实体不设上限。
+- 优先沿用角色、武器和敌人的静态定义、对象身份注册表、严格工厂及 bootstrap/reset
+  模式；新基础设施必须有真实调用路径和测试。
+- 本检查点只提供通用定义和经验适配路径；食物、宝箱和其他内容属于
+  `CP-M5-CONTENT-01`，不得提前实现。
 
 准确的关卡、依赖关系、Git 提交、审计、浏览器验收和 GitHub
 同步点均在 `docs/PIPELINE.md` 中定义。

@@ -4,6 +4,7 @@
 
 - 当前阶段：M5 基础建设；ENEMY-ARCH Green
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
+- 交接状态：等待 `CP-M5-DROP-ARCH-01` 范围关卡；尚未开始实现
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -26,7 +27,7 @@
 - 已审计的 MVP 基线：`6236896`（`M4: close run outcome checkpoint`）
 - 最终 MVP 纯文档收尾：`0d0289e`（`M4: close final MVP audit`）
 - OUTCOME 修复：`a596253`（`M4: fix run outcome audit findings`）
-- 最后更新：2026-07-30
+- 最后更新：2026-08-04
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
@@ -81,4 +82,6 @@
 
 ## 下一步
 
-通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。
+通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。现有路径为
+`advanceProjectiles.kills` -> `spawnGemsAt` -> `pickupGems`；迁移后必须保持每击杀
+必掉经验、无上限未收集掉落和既有升级行为，不得实现食物、宝箱或其他内容。
