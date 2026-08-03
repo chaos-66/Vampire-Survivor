@@ -386,3 +386,4 @@
 | 2026-08-04 | DROP-ARCH 首次正式独立审计 | FAIL | 掉落实现范围、自动化行为和工具链均通过；阻塞项为 `package-lock.json` 安全更新尚未记录为必要范围变更，以及 `STATUS` / `HANDOFF` 仍错误称尚未开始实现。修复后必须由全新上下文复审；浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-04 | DROP-ARCH 第二次独立复审 | FAIL | 首次审计的锁文件范围和状态措辞问题已修复；阻塞项为 `HANDOFF` 仍将 DROP-ARCH 实际基线错误写为 `0bd70d4`，与范围关卡的 `f0ba893` 冲突。修复后必须由全新上下文复审；浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-04 | DROP-ARCH 第三次全新独立复审 | PASS | 范围仅包含通用掉落/拾取定义、默认经验掉落、注册表、严格工厂、bootstrap/reset、经验路径迁移和测试；确认两次 FAIL 已修复，实际基线为 `f0ba893`。独立复跑 `npm test`（9 个文件 / 223 项）、`npx tsc --noEmit`、`npm run build`（50 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-04 | `git push origin main` | 通过 | 上传 DROP-ARCH 实现提交 `bdb5513` 至 `origin/main`；推送前已确认工作区干净、本地仅领先一个提交且远端无未知领先或分叉。 |

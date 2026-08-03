@@ -5,6 +5,7 @@
 - 当前阶段：M5 基础建设；`CP-M5-DROP-ARCH-01` 范围关卡已批准
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
 - 交接状态：DROP-ARCH 实现和自动化验证已完成；首次和第二次独立审计 FAIL 均已修复，第三次全新复审为 PASS；浏览器验收尚未进行
+- DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -35,7 +36,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**ENEMY-ARCH Green 关闭提交 `ecf5ffb` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**DROP-ARCH 实现提交 `bdb5513` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
