@@ -10,6 +10,7 @@ import { CONTACT_DAMAGE, RUN_DURATION_SECONDS } from './constants'
 import { createGameState, createSequenceRng, updateGame } from '../game'
 import { computeWorldBounds } from '../world/world'
 import { computeCamera } from '../world/camera'
+import { DEFAULT_ENEMY_ID } from '../content/enemies/default-enemy'
 import {
   getRestartButtonRect,
   restartButtonContainsPoint,
@@ -137,6 +138,7 @@ describe('updateGame outcome integration', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: 20,

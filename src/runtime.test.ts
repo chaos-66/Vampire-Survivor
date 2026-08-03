@@ -6,6 +6,7 @@ import { createGameState } from './core/game-state'
 import { spawnGemsAt } from './progression/experience-system'
 import { drawWorld } from './ui/draw-world'
 import { circleIntersectsView } from './world/frame-context'
+import { DEFAULT_ENEMY_ID } from './content/enemies/default-enemy'
 
 describe('批量经验掉落', () => {
   it('一次追加大量掉落并保持现有实体和连续 ID', () => {
@@ -44,8 +45,8 @@ describe('批量经验掉落', () => {
 describe('投射物运行时顺序', () => {
   it('每帧复用按 ID 排序的敌人并保持一弹一伤', () => {
     const enemies: Enemy[] = [
-      { id: 2, x: 101, y: 100, radius: 10, speed: 0, health: 1, maxHealth: 1 },
-      { id: 1, x: 100, y: 100, radius: 10, speed: 0, health: 1, maxHealth: 1 },
+      { id: 2, definitionId: DEFAULT_ENEMY_ID, x: 101, y: 100, radius: 10, speed: 0, health: 1, maxHealth: 1 },
+      { id: 1, definitionId: DEFAULT_ENEMY_ID, x: 100, y: 100, radius: 10, speed: 0, health: 1, maxHealth: 1 },
     ]
     const projectiles: Projectile[] = [
       { id: 2, x: 100.5, y: 100, vx: 0, vy: 0, radius: 2, damage: 1, lifeRemaining: 1 },
@@ -70,6 +71,7 @@ describe('投射物运行时顺序', () => {
   it('保留输入中本来已经失去生命的实体', () => {
     const dead: Enemy = {
       id: 1,
+      definitionId: DEFAULT_ENEMY_ID,
       x: 10,
       y: 10,
       radius: 5,
@@ -84,6 +86,7 @@ describe('投射物运行时顺序', () => {
   it('保持重复敌人 ID 由最后一项覆盖的既有语义', () => {
     const first: Enemy = {
       id: 1,
+      definitionId: DEFAULT_ENEMY_ID,
       x: 10,
       y: 10,
       radius: 5,
@@ -136,6 +139,7 @@ describe('可见绘制裁剪', () => {
     }))
     game.enemies = Array.from({ length: far }, (_, id) => ({
       id,
+      definitionId: DEFAULT_ENEMY_ID,
       x: 0,
       y: 0,
       radius: 14,
@@ -154,7 +158,7 @@ describe('可见绘制裁剪', () => {
       lifeRemaining: 1,
     }))
     game.gems.push({ id: far, x: game.player.x, y: game.player.y, radius: 8, value: 1 })
-    game.enemies.push({ id: far, x: game.player.x, y: game.player.y, radius: 14, speed: 0, health: 1, maxHealth: 1 })
+    game.enemies.push({ id: far, definitionId: DEFAULT_ENEMY_ID, x: game.player.x, y: game.player.y, radius: 14, speed: 0, health: 1, maxHealth: 1 })
     game.projectiles.push({ id: far, x: game.player.x, y: game.player.y, vx: 0, vy: 0, radius: 5, damage: 1, lifeRemaining: 1 })
 
     let arcCalls = 0

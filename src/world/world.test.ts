@@ -22,6 +22,7 @@ import {
 } from '../combat/enemy-system'
 import { getUpgradeCardRects, upgradeIdAtPoint } from '../ui/canvas-coordinates'
 import { ENEMY_RADIUS, PLAYER_SPEED } from '../core/constants'
+import { DEFAULT_ENEMY_ID } from '../content/enemies/default-enemy'
 import { clampPlayerToArena, stepPlayer } from '../movement'
 import {
   createGameState,
@@ -372,6 +373,7 @@ describe('off-view spawn', () => {
     advanceSpawns(state, 1.1, viewRectFromCamera(camera), state.player)
     expect(state.enemies.length).toBeGreaterThanOrEqual(1)
     const e = state.enemies[0]
+    expect(e.definitionId).toBe(DEFAULT_ENEMY_ID)
     const vr = viewRectFromCamera(camera)
     const inside =
       e.x >= vr.left && e.x <= vr.right && e.y >= vr.top && e.y <= vr.bottom

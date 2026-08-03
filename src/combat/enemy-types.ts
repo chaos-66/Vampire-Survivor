@@ -2,6 +2,7 @@
 
 export type Enemy = {
   id: number
+  definitionId: string
   x: number
   y: number
   radius: number

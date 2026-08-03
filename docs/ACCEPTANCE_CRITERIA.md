@@ -106,3 +106,33 @@ DIFFICULTY 关闭提交为 `84ab53b`。辅助指针生命周期为 Green。
 - [x] 浏览器验收为 PASS；用户报告全部检查通过
 - [x] `CP-M5-RUNTIME-01` 已达到 Green 关闭条件
 - [x] Green 关闭 `f250741` 已提交并同步 GitHub
+
+## CP-M5-ENEMY-ARCH-01
+
+### 自动化验收
+
+- [x] `EnemyDefinition` 分离静态内容与运行时生命状态
+- [x] 敌人注册表同一对象重复注册幂等，同 ID 不同对象抛错并保留原定义
+- [x] 内容 bootstrap 重复调用幂等，完整重置后可恢复默认敌人
+- [x] 敌人工厂按定义 ID 创建实例，写入必填 `definitionId` 和连续运行时 ID
+- [x] 未注册定义 ID 明确抛错，不静默回退到基础敌人
+- [x] 两个真实生成入口均通过工厂创建基础敌人
+- [x] 基础敌人半径、速度、生命、生成位置和现有玩法保持不变
+- [x] 测试专用额外定义可通过工厂创建，无需修改主循环
+- [x] `npm test`、`npx tsc --noEmit`、`npm run build`、`npm audit` 和 `git diff --check` 通过
+- [x] 开发服务器 `http://localhost:5173/` 返回 HTTP 200
+
+### 浏览器验收
+
+- [ ] 基础敌人仍正常生成、追逐、受击、死亡并掉落经验（`UNVERIFIED`）
+- [ ] 60 秒单局、升级、胜负和重新开始无回归（`UNVERIFIED`）
+- [x] 浏览器验收在实际观察前保持 `UNVERIFIED`
+
+### 流程验收
+
+- [x] 范围仅限敌人定义、注册表、工厂和 `definitionId`
+- [x] 不新增第二种默认敌人，不实现通用掉落或后续 M5 内容
+- [ ] 实现检查点已提交并同步 GitHub
+- [ ] 独立审计为 PASS
+- [ ] 浏览器验收为 PASS
+- [ ] Green 关闭已提交并同步 GitHub

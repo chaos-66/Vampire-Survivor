@@ -47,6 +47,14 @@ export {
 } from './core/constants'
 
 export type { Enemy, ExperienceGem, Projectile } from './combat/enemy-types'
+export type { EnemyDefinition } from './enemies/enemy-definition'
+export { createEnemy } from './enemies/enemy-factory'
+export {
+  registerEnemy,
+  getEnemy,
+  listEnemies,
+  clearEnemyRegistry,
+} from './enemies/enemy-registry'
 export {
   edgeSpawnPosition,
   spawnEnemyOnEdge,

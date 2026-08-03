@@ -8,9 +8,7 @@ import type { Arena } from '../movement'
 import type { Vec2 } from '../vec'
 import { normalize } from '../vec'
 import {
-  ENEMY_MAX_HEALTH,
   ENEMY_RADIUS,
-  ENEMY_SPEED,
 } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
 import type { Enemy } from './enemy-types'
@@ -21,6 +19,8 @@ import {
   DIFFICULTY_PROFILES,
   getDifficultyProfile,
 } from '../core/difficulty'
+import { createEnemy } from '../enemies/enemy-factory'
+import { DEFAULT_ENEMY_ID } from '../content/enemies/default-enemy'
 
 /** 生成点距视口边缘的外边距（逻辑单位）。 */
 export const SPAWN_VIEW_MARGIN = 80
@@ -239,15 +239,7 @@ export const spawnEnemyOutsideView = (
     }
   }
 
-  const enemy: Enemy = {
-    id: state.nextEnemyId,
-    x: pos.x,
-    y: pos.y,
-    radius: ENEMY_RADIUS,
-    speed: ENEMY_SPEED,
-    health: ENEMY_MAX_HEALTH,
-    maxHealth: ENEMY_MAX_HEALTH,
-  }
+  const enemy = createEnemy(DEFAULT_ENEMY_ID, state.nextEnemyId, pos.x, pos.y)
   state.nextEnemyId += 1
   return enemy
 }
@@ -257,15 +249,7 @@ export const spawnEnemyOnEdge = (state: SpawnState): Enemy => {
   const edge = Math.floor(state.rng() * 4) % 4
   const t = state.rng()
   const pos = edgeSpawnPosition(state.arena, edge, t, ENEMY_RADIUS)
-  const enemy: Enemy = {
-    id: state.nextEnemyId,
-    x: pos.x,
-    y: pos.y,
-    radius: ENEMY_RADIUS,
-    speed: ENEMY_SPEED,
-    health: ENEMY_MAX_HEALTH,
-    maxHealth: ENEMY_MAX_HEALTH,
-  }
+  const enemy = createEnemy(DEFAULT_ENEMY_ID, state.nextEnemyId, pos.x, pos.y)
   state.nextEnemyId += 1
   return enemy
 }

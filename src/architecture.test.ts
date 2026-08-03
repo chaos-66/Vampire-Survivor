@@ -23,6 +23,14 @@ import {
   resetAllContentRegistriesForTests,
   advanceWeapons,
   createWeaponProgressionDefinition,
+  createEnemy,
+  registerEnemy,
+  getEnemy,
+  listEnemies,
+  spawnEnemyOnEdge,
+  ENEMY_MAX_HEALTH,
+  ENEMY_RADIUS,
+  ENEMY_SPEED,
   PROJECTILE_DAMAGE,
   PLAYER_MAX_HEALTH,
   PLAYER_SPEED,
@@ -33,6 +41,11 @@ import { defaultProjectileWeapon } from './content/weapons/default-projectile'
 import { swiftUpgrade } from './content/upgrades/swift'
 import type { WeaponDefinition } from './weapons/weapon-definition'
 import type { CharacterDefinition } from './actors/character-definition'
+import type { EnemyDefinition } from './enemies/enemy-definition'
+import {
+  DEFAULT_ENEMY_ID,
+  defaultEnemy,
+} from './content/enemies/default-enemy'
 
 const arena = { width: 960, height: 540 }
 
@@ -136,6 +149,70 @@ describe('weapon registry identity', () => {
     expect(listWeapons().filter((w) => w.id === DEFAULT_WEAPON_ID)).toHaveLength(
       1,
     )
+  })
+})
+
+describe('enemy registry and factory', () => {
+  it('registers the default enemy with the existing gameplay baseline', () => {
+    const definition = getEnemy(DEFAULT_ENEMY_ID)
+    expect(definition).toBe(defaultEnemy)
+    expect(definition).toMatchObject({
+      radius: ENEMY_RADIUS,
+      speed: ENEMY_SPEED,
+      maxHealth: ENEMY_MAX_HEALTH,
+    })
+  })
+
+  it('registers the same enemy object twice safely', () => {
+    registerEnemy(defaultEnemy)
+    registerEnemy(defaultEnemy)
+    expect(listEnemies().filter((enemy) => enemy.id === DEFAULT_ENEMY_ID)).toHaveLength(1)
+  })
+
+  it('rejects a different enemy object with the same id and keeps the original', () => {
+    const replacement: EnemyDefinition = {
+      ...defaultEnemy,
+      speed: defaultEnemy.speed + 1,
+    }
+    expect(() => registerEnemy(replacement)).toThrow(/different definition object/i)
+    expect(getEnemy(DEFAULT_ENEMY_ID)).toBe(defaultEnemy)
+  })
+
+  it('creates a test-only enemy definition without changing the game loop', () => {
+    const fixture: EnemyDefinition = {
+      id: 'fixture_enemy',
+      name: '测试敌人',
+      description: '仅用于工厂测试',
+      radius: 9,
+      speed: 123,
+      maxHealth: 45,
+    }
+    registerEnemy(fixture)
+    expect(createEnemy(fixture.id, 7, 11, 13)).toEqual({
+      id: 7,
+      definitionId: fixture.id,
+      x: 11,
+      y: 13,
+      radius: 9,
+      speed: 123,
+      health: 45,
+      maxHealth: 45,
+    })
+  })
+
+  it('rejects an unregistered enemy definition id', () => {
+    expect(() => createEnemy('missing_enemy', 1, 0, 0)).toThrow(
+      /enemy not registered/i,
+    )
+  })
+
+  it('real spawn path uses the default definition and consecutive runtime ids', () => {
+    const state = createGameState(arena, createSequenceRng([0, 0.5, 1, 0.5]))
+    const first = spawnEnemyOnEdge(state)
+    const second = spawnEnemyOnEdge(state)
+    expect(first.definitionId).toBe(DEFAULT_ENEMY_ID)
+    expect(second.definitionId).toBe(DEFAULT_ENEMY_ID)
+    expect([first.id, second.id]).toEqual([1, 2])
   })
 })
 
@@ -440,14 +517,17 @@ describe('registry lifecycle', () => {
     expect(listCharacters().filter((c) => c.id === DEFAULT_CHARACTER_ID)).toHaveLength(
       1,
     )
+    expect(listEnemies().filter((enemy) => enemy.id === DEFAULT_ENEMY_ID)).toHaveLength(1)
   })
 
   it('full reset then bootstrap restores defaults', () => {
     resetAllContentRegistriesForTests()
     expect(listProgressions()).toHaveLength(0)
+    expect(listEnemies()).toHaveLength(0)
     ensureContentRegistered()
     expect(getCharacter(DEFAULT_CHARACTER_ID)).toBeDefined()
     expect(getWeapon(DEFAULT_WEAPON_ID)).toBeDefined()
+    expect(getEnemy(DEFAULT_ENEMY_ID)).toBeDefined()
     expect(listProgressionCategories().map((c) => c.id)).toEqual(
       expect.arrayContaining(['stat', 'weapon', 'item']),
     )

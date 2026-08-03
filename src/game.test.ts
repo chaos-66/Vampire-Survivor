@@ -42,6 +42,7 @@ import {
   type GameState,
 } from './game'
 import type { Arena } from './movement'
+import { DEFAULT_ENEMY_ID } from './content/enemies/default-enemy'
 
 const arena: Arena = { width: 960, height: 540 }
 
@@ -60,6 +61,7 @@ const weakEnemy = (
   health: PROJECTILE_DAMAGE,
   maxHealth: PROJECTILE_DAMAGE,
   ...overrides,
+  definitionId: overrides.definitionId ?? DEFAULT_ENEMY_ID,
 })
 
 describe('enemy spawn', () => {
@@ -99,6 +101,7 @@ describe('enemy spawn', () => {
       enemy.x <= 0 ||
       enemy.x >= arena.width
     expect(onEdge).toBe(true)
+    expect(enemy.definitionId).toBe(DEFAULT_ENEMY_ID)
   })
 
   it('does not spawn overlapping a centered player for edge spawns', () => {
@@ -150,6 +153,7 @@ describe('enemy chase', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 0,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -168,6 +172,7 @@ describe('enemy chase', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x - 100,
         y: state.player.y - 100,
         radius: ENEMY_RADIUS,
@@ -189,6 +194,7 @@ describe('enemy chase', () => {
       s.enemies = [
         {
           id: 1,
+          definitionId: DEFAULT_ENEMY_ID,
           x: 0,
           y: s.player.y,
           radius: ENEMY_RADIUS,
@@ -211,6 +217,7 @@ describe('enemy chase', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -227,6 +234,7 @@ describe('enemy chase', () => {
   it('two small chase steps match one large step', () => {
     const make = (): Enemy => ({
       id: 1,
+      definitionId: DEFAULT_ENEMY_ID,
       x: 10,
       y: 10,
       radius: ENEMY_RADIUS,
@@ -440,6 +448,7 @@ describe('projectiles', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 100,
         y: 100,
         radius: 20,
@@ -449,6 +458,7 @@ describe('projectiles', () => {
       },
       {
         id: 2,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 105,
         y: 100,
         radius: 20,
@@ -521,6 +531,7 @@ describe('collision death and gems', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 50,
         y: 50,
         radius: 10,
@@ -555,6 +566,7 @@ describe('collision death and gems', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 0,
         y: 0,
         radius: 10,
@@ -612,6 +624,7 @@ describe('collision death and gems', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 0,
         y: 0,
         radius: 10,
@@ -645,6 +658,7 @@ describe('player contact damage', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 0,
         y: 0,
         radius: 5,
@@ -662,6 +676,7 @@ describe('player contact damage', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -679,6 +694,7 @@ describe('player contact damage', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -697,6 +713,7 @@ describe('player contact damage', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -716,6 +733,7 @@ describe('player contact damage', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
         radius: ENEMY_RADIUS,
@@ -853,6 +871,7 @@ describe('pending upgrade freeze', () => {
     state.enemies = [
       {
         id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
         x: 0,
         y: state.player.y,
         radius: ENEMY_RADIUS,

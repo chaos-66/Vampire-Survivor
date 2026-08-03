@@ -352,3 +352,16 @@
 | 2026-07-31 | RUNTIME Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `f250741` 推送至 `origin/main`。 |
 | 2026-07-31 | RUNTIME Green 哈希记录验证 | 通过 | `npm test` 为 9 个文件 / 211 项测试；`npm run build` 转换 43 个模块；`git diff --check` 通过。 |
 | 2026-07-31 | RUNTIME 最终状态措辞修正 | 已应用 | 将当前状态和交接中的浏览器验收描述从旧的 `UNVERIFIED` 更新为用户验收 PASS；历史未验证记录保留不改。 |
+| 2026-08-01 | CP-M5-ENEMY-ARCH-01 基线检查 | 通过 | `main` 工作区干净，HEAD `e6627de` 与 `origin/main` 同步；依赖 RUNTIME 已 Green。 |
+| 2026-08-01 | ENEMY-ARCH 源码路径审查 | 通过 | 确认两个真实敌人构造入口、全局基础属性常量、现有注册表身份规则和 bootstrap/reset 生命周期。 |
+| 2026-08-01 | CP-M5-ENEMY-ARCH-01 范围关卡 | 已批准 | 用户要求继续流水线；记录 D-031，并统一 PLAN、STATUS、HANDOFF 和验收标准。 |
+| 2026-08-01 | ENEMY-ARCH 首次 `npx tsc --noEmit` | 失败 | `Enemy.definitionId` 改为必填后，测试敌人夹具尚未迁移；生产代码未报告遗漏。 |
+| 2026-08-01 | ENEMY-ARCH 测试夹具迁移 | 已应用 | 为明确的敌人夹具补充默认定义 ID；两轮修正移除了误加到相邻投射物对象的字段，最终类型检查通过。 |
+| 2026-08-01 | ENEMY-ARCH 针对性测试 | 通过 | `architecture`、`game`、`runtime` 和 `run-outcome` 共 4 个文件 / 127 项测试通过；`npx tsc --noEmit` 通过。 |
+| 2026-08-01 | ENEMY-ARCH 完整 `npm test` | 通过 | 9 个文件 / 217 项测试。 |
+| 2026-08-01 | ENEMY-ARCH `npx tsc --noEmit` | 通过 | 退出码为 0。 |
+| 2026-08-01 | ENEMY-ARCH `npm run build` | 通过 | 转换了 46 个模块。 |
+| 2026-08-01 | ENEMY-ARCH `npm audit` | 通过 | 发现 0 个漏洞。 |
+| 2026-08-01 | ENEMY-ARCH `git diff --check` | 通过 | 未报告空白字符错误；仅有 LF/CRLF 规范化警告。 |
+| 2026-08-01 | ENEMY-ARCH 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-01 | CP-M5-ENEMY-ARCH-01 提交前独立只读审查 | PASS | 全新审计上下文核对定义、注册表、严格工厂、bootstrap/reset、两个生成入口、必填 `definitionId`、测试和范围；未发现阻塞项。 |
