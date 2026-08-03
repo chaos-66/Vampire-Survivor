@@ -27,6 +27,13 @@ import {
   registerEnemy,
   getEnemy,
   listEnemies,
+  createDrop,
+  registerDrop,
+  getDrop,
+  listDrops,
+  registerPickup,
+  getPickup,
+  listPickups,
   spawnEnemyOnEdge,
   ENEMY_MAX_HEALTH,
   ENEMY_RADIUS,
@@ -46,6 +53,14 @@ import {
   DEFAULT_ENEMY_ID,
   defaultEnemy,
 } from './content/enemies/default-enemy'
+import {
+  EXPERIENCE_DROP_ID,
+  EXPERIENCE_PICKUP_ID,
+  experienceDrop,
+  experiencePickup,
+} from './content/drops/experience-drop'
+import type { DropDefinition } from './drops/drop-definition'
+import type { PickupDefinition } from './drops/pickup-definition'
 
 const arena = { width: 960, height: 540 }
 
@@ -213,6 +228,77 @@ describe('enemy registry and factory', () => {
     expect(first.definitionId).toBe(DEFAULT_ENEMY_ID)
     expect(second.definitionId).toBe(DEFAULT_ENEMY_ID)
     expect([first.id, second.id]).toEqual([1, 2])
+  })
+})
+
+describe('drop and pickup registry and factory', () => {
+  it('registers the default experience drop and pickup', () => {
+    expect(getDrop(EXPERIENCE_DROP_ID)).toBe(experienceDrop)
+    expect(getPickup(EXPERIENCE_PICKUP_ID)).toBe(experiencePickup)
+  })
+
+  it('registers the same drop and pickup objects twice safely', () => {
+    registerDrop(experienceDrop)
+    registerDrop(experienceDrop)
+    registerPickup(experiencePickup)
+    registerPickup(experiencePickup)
+    expect(listDrops().filter((drop) => drop.id === EXPERIENCE_DROP_ID)).toHaveLength(1)
+    expect(listPickups().filter((pickup) => pickup.id === EXPERIENCE_PICKUP_ID)).toHaveLength(1)
+  })
+
+  it('rejects different definition objects with matching ids and keeps originals', () => {
+    const dropReplacement: DropDefinition = { ...experienceDrop, radius: 9 }
+    const pickupReplacement: PickupDefinition = {
+      ...experiencePickup,
+      collect: (experience) => experience + 2,
+    }
+    expect(() => registerDrop(dropReplacement)).toThrow(/different definition object/i)
+    expect(() => registerPickup(pickupReplacement)).toThrow(/different definition object/i)
+    expect(getDrop(EXPERIENCE_DROP_ID)).toBe(experienceDrop)
+    expect(getPickup(EXPERIENCE_PICKUP_ID)).toBe(experiencePickup)
+  })
+
+  it('creates a test-only drop without changing the game loop', () => {
+    const pickup: PickupDefinition = {
+      id: 'fixture_pickup',
+      name: '测试拾取',
+      description: '仅用于工厂测试',
+      collect: (experience) => experience,
+    }
+    const drop: DropDefinition = {
+      id: 'fixture_drop',
+      name: '测试掉落',
+      description: '仅用于工厂测试',
+      radius: 9,
+      pickupDefinitionId: pickup.id,
+    }
+    registerPickup(pickup)
+    registerDrop(drop)
+    expect(createDrop(drop.id, 7, 11, 13)).toEqual({
+      id: 7,
+      definitionId: drop.id,
+      x: 11,
+      y: 13,
+      radius: 9,
+    })
+  })
+
+  it('rejects an unregistered drop definition id', () => {
+    expect(() => createDrop('missing_drop', 1, 0, 0)).toThrow(
+      /drop not registered/i,
+    )
+  })
+
+  it('rejects a drop whose pickup definition is not registered', () => {
+    const drop: DropDefinition = {
+      id: 'missing_pickup_drop',
+      name: '缺失拾取',
+      description: '仅用于严格工厂测试',
+      radius: 9,
+      pickupDefinitionId: 'missing_pickup',
+    }
+    registerDrop(drop)
+    expect(() => createDrop(drop.id, 1, 0, 0)).toThrow(/pickup not registered/i)
   })
 })
 
@@ -518,16 +604,22 @@ describe('registry lifecycle', () => {
       1,
     )
     expect(listEnemies().filter((enemy) => enemy.id === DEFAULT_ENEMY_ID)).toHaveLength(1)
+    expect(listDrops().filter((drop) => drop.id === EXPERIENCE_DROP_ID)).toHaveLength(1)
+    expect(listPickups().filter((pickup) => pickup.id === EXPERIENCE_PICKUP_ID)).toHaveLength(1)
   })
 
   it('full reset then bootstrap restores defaults', () => {
     resetAllContentRegistriesForTests()
     expect(listProgressions()).toHaveLength(0)
     expect(listEnemies()).toHaveLength(0)
+    expect(listDrops()).toHaveLength(0)
+    expect(listPickups()).toHaveLength(0)
     ensureContentRegistered()
     expect(getCharacter(DEFAULT_CHARACTER_ID)).toBeDefined()
     expect(getWeapon(DEFAULT_WEAPON_ID)).toBeDefined()
     expect(getEnemy(DEFAULT_ENEMY_ID)).toBeDefined()
+    expect(getDrop(EXPERIENCE_DROP_ID)).toBeDefined()
+    expect(getPickup(EXPERIENCE_PICKUP_ID)).toBeDefined()
     expect(listProgressionCategories().map((c) => c.id)).toEqual(
       expect.arrayContaining(['stat', 'weapon', 'item']),
     )

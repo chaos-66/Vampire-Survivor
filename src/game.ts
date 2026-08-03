@@ -46,7 +46,23 @@ export {
   PROJECTILE_SPEED,
 } from './core/constants'
 
-export type { Enemy, ExperienceGem, Projectile } from './combat/enemy-types'
+export type { Enemy, Projectile } from './combat/enemy-types'
+export type { Drop } from './drops/drop-types'
+export type { DropDefinition } from './drops/drop-definition'
+export type { PickupDefinition } from './drops/pickup-definition'
+export { createDrop } from './drops/drop-factory'
+export {
+  registerDrop,
+  getDrop,
+  listDrops,
+  clearDropRegistry,
+} from './drops/drop-registry'
+export {
+  registerPickup,
+  getPickup,
+  listPickups,
+  clearPickupRegistry,
+} from './drops/pickup-registry'
 export type { EnemyDefinition } from './enemies/enemy-definition'
 export { createEnemy } from './enemies/enemy-factory'
 export {
@@ -126,8 +142,8 @@ export {
   advanceEnemyChasesOnState as advanceEnemyChases,
   applyContactDamageOnState as applyContactDamage,
   advanceProjectilesOnState as advanceProjectiles,
-  pickupGemsOnState as pickupGems,
-  spawnGemAtOnState as spawnGemAt,
+  pickupDropsOnState as pickupDrops,
+  spawnExperienceDropAtOnState as spawnExperienceDropAt,
   advanceAutoAttackOnState as advanceAutoAttack,
   fireAtEnemyOnState as fireAtEnemy,
   selectNearestEnemy,

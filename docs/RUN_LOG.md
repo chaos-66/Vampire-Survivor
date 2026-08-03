@@ -378,3 +378,11 @@
 | 2026-08-01 | ENEMY-ARCH Green 哈希记录验证 | 通过 | `npm test` 为 9 个文件 / 217 项测试；`npm run build` 转换 46 个模块；`git diff --check` 通过。 |
 | 2026-08-01 | ENEMY-ARCH 最终状态措辞修正 | 已应用 | 将当前状态和交接中的浏览器描述从验收前 `UNVERIFIED` 更新为用户验收 PASS；历史记录保持不变。 |
 | 2026-08-04 | DROP-ARCH 对话交接准备 | 通过 | 工作区干净且 `main` 与 `origin/main` 同步于 `0bd70d4`；已将当前掉落链路、不变量、范围边界和恢复步骤写入 PLAN、STATUS 与 HANDOFF。 |
+| 2026-08-04 | CP-M5-DROP-ARCH-01 范围关卡与基线检查 | 通过 | `main` 工作区干净，HEAD 和 `origin/main` 均为 `f0ba893`；确认现有链路为 `advanceProjectiles.kills` -> `spawnGemsAt` -> `pickupGems`，基线 `npm test` 为 9 个文件 / 217 项测试，`npx tsc --noEmit` 通过。范围仅为通用掉落/拾取定义和经验迁移；已记录 D-032 及一致的验收项。 |
+| 2026-08-04 | DROP-ARCH 首次完整验证 | 部分通过 | `npm test` 为 9 个文件 / 223 项测试，`npx tsc --noEmit`、`npm run build`（50 个模块）和 `git diff --check` 通过；首次 `npm audit` 报告 `postcss` 1 个中危漏洞。 |
+| 2026-08-04 | `npm audit fix` | 通过 | 更新 1 个锁定依赖；随后审计为 0 个漏洞。依据 D-033，该最小锁文件安全更新属于强制验证关卡所需变更。 |
+| 2026-08-04 | DROP-ARCH 完整验证重跑 | 通过 | `npm test` 为 9 个文件 / 223 项测试，`npx tsc --noEmit`、`npm run build`（50 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-04 | DROP-ARCH 开发服务器 HTTP 检查 | 通过 | `http://127.0.0.1:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-04 | DROP-ARCH 首次正式独立审计 | FAIL | 掉落实现范围、自动化行为和工具链均通过；阻塞项为 `package-lock.json` 安全更新尚未记录为必要范围变更，以及 `STATUS` / `HANDOFF` 仍错误称尚未开始实现。修复后必须由全新上下文复审；浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-04 | DROP-ARCH 第二次独立复审 | FAIL | 首次审计的锁文件范围和状态措辞问题已修复；阻塞项为 `HANDOFF` 仍将 DROP-ARCH 实际基线错误写为 `0bd70d4`，与范围关卡的 `f0ba893` 冲突。修复后必须由全新上下文复审；浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-04 | DROP-ARCH 第三次全新独立复审 | PASS | 范围仅包含通用掉落/拾取定义、默认经验掉落、注册表、严格工厂、bootstrap/reset、经验路径迁移和测试；确认两次 FAIL 已修复，实际基线为 `f0ba893`。独立复跑 `npm test`（9 个文件 / 223 项）、`npx tsc --noEmit`、`npm run build`（50 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；浏览器验收仍为 `UNVERIFIED`。 |

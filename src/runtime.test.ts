@@ -1,44 +1,48 @@
 import { describe, expect, it } from 'vitest'
 
 import { advanceProjectiles } from './combat/projectile-system'
-import type { Enemy, ExperienceGem, Projectile } from './combat/enemy-types'
+import type { Enemy, Projectile } from './combat/enemy-types'
 import { createGameState } from './core/game-state'
-import { spawnGemsAt } from './progression/experience-system'
+import { ensureContentRegistered } from './content/bootstrap'
+import { spawnExperienceDropsAt } from './progression/experience-system'
+import type { Drop } from './drops/drop-types'
 import { drawWorld } from './ui/draw-world'
 import { circleIntersectsView } from './world/frame-context'
 import { DEFAULT_ENEMY_ID } from './content/enemies/default-enemy'
 
 describe('批量经验掉落', () => {
   it('一次追加大量掉落并保持现有实体和连续 ID', () => {
-    const existing: ExperienceGem[] = Array.from({ length: 5000 }, (_, id) => ({
+    ensureContentRegistered()
+    const existing: Drop[] = Array.from({ length: 5000 }, (_, id) => ({
       id,
+      definitionId: 'experience_drop',
       x: id,
       y: 0,
       radius: 8,
-      value: 1,
     }))
     const points = Array.from({ length: 1000 }, (_, index) => ({
       x: index * 2,
       y: index * 3,
     }))
 
-    const result = spawnGemsAt(existing, 5000, points)
+    const result = spawnExperienceDropsAt(existing, 5000, points)
 
-    expect(result.gems).toHaveLength(6000)
-    expect(result.gems[0]).toBe(existing[0])
-    expect(result.gems.slice(5000).map((gem) => gem.id)).toEqual(
+    expect(result.drops).toHaveLength(6000)
+    expect(result.drops[0]).toBe(existing[0])
+    expect(result.drops.slice(5000).map((drop) => drop.id)).toEqual(
       Array.from({ length: 1000 }, (_, index) => 5000 + index),
     )
-    expect(result.nextGemId).toBe(6000)
+    expect(result.nextDropId).toBe(6000)
   })
 
   it('空批次不复制现有数组', () => {
-    const existing: ExperienceGem[] = [
-      { id: 1, x: 1, y: 2, radius: 8, value: 1 },
+    ensureContentRegistered()
+    const existing: Drop[] = [
+      { id: 1, definitionId: 'experience_drop', x: 1, y: 2, radius: 8 },
     ]
-    const result = spawnGemsAt(existing, 2, [])
-    expect(result.gems).toBe(existing)
-    expect(result.nextGemId).toBe(2)
+    const result = spawnExperienceDropsAt(existing, 2, [])
+    expect(result.drops).toBe(existing)
+    expect(result.nextDropId).toBe(2)
   })
 })
 
@@ -130,12 +134,12 @@ describe('可见绘制裁剪', () => {
     }
     const viewport = { width: 200, height: 100, dpr: 1 }
     const far = 1000
-    game.gems = Array.from({ length: far }, (_, id) => ({
+    game.drops = Array.from({ length: far }, (_, id) => ({
       id,
+      definitionId: 'experience_drop',
       x: 0,
       y: 0,
       radius: 8,
-      value: 1,
     }))
     game.enemies = Array.from({ length: far }, (_, id) => ({
       id,
@@ -157,7 +161,7 @@ describe('可见绘制裁剪', () => {
       damage: 1,
       lifeRemaining: 1,
     }))
-    game.gems.push({ id: far, x: game.player.x, y: game.player.y, radius: 8, value: 1 })
+    game.drops.push({ id: far, definitionId: 'experience_drop', x: game.player.x, y: game.player.y, radius: 8 })
     game.enemies.push({ id: far, definitionId: DEFAULT_ENEMY_ID, x: game.player.x, y: game.player.y, radius: 14, speed: 0, health: 1, maxHealth: 1 })
     game.projectiles.push({ id: far, x: game.player.x, y: game.player.y, vx: 0, vy: 0, radius: 5, damage: 1, lifeRemaining: 1 })
 
@@ -181,7 +185,7 @@ describe('可见绘制裁剪', () => {
 
     expect(arcCalls).toBe(4)
     expect(fillRectCalls).toBe(3)
-    expect(game.gems).toHaveLength(far + 1)
+    expect(game.drops).toHaveLength(far + 1)
     expect(game.enemies).toHaveLength(far + 1)
     expect(game.projectiles).toHaveLength(far + 1)
   })

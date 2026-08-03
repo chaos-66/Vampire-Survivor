@@ -21,11 +21,3 @@ export type Projectile = {
   damage: number
   lifeRemaining: number
 }
-
-export type ExperienceGem = {
-  id: number
-  x: number
-  y: number
-  radius: number
-  value: number
-}

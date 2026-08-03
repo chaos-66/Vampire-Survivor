@@ -2,9 +2,9 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；ENEMY-ARCH Green
+- 当前阶段：M5 基础建设；`CP-M5-DROP-ARCH-01` 范围关卡已批准
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
-- 交接状态：等待 `CP-M5-DROP-ARCH-01` 范围关卡；尚未开始实现
+- 交接状态：DROP-ARCH 实现和自动化验证已完成；首次和第二次独立审计 FAIL 均已修复，第三次全新复审为 PASS；浏览器验收尚未进行
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -42,6 +42,12 @@
 - `outcome: running | won | lost`；同一帧中 lost > won
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
+- DROP-ARCH：掉落/拾取定义、对象身份注册表、严格工厂、默认经验掉落和运行时
+  `definitionId` 已应用；现有经验路径已迁移为 `drops`
+- DROP-ARCH 自动验证：9 个测试文件 / 223 项测试；tsc / build（50 个模块）/ audit /
+  diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
+- DROP-ARCH 独立审计：首次和第二次为 FAIL（文档一致性问题，均已修复）；第三次全新复审
+  为 PASS；真实浏览器验收仍为 `UNVERIFIED`
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -82,6 +88,6 @@
 
 ## 下一步
 
-通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。现有路径为
-`advanceProjectiles.kills` -> `spawnGemsAt` -> `pickupGems`；迁移后必须保持每击杀
-必掉经验、无上限未收集掉落和既有升级行为，不得实现食物、宝箱或其他内容。
+进行 `CP-M5-DROP-ARCH-01` 真实浏览器验收。实现已将 `advanceProjectiles.kills` ->
+`spawnExperienceDropsAt` -> `pickupDrops` 接通；每次实际击杀仍必掉一个经验掉落，ID 连续
+且未收集掉落无上限。不得借此实现食物、宝箱、稀有度、权重、库存、世界物体、效果或 NPC。

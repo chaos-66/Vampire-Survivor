@@ -16,7 +16,8 @@ import { getCharacter } from '../actors/character-registry'
 import { DEFAULT_CHARACTER_ID } from '../content/characters/default-character'
 import { getWeapon } from '../weapons/weapon-registry'
 import type { CombatPlayer } from '../actors/player-types'
-import type { Enemy, ExperienceGem, Projectile } from '../combat/enemy-types'
+import type { Enemy, Projectile } from '../combat/enemy-types'
+import type { Drop } from '../drops/drop-types'
 import type { PendingUpgrade } from '../progression/progression-definition'
 import type { RunOutcome } from './run-outcome'
 
@@ -27,7 +28,7 @@ export type GameState = {
   player: CombatPlayer
   enemies: Enemy[]
   projectiles: Projectile[]
-  gems: ExperienceGem[]
+  drops: Drop[]
   defeatedCount: number
   /** 升级选择期间冻结的局内有效战斗时间。 */
   elapsedActiveSeconds: number
@@ -37,7 +38,7 @@ export type GameState = {
   contactCooldownRemaining: number
   nextEnemyId: number
   nextProjectileId: number
-  nextGemId: number
+  nextDropId: number
   level: number
   experience: number
   experienceToNextLevel: number
@@ -99,7 +100,7 @@ export const createGameState = (
     player,
     enemies: [],
     projectiles: [],
-    gems: [],
+    drops: [],
     defeatedCount: 0,
     elapsedActiveSeconds: 0,
     outcome: 'running',
@@ -107,7 +108,7 @@ export const createGameState = (
     contactCooldownRemaining: 0,
     nextEnemyId: 1,
     nextProjectileId: 1,
-    nextGemId: 1,
+    nextDropId: 1,
     level: INITIAL_LEVEL,
     experience: INITIAL_EXPERIENCE,
     experienceToNextLevel: experienceThresholdForLevel(INITIAL_LEVEL),

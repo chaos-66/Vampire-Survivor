@@ -32,14 +32,14 @@ export const drawWorld = (
   drawWorldBorder(context, camera, game.arena)
   const view = viewRectFromCamera(camera)
 
-  for (const gem of game.gems) {
-    if (!circleIntersectsView(gem, view)) {
+  for (const drop of game.drops) {
+    if (!circleIntersectsView(drop, view)) {
       continue
     }
-    const s = worldToScreen(gem, camera)
+    const s = worldToScreen(drop, camera)
     context.fillStyle = '#7dffb3'
     context.beginPath()
-    context.arc(s.x, s.y, gem.radius, 0, Math.PI * 2)
+    context.arc(s.x, s.y, drop.radius, 0, Math.PI * 2)
     context.fill()
   }
 

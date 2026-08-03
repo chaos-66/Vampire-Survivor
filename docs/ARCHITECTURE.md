@@ -38,3 +38,18 @@
 - 敌人工厂必须解析已注册定义；未知 ID 明确失败，不提供静默兼容回退。
 - 当前两个生成入口只选择默认基础敌人 ID，实例属性统一由工厂创建。
 - 本检查点不加入生成权重、第二种默认敌人或掉落配置。
+
+## CP-M5-DROP-ARCH-01
+
+- `DropDefinition` 保存静态名称、说明、半径和 `pickupDefinitionId`；不保存位置、运行时
+  ID 或收集状态。
+- `PickupDefinition` 保存静态名称、说明和纯 `collect(experience)` 规则；当前唯一实现只
+  增加既有经验值。
+- 掉落与拾取注册表均遵循对象身份规则：同一对象幂等，同 ID 不同对象抛错。
+- 严格掉落工厂必须解析已注册的掉落定义及其拾取定义；任一缺失均明确失败，不提供静默
+  默认经验掉落或拾取回退。
+- `experience_drop` 是当前唯一默认掉落，映射 `experience_pickup`；两者由内容 bootstrap
+  注册，完整测试重置后可恢复。
+- `GameState.drops` 保存运行时实例；`advanceProjectiles.kills` 通过
+  `spawnExperienceDropsAt` 一次追加实例，`pickupDrops` 通过定义解析经验结果。
+- 本检查点不加入其他掉落内容、稀有度、权重、库存、世界物体、效果或 NPC。

@@ -16,9 +16,9 @@ import { applyContactDamage as applyContactDamageCore } from './combat/damage-sy
 import { advanceProjectiles as advanceProjectilesCore } from './combat/projectile-system'
 import { advanceWeapons } from './weapons/weapon-system'
 import {
-  pickupGems as pickupGemsCore,
-  spawnGemAt as spawnGemAtCore,
-  spawnGemsAt as spawnGemsAtCore,
+  pickupDrops as pickupDropsCore,
+  spawnExperienceDropAt as spawnExperienceDropAtCore,
+  spawnExperienceDropsAt as spawnExperienceDropsAtCore,
 } from './progression/experience-system'
 import { tryEnterPendingUpgrade } from './progression/upgrade-system'
 import { movePlayer as movePlayerCore } from './actors/player-system'
@@ -55,14 +55,14 @@ export const applyContactDamageOnState = (
   state.contactCooldownRemaining = result.contactCooldownRemaining
 }
 
-export const spawnGemAtOnState = (
+export const spawnExperienceDropAtOnState = (
   state: GameState,
   x: number,
   y: number,
 ): void => {
-  const result = spawnGemAtCore(state.gems, state.nextGemId, x, y)
-  state.gems = result.gems
-  state.nextGemId = result.nextGemId
+  const result = spawnExperienceDropAtCore(state.drops, state.nextDropId, x, y)
+  state.drops = result.drops
+  state.nextDropId = result.nextDropId
 }
 
 export const advanceProjectilesOnState = (
@@ -78,17 +78,21 @@ export const advanceProjectilesOnState = (
   state.projectiles = step.projectiles
   state.enemies = step.enemies
   state.defeatedCount += step.defeatedDelta
-  const spawned = spawnGemsAtCore(state.gems, state.nextGemId, step.kills)
-  state.gems = spawned.gems
-  state.nextGemId = spawned.nextGemId
+  const spawned = spawnExperienceDropsAtCore(
+    state.drops,
+    state.nextDropId,
+    step.kills,
+  )
+  state.drops = spawned.drops
+  state.nextDropId = spawned.nextDropId
 }
 
-export const pickupGemsOnState = (state: GameState): void => {
+export const pickupDropsOnState = (state: GameState): void => {
   if (state.pendingUpgrade !== null) {
     return
   }
-  const result = pickupGemsCore(state.player, state.gems, state.experience)
-  state.gems = result.gems
+  const result = pickupDropsCore(state.player, state.drops, state.experience)
+  state.drops = result.drops
   state.experience = result.experience
   tryEnterPendingUpgrade(state)
 }

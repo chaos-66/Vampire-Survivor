@@ -1,58 +1,65 @@
 /**
- * 经验结晶生成与拾取（纯逻辑）。
+ * 当前经验掉落生成与拾取（纯逻辑）。
  */
 
 import { circlesOverlap } from '../collision'
-import { GEM_RADIUS, GEM_VALUE } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
-import type { ExperienceGem } from '../combat/enemy-types'
+import { EXPERIENCE_DROP_ID } from '../content/drops/experience-drop'
+import { createDrop } from '../drops/drop-factory'
+import type { Drop } from '../drops/drop-types'
+import { getDrop } from '../drops/drop-registry'
+import { getPickup } from '../drops/pickup-registry'
 
-export type GemSpawnPoint = { x: number; y: number }
+export type DropSpawnPoint = { x: number; y: number }
 
-export const spawnGemsAt = (
-  gems: ExperienceGem[],
-  nextGemId: number,
-  points: readonly GemSpawnPoint[],
-): { gems: ExperienceGem[]; nextGemId: number } => {
+export const spawnExperienceDropsAt = (
+  drops: Drop[],
+  nextDropId: number,
+  points: readonly DropSpawnPoint[],
+): { drops: Drop[]; nextDropId: number } => {
   if (points.length === 0) {
-    return { gems, nextGemId }
+    return { drops, nextDropId }
   }
 
-  const spawned = points.map((point, index) => ({
-    id: nextGemId + index,
-    x: point.x,
-    y: point.y,
-    radius: GEM_RADIUS,
-    value: GEM_VALUE,
-  }))
+  const spawned = points.map((point, index) =>
+    createDrop(EXPERIENCE_DROP_ID, nextDropId + index, point.x, point.y),
+  )
   return {
-    gems: [...gems, ...spawned],
-    nextGemId: nextGemId + spawned.length,
+    drops: [...drops, ...spawned],
+    nextDropId: nextDropId + spawned.length,
   }
 }
 
-export const spawnGemAt = (
-  gems: ExperienceGem[],
-  nextGemId: number,
+export const spawnExperienceDropAt = (
+  drops: Drop[],
+  nextDropId: number,
   x: number,
   y: number,
-): { gems: ExperienceGem[]; nextGemId: number } => {
-  return spawnGemsAt(gems, nextGemId, [{ x, y }])
+): { drops: Drop[]; nextDropId: number } => {
+  return spawnExperienceDropsAt(drops, nextDropId, [{ x, y }])
 }
 
-export const pickupGems = (
+export const pickupDrops = (
   player: CombatPlayer,
-  gems: ExperienceGem[],
+  drops: Drop[],
   experience: number,
-): { gems: ExperienceGem[]; experience: number } => {
-  const remaining: ExperienceGem[] = []
+): { drops: Drop[]; experience: number } => {
+  const remaining: Drop[] = []
   let xp = experience
-  for (const gem of gems) {
-    if (circlesOverlap(player, gem)) {
-      xp += gem.value
+  for (const drop of drops) {
+    if (circlesOverlap(player, drop)) {
+      const definition = getDrop(drop.definitionId)
+      if (!definition) {
+        throw new Error(`Drop not registered: ${drop.definitionId}`)
+      }
+      const pickup = getPickup(definition.pickupDefinitionId)
+      if (!pickup) {
+        throw new Error(`Pickup not registered: ${definition.pickupDefinitionId}`)
+      }
+      xp = pickup.collect(xp)
     } else {
-      remaining.push(gem)
+      remaining.push(drop)
     }
   }
-  return { gems: remaining, experience: xp }
+  return { drops: remaining, experience: xp }
 }

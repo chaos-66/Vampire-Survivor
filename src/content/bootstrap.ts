@@ -8,6 +8,8 @@
 import { registerCharacter, clearCharacterRegistry } from '../actors/character-registry'
 import { registerWeapon, clearWeaponRegistry } from '../weapons/weapon-registry'
 import { registerEnemy, clearEnemyRegistry } from '../enemies/enemy-registry'
+import { registerDrop, clearDropRegistry } from '../drops/drop-registry'
+import { registerPickup, clearPickupRegistry } from '../drops/pickup-registry'
 import {
   registerProgressionCategory,
   clearProgressionCategoryRegistry,
@@ -22,9 +24,10 @@ import { swiftUpgrade } from './upgrades/swift'
 import { hasteUpgrade } from './upgrades/haste'
 import { powerUpgrade } from './upgrades/power'
 import { defaultEnemy } from './enemies/default-enemy'
+import { experienceDrop, experiencePickup } from './drops/experience-drop'
 
 /**
- * 注册默认分类、角色、武器、敌人与三项升级。
+ * 注册默认分类、角色、武器、敌人、经验掉落与三项升级。
  * 可安全重复调用（依赖各 registry 的幂等行为）。
  */
 export const registerDefaultContent = (): void => {
@@ -35,6 +38,8 @@ export const registerDefaultContent = (): void => {
   registerWeapon(defaultProjectileWeapon)
   registerCharacter(defaultCharacter)
   registerEnemy(defaultEnemy)
+  registerPickup(experiencePickup)
+  registerDrop(experienceDrop)
 
   // 顺序固定：1 迅捷 2 急速 3 强击
   registerProgression(swiftUpgrade)
@@ -55,6 +60,8 @@ export const resetAllContentRegistriesForTests = (): void => {
   clearCharacterRegistry()
   clearWeaponRegistry()
   clearEnemyRegistry()
+  clearDropRegistry()
+  clearPickupRegistry()
   clearProgressionRegistry()
   clearProgressionCategoryRegistry()
 }

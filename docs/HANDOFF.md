@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
-- 交接状态：等待 `CP-M5-DROP-ARCH-01` 范围关卡；尚未开始实现
+- 交接状态：`CP-M5-DROP-ARCH-01` 实现和自动化验证已完成；首次和第二次独立审计 FAIL 均已修复，第三次全新复审为 PASS；浏览器验收尚未进行
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -86,11 +86,16 @@
   注册表、严格工厂、`registerDefaultContent` 和 `resetAllContentRegistriesForTests` 生命周期。
 - 本检查点仅建立通用掉落/拾取定义及当前经验适配路径；不加入食物、宝箱、稀有度、
   掉落权重、库存、世界物体或其他真实内容。
-- 基线：`main` / `origin/main` 为 `0bd70d4`，工作区干净；217 项测试、tsc、46 模块
+- 当前实现将 `GameState.gems` / `nextGemId` 替换为 `drops` / `nextDropId`。`DropDefinition` 和
+  `PickupDefinition` 均使用对象身份注册表；严格工厂要求掉落及对应拾取定义均已注册。
+- 自动化验证已通过：`npm test` 为 9 个文件 / 223 项测试，`npx tsc --noEmit`、`npm run build`
+  （50 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。首次独立审计发现锁文件
+  安全更新未记录且状态措辞过时；第二次发现旧基线哈希；二者均已修复，第三次全新复审为 PASS。
+- 基线：`main` / `origin/main` 为 `f0ba893`，工作区干净；217 项测试、tsc、46 模块
   build 和 `npm audit` 0 均为最近验证结果。历史未收集宝石的长时内存/扫描成本仍是接受的风险。
 
 ## 下一任务
 
-通过范围关卡定义并批准 `CP-M5-DROP-ARCH-01`。开始前必须完整阅读规定文档、
-检查 Git，并在 `PLAN`、`STATUS`、`HANDOFF`、`ACCEPTANCE_CRITERIA` 和
-`DECISIONS` 中写明范围、非目标和验收项。
+进行 `CP-M5-DROP-ARCH-01` 浏览器验收。当前范围仍限于定义、对象身份注册表、严格工厂、
+默认经验掉落、bootstrap/reset、现有击杀到经验拾取的迁移和测试；不得实现食物、宝箱、
+稀有度、掉落权重、库存、世界物体、效果、NPC 或其他真实内容。

@@ -22,7 +22,6 @@ import {
   edgeSpawnPosition,
   experienceThresholdForLevel,
   fireAtEnemy,
-  GEM_VALUE,
   getUpgradeCardRects,
   MIN_ATTACK_COOLDOWN,
   PLAYER_MAX_HEALTH,
@@ -30,10 +29,10 @@ import {
   PROJECTILE_DAMAGE,
   PROJECTILE_LIFETIME,
   PROJECTILE_SPEED,
-  pickupGems,
+  pickupDrops,
   selectNearestEnemy,
   spawnEnemyOnEdge,
-  spawnGemAt,
+  spawnExperienceDropAt,
   tryEnterPendingUpgrade,
   updateGame,
   upgradeIdAtPoint,
@@ -486,7 +485,7 @@ describe('projectiles', () => {
   })
 })
 
-describe('collision death and gems', () => {
+describe('collision death and drops', () => {
   it('circlesOverlap false when separate', () => {
     expect(
       circlesOverlap({ x: 0, y: 0, radius: 5 }, { x: 20, y: 0, radius: 5 }),
@@ -499,7 +498,7 @@ describe('collision death and gems', () => {
     ).toBe(true)
   })
 
-  it('non-lethal hit does not drop a gem', () => {
+  it('non-lethal hit does not drop an experience drop', () => {
     const state = stateWith()
     state.enemies = [
       weakEnemy(state, {
@@ -523,10 +522,10 @@ describe('collision death and gems', () => {
     ]
     advanceProjectiles(state, 0)
     expect(state.enemies).toHaveLength(1)
-    expect(state.gems).toHaveLength(0)
+    expect(state.drops).toHaveLength(0)
   })
 
-  it('removes enemy at 0 hp, increments defeatedCount once, drops one gem', () => {
+  it('removes enemy at 0 hp, increments defeatedCount once, drops one experience drop', () => {
     const state = stateWith()
     state.enemies = [
       {
@@ -555,10 +554,10 @@ describe('collision death and gems', () => {
     advanceProjectiles(state, 0)
     expect(state.enemies).toHaveLength(0)
     expect(state.defeatedCount).toBe(1)
-    expect(state.gems).toHaveLength(1)
-    expect(state.gems[0].x).toBe(50)
-    expect(state.gems[0].y).toBe(50)
-    expect(state.gems[0].value).toBe(GEM_VALUE)
+    expect(state.drops).toHaveLength(1)
+    expect(state.drops[0].x).toBe(50)
+    expect(state.drops[0].y).toBe(50)
+    expect(state.drops[0].definitionId).toBe('experience_drop')
   })
 
   it('does not double-drop from one kill', () => {
@@ -599,24 +598,24 @@ describe('collision death and gems', () => {
     ]
     advanceProjectiles(state, 0)
     expect(state.defeatedCount).toBe(1)
-    expect(state.gems).toHaveLength(1)
+    expect(state.drops).toHaveLength(1)
   })
 
-  it('gem ids increment stably', () => {
+  it('drop ids increment stably', () => {
     const state = stateWith()
-    spawnGemAt(state, 1, 1)
-    spawnGemAt(state, 2, 2)
-    expect(state.gems.map((g) => g.id)).toEqual([1, 2])
+    spawnExperienceDropAt(state, 1, 1)
+    spawnExperienceDropAt(state, 2, 2)
+    expect(state.drops.map((drop) => drop.id)).toEqual([1, 2])
   })
 
-  it('creates a gem for every requested drop without a cap', () => {
+  it('creates an experience drop for every requested drop without a cap', () => {
     const state = stateWith()
     const dropCount = 250
     for (let i = 0; i < dropCount; i += 1) {
-      spawnGemAt(state, i, 0)
+      spawnExperienceDropAt(state, i, 0)
     }
-    expect(state.gems).toHaveLength(dropCount)
-    expect(state.nextGemId).toBe(dropCount + 1)
+    expect(state.drops).toHaveLength(dropCount)
+    expect(state.nextDropId).toBe(dropCount + 1)
   })
 
   it('kill keeps outcome running until updateGame terminal resolve', () => {
@@ -753,69 +752,69 @@ describe('player contact damage', () => {
 describe('experience pickup', () => {
   it('does not pick up without contact', () => {
     const state = stateWith()
-    state.gems = [
-      { id: 1, x: 0, y: 0, radius: 8, value: 1 },
+    state.drops = [
+      { id: 1, definitionId: 'experience_drop', x: 0, y: 0, radius: 8 },
     ]
-    pickupGems(state)
+    pickupDrops(state)
     expect(state.experience).toBe(0)
-    expect(state.gems).toHaveLength(1)
+    expect(state.drops).toHaveLength(1)
   })
 
-  it('picks up on touch, removes gem, adds XP once', () => {
+  it('picks up on touch, removes drop, adds XP once', () => {
     const state = stateWith()
-    state.gems = [
+    state.drops = [
       {
         id: 1,
+        definitionId: 'experience_drop',
         x: state.player.x,
         y: state.player.y,
         radius: 8,
-        value: 1,
       },
     ]
-    pickupGems(state)
+    pickupDrops(state)
     expect(state.experience).toBe(1)
-    expect(state.gems).toHaveLength(0)
+    expect(state.drops).toHaveLength(0)
   })
 
-  it('picks multiple overlapping gems in one step', () => {
+  it('picks multiple overlapping drops in one step', () => {
     const state = stateWith()
-    state.gems = [
+    state.drops = [
       {
         id: 1,
+        definitionId: 'experience_drop',
         x: state.player.x,
         y: state.player.y,
         radius: 8,
-        value: 1,
       },
       {
         id: 2,
+        definitionId: 'experience_drop',
         x: state.player.x + 2,
         y: state.player.y,
         radius: 8,
-        value: 1,
       },
     ]
-    pickupGems(state)
+    pickupDrops(state)
     expect(state.experience).toBe(2)
-    expect(state.gems).toHaveLength(0)
+    expect(state.drops).toHaveLength(0)
   })
 
-  it('keeps distant gems', () => {
+  it('keeps distant drops', () => {
     const state = stateWith()
-    state.gems = [
+    state.drops = [
       {
         id: 1,
+        definitionId: 'experience_drop',
         x: state.player.x,
         y: state.player.y,
         radius: 8,
-        value: 1,
       },
-      { id: 2, x: 10, y: 10, radius: 8, value: 1 },
+      { id: 2, definitionId: 'experience_drop', x: 10, y: 10, radius: 8 },
     ]
-    pickupGems(state)
+    pickupDrops(state)
     expect(state.experience).toBe(1)
-    expect(state.gems).toHaveLength(1)
-    expect(state.gems[0].id).toBe(2)
+    expect(state.drops).toHaveLength(1)
+    expect(state.drops[0].id).toBe(2)
   })
 })
 
@@ -892,13 +891,13 @@ describe('pending upgrade freeze', () => {
         lifeRemaining: 1,
       },
     ]
-    state.gems = [
+    state.drops = [
       {
         id: 1,
+        definitionId: 'experience_drop',
         x: state.player.x,
         y: state.player.y,
         radius: 8,
-        value: 1,
       },
     ]
     const px = state.player.x
@@ -1116,7 +1115,7 @@ describe('game loop closed circuits', () => {
       }
     }
     expect(state.defeatedCount).toBeGreaterThanOrEqual(1)
-    expect(state.gems.length + state.experience).toBeGreaterThanOrEqual(1)
+    expect(state.drops.length + state.experience).toBeGreaterThanOrEqual(1)
   })
 
   it('M3 loop: kill→gem→pickup→pending→choose→buff→resume', () => {
@@ -1142,9 +1141,9 @@ describe('game loop closed circuits', () => {
       },
     ]
     advanceProjectiles(state, 0)
-    expect(state.gems).toHaveLength(1)
+    expect(state.drops).toHaveLength(1)
     state.experience = 2
-    pickupGems(state)
+    pickupDrops(state)
     expect(state.pendingUpgrade).not.toBeNull()
     expect(state.level).toBe(1)
     const speedBefore = state.player.moveSpeed
