@@ -2,10 +2,10 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-DROP-ARCH-01` **Green**
+- 当前阶段：M5 基础建设；`CP-M5-WORLD-OBJECTS-01` 范围关卡已批准
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
+- 交接状态：WORLD-OBJECTS 实现和自动化验证已完成；等待独立审计和浏览器验收
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
-- 交接状态：DROP-ARCH 自动验证、独立复审、用户浏览器验收和 Green 关闭验证均为 PASS
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
 - DROP-ARCH Green 关闭提交：`37e0a9a`（`M5: close drop architecture checkpoint`），已同步 GitHub
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
@@ -30,11 +30,11 @@
 - 已审计的 MVP 基线：`6236896`（`M4: close run outcome checkpoint`）
 - 最终 MVP 纯文档收尾：`0d0289e`（`M4: close final MVP audit`）
 - OUTCOME 修复：`a596253`（`M4: fix run outcome audit findings`）
-- 最后更新：2026-08-04
+- 最后更新：2026-08-05
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME 与 ENEMY-ARCH Green；后续架构和内容未开始**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH 与 DROP-ARCH Green；WORLD-OBJECTS 已进入范围关卡**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -51,6 +51,9 @@
   diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
 - DROP-ARCH 独立审计：首次和第二次为 FAIL（文档一致性问题，均已修复）；第三次全新复审
   为 PASS；用户浏览器验收为 PASS
+- WORLD-OBJECTS：确定性静态矩形物体、玩家障碍碰撞、矩形可见查询和可见绘制已应用
+- WORLD-OBJECTS 自动验证：10 个测试文件 / 236 项测试；tsc / build（52 个模块）/ audit /
+  diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -91,5 +94,5 @@
 
 ## 下一步
 
-通过范围关卡定义 `CP-M5-WORLD-OBJECTS-01`。开始前必须检查范围、基线和文档一致性；
-不得提前实现效果、真实内容、NPC 或其他后续检查点。
+完成 `CP-M5-WORLD-OBJECTS-01` 独立审计、浏览器验收、提交和同步。不得实现敌人/投射物/
+掉落障碍碰撞、随机地图、可破坏物、效果、真实内容、NPC 或其他后续检查点。

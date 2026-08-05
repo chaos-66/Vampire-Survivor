@@ -53,3 +53,16 @@
 - `GameState.drops` 保存运行时实例；`advanceProjectiles.kills` 通过
   `spawnExperienceDropsAt` 一次追加实例，`pickupDrops` 通过定义解析经验结果。
 - 本检查点不加入其他掉落内容、稀有度、权重、库存、世界物体、效果或 NPC。
+
+## CP-M5-WORLD-OBJECTS-01
+
+- `WorldObject` 是运行时静态矩形物体，保存连续 ID、位置、宽高和 `blocksMovement`；不使用
+  注册表、随机地图或内容生成权重。
+- `createStaticWorldObjects` 按世界中心创建固定布局；小世界空间不足时安全返回可用子集，默认布局
+  不与初始玩家重叠且位于世界内。
+- 玩家移动先按既有速度与世界边界计算目标，再通过 `movePlayerAroundObstacles` 解析圆形玩家与
+  矩形障碍；两轴分步移动阻止大步长穿透，并允许沿障碍边缘滑动。
+- 当前只有玩家受 `blocksMovement` 物体阻挡；敌人、投射物、掉落和生成不与世界物体碰撞。
+- `worldObjectIntersectsView` / `queryVisibleWorldObjects` 是无 DOM/Canvas 依赖的矩形可见查询；
+  绘制只跳过不可见物体，不删除、重排或修改状态。
+- 本检查点不加入可破坏物、交互、效果、食物、宝箱、NPC、空间索引或程序化地图。

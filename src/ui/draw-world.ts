@@ -12,6 +12,7 @@ import {
   circleIntersectsView,
   viewRectFromCamera,
 } from '../world/frame-context'
+import { queryVisibleWorldObjects } from '../world/world-object'
 
 /** 世界网格间距（逻辑单位）；仅绘制可见线。 */
 export const WORLD_GRID_SPACING = 256
@@ -31,6 +32,12 @@ export const drawWorld = (
   drawVisibleGrid(context, camera, viewport, game.arena)
   drawWorldBorder(context, camera, game.arena)
   const view = viewRectFromCamera(camera)
+
+  for (const object of queryVisibleWorldObjects(game.worldObjects, view)) {
+    const s = worldToScreen(object, camera)
+    context.fillStyle = object.blocksMovement ? '#59616f' : '#3f765f'
+    context.fillRect(s.x, s.y, object.width, object.height)
+  }
 
   for (const drop of game.drops) {
     if (!circleIntersectsView(drop, view)) {

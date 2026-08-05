@@ -59,6 +59,14 @@ describe('player spawn and world bounds', () => {
     expect(state.player.y).toBeCloseTo(world.height / 2)
   })
 
+  it('new runs rebuild the same static world object layout', () => {
+    const world = computeWorldBounds(960, 540)
+    const first = createGameState(world)
+    const restarted = createGameState(world)
+    expect(first.worldObjects).toEqual(restarted.worldObjects)
+    expect(first.worldObjects).not.toBe(restarted.worldObjects)
+  })
+
   it('cannot cross world edges', () => {
     const world = { width: 1000, height: 800 }
     let player = { x: 20, y: 20, radius: 16 }

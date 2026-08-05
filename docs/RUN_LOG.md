@@ -392,3 +392,8 @@
 | 2026-08-05 | CP-M5-DROP-ARCH-01 Green 关闭验证 | 通过 | `npm test` 为 9 个文件 / 223 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 50 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-05 | `git commit -m "M5: close drop architecture checkpoint"` | 通过 | 创建 DROP-ARCH Green 关闭提交 `37e0a9a`，包含 5 个预期流程文档。 |
 | 2026-08-05 | DROP-ARCH Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 Green 关闭提交 `37e0a9a` 推送至 `origin/main`。 |
+| 2026-08-05 | CP-M5-WORLD-OBJECTS-01 范围关卡与基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `2729b78`；依赖 RUNTIME 已 Green。基线 `npm test` 为 9 个文件 / 223 项测试，`npx tsc --noEmit` 通过。范围仅为确定性静态矩形物体、玩家障碍碰撞、纯函数可见查询和绘制；已记录 D-034。 |
+| 2026-08-05 | WORLD-OBJECTS 首次针对性测试 | 失败后修复 | 首次实现后 `npm test` 中旧世界移动回归失败：正东方障碍阻断直线移动超过一个视口。已调整默认布局避开初始水平通道并添加专门障碍碰撞测试。 |
+| 2026-08-05 | WORLD-OBJECTS 针对性验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit` 和 `git diff --check` 通过。 |
+| 2026-08-05 | WORLD-OBJECTS 完整验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit`、`npm run build`（52 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-05 | WORLD-OBJECTS 开发服务器 HTTP 检查 | 通过 | `http://127.0.0.1:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |

@@ -78,7 +78,13 @@ export const updateGame = (
   const difficultySlices = splitDifficultyTime(state.elapsedActiveSeconds, dt)
   state.elapsedActiveSeconds += dt
 
-  state.player = movePlayer(state.player, direction, dt, state.arena)
+  state.player = movePlayer(
+    state.player,
+    direction,
+    dt,
+    state.arena,
+    state.worldObjects,
+  )
 
   const view = frame ? viewRectFromCamera(frame.camera) : undefined
   for (const slice of difficultySlices) {

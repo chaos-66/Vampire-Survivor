@@ -9,12 +9,15 @@ import {
 } from '../movement'
 import type { Vec2 } from '../vec'
 import type { CombatPlayer } from './player-types'
+import type { WorldObject } from '../world/world-object'
+import { movePlayerAroundObstacles } from '../world/obstacle-collision'
 
 export const movePlayer = (
   player: CombatPlayer,
   direction: Vec2,
   dt: number,
   arena: Arena,
+  worldObjects: readonly WorldObject[] = [],
 ): CombatPlayer => {
   const stepped = stepPlayer(
     player,
@@ -23,11 +26,12 @@ export const movePlayer = (
     dt,
     arena,
   )
+  const resolved = movePlayerAroundObstacles(player, stepped, arena, worldObjects)
   return {
     ...player,
-    x: stepped.x,
-    y: stepped.y,
-    radius: stepped.radius,
+    x: resolved.x,
+    y: resolved.y,
+    radius: resolved.radius,
   }
 }
 

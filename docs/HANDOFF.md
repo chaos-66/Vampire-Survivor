@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
-- 交接状态：DROP-ARCH 自动验证、独立复审、用户浏览器验收和 Green 关闭验证均为 PASS
+- 交接状态：`CP-M5-WORLD-OBJECTS-01` 实现和自动化验证已完成；等待独立审计和浏览器验收
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
 - DROP-ARCH Green 关闭提交：`37e0a9a`（`M5: close drop architecture checkpoint`），已同步 GitHub
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
@@ -99,7 +99,18 @@
 - 基线：`main` / `origin/main` 为 `f0ba893`，工作区干净；217 项测试、tsc、46 模块
   build 和 `npm audit` 0 均为最近验证结果。历史未收集宝石的长时内存/扫描成本仍是接受的风险。
 
+## WORLD-OBJECTS 恢复要点
+
+- 基线为 `2729b78`；`main` 与 `origin/main` 同步，工作区干净；9 个文件 / 223 项测试和
+  `npx tsc --noEmit` 通过。
+- 范围仅为确定性矩形世界物体、玩家障碍碰撞、矩形可见查询、状态创建/重开和可见绘制。
+- 当前实现新增 `WorldObject`、固定布局、玩家圆形对矩形障碍碰撞、矩形可见查询和 Canvas 绘制。
+- 自动化验证已通过：`npm test` 为 10 个文件 / 236 项测试，`npx tsc --noEmit`、`npm run build`
+  （52 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；开发服务器返回 HTTP 200。
+- 玩家碰撞必须阻止穿透并支持沿边滑动；物体布局必须位于世界内且避开初始玩家。
+- 不实现世界物体注册表、随机/程序化地图、空间索引、敌人/投射物/掉落障碍碰撞、可破坏物、
+  交互、效果、食物、宝箱、NPC 或其他真实内容。
+
 ## 下一任务
 
-通过范围关卡定义 `CP-M5-WORLD-OBJECTS-01`。开始前必须阅读规定文档、检查 Git 基线并
-统一范围、非目标、自动验收和浏览器验收；不得提前实现效果、真实内容、NPC 或后续检查点。
+完成 `CP-M5-WORLD-OBJECTS-01` 独立审计、浏览器验收、提交和同步。

@@ -189,4 +189,43 @@ describe('可见绘制裁剪', () => {
     expect(game.enemies).toHaveLength(far + 1)
     expect(game.projectiles).toHaveLength(far + 1)
   })
+
+  it('只绘制可见世界物体且不修改状态', () => {
+    const game = createGameState({ width: 12000, height: 7000 })
+    const camera = {
+      x: game.player.x - 100,
+      y: game.player.y - 50,
+      width: 200,
+      height: 100,
+    }
+    const viewport = { width: 200, height: 100, dpr: 1 }
+    game.worldObjects = [
+      { id: 1, x: game.player.x, y: game.player.y, width: 20, height: 20, blocksMovement: true },
+      { id: 2, x: 0, y: 0, width: 20, height: 20, blocksMovement: true },
+    ]
+    const before = game.worldObjects.map((object) => ({ ...object }))
+    let objectFillCalls = 0
+    const context = {
+      fillStyle: '',
+      strokeStyle: '',
+      lineWidth: 1,
+      beginPath: () => undefined,
+      arc: () => undefined,
+      fill: () => undefined,
+      fillRect: (_x: number, _y: number, width: number, height: number) => {
+        if (width === 20 && height === 20) {
+          objectFillCalls += 1
+        }
+      },
+      moveTo: () => undefined,
+      lineTo: () => undefined,
+      stroke: () => undefined,
+      strokeRect: () => undefined,
+    } as unknown as CanvasRenderingContext2D
+
+    drawWorld(context, game, camera, viewport, 0)
+
+    expect(objectFillCalls).toBe(1)
+    expect(game.worldObjects).toEqual(before)
+  })
 })

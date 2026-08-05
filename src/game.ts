@@ -79,6 +79,14 @@ export {
 export { projectileOutOfBounds } from './combat/projectile-system'
 
 export type { CombatPlayer } from './actors/player-types'
+export type { WorldObject } from './world/world-object'
+export {
+  createStaticWorldObjects,
+  circleIntersectsWorldObject,
+  worldObjectIntersectsView,
+  queryVisibleWorldObjects,
+} from './world/world-object'
+export { movePlayerAroundObstacles } from './world/obstacle-collision'
 
 export {
   applyUpgradeChoice,
