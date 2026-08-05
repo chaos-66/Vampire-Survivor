@@ -402,3 +402,5 @@
 | 2026-08-05 | WORLD-OBJECTS 正式独立审计 | PASS | 审计员确认 `2729b78..e3883a8` 范围仅包含静态矩形世界物体、玩家障碍碰撞、矩形可见查询、状态创建/重开接线、可见绘制和测试；未发现阻塞项。独立复跑 `npm test`（10 个文件 / 236 项）、`npx tsc --noEmit`、`npm run build`（52 个模块）、`npm audit`（0 个漏洞）、`git diff --check` 和提交范围空白检查均通过；浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-05 | 用户 CP-M5-WORLD-OBJECTS-01 浏览器验收 | PASS | 用户回复“pass”，确认所提供的完整检查清单通过：障碍进入/离开视口显示正常；玩家从四边和角落不能穿过障碍且沿边移动不卡死；移动、战斗、经验、升级、60 秒胜负和重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-05 | CP-M5-WORLD-OBJECTS-01 Green 关闭验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 52 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-05 | `git commit -m "M5: close world objects checkpoint"` | 通过 | 创建 WORLD-OBJECTS Green 关闭提交 `e3fd3ec`，包含 5 个预期流程文档。 |
+| 2026-08-05 | WORLD-OBJECTS Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 Green 关闭提交 `e3fd3ec` 推送至 `origin/main`。 |
