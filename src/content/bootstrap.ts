@@ -10,6 +10,7 @@ import { registerWeapon, clearWeaponRegistry } from '../weapons/weapon-registry'
 import { registerEnemy, clearEnemyRegistry } from '../enemies/enemy-registry'
 import { registerDrop, clearDropRegistry } from '../drops/drop-registry'
 import { registerPickup, clearPickupRegistry } from '../drops/pickup-registry'
+import { clearEffectRegistry } from '../effects/effect-registry'
 import {
   registerProgressionCategory,
   clearProgressionCategoryRegistry,
@@ -62,6 +63,7 @@ export const resetAllContentRegistriesForTests = (): void => {
   clearEnemyRegistry()
   clearDropRegistry()
   clearPickupRegistry()
+  clearEffectRegistry()
   clearProgressionRegistry()
   clearProgressionCategoryRegistry()
 }

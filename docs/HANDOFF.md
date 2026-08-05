@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
-- 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
+- 交接状态：`CP-M5-EFFECTS-01` 实现和自动化验证已完成；等待独立审计和浏览器验收
 - WORLD-OBJECTS 实现提交：`e3883a8`（`M5: introduce static world objects`），已同步 GitHub
 - WORLD-OBJECTS Green 关闭提交：`e3fd3ec`（`M5: close world objects checkpoint`），已同步 GitHub
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
@@ -119,5 +119,6 @@
 
 ## 下一任务
 
-通过范围关卡定义 `CP-M5-EFFECTS-01`。开始前必须阅读规定文档、检查 Git 基线并统一范围、
-非目标、自动验收和浏览器验收；不得提前实现真实内容、食物、宝箱、NPC 或后续检查点。
+完成 `CP-M5-EFFECTS-01` 独立审计、浏览器验收、提交和同步。当前实现包含即时/限时效果、
+对象身份注册表、严格应用、`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；
+默认内容不注册效果，不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。

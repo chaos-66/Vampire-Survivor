@@ -87,6 +87,25 @@ export {
   queryVisibleWorldObjects,
 } from './world/world-object'
 export { movePlayerAroundObstacles } from './world/obstacle-collision'
+export type {
+  ActiveEffect,
+  EffectDefinition,
+  EffectModifiers,
+  InstantEffectDefinition,
+  TimedEffectDefinition,
+} from './effects/effect-definition'
+export {
+  registerEffect,
+  getEffect,
+  listEffects,
+  clearEffectRegistry,
+} from './effects/effect-registry'
+export {
+  applyEffect,
+  advanceActiveEffects,
+  getActiveEffectModifiers,
+  deriveEffectivePlayer,
+} from './effects/effect-system'
 
 export {
   applyUpgradeChoice,

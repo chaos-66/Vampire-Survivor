@@ -20,6 +20,7 @@ import type { Enemy, Projectile } from '../combat/enemy-types'
 import type { Drop } from '../drops/drop-types'
 import type { PendingUpgrade } from '../progression/progression-definition'
 import type { RunOutcome } from './run-outcome'
+import type { ActiveEffect } from '../effects/effect-definition'
 import {
   createStaticWorldObjects,
   type WorldObject,
@@ -34,6 +35,7 @@ export type GameState = {
   projectiles: Projectile[]
   drops: Drop[]
   worldObjects: WorldObject[]
+  activeEffects: ActiveEffect[]
   defeatedCount: number
   /** 升级选择期间冻结的局内有效战斗时间。 */
   elapsedActiveSeconds: number
@@ -109,6 +111,7 @@ export const createGameState = (
     projectiles: [],
     drops: [],
     worldObjects,
+    activeEffects: [],
     defeatedCount: 0,
     elapsedActiveSeconds: 0,
     outcome: 'running',

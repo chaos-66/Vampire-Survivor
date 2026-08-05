@@ -404,3 +404,7 @@
 | 2026-08-05 | CP-M5-WORLD-OBJECTS-01 Green 关闭验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 52 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-05 | `git commit -m "M5: close world objects checkpoint"` | 通过 | 创建 WORLD-OBJECTS Green 关闭提交 `e3fd3ec`，包含 5 个预期流程文档。 |
 | 2026-08-05 | WORLD-OBJECTS Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 Green 关闭提交 `e3fd3ec` 推送至 `origin/main`。 |
+| 2026-08-05 | CP-M5-EFFECTS-01 范围关卡与基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `242491c`；依赖 DROP-ARCH 已 Green。范围仅为即时效果、限时增益/减益、`refresh` / 有上限 `stack` 规则和移动/武器接线；已记录 D-035。 |
+| 2026-08-05 | EFFECTS 针对性验证 | 通过 | 效果测试、游戏回归和终局回归共 3 个文件 / 99 项测试通过；随后完整 `npm test` 为 11 个文件 / 248 项测试，`npx tsc --noEmit` 和 `git diff --check` 通过。 |
+| 2026-08-05 | EFFECTS 完整验证 | 通过 | `npm test` 为 11 个文件 / 248 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-05 | EFFECTS 开发服务器 HTTP 检查 | 通过 | `http://127.0.0.1:5173/` 返回 HTTP 200；真实浏览器回归仍为 `UNVERIFIED`。 |

@@ -18,11 +18,12 @@ export const movePlayer = (
   dt: number,
   arena: Arena,
   worldObjects: readonly WorldObject[] = [],
+  effectiveMoveSpeed: number = player.moveSpeed,
 ): CombatPlayer => {
   const stepped = stepPlayer(
     player,
     direction,
-    player.moveSpeed,
+    effectiveMoveSpeed,
     dt,
     arena,
   )

@@ -31,6 +31,10 @@ import {
   isTerminalOutcome,
   resolveRunOutcome,
 } from './run-outcome'
+import {
+  advanceActiveEffects,
+  deriveEffectivePlayer,
+} from '../effects/effect-system'
 
 const applyTerminalIfNeeded = (state: GameState): boolean => {
   const next = resolveRunOutcome(
@@ -78,12 +82,15 @@ export const updateGame = (
   const difficultySlices = splitDifficultyTime(state.elapsedActiveSeconds, dt)
   state.elapsedActiveSeconds += dt
 
+  const effectivePlayer = deriveEffectivePlayer(state.player, state.activeEffects)
+
   state.player = movePlayer(
     state.player,
     direction,
     dt,
     state.arena,
     state.worldObjects,
+    effectivePlayer.moveSpeed,
   )
 
   const view = frame ? viewRectFromCamera(frame.camera) : undefined
@@ -102,7 +109,7 @@ export const updateGame = (
   state.contactCooldownRemaining = contact.contactCooldownRemaining
 
   const fired = advanceWeapons(
-    state.player,
+    deriveEffectivePlayer(state.player, state.activeEffects),
     state.enemies,
     state.nextProjectileId,
     dt,
@@ -135,6 +142,7 @@ export const updateGame = (
   tryEnterPendingUpgrade(state)
 
   state.player = clampPlayerHealthAndArena(state.player, state.arena)
+  state.activeEffects = advanceActiveEffects(state.activeEffects, dt)
   applyTerminalIfNeeded(state)
   return state
 }
