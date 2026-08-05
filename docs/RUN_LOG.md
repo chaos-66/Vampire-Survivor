@@ -408,3 +408,8 @@
 | 2026-08-05 | EFFECTS 针对性验证 | 通过 | 效果测试、游戏回归和终局回归共 3 个文件 / 99 项测试通过；随后完整 `npm test` 为 11 个文件 / 248 项测试，`npx tsc --noEmit` 和 `git diff --check` 通过。 |
 | 2026-08-05 | EFFECTS 完整验证 | 通过 | `npm test` 为 11 个文件 / 248 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-05 | EFFECTS 开发服务器 HTTP 检查 | 通过 | `http://127.0.0.1:5173/` 返回 HTTP 200；真实浏览器回归仍为 `UNVERIFIED`。 |
+| 2026-08-05 | `git commit -m "M5: introduce runtime effect architecture"` | 通过 | 创建 EFFECTS 实现提交 `9ddf4f6`，包含 17 个预期源码、测试和流程文档文件。 |
+| 2026-08-05 | EFFECTS 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将实现提交 `9ddf4f6` 推送至 `origin/main`。 |
+| 2026-08-05 | EFFECTS 首次正式独立审计 | FAIL | 审计确认范围和工具链通过，但发现 `maxStacks` 未严格校验，可产生无限层或 `NaN` 属性；剩余时间短于帧长的效果仍错误影响整帧。状态文档也未写回实际实现提交。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-05 | EFFECTS 审计修复 | 已应用 | 注册时严格校验持续时间、正整数叠层上限、`refresh` 单层和有限非负倍率；游戏循环按最近效果到期边界切分模拟时间片并重新派生有效属性。 |
+| 2026-08-05 | EFFECTS 审计修复验证 | 通过 | 针对性 4 个文件 / 140 项测试通过；完整 `npm test` 为 11 个文件 / 256 项测试，`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |

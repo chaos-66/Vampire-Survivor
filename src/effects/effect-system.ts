@@ -15,10 +15,6 @@ export const applyEffect = (state: GameState, definitionId: string): void => {
     definition.apply(state.player)
     return
   }
-  if (!Number.isFinite(definition.durationSeconds) || definition.durationSeconds <= 0) {
-    throw new Error(`Effect duration must be positive: ${definition.id}`)
-  }
-
   const existing = state.activeEffects.find(
     (effect) => effect.definitionId === definition.id,
   )
@@ -32,10 +28,7 @@ export const applyEffect = (state: GameState, definitionId: string): void => {
   }
   existing.remainingSeconds = definition.durationSeconds
   if (definition.stacking === 'stack') {
-    existing.stacks = Math.min(
-      Math.max(1, Math.floor(definition.maxStacks)),
-      existing.stacks + 1,
-    )
+    existing.stacks = Math.min(definition.maxStacks, existing.stacks + 1)
   }
 }
 
@@ -50,6 +43,22 @@ export const advanceActiveEffects = (
       remainingSeconds: Math.max(0, effect.remainingSeconds - dtSeconds),
     }))
     .filter((effect) => effect.remainingSeconds > 0)
+}
+
+export const getNextEffectBoundary = (
+  effects: readonly ActiveEffect[],
+  maxSeconds: number,
+): number => {
+  let boundary = maxSeconds
+  for (const effect of effects) {
+    if (
+      Number.isFinite(effect.remainingSeconds) &&
+      effect.remainingSeconds > 0
+    ) {
+      boundary = Math.min(boundary, effect.remainingSeconds)
+    }
+  }
+  return boundary
 }
 
 export const getActiveEffectModifiers = (

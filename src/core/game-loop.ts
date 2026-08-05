@@ -34,51 +34,15 @@ import {
 import {
   advanceActiveEffects,
   deriveEffectivePlayer,
+  getNextEffectBoundary,
 } from '../effects/effect-system'
 
-const applyTerminalIfNeeded = (state: GameState): boolean => {
-  const next = resolveRunOutcome(
-    state.player.health,
-    state.elapsedActiveSeconds,
-  )
-  if (!isTerminalOutcome(next)) {
-    return false
-  }
-  state.outcome = next
-  state.pendingUpgrade = null
-  return true
-}
-
-export const updateGame = (
+const simulateActiveSlice = (
   state: GameState,
   direction: Vec2,
-  dtSeconds: number,
+  dt: number,
   frame?: FrameContext,
-): GameState => {
-  if (isTerminalOutcome(state.outcome)) {
-    state.pendingUpgrade = null
-    return state
-  }
-
-  // 已有生命/时间满足终局时，不因 pending 而跳过失败/胜利
-  if (applyTerminalIfNeeded(state)) {
-    return state
-  }
-
-  if (state.pendingUpgrade !== null) {
-    return state
-  }
-
-  if (!Number.isFinite(dtSeconds) || !(dtSeconds > 0)) {
-    return state
-  }
-
-  const dt = clampDtToRunRemaining(state.elapsedActiveSeconds, dtSeconds)
-  if (!(dt > 0)) {
-    applyTerminalIfNeeded(state)
-    return state
-  }
-
+): void => {
   const difficultySlices = splitDifficultyTime(state.elapsedActiveSeconds, dt)
   state.elapsedActiveSeconds += dt
 
@@ -144,5 +108,62 @@ export const updateGame = (
   state.player = clampPlayerHealthAndArena(state.player, state.arena)
   state.activeEffects = advanceActiveEffects(state.activeEffects, dt)
   applyTerminalIfNeeded(state)
+}
+
+const applyTerminalIfNeeded = (state: GameState): boolean => {
+  const next = resolveRunOutcome(
+    state.player.health,
+    state.elapsedActiveSeconds,
+  )
+  if (!isTerminalOutcome(next)) {
+    return false
+  }
+  state.outcome = next
+  state.pendingUpgrade = null
+  return true
+}
+
+export const updateGame = (
+  state: GameState,
+  direction: Vec2,
+  dtSeconds: number,
+  frame?: FrameContext,
+): GameState => {
+  if (isTerminalOutcome(state.outcome)) {
+    state.pendingUpgrade = null
+    return state
+  }
+
+  // 已有生命/时间满足终局时，不因 pending 而跳过失败/胜利
+  if (applyTerminalIfNeeded(state)) {
+    return state
+  }
+
+  if (state.pendingUpgrade !== null) {
+    return state
+  }
+
+  if (!Number.isFinite(dtSeconds) || !(dtSeconds > 0)) {
+    return state
+  }
+
+  const dt = clampDtToRunRemaining(state.elapsedActiveSeconds, dtSeconds)
+  if (!(dt > 0)) {
+    applyTerminalIfNeeded(state)
+    return state
+  }
+
+  let remaining = dt
+  while (remaining > 0) {
+    const slice = getNextEffectBoundary(state.activeEffects, remaining)
+    simulateActiveSlice(state, direction, slice, frame)
+    remaining = Math.max(0, remaining - slice)
+    if (
+      state.pendingUpgrade !== null ||
+      isTerminalOutcome(state.outcome)
+    ) {
+      break
+    }
+  }
   return state
 }

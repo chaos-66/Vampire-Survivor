@@ -103,6 +103,7 @@ export {
 export {
   applyEffect,
   advanceActiveEffects,
+  getNextEffectBoundary,
   getActiveEffectModifiers,
   deriveEffectivePlayer,
 } from './effects/effect-system'

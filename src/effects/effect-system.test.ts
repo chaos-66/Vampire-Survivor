@@ -74,6 +74,21 @@ describe('效果注册表与严格应用', () => {
     expect(listEffects()).toEqual([])
   })
 
+  it.each([Number.POSITIVE_INFINITY, Number.NaN, 0, -1, 1.5])(
+    '拒绝非法叠层上限 %s',
+    (maxStacks) => {
+      expect(() =>
+        registerEffect({ ...damageStack, id: `bad_stacks_${String(maxStacks)}`, maxStacks }),
+      ).toThrow(/maxStacks must be a positive integer/i)
+    },
+  )
+
+  it('refresh 规则强制单层', () => {
+    expect(() =>
+      registerEffect({ ...speedRefresh, id: 'bad_refresh', maxStacks: 2 }),
+    ).toThrow(/refresh effect maxStacks must be 1/i)
+  })
+
   it('即时效果每次只执行一次且不进入活动列表', () => {
     const instant: InstantEffectDefinition = {
       id: 'test_heal',
@@ -169,6 +184,26 @@ describe('游戏循环效果接线', () => {
     expect(state.activeEffects[0].remainingSeconds).toBeCloseTo(1.5)
   })
 
+  it('效果在帧中到期时只影响到期前的移动时间片', () => {
+    const shortSpeed: TimedEffectDefinition = {
+      ...speedRefresh,
+      id: 'test_short_speed',
+      durationSeconds: 0.01,
+    }
+    registerEffect(shortSpeed)
+    const state = createGameState(arena)
+    state.worldObjects = []
+    applyEffect(state, shortSpeed.id)
+    const before = state.player.x
+
+    updateGame(state, { x: 1, y: 0 }, 0.05)
+
+    expect(state.player.x - before).toBeCloseTo(
+      state.player.moveSpeed * 2 * 0.01 + state.player.moveSpeed * 0.04,
+    )
+    expect(state.activeEffects).toEqual([])
+  })
+
   it('武器发射使用有效伤害但保留永久基础伤害', () => {
     registerEffect(damageStack)
     const state = createGameState(arena)
@@ -222,6 +257,44 @@ describe('游戏循环效果接线', () => {
       baseCooldown * 0.5,
     )
     expect(state.player.attackCooldown).toBe(baseCooldown)
+  })
+
+  it('效果在帧中到期后发射使用恢复后的伤害和攻击间隔', () => {
+    const shortCombat: TimedEffectDefinition = {
+      ...damageStack,
+      id: 'test_short_combat',
+      durationSeconds: 0.01,
+      stacking: 'refresh',
+      maxStacks: 1,
+      modifiers: {
+        projectileDamageMultiplier: 2,
+        attackCooldownMultiplier: 0.5,
+      },
+    }
+    registerEffect(shortCombat)
+    const state = createGameState(arena)
+    state.enemies = [
+      {
+        id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
+        x: state.player.x + 100,
+        y: state.player.y,
+        radius: 14,
+        speed: 0,
+        health: 100,
+        maxHealth: 100,
+      },
+    ]
+    state.player.weapons[0].cooldownRemaining = 0.02
+    applyEffect(state, shortCombat.id)
+    const baseDamage = state.player.projectileDamage
+    const baseCooldown = state.player.attackCooldown
+
+    updateGame(state, { x: 0, y: 0 }, 0.05)
+
+    expect(state.projectiles[0].damage).toBe(baseDamage)
+    expect(state.player.weapons[0].cooldownRemaining).toBe(baseCooldown)
+    expect(state.activeEffects).toEqual([])
   })
 
   it('pending 和终局冻结效果时间，重新创建状态清空效果', () => {
