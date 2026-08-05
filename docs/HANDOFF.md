@@ -3,9 +3,11 @@
 ## 当前事实
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
-- 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
+- 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
+- EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
+- EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
 - WORLD-OBJECTS 实现提交：`e3883a8`（`M5: introduce static world objects`），已同步 GitHub
 - WORLD-OBJECTS Green 关闭提交：`e3fd3ec`（`M5: close world objects checkpoint`），已同步 GitHub
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
@@ -41,7 +43,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME 与 ENEMY-ARCH Green；后续架构和内容未开始
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH 与 WORLD-OBJECTS Green；EFFECTS 等待最终全新复审
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -61,6 +63,9 @@
 - DROP-ARCH Green 关闭提交 `37e0a9a` 已同步；本地 `main` 跟踪 `origin/main`
 - WORLD-OBJECTS 实现提交 `e3883a8` 已同步；本地 `main` 跟踪 `origin/main`
 - WORLD-OBJECTS Green 关闭提交 `e3fd3ec` 已同步；本地 `main` 跟踪 `origin/main`
+- EFFECTS 实现提交 `9ddf4f6` 已同步；本地 `main` 跟踪 `origin/main`
+- EFFECTS 首次修复提交 `9986b4d` 已同步；本地 `main` 跟踪 `origin/main`
+- EFFECTS 第二轮修复提交 `980232c` 已同步；本地 `main` 跟踪 `origin/main`
 
 ## 最终证据
 
@@ -112,7 +117,7 @@
 - 当前实现新增 `WorldObject`、固定布局、玩家圆形对矩形障碍碰撞、矩形可见查询和 Canvas 绘制。
 - 自动化验证已通过：`npm test` 为 10 个文件 / 236 项测试，`npx tsc --noEmit`、`npm run build`
   （52 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；开发服务器返回 HTTP 200。
-- 正式独立审计为 PASS；未发现阻塞性问题。浏览器验收仍为 `UNVERIFIED`。
+- 正式独立审计为 PASS；未发现阻塞性问题。用户浏览器验收为 PASS。
 - 用户报告 WORLD-OBJECTS 浏览器验收为 `PASS`；未提供浏览器名称和版本。
 - 玩家碰撞必须阻止穿透并支持沿边滑动；物体布局必须位于世界内且避开初始玩家。
 - 不实现世界物体注册表、随机/程序化地图、空间索引、敌人/投射物/掉落障碍碰撞、可破坏物、
@@ -120,6 +125,6 @@
 
 ## 下一任务
 
-提交并同步 EFFECTS 审计修复，由全新上下文复审后再进行浏览器验收。当前实现包含即时/限时效果、
+由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。当前实现包含即时/限时效果、
 对象身份注册表、严格应用、`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；
 默认内容不注册效果，不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。

@@ -418,3 +418,6 @@
 | 2026-08-06 | EFFECTS 第二次独立复审 | FAIL | 首次发现已修复，但合法的超大倍率组合仍可产生 `Infinity` / `NaN`；武器冷却恰好在效果到期边界就绪时仍使用旧效果属性。范围和工具链通过；浏览器仍为 `UNVERIFIED`。 |
 | 2026-08-06 | EFFECTS 第二轮审计修复 | 已应用 | 限制 `maxStacks` 为 1-64、倍率为 0-1000，组合和最终属性逐步检查有限值；仅在效果到期切片末端延后恰好就绪的武器事件至下一时间片。 |
 | 2026-08-06 | EFFECTS 第二轮修复验证 | 通过 | 针对性 4 个文件 / 148 项测试通过；完整 `npm test` 为 11 个文件 / 259 项测试，`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-06 | `git commit -m "M5: harden runtime effect boundaries"` | 通过 | 创建第二轮 EFFECTS 审计修复提交 `980232c`，包含 11 个预期源码、测试和流程文档文件。 |
+| 2026-08-06 | EFFECTS 第二轮修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将修复提交 `980232c` 推送至 `origin/main`。 |
+| 2026-08-06 | EFFECTS 第三次独立复审 | FAIL | 审计确认两轮代码缺陷均已修复，259 项测试和工具链通过；阻塞项仅为 STATUS、HANDOFF、ACCEPTANCE 和 RUN_LOG 未记录 `9986b4d` / `980232c` 的完整提交与同步事实，以及旧阶段措辞。浏览器仍为 `UNVERIFIED`。 |

@@ -5,6 +5,8 @@
 - 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 范围关卡已批准
 - 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
+- EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
+- EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
@@ -39,11 +41,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH 与 DROP-ARCH Green；WORLD-OBJECTS 已进入范围关卡**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH 与 WORLD-OBJECTS Green；EFFECTS 等待最终全新复审**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**WORLD-OBJECTS Green 关闭提交 `e3fd3ec` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**EFFECTS 第二轮修复提交 `980232c` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -71,6 +73,7 @@
 - EFFECTS 第二次独立复审：FAIL；合法大倍率组合仍可溢出，冷却恰好等于到期边界时仍使用旧效果
 - EFFECTS 第二轮修复验证：11 个测试文件 / 259 项测试；tsc / build（54 个模块）/ audit /
   diff check 通过
+- EFFECTS 第三次独立复审：FAIL；代码结论通过，但提交和同步状态文档过时
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -111,4 +114,4 @@
 
 ## 下一步
 
-提交并同步 EFFECTS 审计修复，由全新上下文复审后再进行浏览器验收。
+由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。
