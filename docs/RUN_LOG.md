@@ -421,3 +421,6 @@
 | 2026-08-06 | `git commit -m "M5: harden runtime effect boundaries"` | 通过 | 创建第二轮 EFFECTS 审计修复提交 `980232c`，包含 11 个预期源码、测试和流程文档文件。 |
 | 2026-08-06 | EFFECTS 第二轮修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将修复提交 `980232c` 推送至 `origin/main`。 |
 | 2026-08-06 | EFFECTS 第三次独立复审 | FAIL | 审计确认两轮代码缺陷均已修复，259 项测试和工具链通过；阻塞项仅为 STATUS、HANDOFF、ACCEPTANCE 和 RUN_LOG 未记录 `9986b4d` / `980232c` 的完整提交与同步事实，以及旧阶段措辞。浏览器仍为 `UNVERIFIED`。 |
+| 2026-08-06 | `git commit -m "M5: record runtime effect audit repairs"` | 通过 | 创建 EFFECTS 审计状态修复提交 `8650e7f`，包含 4 个预期流程文档。 |
+| 2026-08-06 | EFFECTS 审计状态分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将状态修复提交 `8650e7f` 推送至 `origin/main`。 |
+| 2026-08-06 | EFFECTS 第四次独立复审 | FAIL | 审计再次确认代码、259 项测试和工具链通过；阻塞项为 STATUS/HANDOFF 仍写“两次”失败且最后同步仍为 `980232c`，RUN_LOG 未记录 `8650e7f`。浏览器仍为 `UNVERIFIED`。 |

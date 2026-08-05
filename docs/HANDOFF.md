@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
-- 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 三次独立审计均为 FAIL（两次代码、一次流程）；代码和流程问题均已修复，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -66,6 +66,7 @@
 - EFFECTS 实现提交 `9ddf4f6` 已同步；本地 `main` 跟踪 `origin/main`
 - EFFECTS 首次修复提交 `9986b4d` 已同步；本地 `main` 跟踪 `origin/main`
 - EFFECTS 第二轮修复提交 `980232c` 已同步；本地 `main` 跟踪 `origin/main`
+- EFFECTS 审计状态修复提交 `8650e7f` 已同步；本地 `main` 跟踪 `origin/main`
 
 ## 最终证据
 
@@ -125,6 +126,7 @@
 
 ## 下一任务
 
-由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。当前实现包含即时/限时效果、
+由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。后续纯文档状态提交按
+`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。当前实现包含即时/限时效果、
 对象身份注册表、严格应用、`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；
 默认内容不注册效果，不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。

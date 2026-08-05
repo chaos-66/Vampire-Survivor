@@ -3,7 +3,7 @@
 ## 快照
 
 - 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 范围关卡已批准
-- 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 三次独立审计均为 FAIL（两次代码、一次流程）；代码和流程问题均已修复，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -45,7 +45,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**EFFECTS 第二轮修复提交 `980232c` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**EFFECTS 审计状态修复提交 `8650e7f` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -74,6 +74,7 @@
 - EFFECTS 第二轮修复验证：11 个测试文件 / 259 项测试；tsc / build（54 个模块）/ audit /
   diff check 通过
 - EFFECTS 第三次独立复审：FAIL；代码结论通过，但提交和同步状态文档过时
+- EFFECTS 第四次独立复审：FAIL；代码结论通过，但第三次失败计数和 `8650e7f` 同步证据仍过时
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -114,4 +115,5 @@
 
 ## 下一步
 
-由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。
+由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。后续纯文档状态提交按
+`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
