@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
-- 交接状态：EFFECTS 首次独立审计为 FAIL；两项代码缺陷已修复并通过验证，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - WORLD-OBJECTS 实现提交：`e3883a8`（`M5: introduce static world objects`），已同步 GitHub
 - WORLD-OBJECTS Green 关闭提交：`e3fd3ec`（`M5: close world objects checkpoint`），已同步 GitHub

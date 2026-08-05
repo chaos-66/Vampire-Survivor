@@ -3,7 +3,7 @@
 ## 快照
 
 - 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 范围关卡已批准
-- 交接状态：EFFECTS 首次独立审计为 FAIL；两项代码缺陷已修复并通过验证，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 两次独立审计均为 FAIL；第二轮边界缺陷已修复并通过验证，等待全新复审和浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
@@ -67,6 +67,9 @@
   diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
 - EFFECTS 首次独立审计：FAIL；非法 `maxStacks` 可产生无限/`NaN` 层，帧中到期仍错误影响整帧
 - EFFECTS 审计修复验证：11 个测试文件 / 256 项测试；tsc / build（54 个模块）/ audit /
+  diff check 通过
+- EFFECTS 第二次独立复审：FAIL；合法大倍率组合仍可溢出，冷却恰好等于到期边界时仍使用旧效果
+- EFFECTS 第二轮修复验证：11 个测试文件 / 259 项测试；tsc / build（54 个模块）/ audit /
   diff check 通过
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade

@@ -16,6 +16,8 @@ import {
 import {
   getEffect,
   listEffects,
+  MAX_EFFECT_MULTIPLIER,
+  MAX_EFFECT_STACKS,
   registerEffect,
 } from './effect-registry'
 
@@ -87,6 +89,61 @@ describe('效果注册表与严格应用', () => {
     expect(() =>
       registerEffect({ ...speedRefresh, id: 'bad_refresh', maxStacks: 2 }),
     ).toThrow(/refresh effect maxStacks must be 1/i)
+  })
+
+  it('拒绝超出架构上限的叠层和倍率', () => {
+    expect(() =>
+      registerEffect({
+        ...damageStack,
+        id: 'too_many_stacks',
+        maxStacks: MAX_EFFECT_STACKS + 1,
+      }),
+    ).toThrow(/maxStacks must be a positive integer/i)
+    expect(() =>
+      registerEffect({
+        ...damageStack,
+        id: 'too_large_modifier',
+        modifiers: { moveSpeedMultiplier: Number.MAX_VALUE },
+      }),
+    ).toThrow(/modifier must be finite and non-negative/i)
+    expect(() =>
+      registerEffect({
+        ...damageStack,
+        id: 'over_multiplier_limit',
+        modifiers: { moveSpeedMultiplier: MAX_EFFECT_MULTIPLIER + 1 },
+      }),
+    ).toThrow(/modifier must be finite and non-negative/i)
+  })
+
+  it('合法定义组合溢出时明确失败而不返回非有限属性', () => {
+    const huge: TimedEffectDefinition = {
+      ...damageStack,
+      id: 'test_huge_stack',
+      maxStacks: MAX_EFFECT_STACKS,
+      modifiers: { projectileDamageMultiplier: MAX_EFFECT_MULTIPLIER },
+    }
+    const anotherHuge: TimedEffectDefinition = {
+      ...huge,
+      id: 'test_another_huge_stack',
+    }
+    registerEffect(huge)
+    registerEffect(anotherHuge)
+    const state = createGameState(arena)
+    state.activeEffects = [
+      {
+        definitionId: huge.id,
+        remainingSeconds: 1,
+        stacks: MAX_EFFECT_STACKS,
+      },
+      {
+        definitionId: anotherHuge.id,
+        remainingSeconds: 1,
+        stacks: MAX_EFFECT_STACKS,
+      },
+    ]
+    expect(() => deriveEffectivePlayer(state.player, state.activeEffects)).toThrow(
+      /overflowed|must remain finite/i,
+    )
   })
 
   it('即时效果每次只执行一次且不进入活动列表', () => {
@@ -295,6 +352,43 @@ describe('游戏循环效果接线', () => {
     expect(state.projectiles[0].damage).toBe(baseDamage)
     expect(state.player.weapons[0].cooldownRemaining).toBe(baseCooldown)
     expect(state.activeEffects).toEqual([])
+  })
+
+  it('冷却恰好在到期边界就绪时使用恢复后的属性发射', () => {
+    const boundaryCombat: TimedEffectDefinition = {
+      ...damageStack,
+      id: 'test_boundary_combat',
+      durationSeconds: 0.01,
+      stacking: 'refresh',
+      maxStacks: 1,
+      modifiers: {
+        projectileDamageMultiplier: 2,
+        attackCooldownMultiplier: 0.5,
+      },
+    }
+    registerEffect(boundaryCombat)
+    const state = createGameState(arena)
+    state.enemies = [
+      {
+        id: 1,
+        definitionId: DEFAULT_ENEMY_ID,
+        x: state.player.x + 100,
+        y: state.player.y,
+        radius: 14,
+        speed: 0,
+        health: 100,
+        maxHealth: 100,
+      },
+    ]
+    state.player.weapons[0].cooldownRemaining = 0.01
+    applyEffect(state, boundaryCombat.id)
+    const baseDamage = state.player.projectileDamage
+    const baseCooldown = state.player.attackCooldown
+
+    updateGame(state, { x: 0, y: 0 }, 0.05)
+
+    expect(state.projectiles[0].damage).toBe(baseDamage)
+    expect(state.player.weapons[0].cooldownRemaining).toBe(baseCooldown)
   })
 
   it('pending 和终局冻结效果时间，重新创建状态清空效果', () => {

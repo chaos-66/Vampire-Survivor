@@ -41,6 +41,7 @@ const simulateActiveSlice = (
   state: GameState,
   direction: Vec2,
   dt: number,
+  effectExpiresAtEnd: boolean,
   frame?: FrameContext,
 ): void => {
   const difficultySlices = splitDifficultyTime(state.elapsedActiveSeconds, dt)
@@ -77,6 +78,7 @@ const simulateActiveSlice = (
     state.enemies,
     state.nextProjectileId,
     dt,
+    effectExpiresAtEnd,
   )
   state.nextProjectileId = fired.nextProjectileId
   if (fired.projectiles.length > 0) {
@@ -156,7 +158,10 @@ export const updateGame = (
   let remaining = dt
   while (remaining > 0) {
     const slice = getNextEffectBoundary(state.activeEffects, remaining)
-    simulateActiveSlice(state, direction, slice, frame)
+    const effectExpiresAtEnd = state.activeEffects.some(
+      (effect) => effect.remainingSeconds === slice,
+    )
+    simulateActiveSlice(state, direction, slice, effectExpiresAtEnd, frame)
     remaining = Math.max(0, remaining - slice)
     if (
       state.pendingUpgrade !== null ||

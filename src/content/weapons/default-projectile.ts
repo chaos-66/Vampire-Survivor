@@ -54,11 +54,18 @@ export const defaultProjectileWeapon: WeaponDefinition = {
     cooldownRemaining: 0,
   }),
   update: (context: WeaponUpdateContext, instance: WeaponInstance): void => {
+    const cooldownBefore = instance.cooldownRemaining
     instance.cooldownRemaining = Math.max(
       0,
-      instance.cooldownRemaining - context.dtSeconds,
+      cooldownBefore - context.dtSeconds,
     )
-    if (instance.cooldownRemaining > 0) {
+    // 时间片使用半开区间；恰好在末端就绪时由下一个时间片触发。
+    if (
+      instance.cooldownRemaining > 0 ||
+      (context.deferReadyAtEnd &&
+        cooldownBefore > 0 &&
+        cooldownBefore === context.dtSeconds)
+    ) {
       return
     }
     const target = selectNearestEnemy(context.player, context.enemies)

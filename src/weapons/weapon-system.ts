@@ -13,12 +13,14 @@ export const advanceWeapons = (
   enemies: readonly Enemy[],
   nextProjectileId: number,
   dt: number,
+  deferReadyAtEnd = false,
 ): { projectiles: Projectile[]; nextProjectileId: number } => {
   const spawned: Projectile[] = []
   let id = nextProjectileId
 
   const context: WeaponUpdateContext = {
     dtSeconds: dt,
+    deferReadyAtEnd,
     player,
     enemies,
     spawnProjectile: (request) => {

@@ -28,6 +28,8 @@ export type WeaponInstance = {
 
 export type WeaponUpdateContext = {
   dtSeconds: number
+  /** 当前时间片末端有活动效果到期；末端就绪事件应由下一时间片处理。 */
+  deferReadyAtEnd: boolean
   player: CombatPlayer
   enemies: readonly Enemy[]
   spawnProjectile: (request: ProjectileRequest) => void
