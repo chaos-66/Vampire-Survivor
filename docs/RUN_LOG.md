@@ -397,3 +397,6 @@
 | 2026-08-05 | WORLD-OBJECTS 针对性验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit` 和 `git diff --check` 通过。 |
 | 2026-08-05 | WORLD-OBJECTS 完整验证 | 通过 | `npm test` 为 10 个文件 / 236 项测试；`npx tsc --noEmit`、`npm run build`（52 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-05 | WORLD-OBJECTS 开发服务器 HTTP 检查 | 通过 | `http://127.0.0.1:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-05 | `git commit -m "M5: introduce static world objects"` | 通过 | 创建 WORLD-OBJECTS 实现提交 `e3883a8`，包含 18 个预期源码、测试和流程文档文件。 |
+| 2026-08-05 | WORLD-OBJECTS 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将实现提交 `e3883a8` 推送至 `origin/main`。 |
+| 2026-08-05 | WORLD-OBJECTS 正式独立审计 | PASS | 审计员确认 `2729b78..e3883a8` 范围仅包含静态矩形世界物体、玩家障碍碰撞、矩形可见查询、状态创建/重开接线、可见绘制和测试；未发现阻塞项。独立复跑 `npm test`（10 个文件 / 236 项）、`npx tsc --noEmit`、`npm run build`（52 个模块）、`npm audit`（0 个漏洞）、`git diff --check` 和提交范围空白检查均通过；浏览器验收仍为 `UNVERIFIED`。 |
