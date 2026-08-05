@@ -387,3 +387,6 @@
 | 2026-08-04 | DROP-ARCH 第二次独立复审 | FAIL | 首次审计的锁文件范围和状态措辞问题已修复；阻塞项为 `HANDOFF` 仍将 DROP-ARCH 实际基线错误写为 `0bd70d4`，与范围关卡的 `f0ba893` 冲突。修复后必须由全新上下文复审；浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-04 | DROP-ARCH 第三次全新独立复审 | PASS | 范围仅包含通用掉落/拾取定义、默认经验掉落、注册表、严格工厂、bootstrap/reset、经验路径迁移和测试；确认两次 FAIL 已修复，实际基线为 `f0ba893`。独立复跑 `npm test`（9 个文件 / 223 项）、`npx tsc --noEmit`、`npm run build`（50 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-04 | `git push origin main` | 通过 | 上传 DROP-ARCH 实现提交 `bdb5513` 至 `origin/main`；推送前已确认工作区干净、本地仅领先一个提交且远端无未知领先或分叉。 |
+| 2026-08-05 | DROP-ARCH 状态提交同步 | 通过 | 纯文档状态提交 `59245b2` 已推送至 `origin/main`；本地与远端同步。 |
+| 2026-08-05 | 用户 CP-M5-DROP-ARCH-01 浏览器验收 | PASS | 用户回复“Pass”，确认所提供的完整检查清单通过：经验掉落可见并可收集；经验、升级、60 秒胜负和重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
+| 2026-08-05 | CP-M5-DROP-ARCH-01 Green 关闭验证 | 通过 | `npm test` 为 9 个文件 / 223 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 50 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |

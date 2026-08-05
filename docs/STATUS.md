@@ -2,9 +2,10 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-DROP-ARCH-01` 范围关卡已批准
+- 当前阶段：M5 基础建设；`CP-M5-DROP-ARCH-01` **Green**
+- 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
-- 交接状态：DROP-ARCH 实现和自动化验证已完成；首次和第二次独立审计 FAIL 均已修复，第三次全新复审为 PASS；浏览器验收尚未进行
+- 交接状态：DROP-ARCH 自动验证、独立复审、用户浏览器验收和 Green 关闭验证均为 PASS
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
@@ -48,7 +49,7 @@
 - DROP-ARCH 自动验证：9 个测试文件 / 223 项测试；tsc / build（50 个模块）/ audit /
   diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
 - DROP-ARCH 独立审计：首次和第二次为 FAIL（文档一致性问题，均已修复）；第三次全新复审
-  为 PASS；真实浏览器验收仍为 `UNVERIFIED`
+  为 PASS；用户浏览器验收为 PASS
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -89,6 +90,5 @@
 
 ## 下一步
 
-进行 `CP-M5-DROP-ARCH-01` 真实浏览器验收。实现已将 `advanceProjectiles.kills` ->
-`spawnExperienceDropsAt` -> `pickupDrops` 接通；每次实际击杀仍必掉一个经验掉落，ID 连续
-且未收集掉落无上限。不得借此实现食物、宝箱、稀有度、权重、库存、世界物体、效果或 NPC。
+通过范围关卡定义 `CP-M5-WORLD-OBJECTS-01`。开始前必须检查范围、基线和文档一致性；
+不得提前实现效果、真实内容、NPC 或其他后续检查点。

@@ -2,8 +2,8 @@
 
 ## 当前目标
 
-**当前检查点：`CP-M5-DROP-ARCH-01`。** 实现和自动化验证已完成，第三次全新独立
-复审为 PASS；等待真实浏览器验收后才可 Green 关闭。
+**当前检查点：`CP-M5-DROP-ARCH-01` Green 收尾。** 实现和自动化验证已完成，第三次
+全新独立复审为 PASS，用户浏览器验收为 PASS。
 
 目标模块：掉落定义、对象身份注册表、严格工厂、默认经验掉落内容、内容 bootstrap/reset、
 运行时掉落实例、掉落生成/拾取路径、现有绘制和针对性测试。
@@ -84,6 +84,9 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 5. `CP-M5-EFFECTS-01`
 6. `CP-M5-CONTENT-01`
 7. `CP-M5-NPC-01`
+
+下一任务：通过范围关卡定义 `CP-M5-WORLD-OBJECTS-01`；不得在范围、基线和文档一致性
+检查前开始实现。
 
 ## DROP-ARCH 交接要点
 
