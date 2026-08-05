@@ -390,3 +390,5 @@
 | 2026-08-05 | DROP-ARCH 状态提交同步 | 通过 | 纯文档状态提交 `59245b2` 已推送至 `origin/main`；本地与远端同步。 |
 | 2026-08-05 | 用户 CP-M5-DROP-ARCH-01 浏览器验收 | PASS | 用户回复“Pass”，确认所提供的完整检查清单通过：经验掉落可见并可收集；经验、升级、60 秒胜负和重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-05 | CP-M5-DROP-ARCH-01 Green 关闭验证 | 通过 | `npm test` 为 9 个文件 / 223 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 50 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-05 | `git commit -m "M5: close drop architecture checkpoint"` | 通过 | 创建 DROP-ARCH Green 关闭提交 `37e0a9a`，包含 5 个预期流程文档。 |
+| 2026-08-05 | DROP-ARCH Green 分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 Green 关闭提交 `37e0a9a` 推送至 `origin/main`。 |

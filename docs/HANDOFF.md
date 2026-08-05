@@ -6,6 +6,7 @@
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 交接状态：DROP-ARCH 自动验证、独立复审、用户浏览器验收和 Green 关闭验证均为 PASS
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
+- DROP-ARCH Green 关闭提交：`37e0a9a`（`M5: close drop architecture checkpoint`），已同步 GitHub
 - ENEMY-ARCH 基线 HEAD：`e6627de`；开始时工作区干净并与 `origin/main` 同步
 - ENEMY-ARCH 实现提交：`fb956cb`（`M5: introduce enemy definition architecture`）
 - ENEMY-ARCH 正式独立审计：**PASS**
@@ -54,6 +55,7 @@
 - ENEMY-ARCH 实现提交 `fb956cb` 已同步；本地 `main` 跟踪 `origin/main`
 - ENEMY-ARCH Green 关闭提交 `ecf5ffb` 已同步；本地 `main` 跟踪 `origin/main`
 - DROP-ARCH 实现提交 `bdb5513` 已同步；本地 `main` 跟踪 `origin/main`
+- DROP-ARCH Green 关闭提交 `37e0a9a` 已同步；本地 `main` 跟踪 `origin/main`
 
 ## 最终证据
 
