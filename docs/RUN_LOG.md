@@ -424,3 +424,4 @@
 | 2026-08-06 | `git commit -m "M5: record runtime effect audit repairs"` | 通过 | 创建 EFFECTS 审计状态修复提交 `8650e7f`，包含 4 个预期流程文档。 |
 | 2026-08-06 | EFFECTS 审计状态分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将状态修复提交 `8650e7f` 推送至 `origin/main`。 |
 | 2026-08-06 | EFFECTS 第四次独立复审 | FAIL | 审计再次确认代码、259 项测试和工具链通过；阻塞项为 STATUS/HANDOFF 仍写“两次”失败且最后同步仍为 `980232c`，RUN_LOG 未记录 `8650e7f`。浏览器仍为 `UNVERIFIED`。 |
+| 2026-08-06 | EFFECTS 第五次独立复审 | FAIL | 审计确认代码、提交链、同步证据和工具链通过；唯一阻塞项为 STATUS/HANDOFF 顶部将已有四次失败错误汇总为三次。改用不依赖动态计数的稳定阶段表述；浏览器仍为 `UNVERIFIED`。 |
