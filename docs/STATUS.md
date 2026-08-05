@@ -2,9 +2,10 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-WORLD-OBJECTS-01` 范围关卡已批准
+- 当前阶段：M5 基础建设；`CP-M5-WORLD-OBJECTS-01` **Green**
+- 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
-- 交接状态：WORLD-OBJECTS 实现、自动化验证和独立审计均为 PASS；等待浏览器验收
+- 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
 - WORLD-OBJECTS 实现提交：`e3883a8`（`M5: introduce static world objects`），已同步 GitHub
 - 最近关闭的检查点：`CP-M5-ENEMY-ARCH-01`，**Green**
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
@@ -56,6 +57,7 @@
 - WORLD-OBJECTS 自动验证：10 个测试文件 / 236 项测试；tsc / build（52 个模块）/ audit /
   diff check 通过；开发服务器 `http://127.0.0.1:5173/` 返回 HTTP 200
 - WORLD-OBJECTS 独立审计：PASS；未发现阻塞性问题
+- WORLD-OBJECTS 用户浏览器验收：PASS
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -96,5 +98,5 @@
 
 ## 下一步
 
-完成 `CP-M5-WORLD-OBJECTS-01` 浏览器验收、Green 关闭、提交和同步。不得实现敌人/投射物/
-掉落障碍碰撞、随机地图、可破坏物、效果、真实内容、NPC 或其他后续检查点。
+通过范围关卡定义 `CP-M5-EFFECTS-01`。开始前必须检查范围、基线和文档一致性；不得提前
+实现真实内容、食物、宝箱、NPC 或其他后续检查点。

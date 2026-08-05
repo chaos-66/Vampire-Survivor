@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
-- 交接状态：`CP-M5-WORLD-OBJECTS-01` 实现、自动化验证和独立审计均为 PASS；等待浏览器验收
+- 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
 - WORLD-OBJECTS 实现提交：`e3883a8`（`M5: introduce static world objects`），已同步 GitHub
 - DROP-ARCH 实现提交：`bdb5513`（`M5: introduce drop and pickup architecture`），已同步 GitHub
 - DROP-ARCH Green 关闭提交：`37e0a9a`（`M5: close drop architecture checkpoint`），已同步 GitHub
@@ -109,10 +109,12 @@
 - 自动化验证已通过：`npm test` 为 10 个文件 / 236 项测试，`npx tsc --noEmit`、`npm run build`
   （52 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；开发服务器返回 HTTP 200。
 - 正式独立审计为 PASS；未发现阻塞性问题。浏览器验收仍为 `UNVERIFIED`。
+- 用户报告 WORLD-OBJECTS 浏览器验收为 `PASS`；未提供浏览器名称和版本。
 - 玩家碰撞必须阻止穿透并支持沿边滑动；物体布局必须位于世界内且避开初始玩家。
 - 不实现世界物体注册表、随机/程序化地图、空间索引、敌人/投射物/掉落障碍碰撞、可破坏物、
   交互、效果、食物、宝箱、NPC 或其他真实内容。
 
 ## 下一任务
 
-完成 `CP-M5-WORLD-OBJECTS-01` 浏览器验收、Green 关闭、提交和同步。
+通过范围关卡定义 `CP-M5-EFFECTS-01`。开始前必须阅读规定文档、检查 Git 基线并统一范围、
+非目标、自动验收和浏览器验收；不得提前实现真实内容、食物、宝箱、NPC 或后续检查点。

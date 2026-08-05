@@ -2,8 +2,8 @@
 
 ## 当前目标
 
-**当前检查点：`CP-M5-WORLD-OBJECTS-01`。** 建立确定性的静态世界物体、玩家障碍碰撞
-和纯函数可见查询，并接入现有 Canvas 绘制。
+**当前检查点：`CP-M5-WORLD-OBJECTS-01` Green 收尾。** 实现、自动验证、独立审计和
+用户浏览器验收均为 PASS。
 
 目标模块：世界物体运行时类型、确定性布局、圆形玩家与矩形障碍的移动解析、矩形可见查询、
 `GameState` 创建/重开、游戏循环、可见绘制和针对性测试。
@@ -85,7 +85,8 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 6. `CP-M5-CONTENT-01`
 7. `CP-M5-NPC-01`
 
-当前范围关卡：`CP-M5-WORLD-OBJECTS-01`；不得合并 `CP-M5-EFFECTS-01` 或后续内容。
+下一任务：通过范围关卡定义 `CP-M5-EFFECTS-01`；不得在范围、基线和文档一致性检查前
+开始实现。
 
 ## DROP-ARCH 交接要点
 
