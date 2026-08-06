@@ -3,7 +3,7 @@
 ## 快照
 
 - 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 范围关卡已批准
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，等待浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -115,5 +115,6 @@
 
 ## 下一步
 
-由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。后续纯文档状态提交按
-`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+第六次全新复审已 PASS，唯一下一任务是用户浏览器验收；验收通过后按 `docs/PIPELINE.md`
+进行 Green 关闭验证与提交。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，
+以避免递归状态提交。

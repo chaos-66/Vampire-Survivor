@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，等待全新复审和浏览器验收
+- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，等待浏览器验收
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -127,7 +127,7 @@
 
 ## 下一任务
 
-由全新上下文复审 EFFECTS 完整代码和文档；通过后进行浏览器验收。后续纯文档状态提交按
-`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。当前实现包含即时/限时效果、
-对象身份注册表、严格应用、`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；
-默认内容不注册效果，不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。
+第六次全新复审已 PASS，唯一下一任务是用户浏览器验收；验收通过后按 `docs/PIPELINE.md`
+进行 Green 关闭验证与提交。当前实现包含即时/限时效果、对象身份注册表、严格应用、
+`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；默认内容不注册效果，
+不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。
