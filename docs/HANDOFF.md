@@ -46,7 +46,7 @@
 - M4 / MVP: **Green**
 - CP-M4-OUTCOME-01 检查点：`dfbe925`（`M4: implement timed run outcomes and restart`）
 - OUTCOME 修复检查点：`a596253`（`M4: fix run outcome audit findings`）
-- 规则：HP<=0 时为 lost；elapsedActiveSeconds>=60 时为 won；lost 优先；将 dt 钳制为单局剩余时间
+- 规则（M4 历史，现为 5 分钟）：HP<=0 时为 lost；elapsedActiveSeconds>=60 时为 won；lost 优先；将 dt 钳制为单局剩余时间
 - 重新开始：仅限终局状态 + KeyR / 重新开始按钮；创建完整的新 GameState
 - 首次独立审计 **FAIL**；本地修复完成后共有 203 项测试
 - 全新独立复审 **PASS**

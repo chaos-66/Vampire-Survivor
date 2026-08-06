@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义与升级随机化已应用，等待复审；`CP-M5-ABILITY-01` 为后续独立检查点**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义（D-037）与升级随机化（D-038）复审 PASS，坚持时间与卡片适配（D-039）复审文档修复已应用，待再次复审；`CP-M5-ABILITY-01` 为后续独立检查点**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
