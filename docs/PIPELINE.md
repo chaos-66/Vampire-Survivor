@@ -286,8 +286,8 @@ git push origin main
 - 流水线检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，Green
 - M5+：RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；
-  `CP-M5-CONTENT-01` 武器语义修复复审 PASS（`8a49ef5`），升级随机化已应用（`e05977c`，
-  D-038），复审文档修复已应用（`13c8f69`），等待再次复审；
+  `CP-M5-CONTENT-01` 武器语义修复复审 PASS（`8a49ef5`），升级随机化（`e05977c`，D-038）
+  复审证据补全已应用（`41a4170`），第四次复审 PASS，等待用户浏览器验收；
   后续独立检查点 `CP-M5-ABILITY-01`
 - 当前检查点：`CP-M5-CONTENT-01`
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`

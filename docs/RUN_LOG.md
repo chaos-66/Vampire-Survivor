@@ -468,6 +468,9 @@
 | 2026-08-06 | PIPELINE 对齐分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `da0d0f2` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CONTENT-01 随机化第三次独立复审 | FAIL | 复审确认代码、PIPELINE 第 6 节与其余文档均通过；阻塞项为第二次随机化复审 FAIL 证据未保留于 RUN_LOG，且 `13c8f69`、`da0d0f2` 提交与推送证据缺失。 |
 | 2026-08-06 | CONTENT-01 随机化复审证据补全 | 已应用 | RUN_LOG 补记第二次 FAIL、`13c8f69`/`da0d0f2` 提交与推送证据；STATUS/HANDOFF 更新为"三次随机化复审 FAIL 均为文档一致性，证据补全已应用，待第四次复审"。 |
+| 2026-08-06 | `git commit -m "M5: complete content randomization audit evidence"` | 通过 | 创建随机化复审证据补全提交 `41a4170`，纯文档。 |
+| 2026-08-06 | 证据补充分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `41a4170` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CONTENT-01 随机化第四次全新独立复审 | PASS | 全新审计上下文确认：证据链完整（`e05977c`/`13c8f69`/`da0d0f2` 提交与推送、三次 FAIL 全部保留）、阶段表述一致、最后同步提交与实际一致；代码抽查确认权重无放回抽取、位置随机、权重 0/负值排除、`state.rng` 接线、散射弹权重 0.6。独立复跑 `npm test`（12 个文件 / 280 项）、`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
