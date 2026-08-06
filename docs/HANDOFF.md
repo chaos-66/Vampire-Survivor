@@ -4,7 +4,9 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 范围已批准（D-036），等待实现
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现提交 `aa0a999` 已同步 GitHub，首次独立审计为 FAIL（文档一致性），修复后待全新复审
+- CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
+- CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -136,10 +138,19 @@
 - 当前实现包含即时/限时效果、对象身份注册表、严格应用、`refresh` / 有上限 `stack`、
   活动状态和移动/武器有效属性接线；默认内容不注册效果。
 
+## CONTENT-01 审计要点
+
+- 首次独立审计为 FAIL；阻塞项仅为文档一致性：STATUS/HANDOFF 阶段表述未更新、
+  实现提交 `aa0a999` 与同步事实未记录、STATUS 残留 EFFECTS 关闭旧状态、
+  RUN_LOG build 模块数记录不符（实际 59）。代码与全部自动化验收项通过
+  （12 个文件 / 278 项测试；tsc / build / audit / diff check / HTTP 200 均 PASS）。
+- 范围与 D-036 严格一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
+  `PickupResult` 拾取结果、散射武器 offer、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
+- 未实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。
+
 ## 下一任务
 
-`CP-M5-CONTENT-01` 范围关卡已批准（D-036）：第一批真实内容（`fast_enemy`、
-`scatter_weapon`、`food_drop`、`chest_drop`）与三个通用机制扩展（`spawnWeight` 权重生成、
-`EnemyDefinition.drops` 掉落表、`PickupResult` 拾取结果）。范围细节见
-`docs/PLAN.md`；下一步为阶段 1 基线检查与实现。不得实现敌人行为钩子、稀有度、效果内容、
+`CP-M5-CONTENT-01` 文档一致性修复已应用（提交后），由全新审计上下文复审；
+通过后进入用户浏览器验收（两种敌人混合、散射三弹、食物/宝箱可见、无回归、控制台
+无错误），最后 Green 关闭并同步。不得实现敌人行为钩子、稀有度、效果内容、
 程序化地图、NPC 或 HUD 新 UI。

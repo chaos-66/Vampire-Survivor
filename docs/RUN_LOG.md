@@ -427,8 +427,12 @@
 | 2026-08-06 | EFFECTS 第五次独立复审 | FAIL | 审计确认代码、提交链、同步证据和工具链通过；唯一阻塞项为 STATUS/HANDOFF 顶部将已有四次失败错误汇总为三次。改用不依赖动态计数的稳定阶段表述；浏览器仍为 `UNVERIFIED`。 |
 | 2026-08-06 | CP-M5-CONTENT-01 范围关卡 | 已批准 | 用户确认第一批真实内容构成并批准 D-036；统一 PLAN、STATUS、HANDOFF 和验收标准；范围关卡提交 `cd36de5` 已推送。 |
 | 2026-08-06 | CONTENT-01 实现与针对性测试 | 通过 | 新增 `spawnWeight` / `drops` 权重生成与掉落表、`kills` 携带 `definitionId`、`spawnDropsForKills`、`PickupResult`、散射武器、迅捷蝠、食物与宝箱、武器 offer 优先排序、数据驱动掉落颜色；12 个文件 / 278 项测试通过。 |
-| 2026-08-06 | CONTENT-01 完整验证 | 通过 | `npm test` 为 12 个文件 / 278 项测试；`npx tsc --noEmit`、`npm run build`（55 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-06 | CONTENT-01 完整验证 | 通过 | `npm test` 为 12 个文件 / 278 项测试；`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | CONTENT-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-06 | `git commit -m "M5: introduce first real content"` | 通过 | 创建 CONTENT-01 实现提交 `aa0a999`，包含 27 个预期源码、测试和流程文档文件。 |
+| 2026-08-06 | CONTENT-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将实现提交 `aa0a999` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CONTENT-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验收项通过（12 个文件 / 278 项测试，tsc / build / audit / diff check / HTTP 200 均 PASS），范围与 D-036 严格一致；阻塞项仅为文档一致性：STATUS/HANDOFF 阶段表述未更新、实现提交与同步事实未记录、STATUS 残留 EFFECTS 关闭旧状态、RUN_LOG build 模块数记录不符（实际 59）。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-06 | CONTENT-01 审计文档修复 | 已应用 | 更新 STATUS/HANDOFF 阶段表述与实现提交 `aa0a999` 同步证据，修正 STATUS 残留旧状态与 RUN_LOG build 模块数记录。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

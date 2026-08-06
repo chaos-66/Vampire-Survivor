@@ -2,8 +2,10 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 范围关卡已批准（D-036）
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 范围已批准，等待实现
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 实现已提交，首次独立审计为 **FAIL**（文档一致性，修复中）
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现提交 `aa0a999` 已同步 GitHub，等待修复文档后的全新复审
+- CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
+- CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -45,11 +47,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 范围已批准，实现待进行**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 实现已提交，首次审计 FAIL（文档一致性），修复后需全新复审**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**EFFECTS 关闭状态提交即将记录；`main` 跟踪 `origin/main`**
+- GitHub 同步：**CONTENT-01 实现提交 `aa0a999` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -83,7 +85,13 @@
 - EFFECTS 第六次全新独立复审：PASS；代码与流程均无阻塞项
 - EFFECTS 用户浏览器验收：PASS；Green 关闭验证：11 个文件 / 259 项测试；tsc / build（54
   个模块）/ audit / diff check 通过
-- EFFECTS Green 关闭提交：即将创建（`M5: close runtime effect checkpoint`）
+- EFFECTS Green 关闭提交：`32da5a4`（`M5: close runtime effect checkpoint`），已同步 GitHub
+- CONTENT-01：`spawnWeight` 权重生成、敌人自带掉落表（`kills` 携带 `definitionId`）、
+  `PickupResult` 拾取结果、散射武器 offer、迅捷蝠、食物与宝箱、数据驱动掉落颜色已应用
+- CONTENT-01 自动验证：12 个文件 / 278 项测试；tsc / build（59 个模块）/ audit /
+  diff check 通过；开发服务器 `http://localhost:5173/` 返回 HTTP 200
+- CONTENT-01 首次独立审计：FAIL；代码与自动化验收全部通过，阻塞项仅为文档一致性
+  （实现提交与同步事实未记录、旧状态残留、build 模块数记录不符）；修复后需全新复审
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -124,7 +132,7 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 范围关卡已批准（D-036）。下一步为阶段 1 基线检查与实现：按
-`docs/PIPELINE.md` 扩展 `EnemyDefinition`（`spawnWeight`、`drops`）、通用掉落生成、
-`PickupResult` 及新内容文件，随后验证、提交、独立审计与浏览器验收。后续纯文档状态提交
-按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 首次独立审计为 FAIL，阻塞项仅为文档一致性（实现提交与同步事实
+未记录、旧状态残留、build 模块数记录不符）；修复已应用并提交后，由全新审计上下文
+复审；通过后进入用户浏览器验收，最后 Green 关闭。后续纯文档状态提交按
+`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
