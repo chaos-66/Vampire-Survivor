@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现提交 `aa0a999` 与审计修复提交 `bdc9b70`、`9dd2c73`、`c19b3ab` 均已同步 GitHub，等待第五次全新复审
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与四次审计修复提交均已同步 GitHub，第五次全新复审 **PASS**，等待浏览器验收
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
@@ -48,7 +48,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 实现已提交，四次审计 FAIL 均为文档一致性，第四次修复已应用，待第五次全新复审
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 第五次全新复审 PASS，等待浏览器验收
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -143,9 +143,8 @@
 
 ## CONTENT-01 审计要点
 
-- 前四次独立审计均为 FAIL；阻塞项全部为文档一致性：阶段表述未更新、提交与同步事实
-  未记录、旧状态残留、build 模块数记录不符（实际 59）、PIPELINE 当前入口过时、
-  汇总计数残留。代码与全部自动化验收项均通过（12 个文件 / 278 项测试；tsc / build /
+- 前四次独立审计均为 FAIL（阻塞项全部为文档一致性）；第五次全新复审为 **PASS**。
+  代码与全部自动化验收项自始通过（12 个文件 / 278 项测试；tsc / build（59 模块）/
   audit / diff check / HTTP 200 均 PASS）。
 - 范围与 D-036 严格一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
   `PickupResult` 拾取结果、散射武器 offer、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
@@ -153,7 +152,7 @@
 
 ## 下一任务
 
-`CP-M5-CONTENT-01` 第四次文档修复已应用，由全新审计上下文第五次复审；
-通过后进入用户浏览器验收（两种敌人混合、散射三弹、食物/宝箱可见、无回归、控制台
-无错误），最后 Green 关闭并同步。不得实现敌人行为钩子、稀有度、效果内容、
-程序化地图、NPC 或 HUD 新 UI。
+`CP-M5-CONTENT-01` 第五次全新复审已 PASS，唯一下一任务是用户浏览器验收（两种敌人
+混合、散射三弹、食物/宝箱可见、无回归、控制台无错误）；验收通过后按 `docs/PIPELINE.md`
+进行 Green 关闭验证与提交。不得实现敌人行为钩子、稀有度、效果内容、程序化地图、
+NPC 或 HUD 新 UI。
