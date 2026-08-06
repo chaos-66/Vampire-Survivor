@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与四次审计修复提交均已同步 GitHub，第五次全新复审 **PASS**，等待浏览器验收
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与审计修复均已同步，武器替换/升级语义修复（D-037）已应用，等待全新复审与重新验收
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
@@ -48,7 +48,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 第五次全新复审 PASS，等待浏览器验收
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 第五次复审 PASS，用户验收反馈武器叠加（D-037），武器语义修复待复审；`CP-M5-ABILITY-01` 为后续独立检查点
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -144,15 +144,17 @@
 ## CONTENT-01 审计要点
 
 - 前四次独立审计均为 FAIL（阻塞项全部为文档一致性）；第五次全新复审为 **PASS**。
-  代码与全部自动化验收项自始通过（12 个文件 / 278 项测试；tsc / build（59 模块）/
-  audit / diff check / HTTP 200 均 PASS）。
-- 范围与 D-036 严格一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
-  `PickupResult` 拾取结果、散射武器 offer、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
+- 用户浏览器验收反馈：选择散射弹后与默认武器叠加发射四弹，不符合"武器=手里拿的单件、
+  能力=附在角色身上"的直觉（D-037）。已修复：武器成长 apply 改为单件替换（获得新武器
+  替换当前持有）；散射弹 `maxLevel` 1→3，等级 1/2/3 对应 3/4/5 颗弹。
+- 范围与 D-036 一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
+  `PickupResult` 拾取结果、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
 - 未实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。
 
 ## 下一任务
 
-`CP-M5-CONTENT-01` 第五次全新复审已 PASS，唯一下一任务是用户浏览器验收（两种敌人
-混合、散射三弹、食物/宝箱可见、无回归、控制台无错误）；验收通过后按 `docs/PIPELINE.md`
-进行 Green 关闭验证与提交。不得实现敌人行为钩子、稀有度、效果内容、程序化地图、
-NPC 或 HUD 新 UI。
+`CP-M5-CONTENT-01` 武器语义修复已应用并验证（12 个文件 / 279 项测试；tsc / build 59
+模块 / audit / diff check 通过），由全新审计上下文复审；通过后用户重新浏览器验收
+（选择散射弹应替换默认武器并发射 3 颗弹、升级后 4/5 颗、迅捷蝠与食物/宝箱、无回归、
+控制台无错误），最后 Green 关闭。随后进行 `CP-M5-ABILITY-01` 范围关卡（斧头/吸经验/
+追踪弹，D-037）。不得实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。

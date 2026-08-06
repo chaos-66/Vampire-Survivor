@@ -44,7 +44,7 @@ const ensureScatterWeaponProgression = (): ProgressionDefinition => {
       {
         id: SCATTER_WEAPON_ID,
         name: '散射弹',
-        description: '获得散射弹武器：一次发射三颗弹',
+        description: '获得散射弹武器（替换当前武器）：一次发射多颗弹，可升级',
       },
     )
   }

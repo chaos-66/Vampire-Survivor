@@ -69,7 +69,8 @@ export const createWeaponProgressionDefinition = (
           )
         }
         instance.level = 1
-        context.player.weapons.push(instance)
+        // 武器是角色手中持有的单件：获得新武器替换当前持有，不叠加。
+        context.player.weapons = [instance]
         return
       }
       if (owned.level >= definition.maxLevel) {

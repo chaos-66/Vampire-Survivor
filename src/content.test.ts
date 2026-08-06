@@ -243,22 +243,39 @@ describe('scatter weapon', () => {
     expect(offers).toHaveLength(3)
   })
 
-  it('is granted through apply and excluded once owned at max level', () => {
+  it('replaces the held weapon instead of stacking, and can level up to maxLevel', () => {
     const state = withPendingScatter()
+    expect(state.player.weapons).toHaveLength(1)
     expect(applyUpgradeChoice(state, SCATTER_WEAPON_ID)).toBe(true)
-    expect(
-      state.player.weapons.some((w) => w.definitionId === SCATTER_WEAPON_ID),
-    ).toBe(true)
+    expect(state.player.weapons).toHaveLength(1)
+    expect(state.player.weapons[0].definitionId).toBe(SCATTER_WEAPON_ID)
+    expect(state.player.weapons[0].level).toBe(1)
 
+    // 拥有后仍可升级（level 1 < maxLevel 3）
     state.experience = 5
+    tryEnterPendingUpgrade(state)
+    const offers = state.pendingUpgrade?.options ?? []
+    expect(offers[0].id).toBe(SCATTER_WEAPON_ID)
+    expect(applyUpgradeChoice(state, SCATTER_WEAPON_ID)).toBe(true)
+    expect(state.player.weapons[0].level).toBe(2)
+  })
+
+  it('is excluded from offers once owned at max level', () => {
+    const state = createGameState(arena, createSequenceRng([]))
+    const weapon = getWeapon(SCATTER_WEAPON_ID)!.create()
+    weapon.level = 3
+    state.player.weapons = [weapon]
+    state.experience = 3
     tryEnterPendingUpgrade(state)
     const offers = state.pendingUpgrade?.options ?? []
     expect(offers.some((o) => o.id === SCATTER_WEAPON_ID)).toBe(false)
   })
 
-  it('fires three projectiles at once', () => {
+  it('fires shots based on weapon level', () => {
     const state = createGameState(arena, createSequenceRng([]))
-    state.player.weapons.push(getWeapon(SCATTER_WEAPON_ID)!.create())
+    const weapon = getWeapon(SCATTER_WEAPON_ID)!.create()
+    weapon.level = 2
+    state.player.weapons = [weapon]
     state.enemies = [
       {
         id: 1,
@@ -276,7 +293,7 @@ describe('scatter weapon', () => {
       (projectile) =>
         projectile.damage === state.player.projectileDamage * 0.4,
     )
-    expect(scatterShots).toHaveLength(3)
+    expect(scatterShots).toHaveLength(4)
   })
 })
 
