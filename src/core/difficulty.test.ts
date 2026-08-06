@@ -214,14 +214,21 @@ describe('difficulty-driven spawning', () => {
 describe('difficulty HUD', () => {
   it('formats elapsed time and tier in Chinese', () => {
     expect(getDifficultyHudLines(30.25)).toEqual([
-      '时间 30.3 秒',
+      '时间 00:30',
       '难度 第 3 档',
+    ])
+  })
+
+  it('formats five-minute durations as mm:ss', () => {
+    expect(getDifficultyHudLines(299.9)).toEqual([
+      '时间 04:59',
+      '难度 第 4 档',
     ])
   })
 
   it('normalizes invalid elapsed time for display', () => {
     expect(getDifficultyHudLines(Number.NaN)).toEqual([
-      '时间 0.0 秒',
+      '时间 00:00',
       '难度 第 1 档',
     ])
   })

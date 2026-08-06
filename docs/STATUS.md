@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 升级随机化第四次全新复审 **PASS**，等待用户浏览器验收
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`、升级随机化 `e05977c`）均已同步，升级随机化复审 **PASS**，等待浏览器验收
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）已应用并验证，等待全新复审与用户验收
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步或已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -103,6 +103,8 @@
 - CONTENT-01 升级随机化：D-038 `offerWeight` 权重随机抽取、位置随机、散射弹权重 0.6
   （提交 `e05977c`）；三次复审 FAIL 均为文档一致性（同步证据缺失、PIPELINE 入口过时、
   证据链不全），第四次全新复审 **PASS**
+- CONTENT-01 坚持时间与卡片适配：D-039 5 分钟单局、HUD `mm:ss`、卡片描述自动换行
+  （`wrapTextByWidth`），已应用并验证
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -143,7 +145,8 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 升级随机化（D-038）第四次全新复审已 PASS，唯一下一任务是用户
-浏览器验收；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。后续独立检查点
-`CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。后续纯文档状态提交
-按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）已应用并验证，由全新审计上下文复审；
+通过后用户浏览器验收（5 分钟胜负、HUD 时间 mm:ss、卡片文字不溢出、散射弹替换/3/4/5
+颗弹、选项卡随机且权重可调、迅捷蝠与食物/宝箱、无回归、控制台无错误），最后 Green
+关闭。后续独立检查点 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。
+后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。

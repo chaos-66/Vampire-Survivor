@@ -2,8 +2,8 @@
  * 游戏更新协调器（纯逻辑）。
  *
  * 终局（won/lost）时立即返回，不推进任何模拟。
- * 运行中：先钳制本帧 dt 到 60 秒剩余，再模拟，再解析 outcome。
- * 失败（生命<=0）优先于同帧胜利（时间>=60）。
+ * 运行中：先钳制本帧 dt 到 RUN_DURATION_SECONDS 剩余，再模拟，再解析 outcome。
+ * 失败（生命<=0）优先于同帧胜利（时间>=RUN_DURATION_SECONDS）。
  *
  * 不导入 window/document。
  */

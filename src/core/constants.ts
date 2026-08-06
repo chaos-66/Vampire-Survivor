@@ -28,5 +28,5 @@ export const FOOD_HEAL = 20
 export const CHEST_XP = 5
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0
-/** 有效战斗时间达到该秒数即胜利（精确边界）。 */
-export const RUN_DURATION_SECONDS = 60
+/** 有效战斗时间达到该秒数即胜利（精确边界）。5 分钟 = 300 秒。 */
+export const RUN_DURATION_SECONDS = 300

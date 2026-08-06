@@ -6,6 +6,14 @@ import type { GameState } from '../core/game-state'
 import { getStatusMessage } from '../status'
 import { getDifficultyProfile } from '../core/difficulty'
 
+/** 秒数格式化为 mm:ss（向下取整；无效输入按 00:00）。 */
+export const formatClockSeconds = (seconds: number): string => {
+  const total = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0
+  const minutes = Math.floor(total / 60)
+  const rest = total % 60
+  return `${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')}`
+}
+
 export const getDifficultyHudLines = (
   elapsedActiveSeconds: number,
 ): [string, string] => {
@@ -14,7 +22,7 @@ export const getDifficultyHudLines = (
     : 0
   const difficulty = getDifficultyProfile(elapsed)
   return [
-    `时间 ${elapsed.toFixed(1)} 秒`,
+    `时间 ${formatClockSeconds(elapsed)}`,
     `难度 第 ${difficulty.tier} 档`,
   ]
 }

@@ -74,7 +74,7 @@ export const drawOutcomeOverlay = (
   context.font = '500 18px system-ui, sans-serif'
   context.fillStyle = '#c8c0b0'
   context.fillText(
-    outcome === 'won' ? '你坚持了 60 秒' : '你被敌人击败了',
+    outcome === 'won' ? '你坚持了 5 分钟' : '你被敌人击败了',
     cx,
     cy - 8,
   )

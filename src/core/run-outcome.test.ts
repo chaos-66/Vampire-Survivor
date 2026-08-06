@@ -19,7 +19,7 @@ import {
 describe('resolveRunOutcome', () => {
   it('starts as running for healthy early time', () => {
     expect(resolveRunOutcome(100, 0)).toBe('running')
-    expect(resolveRunOutcome(1, 59.99)).toBe('running')
+    expect(resolveRunOutcome(1, RUN_DURATION_SECONDS - 0.01)).toBe('running')
   })
 
   it('lost when health is zero or below', () => {
@@ -27,25 +27,27 @@ describe('resolveRunOutcome', () => {
     expect(resolveRunOutcome(-1, 10)).toBe('lost')
   })
 
-  it('won at exact 60 with positive health', () => {
+  it('won at exact duration with positive health', () => {
     expect(resolveRunOutcome(1, RUN_DURATION_SECONDS)).toBe('won')
-    expect(resolveRunOutcome(50, 60.5)).toBe('won')
+    expect(resolveRunOutcome(50, RUN_DURATION_SECONDS + 0.5)).toBe('won')
   })
 
   it('lost beats won when both conditions hold', () => {
-    expect(resolveRunOutcome(0, 60)).toBe('lost')
+    expect(resolveRunOutcome(0, RUN_DURATION_SECONDS)).toBe('lost')
     expect(resolveRunOutcome(0, 100)).toBe('lost')
   })
 })
 
 describe('clampDtToRunRemaining', () => {
-  it('clamps overshoot so elapsed lands on 60', () => {
-    expect(clampDtToRunRemaining(59.98, 0.05)).toBeCloseTo(0.02)
+  it('clamps overshoot so elapsed lands on the duration', () => {
+    expect(
+      clampDtToRunRemaining(RUN_DURATION_SECONDS - 0.02, 0.05),
+    ).toBeCloseTo(0.02)
   })
 
-  it('returns 0 when already at or past 60', () => {
-    expect(clampDtToRunRemaining(60, 0.05)).toBe(0)
-    expect(clampDtToRunRemaining(61, 1)).toBe(0)
+  it('returns 0 when already at or past the duration', () => {
+    expect(clampDtToRunRemaining(RUN_DURATION_SECONDS, 0.05)).toBe(0)
+    expect(clampDtToRunRemaining(RUN_DURATION_SECONDS + 1, 1)).toBe(0)
   })
 
   it('rejects non-positive dt', () => {
@@ -93,30 +95,30 @@ describe('updateGame outcome integration', () => {
     expect(state.elapsedActiveSeconds).toBe(0)
   })
 
-  it('precise win at 60 without overshooting elapsed', () => {
+  it('precise win at duration without overshooting elapsed', () => {
     const state = createGameState(world, createSequenceRng([]))
-    state.elapsedActiveSeconds = 59.98
+    state.elapsedActiveSeconds = RUN_DURATION_SECONDS - 0.02
     updateGame(state, { x: 0, y: 0 }, 0.05, frameFor(state))
-    expect(state.elapsedActiveSeconds).toBeCloseTo(60)
+    expect(state.elapsedActiveSeconds).toBeCloseTo(RUN_DURATION_SECONDS)
     expect(state.outcome).toBe('won')
   })
 
-  it('does not advance past 60 on further updates', () => {
+  it('does not advance past the duration on further updates', () => {
     const state = createGameState(world, createSequenceRng([]))
-    state.elapsedActiveSeconds = 59.98
+    state.elapsedActiveSeconds = RUN_DURATION_SECONDS - 0.02
     updateGame(state, { x: 0, y: 0 }, 0.05, frameFor(state))
     const enemies = state.enemies.length
     const x = state.player.x
     updateGame(state, { x: 1, y: 0 }, 1, frameFor(state))
     expect(state.outcome).toBe('won')
-    expect(state.elapsedActiveSeconds).toBeCloseTo(60)
+    expect(state.elapsedActiveSeconds).toBeCloseTo(RUN_DURATION_SECONDS)
     expect(state.player.x).toBe(x)
     expect(state.enemies.length).toBe(enemies)
   })
 
   it('pending upgrade freezes time so win cannot happen mid-choice', () => {
     const state = createGameState(world)
-    state.elapsedActiveSeconds = 59.5
+    state.elapsedActiveSeconds = RUN_DURATION_SECONDS - 0.5
     state.pendingUpgrade = {
       options: [
         {
@@ -128,7 +130,7 @@ describe('updateGame outcome integration', () => {
       ],
     }
     updateGame(state, { x: 0, y: 0 }, 1, frameFor(state))
-    expect(state.elapsedActiveSeconds).toBe(59.5)
+    expect(state.elapsedActiveSeconds).toBe(RUN_DURATION_SECONDS - 0.5)
     expect(state.outcome).toBe('running')
   })
 
@@ -175,7 +177,7 @@ describe('updateGame outcome integration', () => {
   it('lost preferred over win same conditions', () => {
     const state = createGameState(world)
     state.player = { ...state.player, health: 0 }
-    state.elapsedActiveSeconds = 60
+    state.elapsedActiveSeconds = RUN_DURATION_SECONDS
     updateGame(state, { x: 0, y: 0 }, 0.1, frameFor(state))
     expect(state.outcome).toBe('lost')
   })
@@ -183,7 +185,7 @@ describe('updateGame outcome integration', () => {
   it('terminal outcome is sticky', () => {
     const state = createGameState(world)
     state.outcome = 'won'
-    state.elapsedActiveSeconds = 60
+    state.elapsedActiveSeconds = RUN_DURATION_SECONDS
     state.player = { ...state.player, health: 0 }
     updateGame(state, { x: 0, y: 0 }, 1, frameFor(state))
     expect(state.outcome).toBe('won')

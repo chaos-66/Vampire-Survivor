@@ -1,1 +1,1 @@
-export const getStatusMessage = (): string => 'M4：坚持 60 秒'
+export const getStatusMessage = (): string => 'M5：坚持 5 分钟'

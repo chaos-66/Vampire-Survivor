@@ -1,6 +1,6 @@
 /**
  * 局内结果解析（纯函数）。
- * 优先级：生命 <= 0 失败 > 有效时间 >= 60 胜利 > 进行中。
+ * 优先级：生命 <= 0 失败 > 有效时间 >= RUN_DURATION_SECONDS 胜利 > 进行中。
  * 不负责模拟；由 game-loop 在钳制时间与生命后调用。
  */
 
@@ -21,7 +21,7 @@ export const resolveRunOutcome = (
   return 'running'
 }
 
-/** 本帧允许推进的有效战斗时间，使 elapsed 最多到 60，不越过。 */
+/** 本帧允许推进的有效战斗时间，使 elapsed 最多到 RUN_DURATION_SECONDS，不越过。 */
 export const clampDtToRunRemaining = (
   elapsedActiveSeconds: number,
   dtSeconds: number,

@@ -4,6 +4,7 @@
 
 import type { PendingUpgrade } from '../progression/progression-definition'
 import { getUpgradeCardRects } from './canvas-coordinates'
+import { wrapTextByWidth } from './text-wrap'
 
 export type ViewportSize = {
   width: number
@@ -51,6 +52,14 @@ export const drawUpgradeOverlay = (
     )
     context.font = '500 14px system-ui, sans-serif'
     context.fillStyle = '#c8c0b0'
-    context.fillText(option.description, r.x + r.width / 2, r.y + 74)
+    const descLines = wrapTextByWidth(
+      option.description,
+      r.width - 24,
+      14,
+      2,
+    )
+    for (let j = 0; j < descLines.length; j += 1) {
+      context.fillText(descLines[j], r.x + r.width / 2, r.y + 66 + j * 20)
+    }
   }
 }
