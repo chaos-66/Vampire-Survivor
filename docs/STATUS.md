@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 武器语义修复全新复审 **PASS**，等待用户重新浏览器验收
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`）均已同步，复审 PASS，等待重新验收
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 武器语义与升级随机化（D-037/D-038）均已应用并验证，等待全新复审与用户验收
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`）均已同步，升级随机化（D-038）已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义修复复审 PASS，等待用户重新验收；`CP-M5-ABILITY-01` 为后续独立检查点**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义与升级随机化已应用，等待复审；`CP-M5-ABILITY-01` 为后续独立检查点**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -138,7 +138,8 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 武器语义修复（D-037：单件替换 + 可升级）复审已 PASS，唯一下一任务是
-用户重新浏览器验收；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。后续
-独立检查点 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。后续纯文档
-状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 升级随机化（D-038）已应用并验证，由全新审计上下文复审；通过后
+用户浏览器验收（散射弹替换默认武器、3/4/5 颗弹、升级选项卡随机且权重可调、迅捷蝠与
+食物/宝箱、无回归、控制台无错误），最后 Green 关闭。后续独立检查点
+`CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。后续纯文档状态提交
+按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。

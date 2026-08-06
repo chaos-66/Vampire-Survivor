@@ -22,6 +22,7 @@ import { advanceWeapons } from './weapons/weapon-system'
 import { getWeapon } from './weapons/weapon-registry'
 import { tryEnterPendingUpgrade } from './progression/upgrade-system'
 import { applyUpgradeChoice } from './progression/upgrade-system'
+import { getProgression } from './progression/progression-registry'
 import { createDrop } from './drops/drop-factory'
 import { getDrop } from './drops/drop-registry'
 import { updateGame } from './core/game-loop'
@@ -31,7 +32,7 @@ import {
 } from './content/bootstrap'
 import { FOOD_HEAL, CHEST_XP, GEM_VALUE, CONTACT_DAMAGE } from './core/constants'
 import type { EnemyDefinition } from './enemies/enemy-definition'
-import type { GameState } from './core/game-state'
+import type { GameState, Rng } from './core/game-state'
 
 const arena = { width: 960, height: 540 }
 
@@ -226,21 +227,36 @@ describe('pickup results', () => {
 })
 
 describe('scatter weapon', () => {
+  /** rng 序列使第一次抽取命中散射弹（池顺序 swift/haste/power/scatter，总权重 3.6，cursor 0.9*3.6=3.24 落在 3.0-3.6 区间）。 */
+  const scatterFirstRng = (): Rng => createSequenceRng([0.9, 0.5, 0.9])
+
   const withPendingScatter = (): GameState => {
-    const state = createGameState(arena, createSequenceRng([]))
+    const state = createGameState(arena, scatterFirstRng())
     state.experience = 3
     tryEnterPendingUpgrade(state)
     expect(state.pendingUpgrade?.options[0].id).toBe(SCATTER_WEAPON_ID)
     return state
   }
 
-  it('is the first upgrade offer while not owned', () => {
-    const state = createGameState(arena, createSequenceRng([]))
+  it('can appear in offers with weighted probability while not owned', () => {
+    const state = createGameState(arena, scatterFirstRng())
     state.experience = 3
     tryEnterPendingUpgrade(state)
     const offers = state.pendingUpgrade?.options ?? []
     expect(offers[0].id).toBe(SCATTER_WEAPON_ID)
     expect(offers).toHaveLength(3)
+  })
+
+  it('does not always appear: weight 0 excludes it entirely', () => {
+    const state = createGameState(arena, scatterFirstRng())
+    state.experience = 3
+    const scatter = getProgression(SCATTER_WEAPON_ID)!
+    const original = scatter.offerWeight
+    scatter.offerWeight = 0
+    tryEnterPendingUpgrade(state)
+    const offers = state.pendingUpgrade?.options ?? []
+    expect(offers.some((o) => o.id === SCATTER_WEAPON_ID)).toBe(false)
+    scatter.offerWeight = original
   })
 
   it('replaces the held weapon instead of stacking, and can level up to maxLevel', () => {
@@ -252,6 +268,7 @@ describe('scatter weapon', () => {
     expect(state.player.weapons[0].level).toBe(1)
 
     // 拥有后仍可升级（level 1 < maxLevel 3）
+    state.rng = scatterFirstRng()
     state.experience = 5
     tryEnterPendingUpgrade(state)
     const offers = state.pendingUpgrade?.options ?? []

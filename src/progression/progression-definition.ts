@@ -22,6 +22,8 @@ export type ProgressionDefinition = {
   description: string
   /** null = 无限；number = 有限上限。禁止用 999 等魔法数表示无限。 */
   maxLevel: number | null
+  /** 升级候选出现权重（可选，默认 1；0 或缺失按 1 处理，负值按 0 排除）。 */
+  offerWeight?: number
   isEligible: (context: ProgressionContext) => boolean
   apply: (context: ProgressionContext) => void
 }

@@ -17,10 +17,14 @@ export const tryEnterPendingUpgrade = (state: GameState): void => {
   if (state.experience < state.experienceToNextLevel) {
     return
   }
-  const options = generateUpgradeOffers({
-    player: state.player,
-    progressionLevels: state.progressionLevels,
-  })
+  const options = generateUpgradeOffers(
+    {
+      player: state.player,
+      progressionLevels: state.progressionLevels,
+    },
+    3,
+    state.rng,
+  )
   if (options.length === 0) {
     // 无可用候选时不进入冻结，避免经验达标后永久卡住。
     return

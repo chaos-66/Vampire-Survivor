@@ -340,10 +340,11 @@ describe('progression registry identity', () => {
     const state = createGameState(arena)
     state.experience = 3
     state.pendingUpgrade = {
-      options: generateUpgradeOffers({
-        player: state.player,
-        progressionLevels: {},
-      }),
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
+      ],
     }
     applyUpgradeChoice(state, 'swift')
     expect(state.player.moveSpeed).toBeCloseTo(before * 1.1)
@@ -586,10 +587,13 @@ describe('pending input and offers', () => {
   it('maxLevel null never filters; finite filters', () => {
     const state = createGameState(arena)
     state.progressionLevels = { swift: 1000 }
-    const offers = generateUpgradeOffers({
-      player: state.player,
-      progressionLevels: state.progressionLevels,
-    })
+    const offers = generateUpgradeOffers(
+      {
+        player: state.player,
+        progressionLevels: state.progressionLevels,
+      },
+      20,
+    )
     expect(offers.some((o) => o.id === 'swift')).toBe(true)
   })
 

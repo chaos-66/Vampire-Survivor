@@ -47,6 +47,7 @@ const ensureScatterWeaponProgression = (): ProgressionDefinition => {
         description: '获得散射弹武器（替换当前武器）：一次发射多颗弹，可升级',
       },
     )
+    scatterWeaponProgression.offerWeight = 0.6
   }
   return scatterWeaponProgression
 }

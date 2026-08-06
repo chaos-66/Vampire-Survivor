@@ -454,6 +454,9 @@
 | 2026-08-06 | `git commit -m "M5: replace weapon stacking with single held weapon"` | 通过 | 创建 CONTENT-01 武器语义修复提交 `8a49ef5`，包含 4 个源码/测试文件和 6 个流程文档。 |
 | 2026-08-06 | CONTENT-01 武器修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `8a49ef5` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CONTENT-01 武器语义修复全新独立复审 | PASS | 全新审计上下文确认：武器成长 apply 单件替换（`weapon-progression.ts:73`）、散射弹 maxLevel 3 且等级 1/2/3 → 3/4/5 颗弹、无 `weapons.push` 残留路径、测试覆盖替换/升级/满级排除/按等级发射；D-037 记录与文档一致，能力系统未越界实现。独立复跑 `npm test`（12 个文件 / 279 项）、`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器重新验收仍为 `UNVERIFIED`。 |
+| 2026-08-06 | 用户 CP-M5-CONTENT-01 升级随机化反馈 | 反馈 | 用户要求：升级选项卡位置随机、不必每次升级都出现武器、各选项出现概率随内容增多可调。已记录 D-038，并入 CONTENT-01。 |
+| 2026-08-06 | CONTENT-01 升级随机化实现 | 已应用 | `ProgressionDefinition.offerWeight`（可选默认 1）；`generateUpgradeOffers` 改为按权重随机抽取（无放回、位置随机），rng 复用 `GameState.rng`；删除武器分类优先排序；散射弹 `offerWeight: 0.6`；迁移受影响测试（固定 rng 序列复现）。 |
+| 2026-08-06 | CONTENT-01 升级随机化验证 | 通过 | `npm test` 为 12 个文件 / 280 项测试；`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
