@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，用户浏览器验收 **PASS**，已 Green 关闭
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 范围已批准（D-036），等待实现
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -138,7 +138,8 @@
 
 ## 下一任务
 
-`CP-M5-EFFECTS-01` 已 Green 关闭。唯一下一任务是 `CP-M5-CONTENT-01` 的范围关卡：
-按 `docs/PIPELINE.md` 阶段 0 产出唯一检查点 ID、目标/非目标、受影响模块、自动与浏览器
-验收项，并在 `docs/DECISIONS.md` 记录范围批准后开始实现。范围预期为第一批真实内容
-（敌人、武器、食物、宝箱）；依赖为前述架构全部 Green。不得直接实现或开始 NPC。
+`CP-M5-CONTENT-01` 范围关卡已批准（D-036）：第一批真实内容（`fast_enemy`、
+`scatter_weapon`、`food_drop`、`chest_drop`）与三个通用机制扩展（`spawnWeight` 权重生成、
+`EnemyDefinition.drops` 掉落表、`PickupResult` 拾取结果）。范围细节见
+`docs/PLAN.md`；下一步为阶段 1 基线检查与实现。不得实现敌人行为钩子、稀有度、效果内容、
+程序化地图、NPC 或 HUD 新 UI。

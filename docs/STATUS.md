@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 已达到 **Green**；`CP-M5-CONTENT-01` 范围关卡待进行
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，用户浏览器验收 **PASS**，已 Green 关闭
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 范围关卡已批准（D-036）
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 范围已批准，等待实现
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -45,7 +45,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 范围关卡待进行**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 范围已批准，实现待进行**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -124,7 +124,7 @@
 
 ## 下一步
 
-`CP-M5-EFFECTS-01` 已 Green 关闭。唯一下一任务是 `CP-M5-CONTENT-01` 的范围关卡：
-按 `docs/PIPELINE.md` 阶段 0 产出唯一检查点 ID、目标/非目标、受影响模块、自动与浏览器
-验收项，并在 `docs/DECISIONS.md` 记录范围批准后开始实现。后续纯文档状态提交按
-`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 范围关卡已批准（D-036）。下一步为阶段 1 基线检查与实现：按
+`docs/PIPELINE.md` 扩展 `EnemyDefinition`（`spawnWeight`、`drops`）、通用掉落生成、
+`PickupResult` 及新内容文件，随后验证、提交、独立审计与浏览器验收。后续纯文档状态提交
+按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
