@@ -4,12 +4,14 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与审计修复均已同步，武器替换/升级语义修复（D-037）已应用，等待全新复审与重新验收
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`）均已同步，复审 PASS，等待重新验收
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
 - CONTENT-01 审计对齐提交：`9dd2c73`（`M5: align content audit handoff`），已同步 GitHub
 - CONTENT-01 审计记录提交：`c19b3ab`（`M5: record content audit fix sync`），已同步 GitHub
+- CONTENT-01 计数修复提交：`66d397f`（`M5: fix content audit count wording`），已同步 GitHub
+- CONTENT-01 武器语义修复提交：`8a49ef5`（`M5: replace weapon stacking with single held weapon`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -146,15 +148,16 @@
 - 前四次独立审计均为 FAIL（阻塞项全部为文档一致性）；第五次全新复审为 **PASS**。
 - 用户浏览器验收反馈：选择散射弹后与默认武器叠加发射四弹，不符合"武器=手里拿的单件、
   能力=附在角色身上"的直觉（D-037）。已修复：武器成长 apply 改为单件替换（获得新武器
-  替换当前持有）；散射弹 `maxLevel` 1→3，等级 1/2/3 对应 3/4/5 颗弹。
+  替换当前持有）；散射弹 `maxLevel` 1→3，等级 1/2/3 对应 3/4/5 颗弹。修复后全新复审
+  为 **PASS**。
 - 范围与 D-036 一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
   `PickupResult` 拾取结果、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
 - 未实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。
 
 ## 下一任务
 
-`CP-M5-CONTENT-01` 武器语义修复已应用并验证（12 个文件 / 279 项测试；tsc / build 59
-模块 / audit / diff check 通过），由全新审计上下文复审；通过后用户重新浏览器验收
+`CP-M5-CONTENT-01` 武器语义修复复审已 PASS，唯一下一任务是用户重新浏览器验收
 （选择散射弹应替换默认武器并发射 3 颗弹、升级后 4/5 颗、迅捷蝠与食物/宝箱、无回归、
-控制台无错误），最后 Green 关闭。随后进行 `CP-M5-ABILITY-01` 范围关卡（斧头/吸经验/
-追踪弹，D-037）。不得实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。
+控制台无错误）；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。随后进行
+`CP-M5-ABILITY-01` 范围关卡（斧头/吸经验/追踪弹，D-037）。不得实现敌人行为钩子、
+稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。

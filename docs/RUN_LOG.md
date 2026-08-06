@@ -451,6 +451,9 @@
 | 2026-08-06 | 用户 CP-M5-CONTENT-01 浏览器验收 | FAIL（反馈） | 用户发现选择散射弹后与默认武器叠加共发射四颗弹；要求武器为单件持有（替换而非叠加）、武器可升级、能力与武器分离（斧头/吸经验/追踪弹等被动能力附着角色）。已记录 D-037；能力系统列为独立检查点 `CP-M5-ABILITY-01`。 |
 | 2026-08-06 | CONTENT-01 武器语义修复 | 已应用 | 武器成长 apply 改为单件替换（获得新武器替换当前持有）；散射弹 `maxLevel` 1→3，等级 1/2/3 对应 3/4/5 颗弹；更新针对性测试（替换语义、升级路径、按等级发射、满级排除）。 |
 | 2026-08-06 | CONTENT-01 武器修复验证 | 通过 | `npm test` 为 12 个文件 / 279 项测试；`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-06 | `git commit -m "M5: replace weapon stacking with single held weapon"` | 通过 | 创建 CONTENT-01 武器语义修复提交 `8a49ef5`，包含 4 个源码/测试文件和 6 个流程文档。 |
+| 2026-08-06 | CONTENT-01 武器修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `8a49ef5` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CONTENT-01 武器语义修复全新独立复审 | PASS | 全新审计上下文确认：武器成长 apply 单件替换（`weapon-progression.ts:73`）、散射弹 maxLevel 3 且等级 1/2/3 → 3/4/5 颗弹、无 `weapons.push` 残留路径、测试覆盖替换/升级/满级排除/按等级发射；D-037 记录与文档一致，能力系统未越界实现。独立复跑 `npm test`（12 个文件 / 279 项）、`npx tsc --noEmit`、`npm run build`（59 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器重新验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

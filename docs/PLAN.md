@@ -104,8 +104,8 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
   拾取汇总由 `game-loop` 应用，生命钳制到最大生命；纯函数不依赖 DOM。
 - 默认敌人 `spawnWeight: 2`、`fast_enemy` `spawnWeight: 1`；食物回血 20、宝箱经验 +5；
   掉落颜色通过 `DropDefinition.color` 数据驱动，绘制层不按 ID 硬编码。
-- 散射武器经 `createWeaponProgressionDefinition` 注册武器升级 offer，一次发射三颗弹，
-  伤害低于默认单弹以保持总量平衡。
+- 散射武器经 `createWeaponProgressionDefinition` 注册武器升级 offer，单件持有（选择时替换
+  当前武器），等级 1/2/3 对应 3/4/5 颗弹，伤害低于默认单弹以保持总量平衡。
 
 ## DROP-ARCH 交接要点
 
