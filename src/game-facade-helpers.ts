@@ -18,7 +18,7 @@ import { advanceWeapons } from './weapons/weapon-system'
 import {
   pickupDrops as pickupDropsCore,
   spawnExperienceDropAt as spawnExperienceDropAtCore,
-  spawnExperienceDropsAt as spawnExperienceDropsAtCore,
+  spawnDropsForKills as spawnDropsForKillsCore,
 } from './progression/experience-system'
 import { tryEnterPendingUpgrade } from './progression/upgrade-system'
 import { movePlayer as movePlayerCore } from './actors/player-system'
@@ -78,10 +78,11 @@ export const advanceProjectilesOnState = (
   state.projectiles = step.projectiles
   state.enemies = step.enemies
   state.defeatedCount += step.defeatedDelta
-  const spawned = spawnExperienceDropsAtCore(
+  const spawned = spawnDropsForKillsCore(
     state.drops,
     state.nextDropId,
     step.kills,
+    state.rng,
   )
   state.drops = spawned.drops
   state.nextDropId = spawned.nextDropId
@@ -94,6 +95,15 @@ export const pickupDropsOnState = (state: GameState): void => {
   const result = pickupDropsCore(state.player, state.drops, state.experience)
   state.drops = result.drops
   state.experience = result.experience
+  if (result.healthDelta !== 0) {
+    state.player = {
+      ...state.player,
+      health: Math.min(
+        state.player.maxHealth,
+        state.player.health + result.healthDelta,
+      ),
+    }
+  }
   tryEnterPendingUpgrade(state)
 }
 

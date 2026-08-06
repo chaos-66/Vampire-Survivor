@@ -20,7 +20,7 @@ import { advanceProjectiles } from '../combat/projectile-system'
 import { advanceWeapons } from '../weapons/weapon-system'
 import {
   pickupDrops,
-  spawnExperienceDropsAt,
+  spawnDropsForKills,
 } from '../progression/experience-system'
 import { tryEnterPendingUpgrade } from '../progression/upgrade-system'
 import type { FrameContext } from '../world/frame-context'
@@ -94,10 +94,11 @@ const simulateActiveSlice = (
   state.projectiles = step.projectiles
   state.enemies = step.enemies
   state.defeatedCount += step.defeatedDelta
-  const spawnedDrops = spawnExperienceDropsAt(
+  const spawnedDrops = spawnDropsForKills(
     state.drops,
     state.nextDropId,
     step.kills,
+    state.rng,
   )
   state.drops = spawnedDrops.drops
   state.nextDropId = spawnedDrops.nextDropId
@@ -105,6 +106,15 @@ const simulateActiveSlice = (
   const picked = pickupDrops(state.player, state.drops, state.experience)
   state.drops = picked.drops
   state.experience = picked.experience
+  if (picked.healthDelta !== 0) {
+    state.player = {
+      ...state.player,
+      health: Math.min(
+        state.player.maxHealth,
+        state.player.health + picked.healthDelta,
+      ),
+    }
+  }
   tryEnterPendingUpgrade(state)
 
   state.player = clampPlayerHealthAndArena(state.player, state.arena)

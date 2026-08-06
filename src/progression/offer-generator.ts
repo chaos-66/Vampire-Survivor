@@ -3,6 +3,7 @@
  * - maxLevel: number 达上限则排除；null 永不排除
  * - 尊重 isEligible
  * - 确定性注册顺序，不随机
+ * - 武器分类（categoryId === 'weapon'）优先展示，未获得的新武器可及
  * - 不写死分类或具体升级名称
  *
  * 返回的 options 即为 UI 显示与输入绑定的唯一来源。
@@ -14,6 +15,12 @@ import {
   type UpgradeOption,
 } from './progression-definition'
 import { listProgressions } from './progression-registry'
+
+const weaponFirst = (a: UpgradeOption, b: UpgradeOption): number => {
+  const aw = a.categoryId === 'weapon' ? 0 : 1
+  const bw = b.categoryId === 'weapon' ? 0 : 1
+  return aw - bw
+}
 
 export const generateUpgradeOffers = (
   context: ProgressionContext,
@@ -34,9 +41,7 @@ export const generateUpgradeOffers = (
       description: definition.description,
       categoryId: definition.categoryId,
     })
-    if (offers.length >= limit) {
-      break
-    }
   }
-  return offers
+  offers.sort(weaponFirst)
+  return offers.slice(0, limit)
 }

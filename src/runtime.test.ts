@@ -67,8 +67,8 @@ describe('投射物运行时顺序', () => {
     expect(result.projectiles).toHaveLength(0)
     expect(result.enemies).toHaveLength(0)
     expect(result.kills).toEqual([
-      { x: 100, y: 100 },
-      { x: 101, y: 100 },
+      { x: 100, y: 100, definitionId: DEFAULT_ENEMY_ID },
+      { x: 101, y: 100, definitionId: DEFAULT_ENEMY_ID },
     ])
   })
 

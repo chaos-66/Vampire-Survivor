@@ -22,6 +22,10 @@ export const PROJECTILE_LIFETIME = 2
 export const PROJECTILE_BOUNDS_MARGIN = 64
 export const GEM_RADIUS = 8
 export const GEM_VALUE = 1
+/** 食物拾取恢复的生命值。 */
+export const FOOD_HEAL = 20
+/** 宝箱拾取提供的一次性经验。 */
+export const CHEST_XP = 5
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0
 /** 有效战斗时间达到该秒数即胜利（精确边界）。 */

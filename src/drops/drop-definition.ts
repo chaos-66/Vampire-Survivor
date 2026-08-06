@@ -5,4 +5,6 @@ export type DropDefinition = {
   description: string
   radius: number
   pickupDefinitionId: string
+  /** 绘制颜色（数据驱动；绘制层不按内容 ID 硬编码）。 */
+  color: string
 }

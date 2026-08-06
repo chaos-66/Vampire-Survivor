@@ -49,7 +49,7 @@ export {
 export type { Enemy, Projectile } from './combat/enemy-types'
 export type { Drop } from './drops/drop-types'
 export type { DropDefinition } from './drops/drop-definition'
-export type { PickupDefinition } from './drops/pickup-definition'
+export type { PickupDefinition, PickupResult } from './drops/pickup-definition'
 export { createDrop } from './drops/drop-factory'
 export {
   registerDrop,
@@ -63,7 +63,10 @@ export {
   listPickups,
   clearPickupRegistry,
 } from './drops/pickup-registry'
-export type { EnemyDefinition } from './enemies/enemy-definition'
+export type {
+  EnemyDefinition,
+  EnemyDropRoll,
+} from './enemies/enemy-definition'
 export { createEnemy } from './enemies/enemy-factory'
 export {
   registerEnemy,
@@ -75,6 +78,7 @@ export {
   edgeSpawnPosition,
   spawnEnemyOnEdge,
   chasePlayer,
+  pickEnemyDefinitionId,
 } from './combat/enemy-system'
 export { projectileOutOfBounds } from './combat/projectile-system'
 
@@ -136,6 +140,40 @@ export {
   registerDefaultContent,
   resetAllContentRegistriesForTests,
 } from './content/bootstrap'
+export {
+  DEFAULT_ENEMY_ID,
+  defaultEnemy,
+} from './content/enemies/default-enemy'
+export {
+  FAST_ENEMY_ID,
+  fastEnemy,
+} from './content/enemies/fast-enemy'
+export {
+  DEFAULT_WEAPON_ID,
+  defaultProjectileWeapon,
+} from './content/weapons/default-projectile'
+export {
+  SCATTER_WEAPON_ID,
+  scatterProjectileWeapon,
+} from './content/weapons/scatter-weapon'
+export {
+  EXPERIENCE_DROP_ID,
+  EXPERIENCE_PICKUP_ID,
+  experienceDrop,
+  experiencePickup,
+} from './content/drops/experience-drop'
+export {
+  FOOD_DROP_ID,
+  FOOD_PICKUP_ID,
+  foodDrop,
+  foodPickup,
+} from './content/drops/food-drop'
+export {
+  CHEST_DROP_ID,
+  CHEST_PICKUP_ID,
+  chestDrop,
+  chestPickup,
+} from './content/drops/chest-drop'
 
 export {
   cssPointToLogical,
@@ -147,6 +185,8 @@ export {
 export { zeroVec } from './vec'
 export type { Arena } from './movement'
 export type { UpgradeId } from './progression/types-compat'
+export { spawnDropsForKills } from './progression/experience-system'
+export type { KillPoint, DropSpawnPoint } from './progression/experience-system'
 
 export {
   getCharacter,
@@ -160,7 +200,7 @@ export {
   registerWeapon,
   clearWeaponRegistry,
 } from './weapons/weapon-registry'
-export { advanceWeapons } from './weapons/weapon-system'
+export { advanceWeapons, readyToFire } from './weapons/weapon-system'
 export { createWeaponProgressionDefinition } from './weapons/weapon-progression'
 export type { WeaponDefinition, WeaponInstance } from './weapons/weapon-definition'
 

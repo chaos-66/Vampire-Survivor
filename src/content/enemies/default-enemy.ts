@@ -15,4 +15,5 @@ export const defaultEnemy: EnemyDefinition = {
   radius: ENEMY_RADIUS,
   speed: ENEMY_SPEED,
   maxHealth: ENEMY_MAX_HEALTH,
+  spawnWeight: 2,
 }

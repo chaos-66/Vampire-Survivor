@@ -10,7 +10,7 @@ export const experiencePickup: PickupDefinition = {
   id: EXPERIENCE_PICKUP_ID,
   name: '经验',
   description: '增加既有经验值',
-  collect: (experience) => experience + GEM_VALUE,
+  collect: () => ({ experienceDelta: GEM_VALUE, healthDelta: 0 }),
 }
 
 export const experienceDrop: DropDefinition = {
@@ -19,4 +19,5 @@ export const experienceDrop: DropDefinition = {
   description: '被收集时提供经验',
   radius: GEM_RADIUS,
   pickupDefinitionId: EXPERIENCE_PICKUP_ID,
+  color: '#7dffb3',
 }

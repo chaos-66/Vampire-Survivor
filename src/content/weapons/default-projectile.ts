@@ -12,6 +12,7 @@ import {
 import type { Enemy } from '../../combat/enemy-types'
 import type { CombatPlayer } from '../../actors/player-types'
 import { normalize, vecLength } from '../../vec'
+import { readyToFire } from '../../weapons/weapon-system'
 import type {
   WeaponDefinition,
   WeaponInstance,
@@ -20,7 +21,7 @@ import type {
 
 export const DEFAULT_WEAPON_ID = 'default_projectile'
 
-const selectNearestEnemy = (
+export const selectNearestEnemy = (
   player: CombatPlayer,
   enemies: readonly Enemy[],
 ): Enemy | null => {
@@ -54,18 +55,7 @@ export const defaultProjectileWeapon: WeaponDefinition = {
     cooldownRemaining: 0,
   }),
   update: (context: WeaponUpdateContext, instance: WeaponInstance): void => {
-    const cooldownBefore = instance.cooldownRemaining
-    instance.cooldownRemaining = Math.max(
-      0,
-      cooldownBefore - context.dtSeconds,
-    )
-    // 时间片使用半开区间；恰好在末端就绪时由下一个时间片触发。
-    if (
-      instance.cooldownRemaining > 0 ||
-      (context.deferReadyAtEnd &&
-        cooldownBefore > 0 &&
-        cooldownBefore === context.dtSeconds)
-    ) {
+    if (!readyToFire(instance, context)) {
       return
     }
     const target = selectNearestEnemy(context.player, context.enemies)

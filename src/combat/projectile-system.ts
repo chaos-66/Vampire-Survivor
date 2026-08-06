@@ -22,7 +22,7 @@ export type ProjectileStepResult = {
   projectiles: Projectile[]
   enemies: Enemy[]
   defeatedDelta: number
-  kills: Array<{ x: number; y: number }>
+  kills: Array<{ x: number; y: number; definitionId: string }>
 }
 
 export const advanceProjectiles = (
@@ -38,7 +38,7 @@ export const advanceProjectiles = (
   const orderedEnemies = [...enemyById.values()].sort((a, b) => a.id - b.id)
   const killedEnemyIds = new Set<number>()
   let defeatedDelta = 0
-  const kills: Array<{ x: number; y: number }> = []
+  const kills: Array<{ x: number; y: number; definitionId: string }> = []
 
   const sortedProjectiles = [...projectiles].sort((a, b) => a.id - b.id)
 
@@ -67,7 +67,7 @@ export const advanceProjectiles = (
           enemy.health = 0
           killedEnemyIds.add(enemy.id)
           defeatedDelta += 1
-          kills.push({ x: enemy.x, y: enemy.y })
+          kills.push({ x: enemy.x, y: enemy.y, definitionId: enemy.definitionId })
         } else {
           enemy.health = nextHp
         }

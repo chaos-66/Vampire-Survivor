@@ -12,6 +12,8 @@ import {
 } from '../core/constants'
 import type { CombatPlayer } from '../actors/player-types'
 import type { Enemy } from './enemy-types'
+import type { EnemyDefinition } from '../enemies/enemy-definition'
+import { listEnemies } from '../enemies/enemy-registry'
 import type { ViewRect } from '../world/frame-context'
 import { circlesOverlap } from '../collision'
 import type { DifficultyProfile } from '../core/difficulty'
@@ -20,12 +22,37 @@ import {
   getDifficultyProfile,
 } from '../core/difficulty'
 import { createEnemy } from '../enemies/enemy-factory'
-import { DEFAULT_ENEMY_ID } from '../content/enemies/default-enemy'
 
 /** 生成点距视口边缘的外边距（逻辑单位）。 */
 export const SPAWN_VIEW_MARGIN = 80
 /** 生成点沿视口外侧向世界延伸的最大深度（逻辑单位）。 */
 export const SPAWN_VIEW_DEPTH = 160
+
+/** 按 spawnWeight 加权选择敌人定义 ID（确定性：注册表顺序 + 传入 rng）。 */
+export const pickEnemyDefinitionId = (
+  rng: () => number,
+  enemies: readonly EnemyDefinition[],
+): string => {
+  const weighted = enemies.map((definition) => ({
+    definition,
+    weight: Math.max(0, definition.spawnWeight ?? 1),
+  }))
+  const total = weighted.reduce((sum, entry) => sum + entry.weight, 0)
+  if (!(total > 0)) {
+    if (weighted.length === 0) {
+      throw new Error('Cannot pick enemy definition: no enemies registered')
+    }
+    return weighted[0].definition.id
+  }
+  let cursor = rng() * total
+  for (const entry of weighted) {
+    cursor -= entry.weight
+    if (cursor < 0) {
+      return entry.definition.id
+    }
+  }
+  return weighted[weighted.length - 1].definition.id
+}
 
 export type SpawnState = {
   /** 世界边界（历史名 arena = 世界，不是屏幕） */
@@ -239,7 +266,12 @@ export const spawnEnemyOutsideView = (
     }
   }
 
-  const enemy = createEnemy(DEFAULT_ENEMY_ID, state.nextEnemyId, pos.x, pos.y)
+  const enemy = createEnemy(
+    pickEnemyDefinitionId(state.rng, listEnemies()),
+    state.nextEnemyId,
+    pos.x,
+    pos.y,
+  )
   state.nextEnemyId += 1
   return enemy
 }
@@ -249,7 +281,12 @@ export const spawnEnemyOnEdge = (state: SpawnState): Enemy => {
   const edge = Math.floor(state.rng() * 4) % 4
   const t = state.rng()
   const pos = edgeSpawnPosition(state.arena, edge, t, ENEMY_RADIUS)
-  const enemy = createEnemy(DEFAULT_ENEMY_ID, state.nextEnemyId, pos.x, pos.y)
+  const enemy = createEnemy(
+    pickEnemyDefinitionId(state.rng, listEnemies()),
+    state.nextEnemyId,
+    pos.x,
+    pos.y,
+  )
   state.nextEnemyId += 1
   return enemy
 }

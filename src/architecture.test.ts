@@ -46,6 +46,7 @@ import { DEFAULT_CHARACTER_ID } from './content/characters/default-character'
 import { DEFAULT_WEAPON_ID } from './content/weapons/default-projectile'
 import { defaultProjectileWeapon } from './content/weapons/default-projectile'
 import { swiftUpgrade } from './content/upgrades/swift'
+import { FAST_ENEMY_ID } from './content/enemies/fast-enemy'
 import type { WeaponDefinition } from './weapons/weapon-definition'
 import type { CharacterDefinition } from './actors/character-definition'
 import type { EnemyDefinition } from './enemies/enemy-definition'
@@ -221,13 +222,22 @@ describe('enemy registry and factory', () => {
     )
   })
 
-  it('real spawn path uses the default definition and consecutive runtime ids', () => {
-    const state = createGameState(arena, createSequenceRng([0, 0.5, 1, 0.5]))
+  it('real spawn path picks weighted definitions and keeps consecutive runtime ids', () => {
+    const state = createGameState(
+      arena,
+      createSequenceRng([0, 0.5, 0.5, 0.5, 0.5, 0.5]),
+    )
     const first = spawnEnemyOnEdge(state)
     const second = spawnEnemyOnEdge(state)
     expect(first.definitionId).toBe(DEFAULT_ENEMY_ID)
     expect(second.definitionId).toBe(DEFAULT_ENEMY_ID)
     expect([first.id, second.id]).toEqual([1, 2])
+  })
+
+  it('weighted spawn can pick the fast enemy', () => {
+    const state = createGameState(arena, createSequenceRng([0, 0.5, 0.8]))
+    const enemy = spawnEnemyOnEdge(state)
+    expect(enemy.definitionId).toBe(FAST_ENEMY_ID)
   })
 })
 
@@ -250,7 +260,7 @@ describe('drop and pickup registry and factory', () => {
     const dropReplacement: DropDefinition = { ...experienceDrop, radius: 9 }
     const pickupReplacement: PickupDefinition = {
       ...experiencePickup,
-      collect: (experience) => experience + 2,
+      collect: () => ({ experienceDelta: 2, healthDelta: 0 }),
     }
     expect(() => registerDrop(dropReplacement)).toThrow(/different definition object/i)
     expect(() => registerPickup(pickupReplacement)).toThrow(/different definition object/i)
@@ -263,7 +273,7 @@ describe('drop and pickup registry and factory', () => {
       id: 'fixture_pickup',
       name: '测试拾取',
       description: '仅用于工厂测试',
-      collect: (experience) => experience,
+      collect: () => ({ experienceDelta: 1, healthDelta: 0 }),
     }
     const drop: DropDefinition = {
       id: 'fixture_drop',
@@ -271,6 +281,7 @@ describe('drop and pickup registry and factory', () => {
       description: '仅用于工厂测试',
       radius: 9,
       pickupDefinitionId: pickup.id,
+      color: '#ffffff',
     }
     registerPickup(pickup)
     registerDrop(drop)
@@ -296,6 +307,7 @@ describe('drop and pickup registry and factory', () => {
       description: '仅用于严格工厂测试',
       radius: 9,
       pickupDefinitionId: 'missing_pickup',
+      color: '#ffffff',
     }
     registerDrop(drop)
     expect(() => createDrop(drop.id, 1, 0, 0)).toThrow(/pickup not registered/i)
@@ -585,10 +597,11 @@ describe('pending input and offers', () => {
     const state = createGameState(arena)
     state.experience = 3
     state.pendingUpgrade = {
-      options: generateUpgradeOffers({
-        player: state.player,
-        progressionLevels: {},
-      }),
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
+      ],
     }
     applyUpgradeChoice(state, 'power')
     expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)

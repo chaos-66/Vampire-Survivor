@@ -12,7 +12,7 @@ import {
   splitDifficultyTime,
   type DifficultyProfile,
 } from './difficulty'
-import { createGameState } from './game-state'
+import { createGameState, createSequenceRng } from './game-state'
 import { updateGame } from './game-loop'
 import { advanceSpawns } from '../combat/enemy-system'
 import { getDifficultyHudLines } from '../ui/hud'
@@ -158,7 +158,10 @@ describe('difficulty-driven spawning', () => {
   )
 
   it('keeps enemy combat stats at their baseline in the highest tier', () => {
-    const state = createGameState(arena)
+    const state = createGameState(
+      arena,
+      createSequenceRng([0, 0.5, 0.5]),
+    )
     const highest = getDifficultyProfile(45)
 
     advanceSpawns(

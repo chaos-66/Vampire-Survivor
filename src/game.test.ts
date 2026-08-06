@@ -992,14 +992,12 @@ describe('upgrade effects and apply', () => {
       ],
     }
     applyUpgradeChoice(state, 'power')
-    if (state.pendingUpgrade === null) {
-      state.pendingUpgrade = {
-        options: [
-          { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
-          { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
-          { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
-        ],
-      }
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
+      ],
     }
     applyUpgradeChoice(state, 'power')
     expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 10)
@@ -1057,6 +1055,13 @@ describe('upgrade effects and apply', () => {
     expect(state.experience).toBe(5)
     expect(state.pendingUpgrade).not.toBeNull()
     expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 5)
+    state.pendingUpgrade = {
+      options: [
+        { id: 'swift', name: '迅捷', description: 'a', categoryId: 'stat' },
+        { id: 'haste', name: '急速', description: 'b', categoryId: 'stat' },
+        { id: 'power', name: '强击', description: 'c', categoryId: 'stat' },
+      ],
+    }
     applyUpgradeChoice(state, 'power')
     expect(state.level).toBe(3)
     expect(state.player.projectileDamage).toBe(PROJECTILE_DAMAGE + 10)

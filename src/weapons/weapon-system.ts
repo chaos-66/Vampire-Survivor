@@ -4,9 +4,36 @@
  */
 
 import { getWeapon } from './weapon-registry'
-import type { WeaponUpdateContext } from './weapon-definition'
+import type {
+  WeaponUpdateContext,
+  WeaponInstance,
+} from './weapon-definition'
 import type { CombatPlayer } from '../actors/player-types'
 import type { Enemy, Projectile } from '../combat/enemy-types'
+
+/**
+ * 推进武器冷却并判断本时间片是否就绪。
+ * 半开区间语义：恰好在切片末端就绪的事件由下一个时间片处理。
+ */
+export const readyToFire = (
+  instance: WeaponInstance,
+  context: WeaponUpdateContext,
+): boolean => {
+  const cooldownBefore = instance.cooldownRemaining
+  instance.cooldownRemaining = Math.max(
+    0,
+    cooldownBefore - context.dtSeconds,
+  )
+  if (
+    instance.cooldownRemaining > 0 ||
+    (context.deferReadyAtEnd &&
+      cooldownBefore > 0 &&
+      cooldownBefore === context.dtSeconds)
+  ) {
+    return false
+  }
+  return true
+}
 
 export const advanceWeapons = (
   player: CombatPlayer,

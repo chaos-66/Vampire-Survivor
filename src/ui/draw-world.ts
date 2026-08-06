@@ -13,6 +13,7 @@ import {
   viewRectFromCamera,
 } from '../world/frame-context'
 import { queryVisibleWorldObjects } from '../world/world-object'
+import { getDrop } from '../drops/drop-registry'
 
 /** 世界网格间距（逻辑单位）；仅绘制可见线。 */
 export const WORLD_GRID_SPACING = 256
@@ -44,7 +45,8 @@ export const drawWorld = (
       continue
     }
     const s = worldToScreen(drop, camera)
-    context.fillStyle = '#7dffb3'
+    const definition = getDrop(drop.definitionId)
+    context.fillStyle = definition?.color ?? '#7dffb3'
     context.beginPath()
     context.arc(s.x, s.y, drop.radius, 0, Math.PI * 2)
     context.fill()
