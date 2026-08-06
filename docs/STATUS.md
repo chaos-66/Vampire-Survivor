@@ -2,7 +2,7 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）复审文档修复已应用，等待再次复审与用户验收
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）复审证据补全已应用，等待第四次复审与用户验收
 - 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步或已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义（D-037）与升级随机化（D-038）复审 PASS，坚持时间与卡片适配（D-039）复审文档修复已应用，待再次复审；`CP-M5-ABILITY-01` 为后续独立检查点**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义（D-037）与升级随机化（D-038）复审 PASS，坚持时间与卡片适配（D-039）三次复审 FAIL 均为文档一致性，证据补全已应用，待第四次复审；`CP-M5-ABILITY-01` 为后续独立检查点**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -145,8 +145,8 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）已应用并验证，由全新审计上下文复审；
-通过后用户浏览器验收（5 分钟胜负、HUD 时间 mm:ss、卡片文字不溢出、散射弹替换/3/4/5
-颗弹、选项卡随机且权重可调、迅捷蝠与食物/宝箱、无回归、控制台无错误），最后 Green
-关闭。后续独立检查点 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。
-后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）复审证据补全已应用，由全新审计上下文
+第四次复审；通过后用户浏览器验收（5 分钟胜负、HUD 时间 mm:ss、卡片文字不溢出、散射弹
+替换/3/4/5 颗弹、选项卡随机且权重可调、迅捷蝠与食物/宝箱、无回归、控制台无错误），
+最后 Green 关闭。后续独立检查点 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走
+范围关卡。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
