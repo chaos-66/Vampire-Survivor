@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`）均已同步，升级随机化（D-038）已应用，等待复审
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`、升级随机化 `e05977c`）均已同步，随机化复审文档修复已应用，等待再次复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
@@ -12,6 +12,7 @@
 - CONTENT-01 审计记录提交：`c19b3ab`（`M5: record content audit fix sync`），已同步 GitHub
 - CONTENT-01 计数修复提交：`66d397f`（`M5: fix content audit count wording`），已同步 GitHub
 - CONTENT-01 武器语义修复提交：`8a49ef5`（`M5: replace weapon stacking with single held weapon`），已同步 GitHub
+- CONTENT-01 升级随机化提交：`e05977c`（`M5: weight randomize upgrade offers`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -50,7 +51,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义与升级随机化已应用，等待复审；`CP-M5-ABILITY-01` 为后续独立检查点
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义与升级随机化已应用，随机化复审文档修复已应用，等待再次复审；`CP-M5-ABILITY-01` 为后续独立检查点
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -148,16 +149,16 @@
 - 前四次独立审计均为 FAIL（阻塞项全部为文档一致性）；第五次全新复审为 **PASS**。
 - 用户验收反馈两轮：武器叠加（D-037，已修复：单件替换 + 散射弹 1/2/3 级 → 3/4/5 颗弹，
   修复后复审 PASS）；升级随机化（D-038，已应用：`offerWeight` 权重随机抽取、位置随机、
-  散射弹权重 0.6，待复审）。
+  散射弹权重 0.6；复审 FAIL 因同步证据缺失，文档修复已应用，待再次复审）。
 - 范围与 D-036 一致：`spawnWeight` 权重生成、`EnemyDefinition.drops` 掉落表、
   `PickupResult` 拾取结果、迅捷蝠、食物与宝箱、数据驱动掉落颜色。
 - 未实现敌人行为钩子、稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。
 
 ## 下一任务
 
-`CP-M5-CONTENT-01` 升级随机化（D-038）已应用并验证（12 个文件 / 280 项测试；tsc /
-build 59 模块 / audit / diff check 通过），由全新审计上下文复审；通过后用户浏览器验收
-（散射弹替换默认武器并发射 3 颗弹、升级后 4/5 颗、选项卡随机且权重可调、迅捷蝠与
-食物/宝箱、无回归、控制台无错误），最后 Green 关闭。随后进行 `CP-M5-ABILITY-01`
-范围关卡（斧头/吸经验/追踪弹，D-037）。不得实现敌人行为钩子、稀有度、效果内容、
-程序化地图、NPC 或 HUD 新 UI。
+`CP-M5-CONTENT-01` 升级随机化（D-038）复审文档修复已应用（12 个文件 / 280 项测试；
+tsc / build 59 模块 / audit / diff check 通过），由全新审计上下文再次复审；通过后用户
+浏览器验收（散射弹替换默认武器并发射 3 颗弹、升级后 4/5 颗、选项卡随机且权重可调、
+迅捷蝠与食物/宝箱、无回归、控制台无错误），最后 Green 关闭。随后进行
+`CP-M5-ABILITY-01` 范围关卡（斧头/吸经验/追踪弹，D-037）。不得实现敌人行为钩子、
+稀有度、效果内容、程序化地图、NPC 或 HUD 新 UI。

@@ -73,7 +73,7 @@ export const registerDefaultContent = (): void => {
   registerPickup(chestPickup)
   registerDrop(chestDrop)
 
-  // 顺序固定：1 迅捷 2 急速 3 强击；散射弹为武器 offer，生成时优先展示
+  // 顺序固定：1 迅捷 2 急速 3 强击；散射弹为武器 offer（offerWeight 0.6 控制出现概率）
   registerProgression(swiftUpgrade)
   registerProgression(hasteUpgrade)
   registerProgression(powerUpgrade)

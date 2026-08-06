@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 武器语义与升级随机化（D-037/D-038）均已应用并验证，等待全新复审与用户验收
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`）均已同步，升级随机化（D-038）已应用，等待复审
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 武器语义与升级随机化（D-037/D-038）均已应用并验证，随机化复审文档修复已应用，等待再次复审与用户验收
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义 `8a49ef5`、升级随机化 `e05977c`）均已同步，随机化复审文档修复已应用，等待再次复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -51,7 +51,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**CONTENT-01 审计记录提交 `c19b3ab` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**CONTENT-01 升级随机化提交 `e05977c` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -98,6 +98,10 @@
   最后同步提交未更新、旧措辞残留；第三次修复提交 `c19b3ab` 已推送
 - CONTENT-01 第四次独立复审：FAIL；代码通过，阻塞项为 STATUS 快照残留旧计数措辞；
   第四次修复已应用
+- CONTENT-01 武器语义修复：D-037 单件替换 + 散射弹 1/2/3 级 → 3/4/5 颗弹；修复后全新复审
+  PASS（提交 `8a49ef5`）
+- CONTENT-01 升级随机化：D-038 `offerWeight` 权重随机抽取、位置随机、散射弹权重 0.6
+  （提交 `e05977c`）；复审 FAIL（`e05977c` 同步证据缺失），文档修复已应用
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -138,8 +142,8 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 升级随机化（D-038）已应用并验证，由全新审计上下文复审；通过后
-用户浏览器验收（散射弹替换默认武器、3/4/5 颗弹、升级选项卡随机且权重可调、迅捷蝠与
-食物/宝箱、无回归、控制台无错误），最后 Green 关闭。后续独立检查点
+`CP-M5-CONTENT-01` 升级随机化（D-038）复审文档修复已应用，由全新审计上下文再次复审；
+通过后用户浏览器验收（散射弹替换默认武器、3/4/5 颗弹、升级选项卡随机且权重可调、
+迅捷蝠与食物/宝箱、无回归、控制台无错误），最后 Green 关闭。后续独立检查点
 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。后续纯文档状态提交
 按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
