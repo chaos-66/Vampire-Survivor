@@ -437,6 +437,10 @@
 | 2026-08-06 | CONTENT-01 审计修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `bdc9b70` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CONTENT-01 第二次独立复审 | FAIL | 复审确认代码与自动化验收全部通过；阻塞项仍为文档一致性：PIPELINE 第 6 节当前入口过时（EFFECTS 已 Green 关闭、当前检查点为 CONTENT-01）、HANDOFF 残留"范围关卡待进行"、`bdc9b70` 提交与推送事实未记录。 |
 | 2026-08-06 | CONTENT-01 复审文档修复 | 已应用 | 更新 PIPELINE 当前入口与 HANDOFF 残留表述；记录 `bdc9b70` 提交与推送证据；STATUS/HANDOFF 最后同步提交更新为 `bdc9b70`。 |
+| 2026-08-06 | `git commit -m "M5: align content audit handoff"` | 通过 | 创建第二次审计修复提交 `9dd2c73`，包含 4 个预期流程文档。 |
+| 2026-08-06 | CONTENT-01 第二次修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `9dd2c73` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CONTENT-01 第三次独立复审 | FAIL | 复审确认代码与全部自动化验收项通过；阻塞项仍为文档一致性：RUN_LOG 未记录 `9dd2c73` 提交与推送证据、STATUS/HANDOFF 最后同步提交未更新、`STATUS` 与 `HANDOFF` 残留"待推送/待复审"旧措辞。 |
+| 2026-08-06 | CONTENT-01 第三次文档修复 | 已应用 | 记录 `9dd2c73` 提交与推送证据；STATUS/HANDOFF 最后同步提交更新为 `9dd2c73` 并修正旧措辞；PIPELINE 当前入口补记 `9dd2c73`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
