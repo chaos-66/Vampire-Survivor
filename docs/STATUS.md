@@ -2,11 +2,15 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 范围关卡已批准
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，等待浏览器验收
+- 当前阶段：M5 基础建设；`CP-M5-EFFECTS-01` 已达到 **Green**；`CP-M5-CONTENT-01` 范围关卡待进行
+- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，用户浏览器验收 **PASS**，已 Green 关闭
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
+- EFFECTS 审计状态修复提交：`8650e7f`（`M5: record runtime effect audit repairs`），已同步 GitHub
+- EFFECTS 审计状态对齐提交：`9581698`（`M5: align runtime effect audit status`），已同步 GitHub
+- EFFECTS 交接稳定提交：`b523b4f`（`M5: stabilize runtime effect audit handoff`），已同步 GitHub
+- 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
@@ -37,15 +41,15 @@
 - 已审计的 MVP 基线：`6236896`（`M4: close run outcome checkpoint`）
 - 最终 MVP 纯文档收尾：`0d0289e`（`M4: close final MVP audit`）
 - OUTCOME 修复：`a596253`（`M4: fix run outcome audit findings`）
-- 最后更新：2026-08-05
+- 最后更新：2026-08-06
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH 与 WORLD-OBJECTS Green；EFFECTS 等待最终全新复审**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 范围关卡待进行**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**交接稳定提交 `b523b4f` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**EFFECTS 关闭状态提交即将记录；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -75,6 +79,11 @@
   diff check 通过
 - EFFECTS 第三次独立复审：FAIL；代码结论通过，但提交和同步状态文档过时
 - EFFECTS 第四次独立复审：FAIL；代码结论通过，但第三次失败计数和 `8650e7f` 同步证据仍过时
+- EFFECTS 第五次独立复审：FAIL；仅汇总计数过时，改用不依赖动态计数的稳定表述
+- EFFECTS 第六次全新独立复审：PASS；代码与流程均无阻塞项
+- EFFECTS 用户浏览器验收：PASS；Green 关闭验证：11 个文件 / 259 项测试；tsc / build（54
+  个模块）/ audit / diff check 通过
+- EFFECTS Green 关闭提交：即将创建（`M5: close runtime effect checkpoint`）
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -115,6 +124,7 @@
 
 ## 下一步
 
-第六次全新复审已 PASS，唯一下一任务是用户浏览器验收；验收通过后按 `docs/PIPELINE.md`
-进行 Green 关闭验证与提交。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，
-以避免递归状态提交。
+`CP-M5-EFFECTS-01` 已 Green 关闭。唯一下一任务是 `CP-M5-CONTENT-01` 的范围关卡：
+按 `docs/PIPELINE.md` 阶段 0 产出唯一检查点 ID、目标/非目标、受影响模块、自动与浏览器
+验收项，并在 `docs/DECISIONS.md` 记录范围批准后开始实现。后续纯文档状态提交按
+`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。

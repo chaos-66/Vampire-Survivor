@@ -3,8 +3,8 @@
 ## 当前事实
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
-- 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
-- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，等待浏览器验收
+- 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
+- 交接状态：EFFECTS 前两次独立审计发现代码问题，后续复审发现流程一致性问题；代码和流程问题均已修复，第六次全新复审为 **PASS**，用户浏览器验收 **PASS**，已 Green 关闭
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
@@ -43,7 +43,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH 与 WORLD-OBJECTS Green；EFFECTS 等待最终全新复审
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 范围关卡待进行
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -125,9 +125,20 @@
 - 不实现世界物体注册表、随机/程序化地图、空间索引、敌人/投射物/掉落障碍碰撞、可破坏物、
   交互、效果、食物、宝箱、NPC 或其他真实内容。
 
+## EFFECTS 关闭要点
+
+- 第六次全新独立复审为 PASS（代码与流程均无阻塞项）；用户浏览器验收为 PASS。
+- Green 关闭验证：`npm test` 为 11 个文件 / 259 项测试，`npx tsc --noEmit`、`npm run build`
+  （54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。
+- EFFECTS 全部提交均已同步：实现 `9ddf4f6`、修复 `9986b4d` / `980232c`、状态修复
+  `8650e7f` / `9581698`、稳定表述 `b523b4f`。
+- 五次 FAIL 的证据全部保留在 `docs/RUN_LOG.md`；当前阶段使用不依赖动态计数的稳定表述。
+- 当前实现包含即时/限时效果、对象身份注册表、严格应用、`refresh` / 有上限 `stack`、
+  活动状态和移动/武器有效属性接线；默认内容不注册效果。
+
 ## 下一任务
 
-第六次全新复审已 PASS，唯一下一任务是用户浏览器验收；验收通过后按 `docs/PIPELINE.md`
-进行 Green 关闭验证与提交。当前实现包含即时/限时效果、对象身份注册表、严格应用、
-`refresh` / 有上限 `stack`、活动状态和移动/武器有效属性接线；默认内容不注册效果，
-不得新增 UI、食物、宝箱、库存、NPC 或其他真实内容。
+`CP-M5-EFFECTS-01` 已 Green 关闭。唯一下一任务是 `CP-M5-CONTENT-01` 的范围关卡：
+按 `docs/PIPELINE.md` 阶段 0 产出唯一检查点 ID、目标/非目标、受影响模块、自动与浏览器
+验收项，并在 `docs/DECISIONS.md` 记录范围批准后开始实现。范围预期为第一批真实内容
+（敌人、武器、食物、宝箱）；依赖为前述架构全部 Green。不得直接实现或开始 NPC。
