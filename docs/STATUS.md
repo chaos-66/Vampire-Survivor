@@ -2,7 +2,7 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 实现已提交，首次独立审计为 **FAIL**（文档一致性，修复中）
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 实现已提交，审计文档修复已提交（`bdc9b70`），待全新复审
 - 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现提交 `aa0a999` 已同步 GitHub，等待修复文档后的全新复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
@@ -47,11 +47,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 实现已提交，首次审计 FAIL（文档一致性），修复后需全新复审**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 实现已提交，两次审计 FAIL 均为文档一致性，第二次修复已应用，待第三次全新复审**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**CONTENT-01 实现提交 `aa0a999` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**CONTENT-01 审计修复提交 `bdc9b70` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -91,7 +91,9 @@
 - CONTENT-01 自动验证：12 个文件 / 278 项测试；tsc / build（59 个模块）/ audit /
   diff check 通过；开发服务器 `http://localhost:5173/` 返回 HTTP 200
 - CONTENT-01 首次独立审计：FAIL；代码与自动化验收全部通过，阻塞项仅为文档一致性
-  （实现提交与同步事实未记录、旧状态残留、build 模块数记录不符）；修复后需全新复审
+  （实现提交与同步事实未记录、旧状态残留、build 模块数记录不符）；修复提交 `bdc9b70` 已推送
+- CONTENT-01 第二次独立复审：FAIL；代码通过，阻塞项为 PIPELINE 当前入口与 HANDOFF 残留
+  旧表述、`bdc9b70` 同步事实未记录；第二次修复已应用，待第三次全新复审
 - 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -132,7 +134,6 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 首次独立审计为 FAIL，阻塞项仅为文档一致性（实现提交与同步事实
-未记录、旧状态残留、build 模块数记录不符）；修复已应用并提交后，由全新审计上下文
-复审；通过后进入用户浏览器验收，最后 Green 关闭。后续纯文档状态提交按
-`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 两次独立审计均为文档一致性 FAIL，第二次修复已应用并提交（待推送后），
+由全新审计上下文第三次复审；通过后进入用户浏览器验收，最后 Green 关闭。后续纯文档状态
+提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
