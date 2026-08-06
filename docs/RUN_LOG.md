@@ -474,6 +474,10 @@
 | 2026-08-06 | 用户 CP-M5-CONTENT-01 坚持时间与卡片反馈 | 反馈 | 用户要求：坚持时间改为 5 分钟；升级卡片描述文字过长单行溢出（散射弹选项卡），需文字适配。已记录 D-039，并入 CONTENT-01。 |
 | 2026-08-06 | CONTENT-01 坚持时间与卡片适配实现 | 已应用 | `RUN_DURATION_SECONDS` 60→300；状态与胜负文案改"5 分钟"；HUD 时间 `mm:ss`（`formatClockSeconds`）；新增 `wrapTextByWidth` 纯函数（全角 1/半角 0.55 单位近似宽度，最多 2 行，超出加省略号），升级卡片描述改多行绘制；迁移 60 秒硬编码断言为 `RUN_DURATION_SECONDS` 派生。 |
 | 2026-08-06 | CONTENT-01 坚持时间与卡片适配验证 | 通过 | `npm test` 为 13 个文件 / 286 项测试；`npx tsc --noEmit`、`npm run build`（60 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-06 | `git commit -m "M5: five minute runs and card text wrap"` | 通过 | 创建 CONTENT-01 坚持时间与卡片适配提交 `0866487`，包含 8 个源码/测试文件和 6 个流程文档。 |
+| 2026-08-06 | CONTENT-01 坚持时间与卡片适配分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `0866487` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CONTENT-01 坚持时间与卡片适配独立复审 | FAIL | 复审确认代码与全部自动化验收项通过；阻塞项为文档一致性：STATUS 残留"钳制为 60 秒"、ACCEPTANCE 与 PLAN 残留"60 秒胜负"、`0866487` 提交与推送证据未记录、最后同步提交未更新。 |
+| 2026-08-06 | CONTENT-01 时间卡片复审文档修复 | 已应用 | STATUS/ACCEPTANCE/PLAN 的"60 秒"表述更新为 5 分钟常量语义；RUN_LOG 补记 `0866487` 提交与推送证据；STATUS/HANDOFF 最后同步提交更新为 `0866487`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

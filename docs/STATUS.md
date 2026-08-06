@@ -2,7 +2,7 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）已应用并验证，等待全新复审与用户验收
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）复审文档修复已应用，等待再次复审与用户验收
 - 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步或已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
@@ -51,7 +51,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**CONTENT-01 升级随机化提交 `e05977c` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**CONTENT-01 坚持时间与卡片适配提交 `0866487` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -105,7 +105,7 @@
   证据链不全），第四次全新复审 **PASS**
 - CONTENT-01 坚持时间与卡片适配：D-039 5 分钟单局、HUD `mm:ss`、卡片描述自动换行
   （`wrapTextByWidth`），已应用并验证
-- 活跃时间被钳制为准确的 60 秒（`RUN_DURATION_SECONDS`）
+- 活跃时间被钳制为准确的 5 分钟（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
 - 根据当前视口创建新单局世界；清除键盘输入；重置帧时钟

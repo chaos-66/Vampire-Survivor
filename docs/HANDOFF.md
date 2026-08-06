@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步或已应用，等待复审
+- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步或已应用，时间卡片复审文档修复已应用，等待再次复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
@@ -13,6 +13,7 @@
 - CONTENT-01 计数修复提交：`66d397f`（`M5: fix content audit count wording`），已同步 GitHub
 - CONTENT-01 武器语义修复提交：`8a49ef5`（`M5: replace weapon stacking with single held weapon`），已同步 GitHub
 - CONTENT-01 升级随机化提交：`e05977c`（`M5: weight randomize upgrade offers`），已同步 GitHub
+- CONTENT-01 坚持时间与卡片适配提交：`0866487`（`M5: five minute runs and card text wrap`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub

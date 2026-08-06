@@ -287,7 +287,7 @@ git push origin main
 - 最近关闭的检查点：`CP-M5-EFFECTS-01`，Green
 - M5+：RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；
   `CP-M5-CONTENT-01` 武器语义修复复审 PASS（`8a49ef5`），升级随机化（`e05977c`，D-038）
-  复审 PASS，坚持时间与卡片适配（D-039）已应用，等待复审；
+  复审 PASS，坚持时间与卡片适配（`0866487`，D-039）复审文档修复已应用，待再次复审；
   后续独立检查点 `CP-M5-ABILITY-01`
 - 当前检查点：`CP-M5-CONTENT-01`
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
