@@ -59,6 +59,23 @@ describe('ability registry and factory', () => {
     expect(listAbilities()).toHaveLength(3)
   })
 
+  it('rejects a different definition object with the same id and keeps the original', () => {
+    const replacement = {
+      id: AXE_ABILITY_ID,
+      name: '替换',
+      description: '',
+      maxLevel: 1,
+      create: () => ({
+        definitionId: AXE_ABILITY_ID,
+        level: 1,
+        cooldownRemaining: 0,
+      }),
+      update: () => undefined,
+    }
+    expect(() => registerAbility(replacement)).toThrow(/different definition object/i)
+    expect(listAbilities().find((a) => a.id === AXE_ABILITY_ID)?.name).toBe('斧头')
+  })
+
   it('strict factory rejects an unregistered ability id', () => {
     expect(() => createAbility('missing_ability')).toThrow(
       /ability not registered/i,

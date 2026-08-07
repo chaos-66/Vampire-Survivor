@@ -499,6 +499,10 @@
 | 2026-08-06 | ABILITY-01 针对性测试 | 通过 | `src/abilities.test.ts`：注册表幂等、严格工厂拒绝未注册/不匹配、斧头冷却触发与命中伤害、吸经验吸附范围、追踪弹转向与等级弹数、offer 获取/升级、game-loop 集成击杀、重新开始清空能力。 |
 | 2026-08-06 | ABILITY-01 完整验证 | 通过 | `npm test` 为 14 个文件 / 300 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | ABILITY-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-06 | `git commit -m "M5: introduce passive ability system"` | 通过 | 创建 ABILITY-01 实现提交 `a5b959d`，包含 13 个源码/测试文件和 1 个流程文档。 |
+| 2026-08-06 | ABILITY-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `a5b959d` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | ABILITY-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验证通过（300 项测试、67 模块、0 漏洞）；阻塞项：验收项"连续运行时 ID"与实现不符（能力为纯状态实例，以 D-041 为准修正文档）、STATUS/HANDOFF/PIPELINE 仍写"范围关卡待进行"、RUN_LOG 缺 `a5b959d` 推送证据。 |
+| 2026-08-06 | ABILITY-01 审计修复 | 已应用 | ACCEPTANCE/PLAN 验收项改为"严格创建入口 + 必填 definitionId（不设运行时实体 ID）"；STATUS/HANDOFF/PIPELINE 更新为实现已提交待复审；RUN_LOG 补记 `a5b959d` 提交与推送证据；补充同 ID 不同对象抛错断言。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
