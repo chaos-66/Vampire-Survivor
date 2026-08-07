@@ -18,6 +18,7 @@ import {
 import { applyContactDamage } from '../combat/damage-system'
 import { advanceProjectiles } from '../combat/projectile-system'
 import { advanceWeapons } from '../weapons/weapon-system'
+import { advanceAbilities } from '../abilities/ability-system'
 import {
   pickupDrops,
   spawnDropsForKills,
@@ -83,6 +84,19 @@ const simulateActiveSlice = (
   state.nextProjectileId = fired.nextProjectileId
   if (fired.projectiles.length > 0) {
     state.projectiles.push(...fired.projectiles)
+  }
+
+  const abilityFired = advanceAbilities(
+    state.player,
+    state.player.abilities,
+    state.enemies,
+    state.drops,
+    state.nextProjectileId,
+    dt,
+  )
+  state.nextProjectileId = abilityFired.nextProjectileId
+  if (abilityFired.projectiles.length > 0) {
+    state.projectiles.push(...abilityFired.projectiles)
   }
 
   const step = advanceProjectiles(

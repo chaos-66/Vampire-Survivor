@@ -11,6 +11,7 @@ import { registerEnemy, clearEnemyRegistry } from '../enemies/enemy-registry'
 import { registerDrop, clearDropRegistry } from '../drops/drop-registry'
 import { registerPickup, clearPickupRegistry } from '../drops/pickup-registry'
 import { clearEffectRegistry } from '../effects/effect-registry'
+import { registerAbility, clearAbilityRegistry, getAbility } from '../abilities/ability-registry'
 import {
   registerProgressionCategory,
   clearProgressionCategoryRegistry,
@@ -33,9 +34,14 @@ import { chestDrop, chestPickup } from './drops/chest-drop'
 import { createWeaponProgressionDefinition } from '../weapons/weapon-progression'
 import type { ProgressionDefinition } from '../progression/progression-definition'
 import { SCATTER_WEAPON_ID } from './weapons/scatter-weapon'
+import { axeAbility } from './abilities/axe'
+import { experienceMagnetAbility } from './abilities/experience-magnet'
+import { homingMissileAbility } from './abilities/homing-missile'
+import { createAbilityProgressionDefinition } from '../abilities/ability-progression'
 
 /** 模块级缓存保证幂等：同一对象重复注册安全。 */
 let scatterWeaponProgression: ProgressionDefinition | null = null
+const abilityProgressions = new Map<string, ProgressionDefinition>()
 
 const ensureScatterWeaponProgression = (): ProgressionDefinition => {
   if (scatterWeaponProgression === null) {
@@ -52,8 +58,26 @@ const ensureScatterWeaponProgression = (): ProgressionDefinition => {
   return scatterWeaponProgression
 }
 
+const ensureAbilityProgression = (abilityId: string): ProgressionDefinition => {
+  const existing = abilityProgressions.get(abilityId)
+  if (existing) {
+    return existing
+  }
+  const ability = getAbility(abilityId)
+  if (!ability) {
+    throw new Error(`Ability not registered: ${abilityId}`)
+  }
+  const created = createAbilityProgressionDefinition(abilityId, {
+    id: abilityId,
+    name: ability.name,
+    description: ability.description,
+  })
+  abilityProgressions.set(abilityId, created)
+  return created
+}
+
 /**
- * 注册默认分类、角色、武器、敌人、掉落与升级。
+ * 注册默认分类、角色、武器、敌人、掉落、能力与升级。
  * 可安全重复调用（依赖各 registry 的幂等行为）。
  */
 export const registerDefaultContent = (): void => {
@@ -72,12 +96,18 @@ export const registerDefaultContent = (): void => {
   registerDrop(foodDrop)
   registerPickup(chestPickup)
   registerDrop(chestDrop)
+  registerAbility(axeAbility)
+  registerAbility(experienceMagnetAbility)
+  registerAbility(homingMissileAbility)
 
-  // 顺序固定：1 迅捷 2 急速 3 强击；散射弹为武器 offer（offerWeight 0.6 控制出现概率）
+  // 顺序固定：1 迅捷 2 急速 3 强击；散射弹与能力为 offer（offerWeight 控制出现概率）
   registerProgression(swiftUpgrade)
   registerProgression(hasteUpgrade)
   registerProgression(powerUpgrade)
   registerProgression(ensureScatterWeaponProgression())
+  registerProgression(ensureAbilityProgression(axeAbility.id))
+  registerProgression(ensureAbilityProgression(experienceMagnetAbility.id))
+  registerProgression(ensureAbilityProgression(homingMissileAbility.id))
 }
 
 /** 与 registerDefaultContent 同义，保持既有调用点。 */
@@ -96,6 +126,7 @@ export const resetAllContentRegistriesForTests = (): void => {
   clearDropRegistry()
   clearPickupRegistry()
   clearEffectRegistry()
+  clearAbilityRegistry()
   clearProgressionRegistry()
   clearProgressionCategoryRegistry()
 }

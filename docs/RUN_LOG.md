@@ -495,6 +495,10 @@
 | 2026-08-06 | CONTENT-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `6476dcf` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CP-M5-ABILITY-01 范围关卡 | 已批准 | 用户确认继续流水线；记录 D-041，统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE（范围关卡随 CONTENT-01 关闭提交一并落盘）。能力与武器分离，不重做武器系统。 |
 | 2026-08-06 | ABILITY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `6476dcf`；基线 `npm test` 为 13 个文件 / 286 项测试，`npx tsc --noEmit` 通过。 |
+| 2026-08-06 | ABILITY-01 设计与实现 | 已应用 | 新增 `AbilityDefinition`/实例（独立冷却）、对象身份注册表、严格创建入口（`createAbility`）、能力推进（`advanceAbilities`，生成投射物与吸附回调）、能力升级 offer（`createAbilityProgressionDefinition`，复用 `offerWeight`）；`Projectile` 支持可选 `homingTurnSpeed` 追踪转向（`steerTowardNearest`）；`CombatPlayer.abilities` 与 `GameState.abilities` 接线；第一批能力：斧头（AXE_COOLDOWN 1.2/伤害 20）、吸经验（MAGNET_RANGE 120/速度 340）、追踪弹（MISSILE_COOLDOWN 2.2/伤害 12/转向 6 rad/s，等级 1/2/3 → 1/2/3 颗）。 |
+| 2026-08-06 | ABILITY-01 针对性测试 | 通过 | `src/abilities.test.ts`：注册表幂等、严格工厂拒绝未注册/不匹配、斧头冷却触发与命中伤害、吸经验吸附范围、追踪弹转向与等级弹数、offer 获取/升级、game-loop 集成击杀、重新开始清空能力。 |
+| 2026-08-06 | ABILITY-01 完整验证 | 通过 | `npm test` 为 14 个文件 / 300 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-06 | ABILITY-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

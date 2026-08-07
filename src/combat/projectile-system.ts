@@ -18,6 +18,51 @@ export const projectileOutOfBounds = (
   p.x > arena.width + margin ||
   p.y > arena.height + margin
 
+/**
+ * 追踪转向：把当前速度方向朝最近活敌旋转，单帧转角不超过 turnSpeed * dt。
+ * 无活敌时保持原方向。
+ */
+export const steerTowardNearest = (
+  mover: { x: number; y: number; vx: number; vy: number },
+  enemies: readonly Enemy[],
+  turnSpeed: number,
+  dt: number,
+): { x: number; y: number } => {
+  let best: Enemy | null = null
+  let bestDist = Infinity
+  for (const enemy of enemies) {
+    if (enemy.health <= 0) {
+      continue
+    }
+    const dx = enemy.x - mover.x
+    const dy = enemy.y - mover.y
+    const d = dx * dx + dy * dy
+    if (d < bestDist) {
+      best = enemy
+      bestDist = d
+    }
+  }
+  if (!best) {
+    return { x: mover.vx, y: mover.vy }
+  }
+  const desiredAngle = Math.atan2(best.y - mover.y, best.x - mover.x)
+  const currentAngle = Math.atan2(mover.vy, mover.vx)
+  let delta = desiredAngle - currentAngle
+  while (delta > Math.PI) delta -= Math.PI * 2
+  while (delta < -Math.PI) delta += Math.PI * 2
+  const maxTurn = turnSpeed * dt
+  const newAngle =
+    currentAngle + Math.max(-maxTurn, Math.min(maxTurn, delta))
+  const speed = Math.hypot(mover.vx, mover.vy)
+  if (!(speed > 0)) {
+    return { x: mover.vx, y: mover.vy }
+  }
+  return {
+    x: Math.cos(newAngle) * speed,
+    y: Math.sin(newAngle) * speed,
+  }
+}
+
 export type ProjectileStepResult = {
   projectiles: Projectile[]
   enemies: Enemy[]
@@ -43,10 +88,21 @@ export const advanceProjectiles = (
   const sortedProjectiles = [...projectiles].sort((a, b) => a.id - b.id)
 
   for (const raw of sortedProjectiles) {
+    let velocity = { x: raw.vx, y: raw.vy }
+    if (raw.homingTurnSpeed !== undefined && raw.homingTurnSpeed > 0) {
+      velocity = steerTowardNearest(
+        { x: raw.x, y: raw.y, vx: velocity.x, vy: velocity.y },
+        orderedEnemies,
+        raw.homingTurnSpeed,
+        dt,
+      )
+    }
     const moved: Projectile = {
       ...raw,
-      x: raw.x + raw.vx * dt,
-      y: raw.y + raw.vy * dt,
+      x: raw.x + velocity.x * dt,
+      y: raw.y + velocity.y * dt,
+      vx: velocity.x,
+      vy: velocity.y,
       lifeRemaining: raw.lifeRemaining - dt,
     }
     if (moved.lifeRemaining <= 0) {

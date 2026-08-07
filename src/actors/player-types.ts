@@ -5,6 +5,7 @@
 
 import type { Player } from '../movement'
 import type { WeaponInstance } from '../weapons/weapon-definition'
+import type { AbilityInstance } from '../abilities/ability-definition'
 
 export type CombatPlayer = Player & {
   health: number
@@ -16,4 +17,6 @@ export type CombatPlayer = Player & {
   projectileDamage: number
   characterId: string
   weapons: WeaponInstance[]
+  /** 附着角色的被动能力实例（与武器持有槽分离，可叠加多个）。 */
+  abilities: AbilityInstance[]
 }

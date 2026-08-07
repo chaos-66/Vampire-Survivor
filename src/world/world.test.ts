@@ -209,6 +209,7 @@ describe('off-view spawn', () => {
           projectileDamage: 1,
           characterId: 'x',
           weapons: [],
+          abilities: [],
         },
         rng,
       })
@@ -238,6 +239,7 @@ describe('off-view spawn', () => {
       projectileDamage: 1,
       characterId: '',
       weapons: [] as [],
+      abilities: [],
     })
     const a = spawnPositionOutsideView({
       world,
@@ -280,6 +282,7 @@ describe('off-view spawn', () => {
           projectileDamage: 1,
           characterId: 'x',
           weapons: [],
+          abilities: [],
         },
         rng: createSequenceRng([
           (testCase.side + 0.01) / 4,
@@ -345,6 +348,7 @@ describe('off-view spawn', () => {
             projectileDamage: 1,
             characterId: 'x',
             weapons: [],
+            abilities: [],
           },
           rng: createSequenceRng([
             (i % 4) / 4,

@@ -21,6 +21,7 @@ import type { Drop } from '../drops/drop-types'
 import type { PendingUpgrade } from '../progression/progression-definition'
 import type { RunOutcome } from './run-outcome'
 import type { ActiveEffect } from '../effects/effect-definition'
+import type { AbilityInstance } from '../abilities/ability-definition'
 import {
   createStaticWorldObjects,
   type WorldObject,
@@ -46,6 +47,8 @@ export type GameState = {
   nextEnemyId: number
   nextProjectileId: number
   nextDropId: number
+  /** 附着玩家的被动能力（局内获取，重新开始清空）。 */
+  abilities: AbilityInstance[]
   level: number
   experience: number
   experienceToNextLevel: number
@@ -100,6 +103,7 @@ export const createGameState = (
     projectileDamage: PROJECTILE_DAMAGE,
     characterId: character.id,
     weapons,
+    abilities: [],
   }
 
   const worldObjects = createStaticWorldObjects(arena, player)
@@ -120,6 +124,7 @@ export const createGameState = (
     nextEnemyId: 1,
     nextProjectileId: 1,
     nextDropId: 1,
+    abilities: [],
     level: INITIAL_LEVEL,
     experience: INITIAL_EXPERIENCE,
     experienceToNextLevel: experienceThresholdForLevel(INITIAL_LEVEL),

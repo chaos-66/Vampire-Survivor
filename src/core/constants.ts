@@ -26,6 +26,22 @@ export const GEM_VALUE = 1
 export const FOOD_HEAL = 20
 /** 宝箱拾取提供的一次性经验。 */
 export const CHEST_XP = 5
+/** 斧头能力：冷却、伤害、半径、速度、寿命。 */
+export const AXE_COOLDOWN = 1.2
+export const AXE_DAMAGE = 20
+export const AXE_RADIUS = 12
+export const AXE_SPEED = 260
+export const AXE_LIFETIME = 0.9
+/** 吸经验能力：吸附范围与吸附速度。 */
+export const MAGNET_RANGE = 120
+export const MAGNET_PULL_SPEED = 340
+/** 追踪弹能力：冷却、伤害、半径、速度、寿命、转向速度（弧度/秒）。 */
+export const MISSILE_COOLDOWN = 2.2
+export const MISSILE_DAMAGE = 12
+export const MISSILE_RADIUS = 6
+export const MISSILE_SPEED = 300
+export const MISSILE_LIFETIME = 3
+export const MISSILE_TURN_SPEED = 6
 export const INITIAL_LEVEL = 1
 export const INITIAL_EXPERIENCE = 0
 /** 有效战斗时间达到该秒数即胜利（精确边界）。5 分钟 = 300 秒。 */

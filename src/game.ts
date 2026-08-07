@@ -174,6 +174,18 @@ export {
   chestDrop,
   chestPickup,
 } from './content/drops/chest-drop'
+export {
+  AXE_ABILITY_ID,
+  axeAbility,
+} from './content/abilities/axe'
+export {
+  EXPERIENCE_MAGNET_ABILITY_ID,
+  experienceMagnetAbility,
+} from './content/abilities/experience-magnet'
+export {
+  HOMING_MISSILE_ABILITY_ID,
+  homingMissileAbility,
+} from './content/abilities/homing-missile'
 
 export {
   cssPointToLogical,
@@ -201,6 +213,20 @@ export {
   clearWeaponRegistry,
 } from './weapons/weapon-registry'
 export { advanceWeapons, readyToFire } from './weapons/weapon-system'
+export type {
+  AbilityDefinition,
+  AbilityInstance,
+  AbilityUpdateContext,
+} from './abilities/ability-definition'
+export {
+  registerAbility,
+  getAbility,
+  listAbilities,
+  clearAbilityRegistry,
+} from './abilities/ability-registry'
+export { createAbility } from './abilities/ability-factory'
+export { advanceAbilities } from './abilities/ability-system'
+export { createAbilityProgressionDefinition } from './abilities/ability-progression'
 export { createWeaponProgressionDefinition } from './weapons/weapon-progression'
 export type { WeaponDefinition, WeaponInstance } from './weapons/weapon-definition'
 

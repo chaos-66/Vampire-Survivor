@@ -20,4 +20,6 @@ export type Projectile = {
   radius: number
   damage: number
   lifeRemaining: number
+  /** 可选追踪转向速度（弧度/秒）；存在时每帧朝最近活敌转向。 */
+  homingTurnSpeed?: number
 }

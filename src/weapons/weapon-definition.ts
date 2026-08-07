@@ -16,6 +16,8 @@ export type ProjectileRequest = {
   radius: number
   damage: number
   lifeRemaining: number
+  /** 可选追踪转向速度（弧度/秒）。 */
+  homingTurnSpeed?: number
 }
 
 export type WeaponInstance = {

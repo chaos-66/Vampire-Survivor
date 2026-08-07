@@ -227,8 +227,12 @@ describe('pickup results', () => {
 })
 
 describe('scatter weapon', () => {
-  /** rng 序列使第一次抽取命中散射弹（池顺序 swift/haste/power/scatter，总权重 3.6，cursor 0.9*3.6=3.24 落在 3.0-3.6 区间）。 */
-  const scatterFirstRng = (): Rng => createSequenceRng([0.9, 0.5, 0.9])
+  /**
+   * rng 序列使第一次抽取命中散射弹。
+   * 池顺序 swift/haste/power/scatter(0.6)/axe(0.7)/magnet(0.8)/missile(0.5)，总权重 5.6；
+   * scatter 区间 [3.0, 3.6)，rng=0.6 → cursor 3.36 命中。
+   */
+  const scatterFirstRng = (): Rng => createSequenceRng([0.6, 0.5, 0.9])
 
   const withPendingScatter = (): GameState => {
     const state = createGameState(arena, scatterFirstRng())
