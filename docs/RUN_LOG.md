@@ -508,6 +508,10 @@
 | 2026-08-08 | ABILITY-01 修复后验证 | 通过 | `npm test` 为 14 个文件 / 301 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-08 | ABILITY-01 第二次独立复审 | FAIL | 复审确认代码与全部自动化验收项通过；阻塞项为文档一致性：PLAN 残留"范围关卡/M5 CONTENT 进行中"旧表述、RUN_LOG 近期条目日期（08-06）与 Git 提交日期（08-08）冲突、`037fc17` 提交与推送证据未记录且最后同步提交未更新。 |
 | 2026-08-08 | ABILITY-01 复审文档修复 | 已应用 | PLAN 更新为"实现已提交、审计修复已应用、待复审"；RUN_LOG 近期条目日期修正为 2026-08-08 并补记 `037fc17` 提交/推送与修复后验证；STATUS/HANDOFF 最后同步提交更新为 `037fc17`。 |
+| 2026-08-08 | `git commit -m "M5: align ability audit status"` | 通过 | 创建 ABILITY-01 复审文档修复提交 `9015dae`，包含 6 个流程文档并删除 `GameState.abilities` 死字段。 |
+| 2026-08-08 | ABILITY-01 复审修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `9015dae` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | `git commit -m "M5: drop unused ability import"` | 通过 | 删除 `game-state.ts` 未使用导入提交 `0b8bb18`；`npx tsc --noEmit` 与 `npm test`（14 个文件 / 301 项）通过后推送，本地与远端同步。 |
+| 2026-08-08 | ABILITY-01 第三次全新独立复审 | PASS | 全新审计上下文确认：提交链与同步事实一致、四文档表述一致（两次复审 FAIL 均为文档一致性、第二次修复已应用、待第三次复审）、验收项与 D-041 对齐、RUN_LOG 证据齐全且近期日期与 Git 一致、无过时表述残留；代码抽查确认能力注册表/工厂/推进/升级 offer、homing 转向、game-loop 接线与幂等注册，`GameState` 无多余字段。独立复跑 `npm test`（14 个文件 / 301 项）、`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
