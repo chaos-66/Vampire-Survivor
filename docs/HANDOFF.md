@@ -3,8 +3,8 @@
 ## 当前事实
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
-- 最近关闭的检查点：`CP-M5-CONTENT-01`，**Green**
-- 交接状态：CONTENT-01 已 Green 关闭；ABILITY-01 实现与审计修复均已同步，第三次复审 **PASS**，等待浏览器验收
+- 最近关闭的检查点：`CP-M5-ABILITY-01`，**Green**
+- 交接状态：ABILITY-01 自动验证、独立审计、用户浏览器验收（`全部pass`）和 Green 关闭验证均为 PASS；RUN-FLOW-DIFFICULTY 范围已批准（D-042），等待实现
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
 - ABILITY-01 审计修复提交：`037fc17`（`M5: fix ability audit findings`），已同步 GitHub
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
@@ -55,7 +55,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS 与 CONTENT-01 Green；`CP-M5-ABILITY-01` 第三次全新复审 PASS，等待浏览器验收
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 范围已批准（D-042），实现待进行
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -171,8 +171,9 @@
 
 ## 下一任务
 
-`CP-M5-ABILITY-01` 第三次全新复审已 PASS，唯一下一任务是用户浏览器验收（升级可选
-斧头/吸经验/追踪弹并生效：斧头额外攻击、经验范围变大、追踪弹自动命中；散射弹替换
-语义、5 分钟胜负、选项卡随机、卡片文字无回归；控制台无未处理错误）；验收通过后按
-`docs/PIPELINE.md` 进行 Green 关闭验证与提交。不得实现 NPC、程序化地图、敌人行为钩子、
-稀有度、局外成长、HUD 新 UI。
+`CP-M5-ABILITY-01` 已 Green 关闭。唯一下一任务是 `CP-M5-RUN-FLOW-DIFFICULTY-01` 的实现
+（D-042，范围已批准）：开始主界面（标题 + "开始游戏"按钮，加载后不直接开战）、游戏内
+暂停（冻结全部模拟，可继续或提前结束回主界面，再开始创建完整新局）、提高敌人数量压力
+（仅 `enemyCap` 提高与 `spawnInterval` 降低，不改敌人强度属性）。按 `docs/PIPELINE.md`
+完成验证、独立审计、浏览器验收与 Green 关闭后，再进入 `CP-M5-NPC-01` 范围关卡。
+不实现设置菜单、存档、角色选择、难度选择 UI、新敌人行为、新内容。

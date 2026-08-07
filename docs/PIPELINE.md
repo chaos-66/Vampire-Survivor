@@ -284,9 +284,9 @@ git push origin main
 
 - M4 / MVP：Green
 - 流水线检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
-- 最近关闭的检查点：`CP-M5-CONTENT-01`，Green
-- M5+：RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS 与 CONTENT-01 Green；
-  `CP-M5-ABILITY-01` 第三次全新复审 PASS，等待浏览器验收
-- 当前检查点：`CP-M5-ABILITY-01`
+- 最近关闭的检查点：`CP-M5-ABILITY-01`，Green
+- M5+：RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01
+  Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 范围已批准（D-042，NPC 前插入），实现待进行
+- 当前检查点：`CP-M5-RUN-FLOW-DIFFICULTY-01`
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
 - 初始 Green 基线已上传；`main` 跟踪 `origin/main`
