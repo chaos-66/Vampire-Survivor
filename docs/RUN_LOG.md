@@ -514,6 +514,10 @@
 | 2026-08-08 | ABILITY-01 第三次全新独立复审 | PASS | 全新审计上下文确认：提交链与同步事实一致、四文档表述一致（两次复审 FAIL 均为文档一致性、第二次修复已应用、待第三次复审）、验收项与 D-041 对齐、RUN_LOG 证据齐全且近期日期与 Git 一致、无过时表述残留；代码抽查确认能力注册表/工厂/推进/升级 offer、homing 转向、game-loop 接线与幂等注册，`GameState` 无多余字段。独立复跑 `npm test`（14 个文件 / 301 项）、`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-08 | 用户 CP-M5-ABILITY-01 浏览器验收 | PASS | 用户回复原文：`全部pass`。验收覆盖：斧头周期性向最近敌人投掷（额外攻击不影响武器）；吸经验吸附附近掉落、拾取范围变大；追踪弹自动转弯追踪敌人、可升级 1→2→3 颗；散射弹替换语义无回归（3/4/5 颗）；5 分钟胜负、HUD `mm:ss`、选项卡随机、卡片文字不溢出无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-08 | ABILITY-01 Green 关闭验证 | 通过 | `npm test` 为 14 个文件 / 301 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 67 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-08 | `git commit -m "M5: close passive ability checkpoint"` | 通过 | 创建 ABILITY-01 Green 关闭提交 `481ed9e`，包含 7 个流程文档；随附 `CP-M5-RUN-FLOW-DIFFICULTY-01` 范围关卡（D-042：NPC 前插入，开始界面/暂停/敌人数量压力）。 |
+| 2026-08-08 | ABILITY-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `481ed9e` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | CP-M5-RUN-FLOW-DIFFICULTY-01 范围关卡 | 已批准 | 用户确认新需求并批准 D-042；统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE。目标：开始主界面（"开始游戏"按钮）、游戏内暂停（冻结全部模拟，可继续或提前结束回主界面）、提高敌人数量压力（仅 `enemyCap`/`spawnInterval`，不改敌人强度）。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `481ed9e`；基线 `npm test` 为 14 个文件 / 301 项测试，`npx tsc --noEmit` 通过。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

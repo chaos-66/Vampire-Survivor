@@ -7,6 +7,7 @@
 - 交接状态：ABILITY-01 自动验证、独立审计、用户浏览器验收（`全部pass`）和 Green 关闭验证均为 PASS；RUN-FLOW-DIFFICULTY 范围已批准（D-042），等待实现
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
 - ABILITY-01 审计修复提交：`037fc17`（`M5: fix ability audit findings`），已同步 GitHub
+- ABILITY-01 Green 关闭提交：`481ed9e`（`M5: close passive ability checkpoint`），已同步 GitHub
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - CONTENT-01 审计修复提交：`bdc9b70`（`M5: fix content audit documentation findings`），已同步 GitHub
