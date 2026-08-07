@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）第四次全新复审 **PASS**，等待用户浏览器验收
-- 交接状态：EFFECTS 已 Green 关闭；CONTENT-01 实现与全部修复（含武器语义、升级随机化、坚持时间与卡片适配）均已同步，D-039 复审 **PASS**，等待浏览器验收
+- 当前阶段：M5 基础建设；`CP-M5-CONTENT-01` 已达到 **Green**；`CP-M5-ABILITY-01` 范围关卡待进行
+- 交接状态：CONTENT-01 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -12,7 +12,7 @@
 - EFFECTS 审计状态修复提交：`8650e7f`（`M5: record runtime effect audit repairs`），已同步 GitHub
 - EFFECTS 审计状态对齐提交：`9581698`（`M5: align runtime effect audit status`），已同步 GitHub
 - EFFECTS 交接稳定提交：`b523b4f`（`M5: stabilize runtime effect audit handoff`），已同步 GitHub
-- 最近关闭的检查点：`CP-M5-EFFECTS-01`，**Green**
+- 最近关闭的检查点：`CP-M5-CONTENT-01`，**Green**
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS 与 EFFECTS Green；`CP-M5-CONTENT-01` 武器语义（D-037）与升级随机化（D-038）复审 PASS，坚持时间与卡片适配（D-039）第四次全新复审 **PASS**，等待浏览器验收；`CP-M5-ABILITY-01` 为后续独立检查点**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS 与 CONTENT-01 Green；`CP-M5-ABILITY-01` 范围关卡待进行**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -104,7 +104,10 @@
   （提交 `e05977c`）；三次复审 FAIL 均为文档一致性（同步证据缺失、PIPELINE 入口过时、
   证据链不全），第四次全新复审 **PASS**
 - CONTENT-01 坚持时间与卡片适配：D-039 5 分钟单局、HUD `mm:ss`、卡片描述自动换行
-  （`wrapTextByWidth`），已应用并验证
+  （`wrapTextByWidth`）；四次复审 FAIL 均为文档一致性，第四次全新复审 **PASS**（提交 `0866487`）
+- CONTENT-01 用户浏览器验收：PASS（用户回复 `pass`；未提供浏览器名称和版本）
+- CONTENT-01 Green 关闭验证：13 个文件 / 286 项测试；tsc / build（60 个模块）/ audit /
+  diff check 通过；`npm audit fix` 最小 nanoid 锁文件更新（D-040）
 - 活跃时间被钳制为准确的 5 分钟（`RUN_DURATION_SECONDS`）
 - 终局状态冻结所有模拟；清除 pendingUpgrade
 - 仅在终局状态下可通过 KeyR 或中文按钮重新开始；完整调用 `createGameState`
@@ -145,7 +148,8 @@
 
 ## 下一步
 
-`CP-M5-CONTENT-01` 坚持时间与卡片适配（D-039）第四次全新复审已 PASS，唯一下一任务是
-用户浏览器验收；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。后续独立
-检查点 `CP-M5-ABILITY-01`（斧头/吸经验/追踪弹被动能力）需先走范围关卡。后续纯文档
-状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-CONTENT-01` 已 Green 关闭。唯一下一任务是 `CP-M5-ABILITY-01` 的范围关卡：
+按 `docs/PIPELINE.md` 阶段 0 产出唯一检查点 ID、目标/非目标、受影响模块、自动与浏览器
+验收项，并在 `docs/DECISIONS.md` 记录范围批准（D-041）后开始实现。能力与武器分离，
+不重做武器系统。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归
+状态提交。

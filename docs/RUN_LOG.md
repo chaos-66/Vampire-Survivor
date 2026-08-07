@@ -488,6 +488,9 @@
 | 2026-08-06 | `git commit -m "M5: complete time card audit evidence"` | 通过 | 创建 D-039 复审证据补全提交 `cd964a3`，纯文档（4 个流程文档）。 |
 | 2026-08-06 | 证据补充分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `cd964a3` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CONTENT-01 时间卡片第四次全新独立复审 | PASS | 全新审计上下文确认：证据链完整（`0866487`/`d256b3c`/`0c2d180` 提交与推送、三次 FAIL 全部保留）、阶段表述一致、无"60 秒"当前状态残留（历史记录除外）、最后同步提交与实际一致；代码抽查确认 `RUN_DURATION_SECONDS=300`、HUD `mm:ss`、卡片换行。独立复跑 `npm test`（13 个文件 / 286 项）、`npx tsc --noEmit`、`npm run build`（60 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-06 | 用户 CP-M5-CONTENT-01 浏览器验收 | PASS | 用户回复原文：`pass`。验收覆盖：5 分钟胜负；HUD 时间 `mm:ss`；散射弹替换默认武器并发射 3 颗弹；升级后 4/5 颗；升级选项卡随机且权重可调；卡片文字不溢出；迅捷蝠、食物、宝箱正常；移动、战斗、经验、升级、障碍、重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
+| 2026-08-06 | CONTENT-01 Green 关闭验证 | 通过 | `npm test` 为 13 个文件 / 286 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 60 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-06 | `npm audit fix`（nanoid） | 通过 | 审计首次报告 `nanoid <3.3.17` 高危漏洞；`npm audit fix` 仅更新锁文件 3 行（nanoid 3.3.16 → 3.3.18），随后审计为 0 个漏洞。依据 D-040，该最小锁文件安全更新属于强制验证关卡所需变更。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
