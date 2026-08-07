@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-ABILITY-01` 实现已提交（`a5b959d`），首次审计 FAIL（文档一致性），修复已应用，等待全新复审
-- 交接状态：CONTENT-01 已 Green 关闭；ABILITY-01 实现已提交并同步 GitHub，审计文档修复已应用，等待复审
+- 当前阶段：M5 基础建设；`CP-M5-ABILITY-01` 实现与审计修复均已提交，第二次复审 FAIL（文档一致性），修复已应用，等待第三次复审
+- 交接状态：CONTENT-01 已 Green 关闭；ABILITY-01 实现提交 `a5b959d` 与审计修复提交 `037fc17` 均已同步 GitHub，复审文档修复已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -47,11 +47,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS 与 CONTENT-01 Green；`CP-M5-ABILITY-01` 实现已提交（`a5b959d`），首次审计 FAIL（文档一致性），修复已应用，待复审**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS 与 CONTENT-01 Green；`CP-M5-ABILITY-01` 实现（`a5b959d`）与审计修复（`037fc17`）已提交，第二次复审 FAIL（文档一致性），修复已应用，待第三次复审**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**ABILITY-01 实现提交 `a5b959d` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**ABILITY-01 审计修复提交 `037fc17` 已同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -148,7 +148,7 @@
 
 ## 下一步
 
-`CP-M5-ABILITY-01` 实现已提交（`a5b959d`），首次审计 FAIL 阻塞项（验收项措辞、状态文档
-滞后、推送证据缺失）已修复，由全新审计上下文复审；通过后用户浏览器验收（斧头/吸经验/
+`CP-M5-ABILITY-01` 第二次复审 FAIL 阻塞项（PLAN 残留、RUN_LOG 日期冲突、`037fc17`
+证据缺失）已修复，由全新审计上下文第三次复审；通过后用户浏览器验收（斧头/吸经验/
 追踪弹生效、散射弹替换无回归、5 分钟胜负、卡片与选项卡无回归、控制台无错误），最后
 Green 关闭。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。

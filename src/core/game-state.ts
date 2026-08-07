@@ -47,8 +47,6 @@ export type GameState = {
   nextEnemyId: number
   nextProjectileId: number
   nextDropId: number
-  /** 附着玩家的被动能力（局内获取，重新开始清空）。 */
-  abilities: AbilityInstance[]
   level: number
   experience: number
   experienceToNextLevel: number
@@ -124,7 +122,6 @@ export const createGameState = (
     nextEnemyId: 1,
     nextProjectileId: 1,
     nextDropId: 1,
-    abilities: [],
     level: INITIAL_LEVEL,
     experience: INITIAL_EXPERIENCE,
     experienceToNextLevel: experienceThresholdForLevel(INITIAL_LEVEL),

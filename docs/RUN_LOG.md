@@ -488,21 +488,26 @@
 | 2026-08-06 | `git commit -m "M5: complete time card audit evidence"` | 通过 | 创建 D-039 复审证据补全提交 `cd964a3`，纯文档（4 个流程文档）。 |
 | 2026-08-06 | 证据补充分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `cd964a3` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-06 | CONTENT-01 时间卡片第四次全新独立复审 | PASS | 全新审计上下文确认：证据链完整（`0866487`/`d256b3c`/`0c2d180` 提交与推送、三次 FAIL 全部保留）、阶段表述一致、无"60 秒"当前状态残留（历史记录除外）、最后同步提交与实际一致；代码抽查确认 `RUN_DURATION_SECONDS=300`、HUD `mm:ss`、卡片换行。独立复跑 `npm test`（13 个文件 / 286 项）、`npx tsc --noEmit`、`npm run build`（60 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
-| 2026-08-06 | 用户 CP-M5-CONTENT-01 浏览器验收 | PASS | 用户回复原文：`pass`。验收覆盖：5 分钟胜负；HUD 时间 `mm:ss`；散射弹替换默认武器并发射 3 颗弹；升级后 4/5 颗；升级选项卡随机且权重可调；卡片文字不溢出；迅捷蝠、食物、宝箱正常；移动、战斗、经验、升级、障碍、重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
-| 2026-08-06 | CONTENT-01 Green 关闭验证 | 通过 | `npm test` 为 13 个文件 / 286 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 60 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
-| 2026-08-06 | `npm audit fix`（nanoid） | 通过 | 审计首次报告 `nanoid <3.3.17` 高危漏洞；`npm audit fix` 仅更新锁文件 3 行（nanoid 3.3.16 → 3.3.18），随后审计为 0 个漏洞。依据 D-040，该最小锁文件安全更新属于强制验证关卡所需变更。 |
-| 2026-08-06 | `git commit -m "M5: close first content checkpoint"` | 通过 | 创建 CONTENT-01 Green 关闭提交 `6476dcf`，包含 7 个流程文档与锁文件安全更新。 |
-| 2026-08-06 | CONTENT-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `6476dcf` 推送至 `origin/main`，本地与远端同步。 |
-| 2026-08-06 | CP-M5-ABILITY-01 范围关卡 | 已批准 | 用户确认继续流水线；记录 D-041，统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE（范围关卡随 CONTENT-01 关闭提交一并落盘）。能力与武器分离，不重做武器系统。 |
-| 2026-08-06 | ABILITY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `6476dcf`；基线 `npm test` 为 13 个文件 / 286 项测试，`npx tsc --noEmit` 通过。 |
-| 2026-08-06 | ABILITY-01 设计与实现 | 已应用 | 新增 `AbilityDefinition`/实例（独立冷却）、对象身份注册表、严格创建入口（`createAbility`）、能力推进（`advanceAbilities`，生成投射物与吸附回调）、能力升级 offer（`createAbilityProgressionDefinition`，复用 `offerWeight`）；`Projectile` 支持可选 `homingTurnSpeed` 追踪转向（`steerTowardNearest`）；`CombatPlayer.abilities` 与 `GameState.abilities` 接线；第一批能力：斧头（AXE_COOLDOWN 1.2/伤害 20）、吸经验（MAGNET_RANGE 120/速度 340）、追踪弹（MISSILE_COOLDOWN 2.2/伤害 12/转向 6 rad/s，等级 1/2/3 → 1/2/3 颗）。 |
-| 2026-08-06 | ABILITY-01 针对性测试 | 通过 | `src/abilities.test.ts`：注册表幂等、严格工厂拒绝未注册/不匹配、斧头冷却触发与命中伤害、吸经验吸附范围、追踪弹转向与等级弹数、offer 获取/升级、game-loop 集成击杀、重新开始清空能力。 |
-| 2026-08-06 | ABILITY-01 完整验证 | 通过 | `npm test` 为 14 个文件 / 300 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
-| 2026-08-06 | ABILITY-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
-| 2026-08-06 | `git commit -m "M5: introduce passive ability system"` | 通过 | 创建 ABILITY-01 实现提交 `a5b959d`，包含 13 个源码/测试文件和 1 个流程文档。 |
-| 2026-08-06 | ABILITY-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `a5b959d` 推送至 `origin/main`，本地与远端同步。 |
-| 2026-08-06 | ABILITY-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验证通过（300 项测试、67 模块、0 漏洞）；阻塞项：验收项"连续运行时 ID"与实现不符（能力为纯状态实例，以 D-041 为准修正文档）、STATUS/HANDOFF/PIPELINE 仍写"范围关卡待进行"、RUN_LOG 缺 `a5b959d` 推送证据。 |
-| 2026-08-06 | ABILITY-01 审计修复 | 已应用 | ACCEPTANCE/PLAN 验收项改为"严格创建入口 + 必填 definitionId（不设运行时实体 ID）"；STATUS/HANDOFF/PIPELINE 更新为实现已提交待复审；RUN_LOG 补记 `a5b959d` 提交与推送证据；补充同 ID 不同对象抛错断言。 |
+| 2026-08-08 | 用户 CP-M5-CONTENT-01 浏览器验收 | PASS | 用户回复原文：`pass`。验收覆盖：5 分钟胜负；HUD 时间 `mm:ss`；散射弹替换默认武器并发射 3 颗弹；升级后 4/5 颗；升级选项卡随机且权重可调；卡片文字不溢出；迅捷蝠、食物、宝箱正常；移动、战斗、经验、升级、障碍、重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
+| 2026-08-08 | CONTENT-01 Green 关闭验证 | 通过 | `npm test` 为 13 个文件 / 286 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 60 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-08 | `npm audit fix`（nanoid） | 通过 | 审计首次报告 `nanoid <3.3.17` 高危漏洞；`npm audit fix` 仅更新锁文件 3 行（nanoid 3.3.16 → 3.3.18），随后审计为 0 个漏洞。依据 D-040，该最小锁文件安全更新属于强制验证关卡所需变更。 |
+| 2026-08-08 | `git commit -m "M5: close first content checkpoint"` | 通过 | 创建 CONTENT-01 Green 关闭提交 `6476dcf`，包含 7 个流程文档与锁文件安全更新。 |
+| 2026-08-08 | CONTENT-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `6476dcf` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | CP-M5-ABILITY-01 范围关卡 | 已批准 | 用户确认继续流水线；记录 D-041，统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE（范围关卡随 CONTENT-01 关闭提交一并落盘）。能力与武器分离，不重做武器系统。 |
+| 2026-08-08 | ABILITY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `6476dcf`；基线 `npm test` 为 13 个文件 / 286 项测试，`npx tsc --noEmit` 通过。 |
+| 2026-08-08 | ABILITY-01 设计与实现 | 已应用 | 新增 `AbilityDefinition`/实例（独立冷却）、对象身份注册表、严格创建入口（`createAbility`）、能力推进（`advanceAbilities`，生成投射物与吸附回调）、能力升级 offer（`createAbilityProgressionDefinition`，复用 `offerWeight`）；`Projectile` 支持可选 `homingTurnSpeed` 追踪转向（`steerTowardNearest`）；`CombatPlayer.abilities` 接线；第一批能力：斧头（AXE_COOLDOWN 1.2/伤害 20）、吸经验（MAGNET_RANGE 120/速度 340）、追踪弹（MISSILE_COOLDOWN 2.2/伤害 12/转向 6 rad/s，等级 1/2/3 → 1/2/3 颗）。 |
+| 2026-08-08 | ABILITY-01 针对性测试 | 通过 | `src/abilities.test.ts`：注册表幂等、严格工厂拒绝未注册/不匹配、斧头冷却触发与命中伤害、吸经验吸附范围、追踪弹转向与等级弹数、offer 获取/升级、game-loop 集成击杀、重新开始清空能力。 |
+| 2026-08-08 | ABILITY-01 完整验证 | 通过 | `npm test` 为 14 个文件 / 300 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | ABILITY-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-08 | `git commit -m "M5: introduce passive ability system"` | 通过 | 创建 ABILITY-01 实现提交 `a5b959d`，包含 13 个源码/测试文件和 1 个流程文档。 |
+| 2026-08-08 | ABILITY-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `a5b959d` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | ABILITY-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验证通过（300 项测试、67 模块、0 漏洞）；阻塞项：验收项"连续运行时 ID"与实现不符（能力为纯状态实例，以 D-041 为准修正文档）、STATUS/HANDOFF/PIPELINE 仍写"范围关卡待进行"、RUN_LOG 缺 `a5b959d` 推送证据。 |
+| 2026-08-08 | ABILITY-01 审计修复 | 已应用 | ACCEPTANCE/PLAN 验收项改为"严格创建入口 + 必填 definitionId（不设运行时实体 ID）"；STATUS/HANDOFF/PIPELINE 更新为实现已提交待复审；RUN_LOG 补记 `a5b959d` 提交与推送证据；补充同 ID 不同对象抛错断言。 |
+| 2026-08-08 | `git commit -m "M5: fix ability audit findings"` | 通过 | 创建 ABILITY-01 审计修复提交 `037fc17`，包含 4 个流程文档和 1 个测试断言补强。 |
+| 2026-08-08 | ABILITY-01 审计修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `037fc17` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | ABILITY-01 修复后验证 | 通过 | `npm test` 为 14 个文件 / 301 项测试；`npx tsc --noEmit`、`npm run build`（67 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | ABILITY-01 第二次独立复审 | FAIL | 复审确认代码与全部自动化验收项通过；阻塞项为文档一致性：PLAN 残留"范围关卡/M5 CONTENT 进行中"旧表述、RUN_LOG 近期条目日期（08-06）与 Git 提交日期（08-08）冲突、`037fc17` 提交与推送证据未记录且最后同步提交未更新。 |
+| 2026-08-08 | ABILITY-01 复审文档修复 | 已应用 | PLAN 更新为"实现已提交、审计修复已应用、待复审"；RUN_LOG 近期条目日期修正为 2026-08-08 并补记 `037fc17` 提交/推送与修复后验证；STATUS/HANDOFF 最后同步提交更新为 `037fc17`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
