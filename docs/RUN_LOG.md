@@ -491,6 +491,10 @@
 | 2026-08-06 | 用户 CP-M5-CONTENT-01 浏览器验收 | PASS | 用户回复原文：`pass`。验收覆盖：5 分钟胜负；HUD 时间 `mm:ss`；散射弹替换默认武器并发射 3 颗弹；升级后 4/5 颗；升级选项卡随机且权重可调；卡片文字不溢出；迅捷蝠、食物、宝箱正常；移动、战斗、经验、升级、障碍、重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-06 | CONTENT-01 Green 关闭验证 | 通过 | `npm test` 为 13 个文件 / 286 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 60 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-06 | `npm audit fix`（nanoid） | 通过 | 审计首次报告 `nanoid <3.3.17` 高危漏洞；`npm audit fix` 仅更新锁文件 3 行（nanoid 3.3.16 → 3.3.18），随后审计为 0 个漏洞。依据 D-040，该最小锁文件安全更新属于强制验证关卡所需变更。 |
+| 2026-08-06 | `git commit -m "M5: close first content checkpoint"` | 通过 | 创建 CONTENT-01 Green 关闭提交 `6476dcf`，包含 7 个流程文档与锁文件安全更新。 |
+| 2026-08-06 | CONTENT-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `6476dcf` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-06 | CP-M5-ABILITY-01 范围关卡 | 已批准 | 用户确认继续流水线；记录 D-041，统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE（范围关卡随 CONTENT-01 关闭提交一并落盘）。能力与武器分离，不重做武器系统。 |
+| 2026-08-06 | ABILITY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `6476dcf`；基线 `npm test` 为 13 个文件 / 286 项测试，`npx tsc --noEmit` 通过。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

@@ -14,6 +14,7 @@
 - CONTENT-01 武器语义修复提交：`8a49ef5`（`M5: replace weapon stacking with single held weapon`），已同步 GitHub
 - CONTENT-01 升级随机化提交：`e05977c`（`M5: weight randomize upgrade offers`），已同步 GitHub
 - CONTENT-01 坚持时间与卡片适配提交：`0866487`（`M5: five minute runs and card text wrap`），已同步 GitHub
+- CONTENT-01 Green 关闭提交：`6476dcf`（`M5: close first content checkpoint`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
 - EFFECTS 首次修复提交：`9986b4d`（`M5: fix runtime effect audit findings`），已同步 GitHub
 - EFFECTS 第二轮修复提交：`980232c`（`M5: harden runtime effect boundaries`），已同步 GitHub
