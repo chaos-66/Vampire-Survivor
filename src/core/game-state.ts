@@ -21,7 +21,6 @@ import type { Drop } from '../drops/drop-types'
 import type { PendingUpgrade } from '../progression/progression-definition'
 import type { RunOutcome } from './run-outcome'
 import type { ActiveEffect } from '../effects/effect-definition'
-import type { AbilityInstance } from '../abilities/ability-definition'
 import {
   createStaticWorldObjects,
   type WorldObject,
