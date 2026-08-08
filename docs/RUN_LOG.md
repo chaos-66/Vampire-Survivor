@@ -554,6 +554,10 @@
 | 2026-08-08 | TARGETING-01 针对性测试 | 通过 | `src/targeting.test.ts`：新局默认朝右、非零移动更新朝向、静止保留、重新开始重置、散射弹沿朝向发射（敌人在侧方仍朝上）、斧头沿朝向投掷、散射弹无敌人也发射、默认弹仍选最近敌人、追踪弹仍 homing、运行中朝向随移动更新。 |
 | 2026-08-08 | TARGETING-01 完整验证 | 通过 | `npm test` 为 16 个文件 / 315 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-08 | TARGETING-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
+| 2026-08-08 | `git commit -m "M5: introduce facing targeting rules"` | 通过 | 创建 TARGETING-01 实现提交 `1991b7b`，包含 9 个源码/测试文件和 1 个流程文档。 |
+| 2026-08-08 | TARGETING-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `1991b7b` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | TARGETING-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验收项通过（315 项测试、68 模块、0 漏洞）；阻塞项为文档一致性：STATUS/HANDOFF/PIPELINE 仍写"实现待进行"、RUN_LOG 缺 `1991b7b` 提交与推送证据、最后同步提交未更新；非阻塞：`world.test.ts` 引入 UTF-8 BOM。 |
+| 2026-08-08 | TARGETING-01 审计文档修复 | 已应用 | STATUS/HANDOFF/PIPELINE 更新为"实现已提交（`1991b7b`，已同步 GitHub），待独立审计"；RUN_LOG 补记 `1991b7b` 提交与推送证据；STATUS/HANDOFF 最后同步提交更新；清理 `world.test.ts` UTF-8 BOM。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

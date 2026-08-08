@@ -4,7 +4,8 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-RUN-FLOW-DIFFICULTY-01`，**Green**
-- 交接状态：RUN-FLOW-DIFFICULTY-01 自动验证、独立审计、用户浏览器验收（`全部pass`）和 Green 关闭验证均为 PASS；TARGETING 范围已批准（D-044），等待实现
+- 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 实现提交 `1991b7b` 已同步 GitHub，首次审计 FAIL（文档一致性），修复已应用，等待复审
+- TARGETING-01 实现提交：`1991b7b`（`M5: introduce facing targeting rules`），已同步 GitHub
 - RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
 - RUN-FLOW-DIFFICULTY-01 高压档位提交：`fc93677`（`M5: apply high pressure enemy tiers`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
@@ -58,7 +59,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01、ABILITY-01 与 RUN-FLOW-DIFFICULTY-01 Green；`CP-M5-TARGETING-01` 范围已批准（D-044），实现待进行
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01、ABILITY-01 与 RUN-FLOW-DIFFICULTY-01 Green；`CP-M5-TARGETING-01` 实现已提交（`1991b7b`），首次审计 FAIL（文档一致性），修复已应用，待复审
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -180,12 +181,19 @@
 - `src/ui/menu-overlay.ts`：主界面/暂停界面/暂停按钮绘制与纯函数命中测试。
 - 敌人数量压力（用户确认高压档位，D-043）：t1 0.45s/70、t2 0.30s/110、t3 0.22s/160、t4 0.16s/220；敌人强度属性不变。
 
+## TARGETING-01 要点
+
+- `CombatPlayer.facing`（默认 (1,0) 朝右）；`movePlayer` 非零方向更新朝向、静止保留；
+  `createGameState` 重置默认朝向。
+- 散射弹/斧头沿角色朝向决定初始发射方向（不再选择最近敌人，无敌人也发射）；默认弹
+  `selectNearestEnemy`、追踪弹 `homingTurnSpeed` 飞行中追踪不变。
+- `draw-world.ts` 玩家前方小三角朝向指示（仅绘制）。
+- 暂停冻结由 `main.ts` 阶段门控（暂停不调用 `updateGame`）；重新开始经 `createGameState`。
+
 ## 下一任务
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 已 Green 关闭。唯一下一任务是 `CP-M5-TARGETING-01` 的实现
-（D-044，范围已批准）：角色持久朝向（默认朝右、最后非零移动方向更新、静止保留）、
-符合现有视觉风格的朝向指示（不引入多余 HUD/设置/文本）、混合目标规则（默认弹
-`nearestEnemy`、追踪弹 homing 追踪、散射弹与斧头沿朝向发射）；暂停冻结与完整新局重置
-默认朝向。按 `docs/PIPELINE.md` 完成验证、独立审计、浏览器验收与 Green 关闭后，再进入
-`CP-M5-NPC-01` 范围关卡。不实现鼠标/手柄瞄准、锁定 UI、新武器/能力/敌人/掉落/效果、
-NPC、角色选择、难度选择、存档。
+`CP-M5-TARGETING-01` 首次审计 FAIL 阻塞项（状态文档滞后、推送证据缺失）已修复，由全新
+审计上下文复审；通过后用户浏览器验收（角色朝向指示可见且随移动更新、静止保持；
+散射弹/斧头沿朝向发射；默认弹仍自动瞄准；追踪弹仍自动追踪；暂停冻结、继续、返回
+主界面、再次开始完整新局无回归；控制台无未处理错误），最后 Green 关闭。不得实现
+鼠标/手柄瞄准、锁定 UI、新武器/能力/敌人/掉落/效果、NPC、角色选择、难度选择、存档。

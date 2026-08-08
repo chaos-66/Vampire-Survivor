@@ -5,7 +5,8 @@
 **当前检查点：`CP-M5-TARGETING-01`（D-044）。** 角色朝向指示与混合目标规则：玩家持久
 朝向（新局默认朝右、最后非零移动方向更新、静止保留）、符合现有视觉风格的朝向指示
 （不引入多余 HUD/设置/文本）、目标策略分离（默认弹 `nearestEnemy`、追踪弹 homing、
-散射弹与斧头沿角色朝向发射）。
+散射弹与斧头沿角色朝向发射）。实现已提交（`1991b7b`），首次审计 FAIL（文档一致性）
+已修复，待复审。
 
 目标模块：`src/actors/player-types.ts`/`src/actors/player-system.ts`（朝向状态与移动更新）、
 `src/core/game-state.ts`（新局默认朝向）、`src/content/weapons/scatter-weapon.ts` 与
