@@ -5,8 +5,8 @@
 
 export const PLAYER_MAX_HEALTH = 100
 export const PLAYER_SPEED = 220
-export const ENEMY_SPAWN_INTERVAL = 0.8
-export const ENEMY_CAP = 28
+export const ENEMY_SPAWN_INTERVAL = 0.45
+export const ENEMY_CAP = 70
 export const ENEMY_SPEED = 90
 export const ENEMY_RADIUS = 14
 export const ENEMY_MAX_HEALTH = 30

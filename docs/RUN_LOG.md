@@ -529,6 +529,9 @@
 | 2026-08-08 | `git commit -m "M5: fix run flow audit findings"` | 通过 | 创建 RUN-FLOW-DIFFICULTY-01 审计文档修复提交 `3e271e4`，纯文档（5 个流程文档）。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 审计修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `3e271e4` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 第二次全新独立复审 | PASS | 全新审计上下文确认：状态文档一致（实现已提交 `9702f19`、首次审计 FAIL 为文档一致性、修复已应用、待复审）、RUN_LOG 提交与推送证据齐全且保留 FAIL 记录、最后同步提交与实际一致、无过时表述残留；代码抽查确认 phase 门控冻结、按钮接线、难度档位与强度不变。独立复跑 `npm test`（15 个文件 / 305 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-08 | 用户确认高压割草档位 | 反馈 | 用户确认固定难度档位：0 秒 enemyCap 70 / spawnInterval 0.45；15 秒 110 / 0.30；30 秒 160 / 0.22；45 秒 220 / 0.16；敌人生命/速度/伤害/半径不变。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位应用 | 已应用 | `difficulty.ts`/`constants.ts` 档位更新为用户确认数值（`ENEMY_SPAWN_INTERVAL` 0.45、`ENEMY_CAP` 70）；更新 `difficulty.test.ts` 档位/跨档断言与 `game.test.ts` 生成数量断言（3→6）；修复 `content.test.ts` 手动夹具 id 与运行时 `nextEnemyId` 冲突导致的覆盖问题（id 1 → 1000）。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位验证 | 通过 | `npm test` 为 15 个文件 / 305 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

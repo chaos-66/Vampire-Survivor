@@ -195,7 +195,7 @@ describe('pickup results', () => {
     state.player = { ...state.player, health: 50 }
     state.enemies = [
       {
-        id: 1,
+        id: 1000,
         definitionId: FAST_ENEMY_ID,
         x: state.player.x,
         y: state.player.y,
@@ -207,7 +207,7 @@ describe('pickup results', () => {
     ]
     state.projectiles = [
       {
-        id: 1,
+        id: 1000,
         x: state.player.x,
         y: state.player.y,
         vx: 0,

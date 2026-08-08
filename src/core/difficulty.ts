@@ -16,9 +16,9 @@ export const DIFFICULTY_PROFILES: readonly DifficultyProfile[] = Object.freeze([
     spawnInterval: ENEMY_SPAWN_INTERVAL,
     enemyCap: ENEMY_CAP,
   }),
-  Object.freeze({ tier: 2, startsAtSeconds: 15, spawnInterval: 0.65, enemyCap: 36 }),
-  Object.freeze({ tier: 3, startsAtSeconds: 30, spawnInterval: 0.5, enemyCap: 46 }),
-  Object.freeze({ tier: 4, startsAtSeconds: 45, spawnInterval: 0.4, enemyCap: 56 }),
+  Object.freeze({ tier: 2, startsAtSeconds: 15, spawnInterval: 0.3, enemyCap: 110 }),
+  Object.freeze({ tier: 3, startsAtSeconds: 30, spawnInterval: 0.22, enemyCap: 160 }),
+  Object.freeze({ tier: 4, startsAtSeconds: 45, spawnInterval: 0.16, enemyCap: 220 }),
 ])
 
 /** 纯时间映射；无效或负时间按本局起点处理。 */

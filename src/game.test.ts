@@ -88,7 +88,8 @@ describe('enemy spawn', () => {
       advanceSpawns(b, step)
     }
     expect(b.enemies).toHaveLength(a.enemies.length)
-    expect(a.enemies).toHaveLength(3)
+    // 3 秒 / 0.45 秒间隔 → 6 个生成
+    expect(a.enemies).toHaveLength(6)
   })
 
   it('spawns on an arena edge', () => {

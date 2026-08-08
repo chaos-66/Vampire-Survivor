@@ -28,9 +28,9 @@ describe('difficulty profile', () => {
         spawnInterval: ENEMY_SPAWN_INTERVAL,
         enemyCap: ENEMY_CAP,
       },
-      { tier: 2, startsAtSeconds: 15, spawnInterval: 0.65, enemyCap: 36 },
-      { tier: 3, startsAtSeconds: 30, spawnInterval: 0.5, enemyCap: 46 },
-      { tier: 4, startsAtSeconds: 45, spawnInterval: 0.4, enemyCap: 56 },
+      { tier: 2, startsAtSeconds: 15, spawnInterval: 0.3, enemyCap: 110 },
+      { tier: 3, startsAtSeconds: 30, spawnInterval: 0.22, enemyCap: 160 },
+      { tier: 4, startsAtSeconds: 45, spawnInterval: 0.16, enemyCap: 220 },
     ])
   })
 
@@ -60,7 +60,7 @@ describe('difficulty profile', () => {
     expect(() => {
       ;(profile as { spawnInterval: number }).spawnInterval = 0
     }).toThrow(TypeError)
-    expect(getDifficultyProfile(15).spawnInterval).toBe(0.65)
+    expect(getDifficultyProfile(15).spawnInterval).toBe(0.3)
   })
 
   it('splits frames exactly at tier boundaries', () => {
@@ -109,9 +109,9 @@ describe('active run time', () => {
     updateGame(state, { x: 0, y: 0 }, 0.2)
 
     expect(state.elapsedActiveSeconds).toBeCloseTo(15.1)
-    expect(state.enemies).toHaveLength(1)
-    // t1（0.8 间隔）：0.95 + 0.1 = 1.05 生成 1 个后剩 0.25；t2（0.65 间隔）：0.25 + 0.1 = 0.35
-    expect(state.spawnAccumulator).toBeCloseTo(0.35)
+    // t1（0.45 间隔）：0.95 + 0.1 = 1.05 → 生成 2 个后剩 0.15；t2（0.3 间隔）：0.15 + 0.1 = 0.25
+    expect(state.enemies).toHaveLength(2)
+    expect(state.spawnAccumulator).toBeCloseTo(0.25)
   })
 
   it('freezes time and spawning while an upgrade is pending', () => {
