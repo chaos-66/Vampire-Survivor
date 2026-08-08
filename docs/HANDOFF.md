@@ -4,8 +4,9 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-ABILITY-01`，**Green**
-- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现与审计修复均已同步，复审 **PASS**，等待浏览器验收
+- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现与高压档位修正均已同步，高压档位复审文档修复已应用，等待再次复审
 - RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
+- RUN-FLOW-DIFFICULTY-01 高压档位提交：`fc93677`（`M5: apply high pressure enemy tiers`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
 - ABILITY-01 审计修复提交：`037fc17`（`M5: fix ability audit findings`），已同步 GitHub
 - ABILITY-01 Green 关闭提交：`481ed9e`（`M5: close passive ability checkpoint`），已同步 GitHub
@@ -177,7 +178,7 @@
   右上角暂停按钮、暂停冻结全部模拟（`updateGame` 仅 playing 时调用）、继续恢复同一局、
   返回主界面；再次开始创建完整新局。
 - `src/ui/menu-overlay.ts`：主界面/暂停界面/暂停按钮绘制与纯函数命中测试。
-- 敌人数量压力：t1 0.8s/28、t2 0.65s/36、t3 0.5s/46、t4 0.4s/56；敌人强度属性不变。
+- 敌人数量压力（用户确认高压档位，D-043）：t1 0.45s/70、t2 0.30s/110、t3 0.22s/160、t4 0.16s/220；敌人强度属性不变。
 
 ## 下一任务
 
