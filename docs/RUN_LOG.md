@@ -545,6 +545,8 @@
 | 2026-08-08 | `git commit -m "M5: align pipeline entry for pressure tiers"` | 通过 | 创建 PIPELINE 第 6 节对齐提交 `b6e91a7`，纯文档。 |
 | 2026-08-08 | PIPELINE 对齐分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b6e91a7` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第四次全新独立复审 | PASS | 全新审计上下文确认：无过时档位/复审状态残留（历史证据行除外）、四文档表述一致（高压档位已应用、三次高压档位复审 FAIL 均为文档一致性、证据补全已应用、待再次复审）、RUN_LOG 证据齐全且保留全部 FAIL、最后同步提交与实际一致；代码抽查确认档位数值与用户确认一致、敌人强度与 5 分钟规则未改。独立复跑 `npm test`（15 个文件 / 305 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-08 | 用户 CP-M5-RUN-FLOW-DIFFICULTY-01 浏览器验收 | PASS | 用户回复原文：`全部pass`。验收覆盖：首屏主界面含"吸血鬼幸存者"与"开始游戏"；可开始游戏；暂停后玩家、时间、敌人、投射物、掉落、武器、能力、效果、经验、升级和胜负均冻结；可继续同一局；可从暂停页返回主界面；可再次开始完整新局；敌人数量压力符合 D-042/D-043（0 秒 70/0.45s、15 秒 110/0.30s、30 秒 160/0.22s、45 秒 220/0.16s）；单个敌人强度未见明显变化；5 分钟胜负、HUD `mm:ss`、升级卡片、散射弹、斧头、吸经验、追踪弹、食物、宝箱无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 Green 关闭验证 | 通过 | `npm test` 为 15 个文件 / 305 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 68 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位第四次全新复审 **PASS**，等待用户浏览器验收
-- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现与高压档位修正均已同步，第四次复审 **PASS**，等待浏览器验收
+- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 已达到 **Green**；`CP-M5-TARGETING-01` 范围关卡待进行（D-044）
+- 交接状态：RUN-FLOW-DIFFICULTY-01 自动验证、独立审计、用户浏览器验收（`全部pass`）和 Green 关闭验证均为 PASS；TARGETING 范围已批准，等待实现
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -12,7 +12,7 @@
 - EFFECTS 审计状态修复提交：`8650e7f`（`M5: record runtime effect audit repairs`），已同步 GitHub
 - EFFECTS 审计状态对齐提交：`9581698`（`M5: align runtime effect audit status`），已同步 GitHub
 - EFFECTS 交接稳定提交：`b523b4f`（`M5: stabilize runtime effect audit handoff`），已同步 GitHub
-- 最近关闭的检查点：`CP-M5-ABILITY-01`，**Green**
+- 最近关闭的检查点：`CP-M5-RUN-FLOW-DIFFICULTY-01`，**Green**
 - 最近关闭的检查点：`CP-M5-WORLD-OBJECTS-01`，**Green**
 - 最近关闭的检查点：`CP-M5-DROP-ARCH-01`，**Green**
 - 交接状态：WORLD-OBJECTS 自动验证、独立审计、用户浏览器验收和 Green 关闭验证均为 PASS
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位第四次全新复审 PASS，等待浏览器验收**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01、ABILITY-01 与 RUN-FLOW-DIFFICULTY-01 Green；`CP-M5-TARGETING-01` 范围已批准（D-044），实现待进行**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -148,6 +148,7 @@
 
 ## 下一步
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位（D-043）第四次全新复审已 PASS，唯一下一任务是
-用户浏览器验收；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。后续纯文档
-状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 已 Green 关闭。唯一下一任务是 `CP-M5-TARGETING-01` 的实现
+（D-044：玩家持久朝向 + 混合目标规则——默认弹/追踪弹自动、散射弹/斧头沿朝向发射、
+朝向指示绘制）。完成验证、独立审计、浏览器验收与 Green 关闭后，再进入 `CP-M5-NPC-01`
+范围关卡。后续纯文档状态提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
