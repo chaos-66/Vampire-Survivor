@@ -558,6 +558,9 @@
 | 2026-08-08 | TARGETING-01 实现分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `1991b7b` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | TARGETING-01 首次正式独立审计 | FAIL | 审计确认代码与全部自动化验收项通过（315 项测试、68 模块、0 漏洞）；阻塞项为文档一致性：STATUS/HANDOFF/PIPELINE 仍写"实现待进行"、RUN_LOG 缺 `1991b7b` 提交与推送证据、最后同步提交未更新；非阻塞：`world.test.ts` 引入 UTF-8 BOM。 |
 | 2026-08-08 | TARGETING-01 审计文档修复 | 已应用 | STATUS/HANDOFF/PIPELINE 更新为"实现已提交（`1991b7b`，已同步 GitHub），待独立审计"；RUN_LOG 补记 `1991b7b` 提交与推送证据；STATUS/HANDOFF 最后同步提交更新；清理 `world.test.ts` UTF-8 BOM。 |
+| 2026-08-08 | `git commit -m "M5: fix targeting audit findings"` | 通过 | 创建 TARGETING-01 审计文档修复提交 `e61b03e`，包含 5 个流程文档与 `world.test.ts` BOM 清理。 |
+| 2026-08-08 | TARGETING-01 审计修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `e61b03e` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | TARGETING-01 第二次全新独立复审 | PASS | 全新审计上下文确认：状态文档一致（实现已提交 `1991b7b`、首次审计 FAIL 为文档一致性、修复已应用、待复审）、RUN_LOG 证据齐全且保留 FAIL 记录、最后同步提交与实际一致、无过时表述残留；代码抽查确认 facing 状态/朝向指示/混合目标规则与范围一致，默认弹最近敌人与追踪弹 homing 未改。独立复跑 `npm test`（16 个文件 / 315 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
