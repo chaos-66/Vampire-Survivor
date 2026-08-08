@@ -539,6 +539,12 @@
 | 2026-08-08 | 高压档位文档修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `75d000e` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第二次独立复审 | FAIL | 复审确认代码与工具链通过；阻塞项：HANDOFF 残留旧复审状态表述（"第二次全新复审 PASS 等待浏览器验收"）、RUN_LOG 缺 `fc93677`/`75d000e` 提交与推送证据、缺高压档位复审 FAIL 记录。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位复审证据补全 | 已应用 | HANDOFF 旧复审状态与"下一任务"表述更新；RUN_LOG 补记 `fc93677`/`75d000e` 提交与推送证据及两次复审 FAIL 记录；STATUS/HANDOFF 统一为"高压档位已应用、复审文档修复已应用、待再次复审"。 |
+| 2026-08-08 | `git commit -m "M5: complete pressure tier audit evidence"` | 通过 | 创建高压档位复审证据补全提交 `42e52f0`，纯文档（3 个流程文档）。 |
+| 2026-08-08 | 证据补充分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `42e52f0` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第三次独立复审 | FAIL | 复审确认代码与工具链通过；唯一阻塞项为 PIPELINE 第 6 节残留旧复审状态表述（"第二次全新复审 PASS 等待浏览器验收"）。 |
+| 2026-08-08 | `git commit -m "M5: align pipeline entry for pressure tiers"` | 通过 | 创建 PIPELINE 第 6 节对齐提交 `b6e91a7`，纯文档。 |
+| 2026-08-08 | PIPELINE 对齐分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b6e91a7` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第四次全新独立复审 | PASS | 全新审计上下文确认：无过时档位/复审状态残留（历史证据行除外）、四文档表述一致（高压档位已应用、三次高压档位复审 FAIL 均为文档一致性、证据补全已应用、待再次复审）、RUN_LOG 证据齐全且保留全部 FAIL、最后同步提交与实际一致；代码抽查确认档位数值与用户确认一致、敌人强度与 5 分钟规则未改。独立复跑 `npm test`（15 个文件 / 305 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
