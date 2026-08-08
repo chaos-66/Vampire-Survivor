@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现已提交（`9702f19`），首次审计 FAIL（文档一致性），修复已应用，等待全新复审
-- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现已提交并同步 GitHub，审计文档修复已应用，等待复审
+- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审 **PASS**，等待用户浏览器验收
+- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现与审计修复均已同步，复审 **PASS**，等待浏览器验收
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现已提交（`9702f19`），首次审计 FAIL（文档一致性），修复已应用，待复审**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审 PASS，等待浏览器验收**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -148,7 +148,6 @@
 
 ## 下一步
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现已提交（`9702f19`），首次审计 FAIL 阻塞项（状态文档
-滞后、推送证据缺失）已修复，由全新审计上下文复审；通过后用户浏览器验收（主界面/开始/
-暂停/继续/返回、敌人数量压力、无回归、控制台无错误），最后 Green 关闭。后续纯文档状态
-提交按 `docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审已 PASS，唯一下一任务是用户浏览器验收；
+验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。后续纯文档状态提交按
+`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。

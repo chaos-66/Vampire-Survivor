@@ -4,7 +4,7 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-ABILITY-01`，**Green**
-- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现提交 `9702f19` 已同步 GitHub，首次审计 FAIL（文档一致性），修复已应用，等待复审
+- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现与审计修复均已同步，复审 **PASS**，等待浏览器验收
 - RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
 - ABILITY-01 审计修复提交：`037fc17`（`M5: fix ability audit findings`），已同步 GitHub
@@ -57,7 +57,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现已提交（`9702f19`），首次审计 FAIL（文档一致性），修复已应用，待复审
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审 PASS，等待浏览器验收
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -181,7 +181,10 @@
 
 ## 下一任务
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 首次审计 FAIL 阻塞项（状态文档滞后、推送证据缺失）已修复，
-由全新审计上下文复审；通过后用户浏览器验收（主界面/开始/暂停/继续/返回、敌人数量压力、
-无回归、控制台无错误），最后 Green 关闭。不得实现 NPC、设置菜单、存档、角色选择、
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审已 PASS，唯一下一任务是用户浏览器验收
+（打开页面先见主界面与"开始游戏"按钮；点击开始进入游戏；游戏内有暂停按钮；暂停后
+画面/时间/敌人/投射物冻结；继续后同一局恢复；提前结束回主界面；再次开始是完整新局；
+敌人数量明显更多、压力更高但单个敌人强度无明显变化；5 分钟胜负、HUD `mm:ss`、升级卡片、
+散射弹、斧头、吸经验、追踪弹、食物/宝箱无回归；控制台无未处理错误）；验收通过后按
+`docs/PIPELINE.md` 进行 Green 关闭验证与提交。不得实现 NPC、设置菜单、存档、角色选择、
 难度选择 UI、新敌人行为、新内容。
