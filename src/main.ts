@@ -33,6 +33,15 @@ import {
   drawOutcomeOverlay,
   restartButtonContainsPoint,
 } from './ui/outcome-overlay'
+import {
+  continueButtonContainsPoint,
+  drawMainMenu,
+  drawPauseButton,
+  drawPauseOverlay,
+  pauseButtonContainsPoint,
+  quitButtonContainsPoint,
+  startButtonContainsPoint,
+} from './ui/menu-overlay'
 import { ensureContentRegistered } from './content/bootstrap'
 import { computeWorldBounds } from './world/world'
 import {
@@ -89,6 +98,10 @@ let animationFrameId = 0
 let hitFlashRemaining = 0
 const secondaryPointers = createSecondaryPointerState()
 
+/** 应用阶段：主界面 / 游戏进行中 / 暂停。 */
+type AppPhase = 'menu' | 'playing' | 'paused'
+let phase: AppPhase = 'menu'
+
 const statusEl = document.querySelector<HTMLElement>('#status')
 if (statusEl) {
   statusEl.textContent = getStatusMessage()
@@ -120,6 +133,20 @@ const tryChooseUpgrade = (id: string | null): void => {
 }
 
 const onKeyDown = (event: KeyboardEvent): void => {
+  const movementCode =
+    event.code === 'KeyW' ||
+    event.code === 'KeyA' ||
+    event.code === 'KeyS' ||
+    event.code === 'KeyD' ||
+    event.code.startsWith('Arrow')
+
+  if (phase === 'menu' || phase === 'paused') {
+    if (movementCode) {
+      event.preventDefault()
+    }
+    return
+  }
+
   if (isTerminalOutcome(game.outcome)) {
     if (event.repeat) {
       return
@@ -129,13 +156,7 @@ const onKeyDown = (event: KeyboardEvent): void => {
       restartRun()
       return
     }
-    if (
-      event.code === 'KeyW' ||
-      event.code === 'KeyA' ||
-      event.code === 'KeyS' ||
-      event.code === 'KeyD' ||
-      event.code.startsWith('Arrow')
-    ) {
+    if (movementCode) {
       event.preventDefault()
     }
     return
@@ -154,26 +175,14 @@ const onKeyDown = (event: KeyboardEvent): void => {
       tryChooseUpgrade(upgradeId)
       return
     }
-    if (
-      event.code === 'KeyW' ||
-      event.code === 'KeyA' ||
-      event.code === 'KeyS' ||
-      event.code === 'KeyD' ||
-      event.code.startsWith('Arrow')
-    ) {
+    if (movementCode) {
       event.preventDefault()
     }
     return
   }
 
   pressKey(input, event.code)
-  if (
-    event.code === 'KeyW' ||
-    event.code === 'KeyA' ||
-    event.code === 'KeyS' ||
-    event.code === 'KeyD' ||
-    event.code.startsWith('Arrow')
-  ) {
+  if (movementCode) {
     event.preventDefault()
   }
 }
@@ -204,6 +213,29 @@ const onCanvasClick = (event: MouseEvent): void => {
     viewport.width,
     viewport.height,
   )
+
+  if (phase === 'menu') {
+    if (startButtonContainsPoint(viewport, point)) {
+      restartRun()
+      phase = 'playing'
+    }
+    return
+  }
+
+  if (phase === 'paused') {
+    if (continueButtonContainsPoint(viewport, point)) {
+      phase = 'playing'
+    } else if (quitButtonContainsPoint(viewport, point)) {
+      clearInput(input)
+      phase = 'menu'
+    }
+    return
+  }
+
+  if (pauseButtonContainsPoint(viewport, point)) {
+    phase = 'paused'
+    return
+  }
 
   if (isTerminalOutcome(game.outcome)) {
     if (restartButtonContainsPoint(viewport, point)) {
@@ -323,13 +355,22 @@ canvas.addEventListener('mouseup', onCanvasMouseUp)
 window.addEventListener('resize', onResize)
 
 const draw = (): void => {
+  if (phase === 'menu') {
+    drawMainMenu(context, viewport)
+    return
+  }
   const camera = currentCamera()
   drawWorld(context, game, camera, viewport, hitFlashRemaining)
   drawHud(context, game)
-  if (!isTerminalOutcome(game.outcome)) {
+  if (phase === 'playing' && !isTerminalOutcome(game.outcome)) {
     drawUpgradeOverlay(context, viewport, game.pendingUpgrade)
   }
   drawOutcomeOverlay(context, viewport, game.outcome)
+  if (phase === 'playing') {
+    drawPauseButton(context, viewport)
+  } else if (phase === 'paused') {
+    drawPauseOverlay(context, viewport)
+  }
 }
 
 const frame = (timestampMs: number): void => {
@@ -340,23 +381,25 @@ const frame = (timestampMs: number): void => {
   const dtSeconds = clampDeltaSeconds((timestampMs - lastTimestampMs) / 1000)
   lastTimestampMs = timestampMs
 
-  const camera = currentCamera()
-  const hpBefore = game.player.health
-  const terminal = isTerminalOutcome(game.outcome)
-  const direction =
-    terminal || game.pendingUpgrade !== null
-      ? { x: 0, y: 0 }
-      : getMoveDirection(input)
-  game = updateGame(game, direction, dtSeconds, { camera, viewport })
-  if (!terminal && game.player.health < hpBefore) {
-    hitFlashRemaining = 0.12
-  }
-  if (
-    hitFlashRemaining > 0 &&
-    game.pendingUpgrade === null &&
-    !isTerminalOutcome(game.outcome)
-  ) {
-    hitFlashRemaining = Math.max(0, hitFlashRemaining - dtSeconds)
+  if (phase === 'playing') {
+    const camera = currentCamera()
+    const hpBefore = game.player.health
+    const terminal = isTerminalOutcome(game.outcome)
+    const direction =
+      terminal || game.pendingUpgrade !== null
+        ? { x: 0, y: 0 }
+        : getMoveDirection(input)
+    game = updateGame(game, direction, dtSeconds, { camera, viewport })
+    if (!terminal && game.player.health < hpBefore) {
+      hitFlashRemaining = 0.12
+    }
+    if (
+      hitFlashRemaining > 0 &&
+      game.pendingUpgrade === null &&
+      !isTerminalOutcome(game.outcome)
+    ) {
+      hitFlashRemaining = Math.max(0, hitFlashRemaining - dtSeconds)
+    }
   }
 
   draw()

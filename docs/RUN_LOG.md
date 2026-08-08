@@ -518,6 +518,10 @@
 | 2026-08-08 | ABILITY-01 Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `481ed9e` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | CP-M5-RUN-FLOW-DIFFICULTY-01 范围关卡 | 已批准 | 用户确认新需求并批准 D-042；统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE。目标：开始主界面（"开始游戏"按钮）、游戏内暂停（冻结全部模拟，可继续或提前结束回主界面）、提高敌人数量压力（仅 `enemyCap`/`spawnInterval`，不改敌人强度）。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 基线检查 | 通过 | `main` 工作区干净，HEAD 与 `origin/main` 同步于 `481ed9e`；基线 `npm test` 为 14 个文件 / 301 项测试，`npx tsc --noEmit` 通过。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 设计与实现 | 已应用 | `main.ts` 新增应用阶段 `menu | playing | paused`：主界面（标题 + "开始游戏"按钮，加载后不直接开战）、游戏内右上角暂停按钮、暂停冻结（`updateGame` 仅在 playing 时调用）、继续/返回主界面按钮；`src/ui/menu-overlay.ts` 绘制与纯函数命中测试；难度数量压力提高：t1 `spawnInterval` 1.0→0.8 / `enemyCap` 20→28、t2 0.8→0.65 / 24→36、t3 0.65→0.5 / 28→46、t4 0.5→0.4 / 32→56（`ENEMY_SPAWN_INTERVAL`/`ENEMY_CAP` 常量同步更新）；敌人强度属性不变。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 针对性测试 | 通过 | `src/ui/menu-overlay.test.ts`：开始/继续/返回/暂停按钮命中测试（含越界拒绝）；`difficulty.test.ts` 档位断言与跨档 accumulator 断言更新（0.15→0.35）。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 完整验证 | 通过 | `npm test` 为 15 个文件 / 305 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
