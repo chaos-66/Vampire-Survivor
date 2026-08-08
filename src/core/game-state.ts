@@ -101,6 +101,7 @@ export const createGameState = (
     characterId: character.id,
     weapons,
     abilities: [],
+    facing: { x: 1, y: 0 },
   }
 
   const worldObjects = createStaticWorldObjects(arena, player)

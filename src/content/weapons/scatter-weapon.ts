@@ -1,10 +1,11 @@
 /**
- * 散射武器：向最近敌人方向一次发射多颗弹（左右对称分布）。
+ * 散射武器：沿角色当前朝向一次发射多颗弹（左右对称分布）。
  * 单件持有（选择时替换当前武器）；可升级：等级 1/2/3 对应 3/4/5 颗弹。
  * 每弹伤害低于默认单弹，总量略高但更分散；经武器升级 offer 获得或升级。
+ * 指向性武器：初始发射方向取角色朝向，不选择最近敌人（D-044）。
  */
 
-import { normalize, vecLength } from '../../vec'
+import { vecLength } from '../../vec'
 import {
   PROJECTILE_LIFETIME,
   PROJECTILE_RADIUS,
@@ -17,7 +18,6 @@ import type {
   WeaponInstance,
   WeaponUpdateContext,
 } from '../../weapons/weapon-definition'
-import { selectNearestEnemy } from './default-projectile'
 
 export const SCATTER_WEAPON_ID = 'scatter_weapon'
 /** 单弹伤害比例（相对玩家基础伤害）。 */
@@ -40,7 +40,7 @@ const shotCountForLevel = (level: number): number => 2 + level
 export const scatterProjectileWeapon: WeaponDefinition = {
   id: SCATTER_WEAPON_ID,
   name: '散射弹',
-  description: '一次发射多颗散射弹，可升级',
+  description: '沿朝向一次发射多颗散射弹，可升级',
   maxLevel: 3,
   create: (): WeaponInstance => ({
     definitionId: SCATTER_WEAPON_ID,
@@ -51,18 +51,14 @@ export const scatterProjectileWeapon: WeaponDefinition = {
     if (!readyToFire(instance, context)) {
       return
     }
-    const target = selectNearestEnemy(context.player, context.enemies)
-    if (!target) {
+    const facing = context.player.facing
+    if (vecLength(facing) === 0) {
       return
     }
-    const dir = normalize({
-      x: target.x - context.player.x,
-      y: target.y - context.player.y,
-    })
-    const base =
-      vecLength(dir) === 0
-        ? { x: PROJECTILE_SPEED, y: 0 }
-        : { x: dir.x * PROJECTILE_SPEED, y: dir.y * PROJECTILE_SPEED }
+    const base = {
+      x: facing.x * PROJECTILE_SPEED,
+      y: facing.y * PROJECTILE_SPEED,
+    }
     const count = shotCountForLevel(instance.level)
     for (let i = 0; i < count; i += 1) {
       const offset = (i - (count - 1) / 2) * SCATTER_STEP_RAD

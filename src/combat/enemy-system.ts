@@ -241,6 +241,7 @@ export const spawnEnemyOutsideView = (
       characterId: '',
       weapons: [],
       abilities: [],
+      facing: { x: 1, y: 0 },
     },
     rng: state.rng,
   })

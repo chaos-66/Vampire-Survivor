@@ -4,6 +4,7 @@
  */
 
 import type { Player } from '../movement'
+import type { Vec2 } from '../vec'
 import type { WeaponInstance } from '../weapons/weapon-definition'
 import type { AbilityInstance } from '../abilities/ability-definition'
 
@@ -19,4 +20,6 @@ export type CombatPlayer = Player & {
   weapons: WeaponInstance[]
   /** 附着角色的被动能力实例（与武器持有槽分离，可叠加多个）。 */
   abilities: AbilityInstance[]
+  /** 角色朝向（单位方向，默认朝右 (1,0)）；由最后一次非零移动方向更新。 */
+  facing: Vec2
 }

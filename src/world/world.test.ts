@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+﻿import { describe, expect, it } from 'vitest'
 
 import {
   computeWorldBounds,
@@ -210,6 +210,7 @@ describe('off-view spawn', () => {
           characterId: 'x',
           weapons: [],
           abilities: [],
+          facing: { x: 1, y: 0 },
         },
         rng,
       })
@@ -240,6 +241,7 @@ describe('off-view spawn', () => {
       characterId: '',
       weapons: [] as [],
       abilities: [],
+      facing: { x: 1, y: 0 },
     })
     const a = spawnPositionOutsideView({
       world,
@@ -283,6 +285,7 @@ describe('off-view spawn', () => {
           characterId: 'x',
           weapons: [],
           abilities: [],
+          facing: { x: 1, y: 0 },
         },
         rng: createSequenceRng([
           (testCase.side + 0.01) / 4,
@@ -349,6 +352,7 @@ describe('off-view spawn', () => {
             characterId: 'x',
             weapons: [],
             abilities: [],
+            facing: { x: 1, y: 0 },
           },
           rng: createSequenceRng([
             (i % 4) / 4,

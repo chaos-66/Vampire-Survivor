@@ -8,6 +8,7 @@ import {
   type Arena,
 } from '../movement'
 import type { Vec2 } from '../vec'
+import { normalize, vecLength } from '../vec'
 import type { CombatPlayer } from './player-types'
 import type { WorldObject } from '../world/world-object'
 import { movePlayerAroundObstacles } from '../world/obstacle-collision'
@@ -28,12 +29,17 @@ export const movePlayer = (
     arena,
   )
   const resolved = movePlayerAroundObstacles(player, stepped, arena, worldObjects)
-  return {
+  const next: CombatPlayer = {
     ...player,
     x: resolved.x,
     y: resolved.y,
     radius: resolved.radius,
   }
+  // 非零移动方向更新朝向；静止保留最近一次朝向。
+  if (vecLength(direction) > 0) {
+    next.facing = normalize(direction)
+  }
+  return next
 }
 
 export const clampPlayerHealthAndArena = (

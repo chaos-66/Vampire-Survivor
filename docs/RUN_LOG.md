@@ -547,6 +547,13 @@
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第四次全新独立复审 | PASS | 全新审计上下文确认：无过时档位/复审状态残留（历史证据行除外）、四文档表述一致（高压档位已应用、三次高压档位复审 FAIL 均为文档一致性、证据补全已应用、待再次复审）、RUN_LOG 证据齐全且保留全部 FAIL、最后同步提交与实际一致；代码抽查确认档位数值与用户确认一致、敌人强度与 5 分钟规则未改。独立复跑 `npm test`（15 个文件 / 305 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-08 | 用户 CP-M5-RUN-FLOW-DIFFICULTY-01 浏览器验收 | PASS | 用户回复原文：`全部pass`。验收覆盖：首屏主界面含"吸血鬼幸存者"与"开始游戏"；可开始游戏；暂停后玩家、时间、敌人、投射物、掉落、武器、能力、效果、经验、升级和胜负均冻结；可继续同一局；可从暂停页返回主界面；可再次开始完整新局；敌人数量压力符合 D-042/D-043（0 秒 70/0.45s、15 秒 110/0.30s、30 秒 160/0.22s、45 秒 220/0.16s）；单个敌人强度未见明显变化；5 分钟胜负、HUD `mm:ss`、升级卡片、散射弹、斧头、吸经验、追踪弹、食物、宝箱无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 Green 关闭验证 | 通过 | `npm test` 为 15 个文件 / 305 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 68 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-08 | `git commit -m "M5: close run flow checkpoint"` | 通过 | 创建 RUN-FLOW-DIFFICULTY-01 Green 关闭提交 `d8624fc`，包含 7 个流程文档；随附 `CP-M5-TARGETING-01` 范围关卡（D-044）。 |
+| 2026-08-08 | RUN-FLOW Green 关闭分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `d8624fc` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | CP-M5-TARGETING-01 范围关卡与基线检查 | 通过 | 用户确认混合目标规则并批准 D-044；统一 PLAN、STATUS、HANDOFF、ACCEPTANCE、PIPELINE。`main` 干净，HEAD 与 `origin/main` 同步于 `d8624fc`；基线 `npm test` 为 15 个文件 / 305 项测试。 |
+| 2026-08-08 | TARGETING-01 设计与实现 | 已应用 | `CombatPlayer.facing`（默认 (1,0) 朝右）；`movePlayer` 非零方向更新朝向、静止保留；`createGameState` 重置默认朝向；散射弹与斧头改为沿角色朝向决定初始发射方向（不再选择最近敌人，无敌人时也发射）；默认弹保持 `selectNearestEnemy`；追踪弹保持 `homingTurnSpeed` 飞行中追踪；`draw-world.ts` 玩家前方绘制小三角朝向指示（`fill()` 自动闭合，兼容测试 mock）。 |
+| 2026-08-08 | TARGETING-01 针对性测试 | 通过 | `src/targeting.test.ts`：新局默认朝右、非零移动更新朝向、静止保留、重新开始重置、散射弹沿朝向发射（敌人在侧方仍朝上）、斧头沿朝向投掷、散射弹无敌人也发射、默认弹仍选最近敌人、追踪弹仍 homing、运行中朝向随移动更新。 |
+| 2026-08-08 | TARGETING-01 完整验证 | 通过 | `npm test` 为 16 个文件 / 315 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | TARGETING-01 开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器交互仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |
