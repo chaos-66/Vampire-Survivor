@@ -58,7 +58,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审 PASS，等待浏览器验收
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位已应用（D-043），复审文档修复已应用，待再次复审
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -182,10 +182,10 @@
 
 ## 下一任务
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 第二次全新复审已 PASS，唯一下一任务是用户浏览器验收
-（打开页面先见主界面与"开始游戏"按钮；点击开始进入游戏；游戏内有暂停按钮；暂停后
-画面/时间/敌人/投射物冻结；继续后同一局恢复；提前结束回主界面；再次开始是完整新局；
-敌人数量明显更多、压力更高但单个敌人强度无明显变化；5 分钟胜负、HUD `mm:ss`、升级卡片、
-散射弹、斧头、吸经验、追踪弹、食物/宝箱无回归；控制台无未处理错误）；验收通过后按
-`docs/PIPELINE.md` 进行 Green 关闭验证与提交。不得实现 NPC、设置菜单、存档、角色选择、
-难度选择 UI、新敌人行为、新内容。
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位修正（D-043）已应用，复审文档修复已应用，由全新
+审计上下文再次复审；通过后用户浏览器验收（打开页面先见主界面与"开始游戏"按钮；点击开始
+进入游戏；游戏内有暂停按钮；暂停后画面/时间/敌人/投射物冻结；继续后同一局恢复；提前
+结束回主界面；再次开始是完整新局；敌人数量明显更多、压力更高但单个敌人强度无明显变化；
+5 分钟胜负、HUD `mm:ss`、升级卡片、散射弹、斧头、吸经验、追踪弹、食物/宝箱无回归；
+控制台无未处理错误）；验收通过后按 `docs/PIPELINE.md` 进行 Green 关闭验证与提交。
+不得实现 NPC、设置菜单、存档、角色选择、难度选择 UI、新敌人行为、新内容。

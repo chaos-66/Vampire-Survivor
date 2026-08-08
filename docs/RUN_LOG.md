@@ -532,6 +532,13 @@
 | 2026-08-08 | 用户确认高压割草档位 | 反馈 | 用户确认固定难度档位：0 秒 enemyCap 70 / spawnInterval 0.45；15 秒 110 / 0.30；30 秒 160 / 0.22；45 秒 220 / 0.16；敌人生命/速度/伤害/半径不变。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位应用 | 已应用 | `difficulty.ts`/`constants.ts` 档位更新为用户确认数值（`ENEMY_SPAWN_INTERVAL` 0.45、`ENEMY_CAP` 70）；更新 `difficulty.test.ts` 档位/跨档断言与 `game.test.ts` 生成数量断言（3→6）；修复 `content.test.ts` 手动夹具 id 与运行时 `nextEnemyId` 冲突导致的覆盖问题（id 1 → 1000）。 |
 | 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位验证 | 通过 | `npm test` 为 15 个文件 / 305 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | `git commit -m "M5: apply high pressure enemy tiers"` | 通过 | 创建高压档位修正提交 `fc93677`，包含 5 个源码/测试文件和 2 个流程文档。 |
+| 2026-08-08 | 高压档位分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `fc93677` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位独立复审 | FAIL | 复审确认代码、档位数值与全部自动化验证通过；阻塞项为文档一致性：HANDOFF 残留旧档位数值（0.8/28 等）、STATUS/HANDOFF 最后同步提交未更新为 `fc93677`、复审状态表述未反映高压档位修正。 |
+| 2026-08-08 | `git commit -m "M5: align pressure tier audit status"` | 通过 | 创建高压档位复审文档修复提交 `75d000e`，纯文档（3 个流程文档）。 |
+| 2026-08-08 | 高压档位文档修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `75d000e` 推送至 `origin/main`，本地与远端同步。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位第二次独立复审 | FAIL | 复审确认代码与工具链通过；阻塞项：HANDOFF 残留旧复审状态表述（"第二次全新复审 PASS 等待浏览器验收"）、RUN_LOG 缺 `fc93677`/`75d000e` 提交与推送证据、缺高压档位复审 FAIL 记录。 |
+| 2026-08-08 | RUN-FLOW-DIFFICULTY-01 高压档位复审证据补全 | 已应用 | HANDOFF 旧复审状态与"下一任务"表述更新；RUN_LOG 补记 `fc93677`/`75d000e` 提交与推送证据及两次复审 FAIL 记录；STATUS/HANDOFF 统一为"高压档位已应用、复审文档修复已应用、待再次复审"。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

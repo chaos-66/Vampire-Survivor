@@ -2,7 +2,7 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现与高压档位修正均已提交，高压档位复审文档修复已应用，等待再次复审
+- 当前阶段：M5 基础建设；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位复审证据补全已应用，等待再次复审
 - 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现（`9702f19`）与高压档位修正（`fc93677`）均已同步 GitHub，复审文档修复已应用，等待复审
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
@@ -47,7 +47,7 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位修正已应用，复审文档修复已应用，待再次复审**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位复审证据补全已应用，待再次复审**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
@@ -148,7 +148,7 @@
 
 ## 下一步
 
-`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位修正（D-043）已应用，复审文档修复已应用，由全新
-审计上下文再次复审；通过后用户浏览器验收（主界面/开始/暂停/继续/返回、敌人数量压力
-明显更高、无回归、控制台无错误），最后 Green 关闭。后续纯文档状态提交按
-`docs/PIPELINE.md` 不写入自身哈希，以避免递归状态提交。
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 高压档位（D-043）复审证据补全已应用，由全新审计上下文
+再次复审；通过后用户浏览器验收（主界面/开始/暂停/继续/返回、敌人数量压力明显更高、
+无回归、控制台无错误），最后 Green 关闭。后续纯文档状态提交按 `docs/PIPELINE.md`
+不写入自身哈希，以避免递归状态提交。
