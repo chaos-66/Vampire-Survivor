@@ -4,7 +4,8 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-ABILITY-01`，**Green**
-- 交接状态：ABILITY-01 自动验证、独立审计、用户浏览器验收（`全部pass`）和 Green 关闭验证均为 PASS；RUN-FLOW-DIFFICULTY 范围已批准（D-042），等待实现
+- 交接状态：ABILITY-01 已 Green 关闭；RUN-FLOW-DIFFICULTY-01 实现提交 `9702f19` 已同步 GitHub，首次审计 FAIL（文档一致性），修复已应用，等待复审
+- RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
 - ABILITY-01 审计修复提交：`037fc17`（`M5: fix ability audit findings`），已同步 GitHub
 - ABILITY-01 Green 关闭提交：`481ed9e`（`M5: close passive ability checkpoint`），已同步 GitHub
@@ -56,7 +57,7 @@
 - 全新独立复审 **PASS**
 - 用户报告的完整 OUTCOME 浏览器验收：**PASS**
 - CP-M4-OUTCOME-01: **Green**
-- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 范围已批准（D-042），实现待进行
+- M5+ RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01 与 ABILITY-01 Green；`CP-M5-RUN-FLOW-DIFFICULTY-01` 实现已提交（`9702f19`），首次审计 FAIL（文档一致性），修复已应用，待复审
 - RUNTIME：批量经验追加、投射物碰撞列表复用、可见实体绘制裁剪已应用
 - ENEMY-ARCH：定义、注册表、严格工厂、默认敌人和运行时 `definitionId` 已应用
 - 自动验证：9 个测试文件 / 211 项测试；tsc / build / audit / diff check 通过
@@ -170,11 +171,17 @@
 - `Projectile` 新增可选 `homingTurnSpeed`（`steerTowardNearest` 每帧转向最近活敌）。
 - 能力为纯状态实例（无实体位置），不设运行时实体 ID（以 D-041 为准）。
 
+## RUN-FLOW-DIFFICULTY-01 要点
+
+- 应用阶段 `menu | playing | paused`（main.ts）：主界面（标题 + "开始游戏"按钮）、游戏内
+  右上角暂停按钮、暂停冻结全部模拟（`updateGame` 仅 playing 时调用）、继续恢复同一局、
+  返回主界面；再次开始创建完整新局。
+- `src/ui/menu-overlay.ts`：主界面/暂停界面/暂停按钮绘制与纯函数命中测试。
+- 敌人数量压力：t1 0.8s/28、t2 0.65s/36、t3 0.5s/46、t4 0.4s/56；敌人强度属性不变。
+
 ## 下一任务
 
-`CP-M5-ABILITY-01` 已 Green 关闭。唯一下一任务是 `CP-M5-RUN-FLOW-DIFFICULTY-01` 的实现
-（D-042，范围已批准）：开始主界面（标题 + "开始游戏"按钮，加载后不直接开战）、游戏内
-暂停（冻结全部模拟，可继续或提前结束回主界面，再开始创建完整新局）、提高敌人数量压力
-（仅 `enemyCap` 提高与 `spawnInterval` 降低，不改敌人强度属性）。按 `docs/PIPELINE.md`
-完成验证、独立审计、浏览器验收与 Green 关闭后，再进入 `CP-M5-NPC-01` 范围关卡。
-不实现设置菜单、存档、角色选择、难度选择 UI、新敌人行为、新内容。
+`CP-M5-RUN-FLOW-DIFFICULTY-01` 首次审计 FAIL 阻塞项（状态文档滞后、推送证据缺失）已修复，
+由全新审计上下文复审；通过后用户浏览器验收（主界面/开始/暂停/继续/返回、敌人数量压力、
+无回归、控制台无错误），最后 Green 关闭。不得实现 NPC、设置菜单、存档、角色选择、
+难度选择 UI、新敌人行为、新内容。
