@@ -95,24 +95,17 @@ export const drawWorld = (
   context.arc(ps.x, ps.y, game.player.radius, 0, Math.PI * 2)
   context.fill()
 
-  // 朝向指示：玩家前方小三角（仅绘制，不参与碰撞或镜头）。
+  // 朝向指示：玩家前方紧贴轮廓的短小圆点（圆润、克制；仅绘制，不参与碰撞或镜头）。
   const facing = game.player.facing
   const facingLen = Math.hypot(facing.x, facing.y)
   if (facingLen > 0) {
     const ux = facing.x / facingLen
     const uy = facing.y / facingLen
-    const tipX = ps.x + ux * (game.player.radius + 10)
-    const tipY = ps.y + uy * (game.player.radius + 10)
-    const backX = ps.x + ux * (game.player.radius - 2)
-    const backY = ps.y + uy * (game.player.radius - 2)
-    const sideX = -uy * 7
-    const sideY = ux * 7
-    context.fillStyle = '#f0f4ff'
+    const dotX = ps.x + ux * (game.player.radius + 5)
+    const dotY = ps.y + uy * (game.player.radius + 5)
+    context.fillStyle = '#dcecff'
     context.beginPath()
-    context.moveTo(tipX, tipY)
-    context.lineTo(backX + sideX, backY + sideY)
-    context.lineTo(backX - sideX, backY - sideY)
-    // fill() 会自动闭合路径；不调用 closePath 以兼容测试 mock context。
+    context.arc(dotX, dotY, 4.5, 0, Math.PI * 2)
     context.fill()
   }
 }

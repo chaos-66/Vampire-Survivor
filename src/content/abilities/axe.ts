@@ -1,6 +1,6 @@
 /**
- * 斧头能力：周期性沿角色当前朝向投掷斧头（额外攻击行为，不占武器冷却与武器槽）。
- * 指向性能力：初始投掷方向取角色朝向，不选择最近敌人（D-044）。
+ * 斧头能力：周期性朝最近敌人投掷斧头（额外攻击行为，不占武器冷却与武器槽）。
+ * 自动瞄准最近敌人；角色朝向仅用于视觉反馈，不驱动投掷方向（D-045）。
  */
 
 import {
@@ -10,7 +10,8 @@ import {
   AXE_RADIUS,
   AXE_SPEED,
 } from '../../core/constants'
-import { vecLength } from '../../vec'
+import { normalize, vecLength } from '../../vec'
+import { selectNearestEnemy } from '../weapons/default-projectile'
 import type {
   AbilityDefinition,
   AbilityInstance,
@@ -22,7 +23,7 @@ export const AXE_ABILITY_ID = 'axe'
 export const axeAbility: AbilityDefinition = {
   id: AXE_ABILITY_ID,
   name: '斧头',
-  description: '周期性沿朝向投掷斧头',
+  description: '周期性向最近敌人投掷斧头',
   maxLevel: 1,
   offerWeight: 0.7,
   create: (): AbilityInstance => ({
@@ -38,15 +39,23 @@ export const axeAbility: AbilityDefinition = {
     if (instance.cooldownRemaining > 0) {
       return
     }
-    const facing = context.player.facing
-    if (vecLength(facing) === 0) {
+    const target = selectNearestEnemy(context.player, context.enemies)
+    if (!target) {
       return
     }
+    const dir = normalize({
+      x: target.x - context.player.x,
+      y: target.y - context.player.y,
+    })
+    const velocity =
+      vecLength(dir) === 0
+        ? { x: AXE_SPEED, y: 0 }
+        : { x: dir.x * AXE_SPEED, y: dir.y * AXE_SPEED }
     context.spawnProjectile({
       x: context.player.x,
       y: context.player.y,
-      vx: facing.x * AXE_SPEED,
-      vy: facing.y * AXE_SPEED,
+      vx: velocity.x,
+      vy: velocity.y,
       radius: AXE_RADIUS,
       damage: AXE_DAMAGE,
       lifeRemaining: AXE_LIFETIME,

@@ -2,11 +2,11 @@
 
 ## 当前目标
 
-**当前检查点：`CP-M5-TARGETING-01`（D-044）。** 角色朝向指示与混合目标规则：玩家持久
-朝向（新局默认朝右、最后非零移动方向更新、静止保留）、符合现有视觉风格的朝向指示
-（不引入多余 HUD/设置/文本）、目标策略分离（默认弹 `nearestEnemy`、追踪弹 homing、
-散射弹与斧头沿角色朝向发射）。实现已提交（`1991b7b`），第二次全新复审 **PASS**，
-等待浏览器验收。
+**当前检查点：`CP-M5-TARGETING-01`（D-044/D-045）。** 角色朝向指示与战斗修订：玩家持久
+朝向（新局默认朝右、最后非零移动方向更新、静止保留）仅作视觉反馈，不驱动发射方向；
+圆润克制的朝向指示（紧贴轮廓的前向小圆点，非尖锐三角）；散射弹与斧头恢复自动瞄准最近
+敌人；敌人局部分离（确定性轻量分离，阻止完全重叠）。修订已应用（D-045），等待复审与
+用户重新浏览器验收。
 
 目标模块：`src/actors/player-types.ts`/`src/actors/player-system.ts`（朝向状态与移动更新）、
 `src/core/game-state.ts`（新局默认朝向）、`src/content/weapons/scatter-weapon.ts` 与
@@ -105,10 +105,12 @@ Green 关闭提交为 `f250741`（`M5: close runtime performance checkpoint`）�
 ## TARGETING-01 范围要点
 
 - 朝向状态：`CombatPlayer.facing`（`Vec2`，默认 (1,0) 朝右）；`movePlayer` 在非零移动
-  方向时更新朝向，静止保留；`createGameState` 重置默认朝向。
-- 朝向指示：玩家绘制处叠加简洁方向标记（三角/线段），仅绘制不参与碰撞与镜头。
-- 目标策略：默认弹 `selectNearestEnemy`（不变）；追踪弹 `homingTurnSpeed` 飞行中追踪
-  （不变）；散射弹与斧头以 `player.facing` 决定初始发射方向（不再选择最近敌人）。
+  方向时更新朝向，静止保留；`createGameState` 重置默认朝向。朝向仅用于视觉反馈。
+- 朝向指示：玩家前方紧贴轮廓的前向小圆点（圆润克制，无尖锐三角）。
+- 目标规则：默认弹 `selectNearestEnemy`；追踪弹 `homingTurnSpeed` 飞行中追踪；散射弹与
+  斧头均自动瞄准最近敌人（D-045 取消与朝向绑定）。
+- 敌人分离：`separateEnemies` 确定性轻量分离（最小间距 `ENEMY_RADIUS*0.9`、2 轮、
+  完全重合固定方向拆开），阻止长期完全重叠；不改数量/频率/强度。
 
 ## ABILITY-01 范围要点
 

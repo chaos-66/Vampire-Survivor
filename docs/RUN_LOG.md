@@ -561,6 +561,10 @@
 | 2026-08-08 | `git commit -m "M5: fix targeting audit findings"` | 通过 | 创建 TARGETING-01 审计文档修复提交 `e61b03e`，包含 5 个流程文档与 `world.test.ts` BOM 清理。 |
 | 2026-08-08 | TARGETING-01 审计修复分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `e61b03e` 推送至 `origin/main`，本地与远端同步。 |
 | 2026-08-08 | TARGETING-01 第二次全新独立复审 | PASS | 全新审计上下文确认：状态文档一致（实现已提交 `1991b7b`、首次审计 FAIL 为文档一致性、修复已应用、待复审）、RUN_LOG 证据齐全且保留 FAIL 记录、最后同步提交与实际一致、无过时表述残留；代码抽查确认 facing 状态/朝向指示/混合目标规则与范围一致，默认弹最近敌人与追踪弹 homing 未改。独立复跑 `npm test`（16 个文件 / 315 项）、`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
+| 2026-08-08 | 用户 CP-M5-TARGETING-01 功能验收反馈 | 反馈 | 用户确认既有功能 PASS（朝向随移动/静止保持/新局朝右、默认弹与追踪弹自动、暂停/继续/返回/新局/5 分钟/升级/食物/宝箱/敌人压力无回归、控制台无错误），但提出三项修订：①暂时取消"指向性技能"规则（散射弹/斧头恢复自动瞄准，朝向仅视觉反馈）；②重做朝向视觉指示（白色尖三角像"鸡头/喙"，改为圆润紧贴轮廓的方向标记）；③防止敌人完全重叠（轻量确定性分离）。已记录 D-045。 |
+| 2026-08-08 | TARGETING-01 修订实现 | 已应用 | ①散射弹（`scatter-weapon.ts`）与斧头（`axe.ts`）恢复 `selectNearestEnemy` 自动瞄准，不再使用 `player.facing` 决定发射方向；朝向状态与视觉指示保留。②`draw-world.ts` 移除白色尖三角，改为玩家前方紧贴轮廓的前向小圆点（半径 4.5、间距 5、浅蓝白 `#dcecff`）。③`enemy-system.ts` 新增 `separateEnemies`（最小间距 `ENEMY_RADIUS*0.9`、2 轮确定性迭代、完全重合时固定方向按 id 奇偶拆开），接入 `advanceEnemyChases`；不改变敌人属性/数量档位。 |
+| 2026-08-08 | TARGETING-01 修订验证 | 通过 | `npm test` 为 16 个文件 / 319 项测试（新增分离测试 4 项、散射弹/斧头自动瞄准回归测试更新；`runtime.test.ts` 绘制 arc 计数 4→5 含朝向指示点）；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
+| 2026-08-08 | TARGETING-01 修订开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；浏览器交互观察仍待用户验收。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

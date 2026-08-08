@@ -183,7 +183,8 @@ describe('可见绘制裁剪', () => {
 
     drawWorld(context, game, camera, viewport, 0)
 
-    expect(arcCalls).toBe(4)
+    // 玩家圆 + 朝向指示圆点 + 掉落 + 敌人 + 投射物 = 5 次 arc
+    expect(arcCalls).toBe(5)
     expect(fillRectCalls).toBe(3)
     expect(game.drops).toHaveLength(far + 1)
     expect(game.enemies).toHaveLength(far + 1)

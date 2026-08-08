@@ -346,8 +346,67 @@ export const chasePlayer = (
   }
 }
 
+/** 敌人分离最小间距：允许有限的部分重叠，但阻止长期完全叠在同一中心点。 */
+export const ENEMY_SEPARATION_DISTANCE = ENEMY_RADIUS * 0.9
+/** 完全重合时的确定性分离方向（避免零向量无法分开）。 */
+export const SEPARATION_TIE_DIRECTION = { x: 1, y: 0 }
+/** 每帧分离迭代轮数（轻量、性能可控）。 */
+export const SEPARATION_ROUNDS = 2
+
+/**
+ * 局部分离：把距离小于 ENEMY_SEPARATION_DISTANCE 的敌人对沿连线确定性推开。
+ * 完全重合（距离为 0）时使用固定方向，保证可稳定拆开。
+ * 纯位置修正：不改变敌人属性，不参与 rng，不依赖 DOM。
+ */
+export const separateEnemies = (enemies: readonly Enemy[]): Enemy[] => {
+  const out = enemies.map((enemy) => ({ ...enemy }))
+  const minDist = ENEMY_SEPARATION_DISTANCE
+  const minDistSq = minDist * minDist
+  for (let round = 0; round < SEPARATION_ROUNDS; round += 1) {
+    for (let i = 0; i < out.length; i += 1) {
+      const a = out[i]
+      if (!a) {
+        continue
+      }
+      for (let j = i + 1; j < out.length; j += 1) {
+        const b = out[j]
+        if (!b) {
+          continue
+        }
+        const dx = b.x - a.x
+        const dy = b.y - a.y
+        const dSq = dx * dx + dy * dy
+        if (dSq >= minDistSq) {
+          continue
+        }
+        let nx: number
+        let ny: number
+        let dist: number
+        if (dSq > 0) {
+          dist = Math.sqrt(dSq)
+          nx = dx / dist
+          ny = dy / dist
+        } else {
+          // 完全重合：使用固定方向，按 id 奇偶各推一侧，保证确定性。
+          dist = 0
+          nx = SEPARATION_TIE_DIRECTION.x
+          ny = SEPARATION_TIE_DIRECTION.y
+        }
+        const push = (minDist - dist) / 2
+        const sign = (a.id + b.id) % 2 === 0 ? 1 : -1
+        a.x -= nx * push * sign
+        a.y -= ny * push * sign
+        b.x += nx * push * sign
+        b.y += ny * push * sign
+      }
+    }
+  }
+  return out
+}
+
 export const advanceEnemyChases = (
   enemies: Enemy[],
   player: CombatPlayer,
   dt: number,
-): Enemy[] => enemies.map((enemy) => chasePlayer(enemy, player, dt))
+): Enemy[] =>
+  separateEnemies(enemies.map((enemy) => chasePlayer(enemy, player, dt)))
