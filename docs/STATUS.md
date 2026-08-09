@@ -51,7 +51,7 @@
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**TARGETING-01 上一实现提交 `0588983` 已同步；D-046 朝向视觉修订待提交；`main` 跟踪 `origin/main`**
+- GitHub 同步：**TARGETING-01 D-046 实现提交 `dc51898` 待同步；`main` 跟踪 `origin/main`**
 
 ## 已实现
 

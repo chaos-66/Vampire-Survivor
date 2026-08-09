@@ -574,3 +574,4 @@
 | 2026-08-09 | TARGETING-01 朝向视觉修订（D-046） | 已应用 | 移除角色轮廓外的小圆点；`draw-world.ts` 改为深色外缘、朝向微偏的内核与同向内嵌高光弧，朝向信息融入角色主体；自动瞄准、敌人分离和朝向状态保持不变。 |
 | 2026-08-09 | TARGETING-01 朝向视觉修订验证 | 通过 | `npm test` 为 16 个文件 / 319 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 68 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-09 | TARGETING-01 朝向视觉修订开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器视觉验收仍待用户观察。 |
+| 2026-08-09 | `git commit -m "M5: refine player facing visual"` | 通过 | 创建 TARGETING-01 D-046 实现提交 `dc51898`，包含朝向渲染、渲染测试和 8 个流程文档；待同步。 |
