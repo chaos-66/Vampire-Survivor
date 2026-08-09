@@ -5,7 +5,7 @@
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-RUN-FLOW-DIFFICULTY-01`，**Green**
 - 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 内嵌朝向视觉修订（D-046）已应用并验证，待用户重新浏览器验收
-- TARGETING-01 D-046 实现提交：`dc51898`（`M5: refine player facing visual`），待同步 GitHub
+- TARGETING-01 D-046 实现提交：`dc51898`（`M5: refine player facing visual`），状态记录 `b9786bc`，均已同步 GitHub
 - RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
 - RUN-FLOW-DIFFICULTY-01 高压档位提交：`fc93677`（`M5: apply high pressure enemy tiers`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub

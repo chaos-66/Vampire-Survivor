@@ -575,3 +575,4 @@
 | 2026-08-09 | TARGETING-01 朝向视觉修订验证 | 通过 | `npm test` 为 16 个文件 / 319 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 68 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
 | 2026-08-09 | TARGETING-01 朝向视觉修订开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器视觉验收仍待用户观察。 |
 | 2026-08-09 | `git commit -m "M5: refine player facing visual"` | 通过 | 创建 TARGETING-01 D-046 实现提交 `dc51898`，包含朝向渲染、渲染测试和 8 个流程文档；待同步。 |
+| 2026-08-09 | TARGETING-01 D-046 同步 | 通过 | 推送前完成工作区、空白字符、远程、分支和历史检查；`git fetch origin` 确认远端无领先或分叉；`git push origin main` 已将 `dc51898` 与状态记录 `b9786bc` 推送至 `origin/main`。 |
