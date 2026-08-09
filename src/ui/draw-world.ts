@@ -90,24 +90,36 @@ export const drawWorld = (
   }
 
   const ps = worldToScreen(game.player, camera)
-  context.fillStyle = hitFlashRemaining > 0 ? '#ff9a6b' : '#6ec6ff'
+  const facing = game.player.facing
+  const facingLen = Math.hypot(facing.x, facing.y)
+  const ux = facingLen > 0 ? facing.x / facingLen : 1
+  const uy = facingLen > 0 ? facing.y / facingLen : 0
+
+  // 以球体内部的前向亮面表达朝向，避免在轮廓外附加箭头或标记。
+  context.fillStyle = hitFlashRemaining > 0 ? '#b95a45' : '#2f6f92'
   context.beginPath()
   context.arc(ps.x, ps.y, game.player.radius, 0, Math.PI * 2)
   context.fill()
 
-  // 朝向指示：玩家前方紧贴轮廓的短小圆点（圆润、克制；仅绘制，不参与碰撞或镜头）。
-  const facing = game.player.facing
-  const facingLen = Math.hypot(facing.x, facing.y)
-  if (facingLen > 0) {
-    const ux = facing.x / facingLen
-    const uy = facing.y / facingLen
-    const dotX = ps.x + ux * (game.player.radius + 5)
-    const dotY = ps.y + uy * (game.player.radius + 5)
-    context.fillStyle = '#dcecff'
-    context.beginPath()
-    context.arc(dotX, dotY, 4.5, 0, Math.PI * 2)
-    context.fill()
-  }
+  const coreRadius = Math.max(1, game.player.radius - 2)
+  context.fillStyle = hitFlashRemaining > 0 ? '#ff9a6b' : '#6ec6ff'
+  context.beginPath()
+  context.arc(ps.x + ux * 1.5, ps.y + uy * 1.5, coreRadius, 0, Math.PI * 2)
+  context.fill()
+
+  const facingAngle = Math.atan2(uy, ux)
+  context.strokeStyle = hitFlashRemaining > 0 ? '#ffd0bb' : '#b9e6ff'
+  context.lineWidth = 2
+  context.lineCap = 'round'
+  context.beginPath()
+  context.arc(
+    ps.x + ux * 1.5,
+    ps.y + uy * 1.5,
+    Math.max(1, coreRadius - 3),
+    facingAngle - 0.7,
+    facingAngle + 0.7,
+  )
+  context.stroke()
 }
 
 const drawVisibleGrid = (

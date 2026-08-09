@@ -2,8 +2,8 @@
 
 ## 快照
 
-- 当前阶段：M5 基础建设；`CP-M5-TARGETING-01` 修订（D-045）已应用并验证，待用户浏览器验收
-- 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 修订已应用，等待用户重新浏览器验收
+- 当前阶段：M5 基础建设；`CP-M5-TARGETING-01` 修订（D-046）已应用并验证，待用户浏览器验收
+- 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 的内嵌朝向视觉修订已应用并验证，等待用户重新浏览器验收
 - CONTENT-01 范围关卡提交：`cd36de5`（`M5: scope first real content checkpoint`），已同步 GitHub
 - CONTENT-01 实现提交：`aa0a999`（`M5: introduce first real content`），已同步 GitHub
 - EFFECTS 实现提交：`9ddf4f6`（`M5: introduce runtime effect architecture`），已同步 GitHub
@@ -47,11 +47,11 @@
 - DIFFICULTY Green；辅助指针 Green
 - 获胜/失败/重新开始：**Green**
 - FINAL-MVP-AUDIT-01: **PASS**
-- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01、ABILITY-01 与 RUN-FLOW-DIFFICULTY-01 Green；`CP-M5-TARGETING-01` 修订（D-045）已应用并验证，待用户浏览器验收**
+- M5+ 内容：**RUNTIME、ENEMY-ARCH、DROP-ARCH、WORLD-OBJECTS、EFFECTS、CONTENT-01、ABILITY-01 与 RUN-FLOW-DIFFICULTY-01 Green；`CP-M5-TARGETING-01` 内嵌朝向视觉修订（D-046）已应用并验证，待用户浏览器验收**
 - 交付流程：**已定义；强制执行**（`docs/PIPELINE.md`）
 - 流程检查点：`74b6a3e`（`OPS: define mandatory delivery pipeline`）
 - GitHub 远程仓库：`origin` -> `https://github.com/chaos-66/Vampire-Survivor.git`
-- GitHub 同步：**TARGETING-01 实现提交 `1991b7b` 已同步；`main` 跟踪 `origin/main`**
+- GitHub 同步：**TARGETING-01 上一实现提交 `0588983` 已同步；D-046 朝向视觉修订待提交；`main` 跟踪 `origin/main`**
 
 ## 已实现
 
@@ -148,7 +148,7 @@
 
 ## 下一步
 
-`CP-M5-TARGETING-01` 修订（D-045：解除散射弹/斧头朝向绑定、圆润朝向标记、敌人分离）
+`CP-M5-TARGETING-01` 修订（D-046：以角色内部亮面和高光弧替换外置朝向标记）
 已应用并验证（16 个文件 / 319 项测试），待用户重新浏览器验收；验收通过后按
 `docs/PIPELINE.md` 完成复审与 Green 关闭。后续纯文档状态提交按 `docs/PIPELINE.md`
 不写入自身哈希，以避免递归状态提交。

@@ -571,3 +571,6 @@
 | 2026-08-06 | EFFECTS 第六次全新独立复审 | PASS | 全新审计上下文确认：注册表身份规则、严格校验、即时/限时/refresh/stack 语义、派生有效属性、冻结与清空、冷却到期边界、范围与工具链均通过；文档稳定表述与最后同步提交一致，RUN_LOG 保留全部历史失败。独立复跑 `npm test`（11 个文件 / 259 项）、`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；工作区干净且与 `origin/main` 同步。浏览器验收仍为 `UNVERIFIED`。 |
 | 2026-08-06 | 用户 CP-M5-EFFECTS-01 浏览器验收 | PASS | 用户确认验收通过：移动、战斗、经验、升级、障碍、60 秒胜负和重新开始无回归；控制台无未处理错误。未提供浏览器名称和版本。 |
 | 2026-08-06 | CP-M5-EFFECTS-01 Green 关闭验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 54 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-09 | TARGETING-01 朝向视觉修订（D-046） | 已应用 | 移除角色轮廓外的小圆点；`draw-world.ts` 改为深色外缘、朝向微偏的内核与同向内嵌高光弧，朝向信息融入角色主体；自动瞄准、敌人分离和朝向状态保持不变。 |
+| 2026-08-09 | TARGETING-01 朝向视觉修订验证 | 通过 | `npm test` 为 16 个文件 / 319 项测试；`npx tsc --noEmit` 通过；`npm run build` 转换 68 个模块；`npm audit` 为 0 个漏洞；`git diff --check` 通过。 |
+| 2026-08-09 | TARGETING-01 朝向视觉修订开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；真实浏览器视觉验收仍待用户观察。 |
