@@ -565,6 +565,11 @@
 | 2026-08-08 | TARGETING-01 修订实现 | 已应用 | ①散射弹（`scatter-weapon.ts`）与斧头（`axe.ts`）恢复 `selectNearestEnemy` 自动瞄准，不再使用 `player.facing` 决定发射方向；朝向状态与视觉指示保留。②`draw-world.ts` 移除白色尖三角，改为玩家前方紧贴轮廓的前向小圆点（半径 4.5、间距 5、浅蓝白 `#dcecff`）。③`enemy-system.ts` 新增 `separateEnemies`（最小间距 `ENEMY_RADIUS*0.9`、2 轮确定性迭代、完全重合时固定方向按 id 奇偶拆开），接入 `advanceEnemyChases`；不改变敌人属性/数量档位。 |
 | 2026-08-08 | TARGETING-01 修订验证 | 通过 | `npm test` 为 16 个文件 / 319 项测试（新增分离测试 4 项、散射弹/斧头自动瞄准回归测试更新；`runtime.test.ts` 绘制 arc 计数 4→5 含朝向指示点）；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-08 | TARGETING-01 修订开发服务器 HTTP 检查 | 通过 | `http://localhost:5173/` 返回 HTTP 200；浏览器交互观察仍待用户验收。 |
+| 2026-08-09 | 用户敌群分离反馈 | 反馈 | 用户反馈：敌人仍明显重叠；两个敌人中心接近或重合时持续、不自然的震颤/来回抖动；无法提供截图。要求从代码定位根因并修复。朝向视觉（D-046 高光弧方案）暂时接受、后续可能继续调整，本次不再改。已记录 D-047。 |
+| 2026-08-09 | 敌群分离根因复核 | 确认 | `separateEnemies` 旧实现 `sign = (a.id + b.id) % 2 === 0 ? 1 : -1`：sign === -1 时 a 沿 +normal、b 沿 -normal（互斥被反转成吸引/穿过），随后位置关系反转在后续帧反向修正——持续震颤。`ENEMY_SEPARATION_DISTANCE = ENEMY_RADIUS * 0.9`（12.6）过小，仍允许严重视觉重叠。 |
+| 2026-08-09 | 敌群分离重做实现 | 已应用 | 新 `separateEnemies`：非零距离对始终沿连线纯互斥（无奇偶反转）；完全同心对用 `(min(id),max(id))` 派生固定 8 向单位方向（确定性、对称、无 rng）；每轮基于本轮快照两阶段（累积-应用）；最小中心距 = `(a.radius + b.radius) * 0.75`（半径和 28 → 21，重叠约直径 25%，保留群聚感）；有限值防御 + 世界边界钳制（`advanceEnemyChases` 增加 arena 参数，game-loop/facade 接线）。朝向视觉 D-046 方案保留不动。 |
+| 2026-08-09 | 敌群分离测试补强 | 通过 | `targeting.test.ts` 新增/强化：任意相交对单帧分离后距离严格增大（覆盖旧 sign === -1 夹具）；旧奇偶夹具稳定互斥不吸引；同心敌人重复调用方向稳定、不交换相对位置；8 个同心敌人多轮收敛为有限群聚且两两达标；正常间距不动；混合半径按各自半径；属性不变；世界边界钳制；追逐重叠敌人 30 帧无穿越/无来回推拉。`game.test.ts` 位移比例测试初始位置移入世界内（避免新边界钳制干扰）。 |
+| 2026-08-09 | 敌群分离修复验证 | 通过 | `npm test` 为 16 个文件 / 324 项测试；`npx tsc --noEmit`、`npm run build`（68 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过；开发服务器 `http://localhost:5173/` 返回 HTTP 200。 |
 | 2026-08-06 | 交接接手基线检查 | 通过 | 工作区干净；`b523b4f` 已含稳定阶段表述，尚未推送（本地领先 `origin/main` 1 个提交）；远端无未知领先或分叉。 |
 | 2026-08-06 | 交接验证 | 通过 | `npm test` 为 11 个文件 / 259 项测试；`npx tsc --noEmit`、`npm run build`（54 个模块）、`npm audit`（0 个漏洞）和 `git diff --check` 均通过。 |
 | 2026-08-06 | 交接同步分叉检查和 `git push origin main` | 通过 | 远端无未知领先提交或分叉；已将 `b523b4f` 推送至 `origin/main`，本地与远端同步。 |

@@ -167,42 +167,102 @@ describe('pause and reset integration', () => {
 })
 
 describe('enemy separation', () => {
-  const enemyAt = (id: number, x: number, y: number): Enemy => ({
+  const enemyAt = (id: number, x: number, y: number, radius = 10): Enemy => ({
     id,
     definitionId: 'default_enemy',
     x,
     y,
-    radius: 10,
+    radius,
     speed: 0,
     health: 10,
     maxHealth: 10,
   })
 
-  it('fully overlapping enemies are deterministically separated', () => {
-    const enemies = separateEnemies([enemyAt(1, 100, 100), enemyAt(2, 100, 100)])
-    expect(enemies).toHaveLength(2)
-    const dx = enemies[1]!.x - enemies[0]!.x
-    const dy = enemies[1]!.y - enemies[0]!.y
-    const dist = Math.hypot(dx, dy)
-    expect(dist).toBeGreaterThan(0)
-    // 再次分离结果一致（确定性）
-    const again = separateEnemies([enemyAt(1, 100, 100), enemyAt(2, 100, 100)])
-    expect(again[0]!.x).toBe(enemies[0]!.x)
-    expect(again[0]!.y).toBe(enemies[0]!.y)
+  const distance = (a: { x: number; y: number }, b: { x: number; y: number }): number =>
+    Math.hypot(b.x - a.x, b.y - a.y)
+
+  it('any intersecting pair strictly increases separation after one frame', () => {
+    // 覆盖多种偏移（含旧代码 sign === -1 会吸引的 id 组合）
+    const pairs = [
+      [1, 2],
+      [2, 3], // 奇偶和为奇数（旧代码 sign === -1）
+      [4, 7],
+      [10, 11],
+    ] as const
+    const offsets = [
+      { dx: 0, dy: 0 },
+      { dx: 4, dy: 0 },
+      { dx: -3, dy: 5 },
+      { dx: 6, dy: -2 },
+    ] as const
+    for (const [idA, idB] of pairs) {
+      for (const off of offsets) {
+        const before = distance(enemyAt(idA, 100, 100), enemyAt(idB, 100 + off.dx, 100 + off.dy))
+        const result = separateEnemies([
+          enemyAt(idA, 100, 100),
+          enemyAt(idB, 100 + off.dx, 100 + off.dy),
+        ])
+        const after = distance(result[0]!, result[1]!)
+        expect(after).toBeGreaterThan(before)
+      }
+    }
   })
 
-  it('partially overlapping enemies are pushed apart', () => {
-    const enemies = separateEnemies([enemyAt(1, 100, 100), enemyAt(2, 105, 100)])
-    const dist = Math.hypot(enemies[1]!.x - enemies[0]!.x, enemies[1]!.y - enemies[0]!.y)
-    expect(dist).toBeGreaterThan(5)
+  it('old sign-odd fixtures still move apart stably (no attraction)', () => {
+    // id 1 与 2：旧代码 (1+2)%2 === 1 → sign === -1 会反转互斥方向
+    const a = enemyAt(1, 100, 100)
+    const b = enemyAt(2, 105, 100)
+    const result = separateEnemies([a, b])
+    // a 应向左、b 应向右（互斥，不交换位置）
+    expect(result[0]!.x).toBeLessThan(100)
+    expect(result[1]!.x).toBeGreaterThan(105)
   })
 
-  it('normally spaced enemies are not pushed apart', () => {
+  it('fully concentric enemies separate stably across repeated calls and frames', () => {
+    const make = () => separateEnemies([enemyAt(1, 100, 100), enemyAt(2, 100, 100)])
+    const first = make()
+    const second = make()
+    // 方向稳定：两次调用结果一致
+    expect(second[0]!.x).toBe(first[0]!.x)
+    expect(second[0]!.y).toBe(first[0]!.y)
+    // 不交换相对位置：第二次调用中 id1 仍在 id2 的同一侧
+    const sideA = Math.sign(first[1]!.x - first[0]!.x)
+    const sideB = Math.sign(second[1]!.x - second[0]!.x)
+    expect(sideB).toBe(sideA)
+    expect(distance(first[0]!, first[1]!)).toBeGreaterThan(0)
+  })
+
+  it('multiple concentric enemies spread into a finite cluster over iterations', () => {
+    const enemies = Array.from({ length: 8 }, (_, i) => enemyAt(i + 1, 200, 200))
+    // 逐步收敛：多次调用（模拟多帧累积）后所有两两中心距达到半径和 * 0.75
+    let result = separateEnemies(enemies)
+    for (let i = 0; i < 20; i += 1) {
+      result = separateEnemies(result)
+    }
+    const centers = new Set(result.map((e) => `${e.x.toFixed(4)},${e.y.toFixed(4)}`))
+    expect(centers.size).toBeGreaterThan(1)
+    for (let i = 0; i < result.length; i += 1) {
+      for (let j = i + 1; j < result.length; j += 1) {
+        const minDist = (result[i]!.radius + result[j]!.radius) * 0.75
+        expect(distance(result[i]!, result[j]!)).toBeGreaterThanOrEqual(minDist - 1e-6)
+      }
+    }
+  })
+
+  it('normally spaced enemies are not moved', () => {
     const a = enemyAt(1, 100, 100)
     const b = enemyAt(2, 500, 100)
     const enemies = separateEnemies([a, b])
     expect(enemies[0]!.x).toBe(100)
     expect(enemies[1]!.x).toBe(500)
+  })
+
+  it('minimum distance uses each enemy actual radius (mixed radii)', () => {
+    const small = enemyAt(1, 100, 100, 6)
+    const big = enemyAt(2, 108, 100, 16)
+    const result = separateEnemies([small, big])
+    const minDist = (6 + 16) * 0.75
+    expect(distance(result[0]!, result[1]!)).toBeGreaterThanOrEqual(minDist - 1e-9)
   })
 
   it('does not change enemy attributes', () => {
@@ -212,6 +272,38 @@ describe('enemy separation', () => {
       expect(enemy.speed).toBe(0)
       expect(enemy.radius).toBe(10)
       expect(enemy.definitionId).toBe('default_enemy')
+      expect(enemy.id).toBeGreaterThan(0)
+    }
+  })
+
+  it('clamps separated enemies inside the arena', () => {
+    const arena = { width: 200, height: 200 }
+    const result = separateEnemies([enemyAt(1, 5, 5), enemyAt(2, 5, 5)], arena)
+    for (const enemy of result) {
+      expect(enemy.x).toBeGreaterThanOrEqual(enemy.radius)
+      expect(enemy.x).toBeLessThanOrEqual(arena.width - enemy.radius)
+      expect(enemy.y).toBeGreaterThanOrEqual(enemy.radius)
+      expect(enemy.y).toBeLessThanOrEqual(arena.height - enemy.radius)
+    }
+  })
+
+  it('chasing overlapping enemies do not jitter direction across frames', () => {
+    const state = createGameState(arena, createSequenceRng([]))
+    const a = { ...enemyAt(1001, state.player.x + 40, state.player.y, 10), health: 1000, maxHealth: 1000 }
+    const b = { ...enemyAt(1002, state.player.x + 44, state.player.y, 10), health: 1000, maxHealth: 1000 }
+    state.enemies = [a, b]
+    // 追踪多帧（玩家静止）：两敌人持续靠近玩家，但相对 x 顺序不翻转、无来回推拉
+    for (let f = 0; f < 30; f += 1) {
+      updateGame(state, { x: 0, y: 0 }, 0.05)
+      const e1 = state.enemies.find((e) => e.id === 1001)
+      const e2 = state.enemies.find((e) => e.id === 1002)
+      expect(e1).toBeDefined()
+      expect(e2).toBeDefined()
+      // 无穿越：id1 始终在 id2 左侧
+      expect(e1!.x).toBeLessThan(e2!.x)
+      // 无来回推拉：距离不小于半径和 * 0.75
+      const minDist = (e1!.radius + e2!.radius) * 0.75
+      expect(distance(e1!, e2!)).toBeGreaterThanOrEqual(minDist - 1e-6)
     }
   })
 })

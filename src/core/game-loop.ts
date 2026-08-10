@@ -63,7 +63,7 @@ const simulateActiveSlice = (
   for (const slice of difficultySlices) {
     advanceSpawns(state, slice.duration, view, state.player, slice.profile)
   }
-  state.enemies = advanceEnemyChases(state.enemies, state.player, dt)
+  state.enemies = advanceEnemyChases(state.enemies, state.player, dt, state.arena)
 
   const contact = applyContactDamage(
     state.player,

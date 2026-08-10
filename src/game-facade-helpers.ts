@@ -38,7 +38,12 @@ export const advanceEnemyChasesOnState = (
   state: GameState,
   dt: number,
 ): void => {
-  state.enemies = advanceEnemyChasesList(state.enemies, state.player, dt)
+  state.enemies = advanceEnemyChasesList(
+    state.enemies,
+    state.player,
+    dt,
+    state.arena,
+  )
 }
 
 export const applyContactDamageOnState = (

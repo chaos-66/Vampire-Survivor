@@ -4,8 +4,9 @@
 
 - 根目录：`D:\agent\workspace\vampire_survivors`
 - 最近关闭的检查点：`CP-M5-RUN-FLOW-DIFFICULTY-01`，**Green**
-- 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 内嵌朝向视觉修订（D-046）已应用并验证，待用户重新浏览器验收
+- 交接状态：RUN-FLOW-DIFFICULTY-01 已 Green 关闭；TARGETING-01 敌群分离修复（D-047）已应用并验证，待用户重新浏览器验收
 - TARGETING-01 D-046 实现提交：`dc51898`（`M5: refine player facing visual`），状态记录 `b9786bc`，均已同步 GitHub
+- TARGETING-01 敌群分离修复提交：本次提交（`M5: fix enemy separation jitter`），待推送后记录哈希
 - RUN-FLOW-DIFFICULTY-01 实现提交：`9702f19`（`M5: introduce run flow and enemy pressure`），已同步 GitHub
 - RUN-FLOW-DIFFICULTY-01 高压档位提交：`fc93677`（`M5: apply high pressure enemy tiers`），已同步 GitHub
 - ABILITY-01 实现提交：`a5b959d`（`M5: introduce passive ability system`），已同步 GitHub
@@ -187,14 +188,19 @@
   `createGameState` 重置默认朝向。朝向仅用于视觉反馈（D-045），不驱动发射方向。
 - 散射弹/斧头恢复自动瞄准最近敌人（`selectNearestEnemy`）；默认弹最近敌人、追踪弹
   `homingTurnSpeed` 飞行中追踪不变。
-- 朝向指示：`draw-world.ts` 以球体内部的前向亮面与高光弧表达朝向，无外置标记。
-- 敌人分离：`separateEnemies`（`enemy-system.ts`）确定性轻量分离，阻止长期完全重叠；
-  暂停冻结由 `main.ts` 阶段门控；重新开始经 `createGameState`。
+- 朝向指示：`draw-world.ts` 以球体内部的前向亮面与高光弧表达朝向（D-046；用户认为仍可
+  继续改进，暂时接受，后续可再调整）。
+- 敌人分离（D-047）：`separateEnemies`（`enemy-system.ts`）稳定互斥——非零距离对沿连线
+  纯互斥、同心对用 `(min(id), max(id))` 派生固定 8 向单位方向、每轮基于本轮快照两阶段
+  处理、最小中心距 = 半径和 × 0.75、有限值防御与世界边界钳制；暂停冻结由 `main.ts`
+  阶段门控；重新开始经 `createGameState`。
 
 ## 下一任务
 
-`CP-M5-TARGETING-01` 修订（D-046）已应用并验证（16 个文件 / 319 项测试；tsc / build 68 模块 / audit / diff check 通过），**待用户重新浏览器验收**（朝向融入角色内部亮面与高光弧，无三角、圆点或外置标记；
-散射弹/斧头恢复自动瞄准；默认弹/追踪弹保持自动；高压敌群不再完全重叠；暂停/继续/
-返回/完整新局及既有 M5 内容无回归；控制台无错误）；验收通过后完成复审与 Green 关闭。
+`CP-M5-TARGETING-01` 敌群分离修复（D-047）已应用并验证（16 个文件 / 324 项测试；tsc /
+build 68 模块 / audit / diff check 通过），**待用户重新浏览器验收**（高压敌群仅部分重叠、
+不再完全叠为一个位置、无持续震颤抖动；散射弹/斧头恢复自动瞄准；默认弹/追踪弹保持自动；
+朝向指示随移动/静止/新局正确；暂停/继续/返回/完整新局及既有 M5 内容无回归；控制台无
+错误）；验收通过后完成复审与 Green 关闭。朝向视觉（D-046）暂时接受、后续可再调整。
 不得实现鼠标/手柄瞄准、锁定 UI、新武器/能力/敌人/掉落/效果、NPC、角色选择、难度选择、
 存档。

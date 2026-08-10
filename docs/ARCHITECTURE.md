@@ -67,6 +67,20 @@
   绘制只跳过不可见物体，不删除、重排或修改状态。
 - 本检查点不加入可破坏物、交互、效果、食物、宝箱、NPC、空间索引或程序化地图。
 
+## CP-M5-TARGETING-01
+
+- `CombatPlayer.facing`（默认 (1,0) 朝右）由 `movePlayer` 在非零移动方向时更新、静止保留；
+  `createGameState` 重置默认朝向。朝向仅用于视觉反馈（D-045），不驱动发射方向。
+- 朝向指示：玩家球体内部的深色外缘、朝向微偏内核与同向短高光弧（D-046 方案，用户认为
+  仍可继续改进，后续可再调整；本次保留）。
+- 目标规则：默认弹与散射弹、斧头均自动瞄准最近敌人（`selectNearestEnemy`）；追踪弹经
+  `homingTurnSpeed` 飞行中追踪最近敌人。
+- 敌群分离：`separateEnemies`（`src/combat/enemy-system.ts`）稳定互斥——非零距离对沿
+  连线纯互斥推开；完全同心对用 `(min(id), max(id))` 派生的固定 8 向单位方向；每轮基于
+  本轮快照两阶段（累积-应用）处理；最小中心距 = 半径和 * 0.75；有限值防御与世界边界
+  钳制（`advanceEnemyChases` 接收 arena）。O(n²)×3 轮在 D-043 最高 220 上限下约 7.3 万次
+  距离检查/帧，实测可控；分离仅在 `updateGame` 路径内运行，暂停时完全冻结。
+
 ## CP-M5-EFFECTS-01
 
 - `EffectDefinition` 分为 `instant` 和 `timed`；即时效果每次应用直接执行一次，限时效果进入

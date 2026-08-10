@@ -195,7 +195,7 @@ describe('enemy chase', () => {
         {
           id: 1,
           definitionId: DEFAULT_ENEMY_ID,
-          x: 0,
+          x: 100,
           y: s.player.y,
           radius: ENEMY_RADIUS,
           speed: ENEMY_SPEED,
@@ -209,7 +209,7 @@ describe('enemy chase', () => {
     const b = make()
     advanceEnemyChases(a, 0.1)
     advanceEnemyChases(b, 0.2)
-    expect(b.enemies[0].x - 0).toBeCloseTo((a.enemies[0].x - 0) * 2)
+    expect(b.enemies[0].x - 100).toBeCloseTo((a.enemies[0].x - 100) * 2)
   })
 
   it('co-located enemy produces finite positions', () => {

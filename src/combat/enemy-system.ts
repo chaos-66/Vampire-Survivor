@@ -346,35 +346,92 @@ export const chasePlayer = (
   }
 }
 
-/** 敌人分离最小间距：允许有限的部分重叠，但阻止长期完全叠在同一中心点。 */
-export const ENEMY_SEPARATION_DISTANCE = ENEMY_RADIUS * 0.9
-/** 完全重合时的确定性分离方向（避免零向量无法分开）。 */
-export const SEPARATION_TIE_DIRECTION = { x: 1, y: 0 }
-/** 每帧分离迭代轮数（轻量、性能可控）。 */
-export const SEPARATION_ROUNDS = 2
+/**
+ * 敌群局部分离（稳定互斥）。
+ *
+ * 抖动根因（D-047 复核）：旧实现按 (a.id + b.id) 奇偶反转互斥方向，sign === -1 时
+ * 敌人反而相互靠近/穿过，随后位置关系反转导致相邻帧来回修正——持续震颤。
+ * 新实现：
+ * - 非零距离对始终沿当前连线互斥：a 沿 -normal、b 沿 +normal，无奇偶反转；
+ * - 完全同心对使用由 (min(id), max(id)) 派生的固定 8 向单位方向（unordered pair 恒定，
+ *   不全部沿 X 轴，无 rng/时间/遍历顺序依赖）；
+ * - 每轮基于本轮快照两阶段处理（先累积全部对修正，再统一应用），避免顺序依赖；
+ * - 最小中心距 = (a.radius + b.radius) * 0.75：基础敌人半径和 28 → 21，
+ *   两圆重叠约直径的 25%，保留群聚压迫感但中心不再重合、轮廓可分辨；
+ * - 位置经有限值防御与世界边界钳制，不会产生非有限坐标或推出世界。
+ */
+
+/** 最小中心距比例：半径和的 75%。 */
+export const ENEMY_SEPARATION_RATIO = 0.75
+/** 每帧分离迭代轮数（每轮基于该轮快照）。 */
+export const SEPARATION_ROUNDS = 3
+
+/** 完全同心敌人对的确定性方向表（8 向，避免全部沿 X 轴拆开）。 */
+const TIE_DIRECTIONS: readonly { x: number; y: number }[] = [
+  { x: 1, y: 0 },
+  { x: Math.SQRT1_2, y: Math.SQRT1_2 },
+  { x: 0, y: 1 },
+  { x: -Math.SQRT1_2, y: Math.SQRT1_2 },
+  { x: -1, y: 0 },
+  { x: -Math.SQRT1_2, y: -Math.SQRT1_2 },
+  { x: 0, y: -1 },
+  { x: Math.SQRT1_2, y: -Math.SQRT1_2 },
+]
+
+/** 由稳定 ID 派生的、对 unordered pair 固定的单位方向。 */
+const tieDirection = (idA: number, idB: number): { x: number; y: number } => {
+  const lo = Math.min(idA, idB)
+  const hi = Math.max(idA, idB)
+  const seed = ((lo * 7) ^ (hi * 13)) >>> 0
+  return TIE_DIRECTIONS[seed % TIE_DIRECTIONS.length]!
+}
+
+const finiteOrZero = (value: number): number =>
+  Number.isFinite(value) ? value : 0
+
+const clampEnemyToArena = (enemy: Enemy, arena: Arena): Enemy => {
+  const minX = enemy.radius
+  const maxX = Math.max(minX, arena.width - enemy.radius)
+  const minY = enemy.radius
+  const maxY = Math.max(minY, arena.height - enemy.radius)
+  return {
+    ...enemy,
+    x: Math.min(Math.max(enemy.x, minX), maxX),
+    y: Math.min(Math.max(enemy.y, minY), maxY),
+  }
+}
 
 /**
- * 局部分离：把距离小于 ENEMY_SEPARATION_DISTANCE 的敌人对沿连线确定性推开。
- * 完全重合（距离为 0）时使用固定方向，保证可稳定拆开。
- * 纯位置修正：不改变敌人属性，不参与 rng，不依赖 DOM。
+ * 局部分离：把中心距小于 (半径和 * ENEMY_SEPARATION_RATIO) 的敌人对沿连线互斥推开。
+ * 纯位置修正：不改变敌人属性，不参与 rng，不依赖 DOM；暂停时不调用（由 updateGame 门控）。
  */
-export const separateEnemies = (enemies: readonly Enemy[]): Enemy[] => {
+export const separateEnemies = (
+  enemies: readonly Enemy[],
+  arena?: Arena,
+): Enemy[] => {
   const out = enemies.map((enemy) => ({ ...enemy }))
-  const minDist = ENEMY_SEPARATION_DISTANCE
-  const minDistSq = minDist * minDist
+  const count = out.length
   for (let round = 0; round < SEPARATION_ROUNDS; round += 1) {
-    for (let i = 0; i < out.length; i += 1) {
+    // 本轮快照：所有修正基于该轮起始位置计算。
+    const xs = out.map((enemy) => enemy.x)
+    const ys = out.map((enemy) => enemy.y)
+    const accX = new Float64Array(count)
+    const accY = new Float64Array(count)
+
+    for (let i = 0; i < count; i += 1) {
       const a = out[i]
       if (!a) {
         continue
       }
-      for (let j = i + 1; j < out.length; j += 1) {
+      for (let j = i + 1; j < count; j += 1) {
         const b = out[j]
         if (!b) {
           continue
         }
-        const dx = b.x - a.x
-        const dy = b.y - a.y
+        const dx = xs[j] - xs[i]
+        const dy = ys[j] - ys[i]
+        const minDist = (a.radius + b.radius) * ENEMY_SEPARATION_RATIO
+        const minDistSq = minDist * minDist
         const dSq = dx * dx + dy * dy
         if (dSq >= minDistSq) {
           continue
@@ -387,17 +444,28 @@ export const separateEnemies = (enemies: readonly Enemy[]): Enemy[] => {
           nx = dx / dist
           ny = dy / dist
         } else {
-          // 完全重合：使用固定方向，按 id 奇偶各推一侧，保证确定性。
           dist = 0
-          nx = SEPARATION_TIE_DIRECTION.x
-          ny = SEPARATION_TIE_DIRECTION.y
+          const tie = tieDirection(a.id, b.id)
+          nx = tie.x
+          ny = tie.y
         }
         const push = (minDist - dist) / 2
-        const sign = (a.id + b.id) % 2 === 0 ? 1 : -1
-        a.x -= nx * push * sign
-        a.y -= ny * push * sign
-        b.x += nx * push * sign
-        b.y += ny * push * sign
+        // 纯互斥：a 沿 -normal、b 沿 +normal；无奇偶反转。
+        accX[i] -= nx * push
+        accY[i] -= ny * push
+        accX[j] += nx * push
+        accY[j] += ny * push
+      }
+    }
+
+    for (let k = 0; k < count; k += 1) {
+      out[k] = {
+        ...out[k],
+        x: finiteOrZero(xs[k] + accX[k]),
+        y: finiteOrZero(ys[k] + accY[k]),
+      }
+      if (arena) {
+        out[k] = clampEnemyToArena(out[k], arena)
       }
     }
   }
@@ -408,5 +476,9 @@ export const advanceEnemyChases = (
   enemies: Enemy[],
   player: CombatPlayer,
   dt: number,
+  arena?: Arena,
 ): Enemy[] =>
-  separateEnemies(enemies.map((enemy) => chasePlayer(enemy, player, dt)))
+  separateEnemies(
+    enemies.map((enemy) => chasePlayer(enemy, player, dt)),
+    arena,
+  )
